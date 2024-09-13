@@ -1,0 +1,55 @@
+name: CI/CD for VSAT
+
+on:
+  push:
+    branches:
+      - "**" # Triggers on push to any branch
+  pull_request:
+    branches:
+      - "**" # Triggers on pull requests to any branch
+
+jobs:
+  # Job 1: Linting
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x # Use Node.js 20.x to future-proof
+      - name: Install dependencies
+        run: npm ci # Clean install of dependencies
+      - name: Run lint
+        run: npm run lint # Runs linting checks
+
+  # Job 2: Test and Build (runs after Lint)
+  test_and_build:
+    needs: lint # Only runs after the Lint job is successful
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x # Use Node.js 20.x to future-proof
+      - name: Install dependencies
+        run: npm ci # Clean install of dependencies
+      - name: Run tests
+        run: npm run test # Placeholder for actual tests, modify when tests are added
+      - name: Build the app
+        run: npm run build # Builds the React app
+
+  # Job 3: Upload build artifacts (Optional)
+  upload_artifacts:
+    needs: test_and_build # Only runs after test and build pass
+    if: success() # Runs only if previous steps succeed
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist # Uploads the build output from the dist folder

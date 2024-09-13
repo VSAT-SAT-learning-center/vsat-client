@@ -1,0 +1,11 @@
+@import "reset";
+@import "variables";
+@import "mixins";
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: 400;
+  color: $black-color;
+  background-color: $bg-primary-color;
+}
