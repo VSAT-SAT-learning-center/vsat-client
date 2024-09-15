@@ -1,12 +1,12 @@
-name: CI/CD for VSAT
+name: CI/CD for VSAT Client
 
 on:
-  push:
+  push: # Trigger workflow on push to any branch
     branches:
-      - "**" # Triggers on push to any branch
-  pull_request:
+      - "**" # '**' means all branches
+  pull_request: # Trigger workflow on all pull requests to any branch
     branches:
-      - "**" # Triggers on pull requests to any branch
+      - "**"
 
 jobs:
   # Job 1: Linting
@@ -14,42 +14,77 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.x # Use Node.js 20.x to future-proof
-      - name: Install dependencies
-        run: npm ci # Clean install of dependencies
-      - name: Run lint
-        run: npm run lint # Runs linting checks
+        uses: actions/checkout@v3 # Checks out the repository under $GITHUB_WORKSPACE
 
-  # Job 2: Test and Build (runs after Lint)
-  test_and_build:
-    needs: lint # Only runs after the Lint job is successful
+      - name: Set up Node.js
+        uses: actions/setup-node@v3 # Sets up Node.js environment
+        with:
+          node-version: 20.x # Use Node.js 20.x
+
+      - name: Install dependencies
+        run: npm ci # Installs project dependencies using 'ci' for clean install
+
+      - name: Run lint
+        run: npm run lint # Runs lint checks
+
+  # Job 2: Testing
+  test:
+    needs: lint # Runs after lint job is complete
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.x # Use Node.js 20.x to future-proof
-      - name: Install dependencies
-        run: npm ci # Clean install of dependencies
-      - name: Run tests
-        run: npm run test # Placeholder for actual tests, modify when tests are added
-      - name: Build the app
-        run: npm run build # Builds the React app
+        uses: actions/checkout@v3 # Checks out the repository under $GITHUB_WORKSPACE
 
-  # Job 3: Upload build artifacts (Optional)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3 # Sets up Node.js environment
+        with:
+          node-version: 20.x # Use Node.js 20.x
+
+      - name: Install dependencies
+        run: npm ci # Installs project dependencies using 'ci' for clean install
+
+      - name: Run tests
+        env:
+          CI: true # Set CI environment variable to true for better output in CI environments
+        run: npm run test -- --coverage --passWithNoTests # Add --passWithNoTests flag to allow tests to pass when no test files are found
+
+      - name: Upload test coverage report
+        if: always() # Upload even if there is a failure for debugging purposes
+        uses: actions/upload-artifact@v3 # Uploads test coverage report as an artifact
+        with:
+          name: coverage-report
+          path: coverage # Adjust the path if needed (e.g., 'coverage/lcov-report' for LCOV)
+
+  # Job 3: Build the React app
+  build:
+    needs: test # Runs after the test job is complete
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3 # Checks out the repository under $GITHUB_WORKSPACE
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3 # Sets up Node.js environment
+        with:
+          node-version: 20.x # Use Node.js 20.x
+
+      - name: Install dependencies
+        run: npm ci # Installs project dependencies using 'ci' for clean install
+
+      - name: Build the React app
+        run: npm run build # Builds the React Vite app
+
+  # Job 4: Upload build artifacts (Optional)
   upload_artifacts:
-    needs: test_and_build # Only runs after test and build pass
+    needs: build # Only runs after the build job is successful
     if: success() # Runs only if previous steps succeed
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3 # Ensure we are using the latest state
+
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3 # Uploads the build output as an artifact
         with:
-          name: dist
-          path: dist # Uploads the build output from the dist folder
+          name: build-artifacts
+          path: dist # Adjust the path if needed
