@@ -1,5 +1,4 @@
 import js from '@eslint/js';
-import importPlugin from 'eslint-plugin-import'; // Import the eslint-plugin-import
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
@@ -22,8 +21,8 @@ export default [
       react: { version: '18.3' },
       'import/resolver': {
         alias: {
-          map: [['~', './src']], // Add alias configuration for ESLint to recognize '~' as 'src'
-          extensions: ['.js', '.jsx', '.ts', '.tsx'], // Supported file extensions
+          map: [['~', './src']],
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
       },
     },
@@ -31,7 +30,6 @@ export default [
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      import: importPlugin, // Add the import plugin
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -43,8 +41,6 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
-      'import/no-unresolved': 'error', // Add a rule to check for unresolved imports
-      'import/order': ['error', { groups: [['builtin', 'external', 'internal']] }], // Ensure proper ordering of imports
     },
   },
 ];
