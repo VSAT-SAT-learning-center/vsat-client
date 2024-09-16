@@ -1,6 +1,27 @@
-@import "../../styles/variables";
+@import "~/styles/variables";
 
 .home-wrapper {
+  height: 100vh;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
   .home-container {
+    width: 100%;
+    height: fit-content;
+    margin-top: 90px;
+    .home-banner {
+      position: relative;
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 30px;
+    }
   }
+}
+
+.home-wrapper::-webkit-scrollbar {
+  display: none;
 }
