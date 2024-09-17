@@ -1,0 +1,61 @@
+.banner-image {
+  position: relative;
+  margin: 150px 100px 100px 100px;
+
+  .banner-circle-img {
+    animation: rotate-infinite 30s linear infinite;
+  }
+
+  .banner-1-img {
+    position: absolute;
+    top: -99px;
+    left: 30px;
+  }
+
+  .banner-2-img {
+    position: absolute;
+    bottom: 20px;
+    right: -30px;
+    animation: move-slightly-up 5s ease-in-out infinite;
+  }
+
+  .banner-3-img {
+    position: absolute;
+    bottom: 130px;
+    left: -80px;
+    animation: move-slightly-down 5s ease-in-out infinite;
+  }
+}
+
+@keyframes move-slightly-up {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes move-slightly-down {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotate-infinite {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
