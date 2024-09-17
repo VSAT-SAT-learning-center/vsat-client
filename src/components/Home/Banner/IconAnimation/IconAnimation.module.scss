@@ -1,0 +1,79 @@
+.icon {
+  width: 75px;
+  height: auto;
+  opacity: 0.3;
+}
+
+.icon-1 {
+  position: absolute;
+  top: 50px;
+  left: 180px;
+  animation: move-slightly-down 5s ease-in-out infinite;
+}
+
+.icon-2 {
+  position: absolute;
+  top: 30px;
+  left: 42%;
+  animation: move-slightly-down 5s ease-in-out infinite;
+}
+
+.icon-3 {
+  position: absolute;
+  width: 65px;
+  height: auto;
+  top: 30px;
+  right: 200px;
+  animation: move-slightly-up 5s ease-in-out infinite;
+}
+
+.icon-4 {
+  position: absolute;
+  top: 280px;
+  left: 20px;
+  animation: move-slightly-up 5s ease-in-out infinite;
+}
+
+.icon-5 {
+  position: absolute;
+  bottom: 30px;
+  right: 200px;
+  animation: move-slightly-up 5s ease-in-out infinite;
+}
+
+.icon-6 {
+  position: absolute;
+  bottom: 50%;
+  right: 20px;
+  animation: move-slightly-down 5s ease-in-out infinite;
+}
+
+.icon-box {
+  position: absolute;
+  bottom: 80px;
+  left: 100px;
+}
+
+@keyframes move-slightly-up {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes move-slightly-down {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
