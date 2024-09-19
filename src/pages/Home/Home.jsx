@@ -5,7 +5,10 @@ import IconAnimation from "../../components/Home/Banner/IconAnimation";
 import IntroductionInfo from "../../components/Home/Introduction/IntroductionInfo";
 import IntroductionSlider from "../../components/Home/Introduction/IntroductionSlider/IntroductionSlider";
 import ReasonChooseBanner from "../../components/Home/ReasonChoose/ReasonChooseBanner";
+import ReasonInformation from "../../components/Home/ReasonChoose/ReasonInformation";
+import Subscribe from "../../components/Home/Subscribe";
 import UserCard from "../../components/Home/UserCard/UserCard";
+import Footer from "../../layouts/Footer/Footer";
 import Header from "../../layouts/Header";
 import styles from "./Home.module.scss";
 const cx = classNames.bind(styles);
@@ -29,15 +32,17 @@ function Home() {
         <UserCard />
         <div className={cx("home-reason-choose-wrapper")}>
           <div className={cx("home-reason-choose-container")}>
-            <ReasonChooseBanner/>
-            <div className={cx("reason-choose-information")}>
-              information
-            </div>
+            <ReasonChooseBanner />
+            <ReasonInformation />
           </div>
         </div>
+        <div className={cx("home-subscribe-wrapper")}>
+          <Subscribe/>
+        </div>
       </div>
+      <Footer/>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
