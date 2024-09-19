@@ -15,7 +15,7 @@ function IntroductionSlider() {
       slidesPerView={3}
       autoplay={{ delay: 1500, disableOnInteraction: false }}
       loop={true}
-      speed={800}
+      speed={1000}
     >
       {informationSlider.map((item) => (
         <SwiperSlide key={item.id}>

@@ -1,13 +1,13 @@
 import classNames from "classnames/bind"
 import Header from "../../layouts/Header/Header"
-import styles from "./About.module.scss"
+import styles from "./Contact.module.scss"
 const cx = classNames.bind(styles)
-function About() {
+function Contact() {
   return (
-    <div className={cx("about-wrapper")}>
+    <div className={cx("contact-wrapper")}>
       <Header />
     </div>
   )
 }
 
-export default About
+export default Contact
