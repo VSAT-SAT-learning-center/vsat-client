@@ -2,7 +2,7 @@
 
 .header-wrapper {
   width: 100%;
-  height: 90px;
+  height: 80px;
   position: fixed;
   top: 0;
   left: 0;
@@ -10,7 +10,9 @@
   z-index: 100;
   padding: 15px 30px;
   background-color: $bg-primary-color;
-  border-bottom: 1px solid $fourth-color;
+  // box-shadow: rgba(81, 191, 179, 0.2) 0px 2px 8px 0px;
+  border-bottom: 1px solid #dbdcdd;
+
 
   .header-container {
     width: 100%;
@@ -58,8 +60,9 @@
     .header-options {
       height: 100%;
       .header-option-btn {
+        height: 100%;
         position: relative;
-        padding: 15px 30px;
+        padding: 0 30px;
         font-size: 20px;
         font-weight: 400;
         color: $white-color;

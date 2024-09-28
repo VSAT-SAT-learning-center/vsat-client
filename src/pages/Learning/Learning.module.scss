@@ -1,0 +1,15 @@
+.learning-wrapper {
+  width: 100%;
+  height: calc(100vh - 80px);;
+  margin-top: 80px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+
+  .learning-container {
+    width: 100%;
+    height: fit-content;
+    min-height: 100%;
+  }
+}
