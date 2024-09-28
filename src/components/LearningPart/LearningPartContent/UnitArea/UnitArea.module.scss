@@ -1,0 +1,88 @@
+@import "../../../../styles/variables";
+
+.content-unit-area {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 15px;
+  padding: 24px 32px;
+  border-radius: 5px;
+  border: 1px solid #dfdcdc;
+
+  .unit-area-title {
+    margin-bottom: 24px;
+
+    .title {
+      cursor: pointer;
+      font-size: 22px;
+      font-weight: 600;
+      transition: 0.2s linear;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .unit-area-main {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 32px;
+
+    .unit-area-learn {
+      flex: 1;
+      .learn-title {
+        width: 100%;
+        padding-bottom: 20px;
+        font-size: 17px;
+        font-weight: 600;
+        color: $text-color-gray;
+      }
+      .learn-list {
+        width: 100%;
+        .learn-item {
+          width: 100%;
+          padding: 8px 0;
+          display: flex;
+          align-items: center;
+          .learn-item-icon {
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            border: 1px solid #9d9fa2;
+            .icon {
+              font-size: 14px;
+            }
+          }
+          .learn-item-title {
+            cursor: pointer;
+            padding-left: 16px;
+            font-size: 16px;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          &:nth-child(1) {
+            padding-top: 0;
+          }
+        }
+      }
+    }
+
+    .unit-area-practice {
+      flex: 1;
+
+      .practice-title {
+        width: 100%;
+        padding-bottom: 20px;
+        font-size: 17px;
+        font-weight: 600;
+        color: $text-color-gray;
+      }
+    }
+  }
+}
