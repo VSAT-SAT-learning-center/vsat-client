@@ -1,0 +1,17 @@
+@import "../../styles/variables";
+.contact-wrapper {
+    height: 100vh;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    .contact-container {
+      width: 100%;
+      height: fit-content;
+      margin-top: 90px;
+    }
+}
+.contact-wrapper::-webkit-scrollbar {
+    display: none;
+}
+  
