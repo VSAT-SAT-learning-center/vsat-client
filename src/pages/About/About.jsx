@@ -7,6 +7,7 @@ import IconAnimation from "../../components/Home/Banner/IconAnimation";
 import Subscribe from "../../components/Home/Subscribe";
 import BannerAboutImage from "../../components/About/BannerAbout/BannerAboutImage/BannerAboutImage";
 import UserCard from "../../components/Home/UserCard/UserCard";
+import AboutAchievements from "../../components/About/ABoutAchievements/AboutAchievements";
 import Header from "../../layouts/Header/Header";
 import Footer from "../../layouts/Footer/Footer";
 import styles from "./About.module.scss";
@@ -29,6 +30,9 @@ function About() {
           <IconAnimation />
           <BannerImage />
           <BannerAboutInformation />
+        </div>
+        <div className={cx("about-achievements")}>
+          <AboutAchievements />
         </div>
         <UserCard />
         <div className={cx("about-subscribe-wrapper")}>
