@@ -3,6 +3,7 @@ import CustomBreadcrumbs from "../../../components/LearningPartDetail/LearningPa
 import DetailLessonItem from "../../../components/LearningPartDetail/LearningPartDetailSidebar/DetailLessonItem";
 import DetailPracticeItem from "../../../components/LearningPartDetail/LearningPartDetailSidebar/DetailPracticeItem";
 import styles from "./LearningPartDetailSidebar.module.scss";
+import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function LearningPartDetailSidebar() {
@@ -32,7 +33,17 @@ function LearningPartDetailSidebar() {
               <DetailLessonItem />
               <DetailLessonItem />
               <DetailLessonItem />
+            </div>
+            <div className={cx("detail-content-practice")}>
               <DetailPracticeItem />
+            </div>
+          </div>
+          <div className={cx("detail-content-footer")}>
+            <div className={cx("footer-copyright")}>© 2024 VSAT Learning Center</div>
+            <div className={cx("footer-rule")}>
+              <Link className={cx("rule-item")}>Terms of use</Link>
+              <Link className={cx("rule-item")}>Privacy Policy</Link>
+              <Link className={cx("rule-item")}>Cookie Notice</Link>
             </div>
           </div>
         </div>
