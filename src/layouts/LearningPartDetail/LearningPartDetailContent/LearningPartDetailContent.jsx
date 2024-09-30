@@ -1,4 +1,5 @@
 import classNames from "classnames/bind";
+import LessonDef from "../../../components/LearningPartDetail/LearningPartDetailContent/LessonDef/LessonDef";
 import styles from "./LearningPartDetailContent.module.scss";
 const cx = classNames.bind(styles);
 
@@ -21,7 +22,7 @@ function LearningPartDetailContent() {
         </div>
         <div className={cx("lesson-content-container")}>
           <div className={cx("lesson-content-main")}>
-            <div className={cx("lesson-content-def")}></div>
+            <LessonDef />
           </div>
         </div>
       </div>
