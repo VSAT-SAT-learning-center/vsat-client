@@ -59,7 +59,7 @@ function Footer() {
         </div>
       </div>
       <div className={cx("footer-copyright")}>
-        Copyright@ 2021 <span className={cx("hightlight")}>VSAT</span>. All
+        Copyright@ 2024 <span className={cx("hightlight")}>VSAT</span>. All
         Rights Reserved
       </div>
     </div>
