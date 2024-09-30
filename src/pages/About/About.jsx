@@ -7,7 +7,7 @@ import IconAnimation from "../../components/Home/Banner/IconAnimation";
 import Subscribe from "../../components/Home/Subscribe";
 import BannerAboutImage from "../../components/About/BannerAbout/BannerAboutImage/BannerAboutImage";
 import UserCard from "../../components/Home/UserCard/UserCard";
-import AboutAchievements from "../../components/About/ABoutAchievements/AboutAchievements";
+import AboutAchievements from "../../components/About/AboutAchievements/AboutAchievements";
 import Header from "../../layouts/Header/Header";
 import Footer from "../../layouts/Footer/Footer";
 import styles from "./About.module.scss";
