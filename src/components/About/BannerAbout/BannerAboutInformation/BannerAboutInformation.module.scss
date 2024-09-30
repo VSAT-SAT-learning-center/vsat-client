@@ -1,0 +1,29 @@
+@import "../../../../styles/variables";
+.about-banner-information {
+    flex: 1;
+    height: fit-content;
+    margin: 50px 0;
+  
+    .about-icon-info {
+      margin-bottom: 10px;
+    } 
+    .about-infor-title {
+      margin-bottom: 20px;
+      font-size: 35px;
+      font-weight: 600;
+      font-style: inherit;
+      color: $text-color;
+    }
+  
+    .about-infor-desc {
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: 200;
+      font-style: inherit;
+      line-height: 1.7;
+      color: $text-color;
+    }
+    .abouticon-info-bottom {
+      margin-left: -50px;
+    }
+  }

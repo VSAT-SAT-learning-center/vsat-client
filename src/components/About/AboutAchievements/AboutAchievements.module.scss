@@ -1,0 +1,55 @@
+@import "../../../../src/styles/variables";
+
+.achievements-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 30px 200px 80px 200px;
+    .achievement-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        width: 280px;
+        height: 230px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        color: #333;
+        h2 {
+            font-size: 57px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        h5 {
+            height: 260px;
+            font-size: 25px;
+            line-height: 1.4;
+            font-weight: 600;
+            color: $text-color;
+        }
+    }
+    .orange {
+        background-color: #f0f4fc;
+        color: $primary-color;
+    }
+    
+    .purple {
+        background-color: #fef9eb;
+        color: $secondary-color;
+    }
+    
+    .red {
+        background-color: #fde9eb;
+        color: $third-color;
+    }
+    
+    .blue {
+        background-color: #e9f7f6;
+        color: $fourth-color;
+    }
+}
+
+
+
+
