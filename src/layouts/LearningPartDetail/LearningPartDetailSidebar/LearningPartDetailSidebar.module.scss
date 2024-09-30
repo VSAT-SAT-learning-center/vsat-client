@@ -71,11 +71,41 @@
         width: 100%;
         height: fit-content;
         max-height: calc(100% - 91px);
+        margin-bottom: 15px;
         overflow-y: auto;
 
-        .detail-content-lesson {
+        .detail-content-lesson,
+        .detail-content-practice {
           width: 100%;
           height: fit-content;
+        }
+      }
+
+      .detail-content-footer {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .footer-copyright {
+          font-size: 13px;
+          padding-bottom: 4px;
+        }
+
+        .footer-rule {
+          font-size: 13px;
+
+          .rule-item {
+            padding: 0 8px;
+            text-decoration: underline;
+            color: #21242ca3;
+
+            &:hover {
+              color: $primary-color;
+            }
+          }
         }
       }
     }
