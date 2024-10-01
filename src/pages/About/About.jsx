@@ -8,6 +8,8 @@ import IntroductionInfo from "../../components/Home/Introduction/IntroductionInf
 import IntroductionSlider from "../../components/Home/Introduction/IntroductionSlider/IntroductionSlider";
 import Subscribe from "../../components/Home/Subscribe";
 import UserCard from "../../components/Home/UserCard/UserCard";
+import IntrodutionInstructor from "../../components/About/OurInstructor/Introdution/IntrodutionInstructor";
+import OurInstructorSlider from "../../components/About/OurInstructor/OurInstructorSlider/OurInstructorSlider";
 import Footer from "../../layouts/Footer/Footer";
 import Header from "../../layouts/Header/Header";
 import styles from "./About.module.scss";
@@ -35,6 +37,12 @@ function About() {
           <AboutAchievements />
         </div>
         <UserCard />
+        <div className={cx("about-instructor")}>
+          <div className={cx("about-instructor-detail")}>
+            <IntrodutionInstructor />
+            <OurInstructorSlider />
+          </div>
+        </div>
         <div className={cx("about-subscribe-wrapper")}>
           <Subscribe />
         </div>

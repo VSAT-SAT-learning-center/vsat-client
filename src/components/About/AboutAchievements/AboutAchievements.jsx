@@ -5,11 +5,11 @@ const cx = classNames.bind(styles);
 function AboutAchievements() {
   return (
     <div className={cx("achievements-container")}>
-      <div className={cx("achievement-card", "orange")}>
+      <div className={cx("achievement-card", "blue")}>
         <div className={cx("card-title")}>100+</div>
         <div className={cx("card-sub-title")}>Specialist Good Teachers</div>
       </div>
-      <div className={cx("achievement-card", "purple")}>
+      <div className={cx("achievement-card", "yellow")}>
         <div className={cx("card-title")}>200+</div>
         <div className={cx("card-sub-title")}>Online Learning Courses</div>
       </div>
@@ -17,7 +17,7 @@ function AboutAchievements() {
         <div className={cx("card-title")}>350+</div>
         <div className={cx("card-sub-title")}>Students participate online</div>
       </div>
-      <div className={cx("achievement-card", "blue")}>
+      <div className={cx("achievement-card", "green")}>
         <div className={cx("card-title")}>1000+</div>
         <div className={cx("card-sub-title")}>
           Standard and diversified banking
