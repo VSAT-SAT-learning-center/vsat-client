@@ -1,17 +1,19 @@
 @import "../../../../styles/variables";
 
-.lesson-content-def {
+.lesson-content-tips {
   width: 100%;
   height: fit-content;
+  padding-top: 32px;
+  margin-bottom: 32px;
+  border-top: 1px solid #c0c0c0;
 
-  .def-title {
+  .tips-title {
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 16px;
   }
 
-  .def-content {
-    border-bottom: 1px solid #c0c0c0;
+  .tips-content {
     font-size: 20px;
     line-height: 30px;
     h3 {
