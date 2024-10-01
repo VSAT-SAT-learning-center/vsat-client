@@ -1,0 +1,36 @@
+@import "../../../../styles/variables";
+
+.info-slider {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 15px; 
+  border-radius: 12px;
+  text-align: center;
+  
+  .info-slider-item {
+    width: 300px !important;
+    .item-img img {
+      width: 100%;
+      height: 350px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+  
+    .item-name {
+      margin: 10px 0;
+      font-size: 28px; 
+      font-weight: 600;
+    }
+    .item-job {
+      font-size: 20px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+  }
+}
+.swiper {
+  width: 200px;
+}
