@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import DOMPurify from "dompurify";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { questionData } from "../../../../data/LearningPartDetailContent/questionData";
+import { questionData } from "../../../../../data/LearningPartDetailContent/questionData";
 import styles from "./LessonQuestion.module.scss";
 const cx = classNames.bind(styles);
 
@@ -27,7 +27,7 @@ function LessonQuestion({ title }) {
     const selectedIndex = questionData.options.findIndex(
       (option) => option.label === selectedOption
     );
-    
+
     setCheckedAnswers((prev) => ({
       ...prev,
       [selectedOption]:
@@ -85,6 +85,7 @@ function LessonQuestion({ title }) {
                     correctAnswer: checkedAnswers[option.label] === "correct",
                     incorrectAnswer:
                       checkedAnswers[option.label] === "incorrect",
+                    disabled: isAnswerCorrect,
                   })}
                   disabled={isAnswerCorrect}
                 />
