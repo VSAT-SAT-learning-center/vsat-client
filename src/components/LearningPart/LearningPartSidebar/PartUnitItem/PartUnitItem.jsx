@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 function PartUnitItem({ item, learningContent }) {
   const navigate = useNavigate();
   const hanldeClickUnitItem = () => {
-    navigate(`/learning/${learningContent}/1`);
+    navigate(`/learning/${learningContent}/1:foundations-information-and-ideas/1`);
   }
   return (
     <div className={cx("learning-part-unit-item")} onClick={hanldeClickUnitItem}>
