@@ -1,0 +1,15 @@
+.contact-image-container {
+    position: relative;
+    width: 400px;
+    height: 500px;
+  
+    .contact-circle {
+        position: absolute;
+        top: -50px; 
+        left: -50px;
+        width: 200px;
+        height: 200px;
+        background-color: #a75618;
+        border-radius: 50%;
+    }
+}
