@@ -1,5 +1,9 @@
 import classNames from "classnames/bind";
-import LessonDef from "../../../components/LearningPartDetail/LearningPartDetailContent/LessonDef/LessonDef";
+import LessonApp from "../../../components/LearningPartDetail/LearningPartDetailContent/LessonApp";
+import LessonConc from "../../../components/LearningPartDetail/LearningPartDetailContent/LessonConc";
+import LessonDef from "../../../components/LearningPartDetail/LearningPartDetailContent/LessonDef";
+import LessonPrac from "../../../components/LearningPartDetail/LearningPartDetailContent/LessonPrac";
+import LessonTips from "../../../components/LearningPartDetail/LearningPartDetailContent/LessonTips";
 import styles from "./LearningPartDetailContent.module.scss";
 const cx = classNames.bind(styles);
 
@@ -23,6 +27,10 @@ function LearningPartDetailContent() {
         <div className={cx("lesson-content-container")}>
           <div className={cx("lesson-content-main")}>
             <LessonDef />
+            <LessonConc/>
+            <LessonApp/>
+            <LessonTips/>
+            <LessonPrac/>
           </div>
         </div>
       </div>
