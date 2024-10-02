@@ -13,7 +13,7 @@ function LearningPartSidebar({ learningContent }) {
       : "SAT Math";
   return (
     <div className={cx("learning-part-sidebar-container")}>
-      <Link to="/learning/part" className={cx("learning-part-introduction", "introduction-active")}>
+      <Link to="/learning/sat-reading-and-writing" className={cx("learning-part-introduction", "introduction-active")}>
         <img
           src={LMImg}
           alt="introduction-img"
