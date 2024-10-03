@@ -3,46 +3,11 @@
 .lesson-content-app {
   width: 100%;
   height: fit-content;
-  padding-top: 32px;
   margin-bottom: 32px;
-  border-top: 1px solid #c0c0c0;
 
   .app-title {
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 16px;
-  }
-
-  .app-content {
-    font-size: 20px;
-    line-height: 30px;
-    h3 {
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    p {
-      margin-bottom: 24px;
-      margin-top: 0;
-    }
-
-    blockquote {
-      padding: 0 32px;
-      margin-bottom: 24px;
-
-      strong {
-        font-weight: 700;
-      }
-    }
-
-    li {
-      margin-bottom: 12px;
-    }
-
-    ul {
-      list-style-type: disc;
-      padding-left: 24px;
-    }
   }
 }

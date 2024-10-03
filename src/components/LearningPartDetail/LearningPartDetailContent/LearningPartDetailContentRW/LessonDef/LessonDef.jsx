@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import DOMPurify from "dompurify";
 import LessonQuestion from "../LessonQuestion/LessonQuestion";
+import RWRerender from "../RWRerender/RWRerender";
 import styles from "./LessonDef.module.scss";
 const cx = classNames.bind(styles);
 
@@ -15,10 +16,7 @@ function LessonDef() {
       <div className={cx("def-title")}>
         What are textual evidence questions?
       </div>
-      <div
-        className={cx("def-content")}
-        dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-      ></div>
+      <RWRerender loadedContent={sanitizedContent}/>
       <LessonQuestion title="Words in context: Example" />
     </div>
   );
