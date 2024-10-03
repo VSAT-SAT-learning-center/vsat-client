@@ -4,6 +4,7 @@ import BannerContactImage from "../../components/Contact/BannerContact/BannerCon
 import ContactInformationImage from "../../components/Contact/ContactInformation/ContactInformationImage";
 import ContactInformationContext from "../../components/Contact/ContactInformation/ContactInformationContext";
 import ContactInformationCard from "../../components/Contact/ContactInformation/ContactInformationCard";
+import Map from "../../components/Contact/Map";
 import Footer from "../../layouts/Footer/Footer";
 import Header from "../../layouts/Header/Header";
 import styles from "./Contact.module.scss"
@@ -27,6 +28,9 @@ function Contact() {
             </div>
           </div>
         </div>
+        <div className={cx("contact-map-wrapper")}>
+            <Map />
+          </div>
         <div className={cx("contact-subscribe-wrapper")}>
           <Subscribe />
         </div>
