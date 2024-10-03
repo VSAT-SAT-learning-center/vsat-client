@@ -5,6 +5,7 @@
 
   .question-title {
     font-size: 14px;
+    font-weight: 400;
     text-transform: uppercase;
     margin-bottom: 12px;
     letter-spacing: 1px;
@@ -35,12 +36,12 @@
     }
 
     li {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     ul {
       list-style-type: disc;
-      padding-left: 24px;
+      padding-left: 42px;
     }
   }
 
@@ -119,7 +120,7 @@
             flex: 1;
             padding-left: 16px;
             font-size: 18px;
-            line-height: 28px;
+            line-height: 30px;
 
             &.correctAnswer {
               color: $success-color;
@@ -170,6 +171,7 @@
       margin-top: 32px;
 
       .show-explain-title {
+        width: fit-content;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -178,7 +180,7 @@
         .title {
           padding-right: 5px;
           font-size: 18px;
-          font-weight: 600;
+          font-weight: 700;
           color: $primary-color;
 
           &:hover {
@@ -216,12 +218,12 @@
         }
 
         li {
-          margin-bottom: 12px;
+          margin-bottom: 14px;
         }
 
         ul {
           list-style-type: disc;
-          padding-left: 24px;
+          padding-left: 42px;
         }
       }
     }

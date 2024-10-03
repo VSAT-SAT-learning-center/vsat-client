@@ -1,0 +1,64 @@
+@import "../../../../styles/variables";
+
+.contact-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+
+    .contact-card {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 600px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+        &.blue-card {
+            background-color: #f0f4fc;
+        }
+
+        &.red-card {
+            background-color: #fde9eb;
+        }
+
+        &.yellow-card {
+            background-color: #fef9eb;
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-right: 20px;
+            flex: 1;
+            &.blue {
+                background-color: $primary-color;
+            }
+
+            &.red {
+                background-color: $third-color;
+            }
+            &.yellow {
+                background-color: $secondary-color;
+            }
+            
+        }
+        .contact-info-wrapper {
+            flex: 8;
+            display: flex;
+            .contact-info{
+                font-size: 20px;
+                margin: 0;
+                font-weight: 500;
+                color: #333;
+            }
+        }
+    }
+}
