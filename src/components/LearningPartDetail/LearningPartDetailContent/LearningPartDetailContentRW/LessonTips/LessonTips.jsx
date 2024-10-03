@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import DOMPurify from "dompurify";
+import RWRerender from "../RWRerender/RWRerender";
 import styles from "./LessonTips.module.scss";
 const cx = classNames.bind(styles);
 
@@ -12,10 +13,7 @@ function LessonTips() {
   return (
     <div className={cx("lesson-content-tips")}>
       <div className={cx("tips-title")}>Top tips</div>
-      <div
-        className={cx("tips-content")}
-        dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-      ></div>
+      <RWRerender loadedContent={sanitizedContent}/>
     </div>
   );
 }

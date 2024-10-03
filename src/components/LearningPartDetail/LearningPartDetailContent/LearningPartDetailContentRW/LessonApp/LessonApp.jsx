@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import DOMPurify from "dompurify";
+import RWRerender from "../RWRerender/RWRerender";
 import styles from "./LessonApp.module.scss";
 const cx = classNames.bind(styles);
 
@@ -25,10 +26,7 @@ function LessonApp() {
       <div className={cx("app-title")}>
         How to approach textual evidence questions
       </div>
-      <div
-        className={cx("app-content")}
-        dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-      ></div>
+      <RWRerender loadedContent={sanitizedContent} />
     </div>
   );
 }

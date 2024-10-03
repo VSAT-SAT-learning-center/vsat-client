@@ -1,8 +1,7 @@
-.math-renderer-content {
+.rw-rerender-content {
   font-size: 20px;
   line-height: 30px;
-  // border-bottom: 1px solid #c0c0c0;
-
+  border-bottom: 1px solid #c0c0c0;
   h3 {
     font-size: 26px;
     font-weight: 700;
@@ -31,15 +30,4 @@
     list-style-type: disc;
     padding-left: 42px;
   }
-
-  ol {
-    list-style-type: decimal;
-    padding-left: 42px;
-  }
-}
-
-.math-inline {
-}
-
-.math-block {
 }
