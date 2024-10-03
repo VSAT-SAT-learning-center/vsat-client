@@ -9,30 +9,35 @@ const ContactInformationCard = () => {
         <div className={cx("icon", "blue")}>
           <i className="fas fa-map-marker-alt"></i>
         </div>
-        <div className={cx("contact-info")}>
-            Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh
+        <div className={cx("contact-info-wrapper")}>
+          <div className={cx("contact-info")}>
+            Lô E2a-7, Đường D1, Phường Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành
+            Phố Hồ Chí Minh
+          </div>
+        </div>
+      </div>
+
+      <div className={cx("contact-card", "yellow-card")}>
+        <div className={cx("icon", "yellow")}>
+          <i className="fas fa-phone"></i>
+        </div>
+        <div className={cx("contact-info-wrapper")}>
+          <div className={cx("contact-info")}>0929 147 349</div>
         </div>
       </div>
 
       <div className={cx("contact-card", "red-card")}>
         <div className={cx("icon", "red")}>
-          <i className="fas fa-phone"></i>
-        </div>
-        <div className={cx("contact-info")}>
-          0929 147 349
-        </div>
-      </div>
-
-      <div className={cx("contact-card", "green-card")}>
-        <div className={cx("icon", "green")}>
           <i className="fas fa-envelope"></i>
         </div>
-            <div className={cx("contact-info")}>
-                vsat.center.official@gmail.com
-            </div>
+        <div className={cx("contact-info-wrapper")}>
+          <div className={cx("contact-info")}>
+            vsat.center.official@gmail.com
+          </div>
+        </div>
       </div>
-      </div>
-    )
+    </div>
+  );
 };
 
 export default ContactInformationCard;

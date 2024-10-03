@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import Banner_Contact from "../../../../assets/images/content/SAT.png";
+import Banner_Contact from "../../../../assets/images/content/contact.png";
 import styles from "./ContactInformationImage.module.scss"
 const cx = classNames.bind(styles)
 
