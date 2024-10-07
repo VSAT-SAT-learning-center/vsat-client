@@ -1,0 +1,39 @@
+@import "~/styles/variables";
+
+.learning-part-unit-item {
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+  padding: 16px;
+  transition: 0.2s ease-in;
+  border-bottom: 1px solid #ececec;
+
+  .unit-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-color-gray;
+  }
+
+  .unit-desc {
+    font-size: 17px;
+    font-weight: 400;
+  }
+
+  &:hover {
+    background-color: #f4f4f4;
+  }
+}
+
+.unit-active {
+  border-left: 5px solid $primary-color;
+  background-color: $active-bg;
+
+  .unit-desc {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  &:hover {
+    background-color: $active-bg;
+  }
+}

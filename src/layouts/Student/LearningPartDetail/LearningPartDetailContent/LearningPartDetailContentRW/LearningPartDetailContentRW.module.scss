@@ -1,0 +1,62 @@
+@import "~/styles/variables";
+
+.learning-part-detail-content-rw-container {
+  width: 100%;
+  height: fit-content;
+  min-height: 100%;
+  background-color: $white-color;
+
+  .lesson-main-title {
+    width: 100%;
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .main-title {
+      width: 698px;
+      padding-top: 24px;
+      font-size: 32px;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+
+  .lesson-guide {
+    width: 100%;
+    padding: 0 48px;
+    margin-top: 24px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .content-guide {
+      width: 680px;
+      height: fit-content;
+      padding: 16px 0;
+      border-top: 1px solid #c0c0c0;
+      border-bottom: 1px solid #c0c0c0;
+
+      .guide-text {
+        font-size: 16px;
+        font-style: italic;
+        text-align: center;
+        color: $text-color;
+      }
+    }
+  }
+
+  .lesson-content-container {
+    width: 100%;
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .lesson-content-main {
+      width: 698px;
+      height: fit-content;
+    }
+  }
+}

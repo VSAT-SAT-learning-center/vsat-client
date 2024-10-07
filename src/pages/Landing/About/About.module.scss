@@ -1,0 +1,78 @@
+@import "~/styles/variables";
+.about-wrapper {
+    height: 100vh;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    .about-container {
+      width: 100%;
+      height: fit-content;
+      margin-top: 80px;
+      .about-banner-wrapper{
+        margin-bottom: 90px;
+      }
+      .about-introduction {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 90px;
+  
+        .about-introduction-wrapper {
+          width: 90%;
+          height: fit-content;
+          display: flex;
+          justify-content: center;
+        }
+      }
+      .about-subscribe-wrapper {
+        width: 100%;
+        height: fit-content;
+        padding: 150px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .about-instructor {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 50px;
+        background-color: rgba(81, 191, 179, 0.08); 
+        padding-bottom: 100px;
+      
+        .about-instructor-detail {
+          width: 80%;
+          flex-direction: column; 
+          align-items: center;
+          justify-content: center;
+          
+        }
+      }
+      .about-banner {
+        position: relative;
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 30px;
+      }
+      .about-achievements{
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 50px;
+      }
+    }
+}
+.about-wrapper::-webkit-scrollbar {
+    display: none;
+}
+  

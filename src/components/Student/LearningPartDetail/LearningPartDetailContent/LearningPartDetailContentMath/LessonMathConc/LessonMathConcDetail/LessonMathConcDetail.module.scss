@@ -1,0 +1,46 @@
+@import "~/styles/variables";
+
+.lesson-content-conc-detail {
+  width: 100%;
+  height: fit-content;
+  padding-top: 32px;
+  border-bottom: 1px solid #c0c0c0;
+
+  .conc-detail-example {
+    width: 100%;
+    padding-top: 32px;
+    border-top: 1px solid #c0c0c0;
+
+    .show-example {
+      margin-top: 32px;
+
+      .show-example-title {
+        cursor: pointer;
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .title {
+          padding-right: 5px;
+          font-size: 18px;
+          font-weight: 700;
+          color: $primary-color;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        .icon-show {
+          font-size: 16px;
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+}

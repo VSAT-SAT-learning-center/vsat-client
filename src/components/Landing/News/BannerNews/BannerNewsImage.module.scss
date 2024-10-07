@@ -1,0 +1,21 @@
+@import "~/styles/variables";
+.news-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 230px; 
+    background-color: #E2E2E4;
+  
+    .news-banner-title {
+      flex: 1.5;
+      font-size: 40px;
+      font-weight: 600;
+      text-align: center;
+    }
+  
+    .news-banner-image {
+      flex: 1.5;
+      height: 100%;
+      object-fit: cover;
+    }
+  }

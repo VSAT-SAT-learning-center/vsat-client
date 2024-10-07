@@ -1,0 +1,113 @@
+@import "~/styles/variables";
+.learning-part-detail-sidebar-wrapper {
+  width: 420px;
+  height: calc(100vh - 80px);
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding: 16px;
+  background-color: #f7f8fa;
+
+  .learning-part-detail-sidebar-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    border: 1px solid #dbdcdd;
+    background-color: $white-color;
+
+    .detail-header {
+      user-select: none;
+      width: 100%;
+      height: 73px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #dbdcdd;
+
+      .detail-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background-color: $primary-color;
+
+        .icon {
+          font-size: 18px;
+          color: $white-color;
+        }
+      }
+
+      .detail-title {
+        flex: 1;
+        font-size: 20px;
+        font-weight: 700;
+      }
+    }
+
+    .detail-content {
+      width: 100%;
+      max-height: calc(100% - 73px);
+      padding: 0 16px 16px 16px;
+      display: flex;
+      flex-direction: column;
+
+      .detail-content-header {
+        width: 100%;
+        height: 91px;
+        padding: 16px 10px;
+
+        .detail-content-title {
+          width: 100%;
+          font-size: 18px;
+          font-weight: 600;
+          text-align: center;
+        }
+      }
+
+      .detail-content-main {
+        width: 100%;
+        height: fit-content;
+        max-height: calc(100% - 91px);
+        margin-bottom: 15px;
+        overflow-y: auto;
+
+        .detail-content-lesson,
+        .detail-content-practice {
+          width: 100%;
+          height: fit-content;
+        }
+      }
+
+      .detail-content-footer {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .footer-copyright {
+          font-size: 13px;
+          padding-bottom: 4px;
+        }
+
+        .footer-rule {
+          font-size: 13px;
+
+          .rule-item {
+            padding: 0 8px;
+            text-decoration: underline;
+            color: #21242ca3;
+
+            &:hover {
+              color: $primary-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}

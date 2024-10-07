@@ -1,0 +1,12 @@
+@import "~/styles/variables";
+
+.lesson-content-def {
+  width: 100%;
+  height: fit-content;
+
+  .def-title {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+}

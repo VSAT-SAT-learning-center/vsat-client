@@ -1,0 +1,13 @@
+@import "~/styles/variables";
+
+.lesson-content-tips {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 32px;
+
+  .tips-title {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+}
