@@ -1,0 +1,18 @@
+@import "../../styles/variables";
+.news-wrapper {
+    width: 100%;
+    height: calc(100vh - 80px);;
+    margin-top: 80px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    .news-container {
+      width: 100%;
+      height: fit-content;
+      min-height: 100%;
+      .news-banner-wrapper {
+        margin-bottom: 90px;
+      }
+    }
+}
