@@ -1,0 +1,22 @@
+@import "~/styles/variables";
+
+.introduction-info {
+  width: fit-content;
+  height: fit-content;
+  padding: 0 20px;
+
+  .introduction-info-title {
+    font-size: 43px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+
+  .introduction-info-desc {
+    width: 300px;
+    font-size: 18px;
+    color: $text-color-gray;
+    font-style: inherit;
+    margin-bottom: 30px;
+  }
+}

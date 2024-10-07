@@ -1,5 +1,5 @@
-import KhanhImage from "../../assets/images/content/Khanh.jpg";
-import MDuyImage from "../../assets/images/content/MDuy.jpg";
+import KhanhImage from "~/assets/images/content/Khanh.jpg";
+import MDuyImage from "~/assets/images/content/MDuy.jpg";
 
 export const informationOurInstructor = [
     {

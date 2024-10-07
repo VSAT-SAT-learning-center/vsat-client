@@ -1,0 +1,71 @@
+@import "~/styles/variables";
+
+.home-wrapper {
+  width: 100%;
+  height: calc(100vh - 80px);;
+  margin-top: 80px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  .home-container {
+    width: 100%;
+    height: fit-content;
+    min-height: 100%;
+    .home-banner {
+      position: relative;
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 30px;
+    }
+    
+    .home-introduction {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 90px;
+
+      .introduction-wrapper {
+        width: 90%;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    .home-reason-choose-wrapper {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 150px 0;
+      background-color: rgba(81, 191, 179, 0.08);
+
+      .home-reason-choose-container {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .home-subscribe-wrapper {
+      width: 100%;
+      height: fit-content;
+      padding: 150px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.home-wrapper::-webkit-scrollbar {
+  display: none;
+}

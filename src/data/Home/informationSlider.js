@@ -1,6 +1,6 @@
-import ManagerIcon from "../../assets/images/icon/manager.svg";
-import NotepadIcon from "../../assets/images/icon/notepad.svg";
-import PuzzleIcon from "../../assets/images/icon/puzzle.svg";
+import ManagerIcon from "~/assets/images/icon/manager.svg";
+import NotepadIcon from "~/assets/images/icon/notepad.svg";
+import PuzzleIcon from "~/assets/images/icon/puzzle.svg";
 
 export const informationSlider = [
   {
