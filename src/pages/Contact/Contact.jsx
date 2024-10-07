@@ -1,13 +1,13 @@
-import classNames from "classnames/bind"
-import Subscribe from "../../components/Home/Subscribe";
+import classNames from "classnames/bind";
 import BannerContactImage from "../../components/Contact/BannerContact/BannerContactImage";
-import ContactInformationImage from "../../components/Contact/ContactInformation/ContactInformationImage";
-import ContactInformationContext from "../../components/Contact/ContactInformation/ContactInformationContext";
 import ContactInformationCard from "../../components/Contact/ContactInformation/ContactInformationCard";
+import ContactInformationContext from "../../components/Contact/ContactInformation/ContactInformationContext";
+import ContactInformationImage from "../../components/Contact/ContactInformation/ContactInformationImage";
 import Map from "../../components/Contact/Map";
+import Subscribe from "../../components/Home/Subscribe";
 import Footer from "../../layouts/Footer/Footer";
 import Header from "../../layouts/Header/Header";
-import styles from "./Contact.module.scss"
+import styles from "./Contact.module.scss";
 const cx = classNames.bind(styles)
 function Contact() {
   return (
