@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import DOMPurify from "dompurify";
+import RWRerender from "../RWRerender/RWRerender";
 import styles from "./LessonConc.module.scss";
 const cx = classNames.bind(styles);
 
@@ -14,10 +15,7 @@ function LessonConc() {
       <div className={cx("conc-title")}>
         How should we think about textual evidence questions?
       </div>
-      <div
-        className={cx("conc-content")}
-        dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-      ></div>
+      <RWRerender loadedContent={sanitizedContent} />
     </div>
   );
 }

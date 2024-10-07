@@ -5,6 +5,7 @@
   height: fit-content;
   min-height: 100%;
   background-color: $white-color;
+  margin-bottom: 50px;
 
   .lesson-main-title {
     width: 100%;
@@ -14,7 +15,7 @@
     justify-content: center;
 
     .main-title {
-      width: 688px;
+      width: 698px;
       padding-top: 24px;
       font-size: 32px;
       font-weight: 600;
@@ -34,12 +35,12 @@
     .content-guide {
       width: 680px;
       height: fit-content;
-      padding: 16px 48px;
+      padding: 16px 0;
       border-top: 1px solid #c0c0c0;
       border-bottom: 1px solid #c0c0c0;
 
       .guide-text {
-        font-size: 17px;
+        font-size: 16px;
         font-style: italic;
         text-align: center;
         color: $text-color;
@@ -53,5 +54,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .lesson-content-main {
+      width: 698px;
+      height: fit-content;
+    }
   }
 }

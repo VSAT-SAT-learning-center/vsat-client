@@ -3,13 +3,20 @@
 .lesson-content-conc {
   width: 100%;
   height: fit-content;
-  padding-top: 32px;
-  margin-bottom: 32px;
-  border-top: 1px solid #c0c0c0;
+  margin-top: 32px;
 
   .conc-title {
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 16px;
+  }
+  .conc-try-it {
+    margin-top: 32px;
+    border-bottom: 1px solid #c0c0c0;
+
+    .try-it-title {
+      font-size: 26px;
+      font-weight: 700;
+    }
   }
 }
