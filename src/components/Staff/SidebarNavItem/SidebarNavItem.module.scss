@@ -1,0 +1,129 @@
+@import "~/styles/variables";
+
+.sidebar-nav-item {
+  cursor: pointer;
+  width: 100%;
+  height: fit-content;
+
+  .nav-item-main {
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    border-radius: 10px;
+    transition: 0.2s linear;
+    .nav-item-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .nav-item-icon,
+      .nav-item-title,
+      .nav-icon-show-option {
+        color: #7685a2;
+        transition: background-color 0.2s linear;
+      }
+
+      .nav-item-icon {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+
+        .item-icon {
+          font-size: 17px;
+        }
+      }
+
+      .nav-item-title {
+        font-size: 16px;
+      }
+    }
+
+    .nav-icon-show-option {
+      font-size: 14px;
+    }
+
+    &:hover {
+      background-color: $hover-bg-item;
+
+      .nav-item-content .nav-item-icon,
+      .nav-item-content .nav-item-title,
+      .nav-icon-show-option {
+        color: $primary-color;
+      }
+    }
+  }
+  .nav-item-active {
+    background-color: $primary-color;
+    .nav-item-content {
+      .nav-item-icon {
+        color: $white-color;
+      }
+
+      .nav-item-title {
+        font-weight: 600;
+        color: $white-color;
+      }
+    }
+    .nav-icon-show-option {
+      color: $white-color;
+    }
+    &:hover {
+      background-color: $primary-color;
+
+      .nav-item-content .nav-item-icon,
+      .nav-item-content .nav-item-title,
+      .nav-icon-show-option {
+        color: $white-color;
+      }
+    }
+  }
+
+  .nav-item-subnav {
+    display: flex;
+    flex-direction: column;
+    margin-left: 14px;
+
+    .nav-item-subnav-item {
+      user-select: none;
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      color: #7685a2;
+      border-radius: 10px;
+      transition: background-color 0.2s linear;
+
+      .subnav-item-icon {
+        font-size: 12px;
+        margin-right: 12px;
+      }
+
+      .subnav-item-title {
+        font-size: 16px;
+      }
+
+      &:hover {
+        background-color: $hover-bg-item;
+        color: $primary-color;
+      }
+    }
+
+    .subnav-item-active {
+      color: $primary-color;
+      .subnav-item-icon {
+        font-size: 14px;
+      }
+      .subnav-item-title {
+        font-weight: 600;
+      }
+      &:hover {
+        background-color: $bg-primary-color;
+        color: $primary-color;
+      }
+    }
+  }
+}

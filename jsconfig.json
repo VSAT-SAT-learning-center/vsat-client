@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",    // Set base directory to the project root
+    "baseUrl": "./",
     "paths": {
-      "~/*": ["src/*"]  // Map '~' to the 'src' directory
+      "~/*": ["src/*"]
     }
   },
-  "include": ["src"]    // Include your 'src' directory in the project scope
+  "include": ["src"]
 }
