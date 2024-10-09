@@ -6,7 +6,6 @@ const cx = classNames.bind(styles);
 
 function CollegeList() {
   const displayedColleges = scoreSAT.slice(0, 10);
-
   return (
     <div className={cx("college-list-container")}>
       <div className={cx("college-list-title")}>Top 10 schools with the highest SAT scores in America</div>
