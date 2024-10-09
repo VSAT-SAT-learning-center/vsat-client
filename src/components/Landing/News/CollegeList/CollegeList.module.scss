@@ -1,0 +1,35 @@
+.college-list-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+    margin: 20px;
+    .college-list-title {
+        font-size: 37px;
+        font-weight: 800;
+        margin-bottom: 30px;
+      }
+
+    .college-table {
+        width: 70%; 
+        border-collapse: collapse;
+        margin-bottom: 20px;
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        .college-table-school-name{
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    }
+}
