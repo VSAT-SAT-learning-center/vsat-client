@@ -2,7 +2,7 @@ import SatNews1 from "~/assets/images/content/SatNews1.jpg";
 import SatNews2 from "~/assets/images/content/SatNews2.png";
 import SatNews3 from "~/assets/images/content/SatNews3.png";
 import SatNews4 from "~/assets/images/content/SatNews4.png";
-import SatNews5 from "~/assets/images/content/SatNews5.jpg";
+import SatNews5 from "~/assets/images/content/SatNews5.png";
 import SatNews6 from "~/assets/images/content/SatNews6.png";
 import SatNews7 from "~/assets/images/content/SatNews7.png";
 import SatNews8 from "~/assets/images/content/SatNews8.png";
