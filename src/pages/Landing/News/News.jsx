@@ -16,7 +16,6 @@ function News() {
         <div className={cx("news-banner-wrapper")}>
           <BannerNewsImage />
         </div>
-
         <div className={cx("blog-list-wrapper")}>
           <BlogList />
         </div>
