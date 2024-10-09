@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames/bind";
 import styles from "./BlogList.module.scss";
 import { informationNews } from "~/data/News/BlogAndNews/informationNews"; 

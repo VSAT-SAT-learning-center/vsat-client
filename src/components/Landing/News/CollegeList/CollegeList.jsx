@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames/bind";
 import styles from "./CollegeList.module.scss";
 import { scoreSAT } from "~/data/News/ScoreSAT/ScoreSAT";
