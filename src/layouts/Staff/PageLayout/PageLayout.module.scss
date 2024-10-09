@@ -16,12 +16,15 @@
       width: 100%;
       height: calc(100vh - 80px);
       margin-top: 80px;
-      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+      background-color: $bg-secondary-color;
       overflow-y: auto;
       -ms-overflow-style: none;
       scroll-snap-type: y mandatory;
       scroll-behavior: smooth;
-      background-color: $bg-secondary-color;
     }
   }
 }

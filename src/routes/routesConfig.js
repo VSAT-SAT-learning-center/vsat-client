@@ -12,8 +12,9 @@ import ExamStructure from "~/pages/Staff/Exam/ExamStructure";
 import Feedback from "~/pages/Staff/Feedback";
 import LearningMaterial from "~/pages/Staff/LearningMaterial";
 import LearningMaterialAss from "~/pages/Staff/LearningMaterial/LearningMaterialAss";
-import LearningMaterialLesson from "~/pages/Staff/LearningMaterial/LearningMaterialLesson";
-import LearningMaterialUnits from "~/pages/Staff/LearningMaterial/LearningMaterialUnits";
+import LearningMaterialCreateDetails from "~/pages/Staff/LearningMaterial/LearningMaterialCreateDetails";
+import LearningMaterialCreateLesson from "~/pages/Staff/LearningMaterial/LearningMaterialCreateLesson";
+import LearningMaterialCreateTopic from "~/pages/Staff/LearningMaterial/LearningMaterialCreateTopic";
 import Practice from "~/pages/Staff/Practice";
 import PracticeCreate from "~/pages/Staff/Practice/PracticeCreate";
 import QuestionExam from "~/pages/Staff/QuestionExam";
@@ -46,11 +47,12 @@ const routesConfig = [
   { path: '/staff', component: Dashboard, protected: true },
   // Staff learning material routes
   { path: '/staff/learning-material/overview', component: LearningMaterial, protected: true },
-  { path: '/staff/learning-material/units', component: LearningMaterialUnits, protected: true },
-  { path: '/staff/learning-material/lessons', component: LearningMaterialLesson, protected: true },
+  { path: '/staff/learning-material/create/details', component: LearningMaterialCreateDetails, protected: true },
+  { path: '/staff/learning-material/create/topics', component: LearningMaterialCreateTopic, protected: true },
+  { path: '/staff/learning-material/create/lessons', component: LearningMaterialCreateLesson, protected: true },
   { path: '/staff/learning-material/assignments', component: LearningMaterialAss, protected: true },
   // Staff question bank routes
-  { path: '/staff/question-bank/overview', component: QuestionExam, protected: true },
+  { path: '/staff/question-bank/bank', component: QuestionExam, protected: true },
   { path: '/staff/question-bank/create', component: QuestionExamCreate, protected: true },
   // Staff quizz question bank routes
   { path: '/staff/question-quizz/bank', component: QuestionQuizz, protected: true },

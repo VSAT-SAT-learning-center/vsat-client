@@ -71,9 +71,7 @@ function SidebarNavItem({ navItem }) {
           </div>
 
           {isShowSubnav && navItem.subNavs && navItem.subNavs.length > 0 && (
-            <div
-              className={cx("nav-item-subnav")}
-            >
+            <div className={cx("nav-item-subnav")}>
               {navItem.subNavs.map((subNav) => (
                 <Link
                   to={subNav.path}
