@@ -87,6 +87,7 @@
     display: flex;
     flex-direction: column;
     margin-left: 14px;
+    margin-top: 8px;
 
     .nav-item-subnav-item {
       user-select: none;
@@ -107,7 +108,6 @@
       }
 
       &:hover {
-        background-color: $hover-bg-item;
         color: $primary-color;
       }
     }
@@ -121,7 +121,6 @@
         font-weight: 600;
       }
       &:hover {
-        background-color: $bg-primary-color;
         color: $primary-color;
       }
     }

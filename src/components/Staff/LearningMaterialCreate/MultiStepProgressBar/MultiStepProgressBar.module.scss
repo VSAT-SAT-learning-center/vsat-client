@@ -1,0 +1,61 @@
+@import "~/styles/variables";
+
+.multi-step-progress-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 10px;
+  margin-bottom: 24px;
+
+  .step-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 14px 40px;
+    clip-path: polygon(
+      0 0,
+      calc(100% - 15px) 0,
+      100% 50%,
+      calc(100% - 15px) 100%,
+      0 100%,
+      10px 50%
+    );
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    transition: background-color 0.3s ease;
+    background-color: $bg-primary-color;
+
+    .step-icon {
+      margin-right: 10px;
+      font-size: 14px;
+    }
+
+    .step-item-label {
+      font-weight: 600;
+    }
+
+  }
+
+  .active {
+    .step-icon {
+      color: $primary-color;
+    }
+
+    .step-item-label {
+      color: $primary-color;
+    }
+  }
+
+  .completed {
+    background-color: $primary-color;
+    .step-icon {
+      color: $white-color;
+    }
+
+    .step-item-label {
+      color: $white-color;
+    }
+  }
+}

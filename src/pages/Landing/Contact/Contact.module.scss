@@ -6,7 +6,6 @@
   -ms-overflow-style: none;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
-  
 
   .contact-container {
     width: 100%;
@@ -18,14 +17,13 @@
     }
 
     .contact-information-wrapper {
-      width: 90%; 
-      max-width: 1350px; 
-      margin: 0 auto 90px auto; 
+      width: 90%;
+      max-width: 1350px;
+      margin: 0 auto 90px auto;
       display: flex;
       align-items: center;
-      justify-content: space-between; 
-      padding: 50px 0; 
-      
+      justify-content: space-between;
+      padding: 50px 0;
 
       .contact-information-container {
         display: flex;

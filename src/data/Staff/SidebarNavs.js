@@ -12,7 +12,6 @@ export const sidebarNavs = [
     icon: "fa-light fa-book-open",
     iconActive: "fa-regular fa-book-open",
     title: "Learning Material",
-    path: "/staff/learning-material",
     show: true,
     subNavs: [
       {
@@ -22,16 +21,36 @@ export const sidebarNavs = [
       },
       {
         id: 2,
-        title: "Units",
-        path: "/staff/learning-material/units",
+        title: "Create Unit",
+        path: "/staff/learning-material/create/details",
       },
+      // {
+      //   id: 3,
+      //   title: "Create Topic",
+      //   path: "/staff/learning-material/create/topics",
+      //   show: false,
+      // },
+      // {
+      //   id: 4,
+      //   title: "Create Lesson",
+      //   path: "/staff/learning-material/create/lessons",
+      //   show: false,
+
+      // },
+      // {
+      //   id: 5,
+      //   title: "Create Practice",
+      //   path: "/staff/learning-material/create/practice",
+      //   show: false,
+      // },
+      // {
+      //   id: 6,
+      //   title: "Publish Unit",
+      //   path: "/staff/learning-material/create/publish",
+      //   show: false,
+      // },
       {
-        id: 3,
-        title: "Lessons",
-        path: "/staff/learning-material/lessons",
-      },
-      {
-        id: 4,
+        id: 7,
         title: "Assignments",
         path: "/staff/learning-material/assignments",
       }
