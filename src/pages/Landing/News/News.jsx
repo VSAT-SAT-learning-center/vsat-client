@@ -7,6 +7,7 @@ import styles from "./News.module.scss";
 import BlogList from "~/components/Landing/News/BlogList";
 import CollegeList from "~/components/Landing/News/CollegeList";
 const cx = classNames.bind(styles);
+
 function News() {
   return (
     <div className={cx("news-wrapper")}>
