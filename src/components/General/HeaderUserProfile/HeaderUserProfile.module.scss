@@ -1,0 +1,48 @@
+@import "~/styles/variables";
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .profile-image {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: transparent;
+    .image {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    &:hover {
+      background-color: $hover-bg-icon;
+    }
+  }
+
+  .dropdown {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: transparent;
+
+    .icon {
+      font-size: 12px;
+      color: $icon-color;
+    }
+
+    &:hover {
+      background-color: $hover-bg-icon;
+    }
+  }
+}

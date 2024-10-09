@@ -11,7 +11,7 @@
   padding: 15px 30px;
   background-color: $bg-primary-color;
   // box-shadow: rgba(81, 191, 179, 0.2) 0px 2px 8px 0px;
-  border-bottom: 1px solid #dbdcdd;
+  border-bottom: 1px solid $border-color;
 
 
   .header-container {
@@ -24,7 +24,7 @@
     .header-logo {
       height: 100%;
       .logo {
-        width: 150px;
+        width: 160px;
         height: 100%;
         object-fit: cover;
       }
