@@ -116,7 +116,6 @@ function LearningMaterialCreateDetails() {
                   <textarea
                     className={cx("about-input")}
                     placeholder="About information of unit"
-                    autoFocus={true}
                   ></textarea>
                 </div>
               </div>
@@ -124,17 +123,20 @@ function LearningMaterialCreateDetails() {
           </div>
           <div className={cx("create-details-bottom")}>
             <button className={cx("cancel-btn")}>Cancel</button>
-            <button
+            {/* <button
               className={cx("continue-btn", "disabled-btn")}
               disabled={true}
               onClick={handleNext}
             >
               Continue
+            </button> */}
+            <button className={cx("continue-btn")} onClick={handleNext}>
+              Continue
             </button>
           </div>
         </div>
       </div>
-      <LearningMaterialCreateFooter/>
+      <LearningMaterialCreateFooter />
     </PageLayout>
   );
 }

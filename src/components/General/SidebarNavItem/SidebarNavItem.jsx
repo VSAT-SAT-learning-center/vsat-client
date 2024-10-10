@@ -19,6 +19,12 @@ function SidebarNavItem({ navItem }) {
       return true;
     }
     if (
+      location.pathname.startsWith("/staff/learning-material/create") &&
+      navItem.path === "/staff/learning-material"
+    ) {
+      return true;
+    }
+    if (
       navItem.subNavs &&
       navItem.subNavs.some((subNav) => isActiveSubNav(subNav.path))
     ) {
@@ -69,7 +75,6 @@ function SidebarNavItem({ navItem }) {
               )}
             ></i>
           </div>
-
           {isShowSubnav && navItem.subNavs && navItem.subNavs.length > 0 && (
             <div className={cx("nav-item-subnav")}>
               {navItem.subNavs.map((subNav) => (
