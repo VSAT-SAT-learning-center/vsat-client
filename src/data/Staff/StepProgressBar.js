@@ -1,5 +1,5 @@
 export const steps = [
-  { label: "Unit Detail", path: "/staff/learning-material/create/details" },
+  { label: "Unit Detail", path: "/staff/learning-material/create" },
   { label: "Unit Topic", path: "/staff/learning-material/create/topics" },
   { label: "Unit Lesson", path: "/staff/learning-material/create/lesson" },
   { label: "Lesson Practice", path: "/staff/learning-material/create/practice" },
