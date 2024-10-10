@@ -1,0 +1,145 @@
+@import url(https://fonts.googleapis.com/css?family=opensans:500);
+@import "~/styles/variables";
+
+.not-found-container {
+  height: 100vh;
+  background: $fourth-color;
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+  padding: 100px 0;
+  position: relative;
+  
+  #clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    
+    .cloud {
+      width: 350px;
+      height: 120px;
+      background: #fff;
+      border-radius: 100px;
+      position: absolute;
+      opacity: 0.8;
+      animation: moveclouds 20s linear infinite;
+      
+      &:after, &:before {
+        content: '';
+        position: absolute;
+        background: #fff;
+      }
+
+      &:after {
+        width: 100px;
+        height: 100px;
+        top: -50px;
+        left: 50px;
+        border-radius: 100px;
+      }
+
+      &:before {
+        width: 180px;
+        height: 180px;
+        top: -90px;
+        right: 50px;
+        border-radius: 200px;
+      }
+    }
+
+    .x1 {
+      top: -50px;
+      left: 100px;
+      transform: scale(0.3);
+      animation-duration: 15s;
+      margin-top: 200px;
+    }
+
+    .x1_5 {
+      top: -80px;
+      left: 250px;
+      transform: scale(0.4);
+      animation-duration: 17s;
+      margin-top: 300px;
+    }
+
+    .x2 {
+      top: 30px;
+      left: 250px;
+      transform: scale(0.6);
+      opacity: 0.6;
+      animation-duration: 22s;
+      margin-top: 50px;
+    }
+
+    .x3 {
+      bottom: -70px;
+      left: 250px;
+      transform: scale(0.6);
+      opacity: 0.8;
+      animation-duration: 23s;
+    }
+
+    .x4 {
+      left: 470px;
+      bottom: 20px;
+      transform: scale(0.75);
+      opacity: 0.75;
+      animation-duration: 40s;
+    }
+
+    .x5 {
+      left: 200px;
+      top: 300px;
+      transform: scale(0.5);
+      opacity: 0.8;
+      animation-duration: 35s;
+      margin-top: 100px;
+    }
+  }
+
+  @keyframes moveclouds {
+    0% {
+      transform: translateX(1000px);
+    }
+    100% {
+      transform: translateX(-1000px);
+    }
+  }
+
+  .oops-text {
+    font-size: 4em;
+    letter-spacing: 15px;
+  }
+
+  .number-404 {
+    font-size: 220px;
+    letter-spacing: 15px;
+  }
+
+  .page-not-found {
+    font-size: 2em;
+  }
+
+  .description {
+    font-size: 1.2em;
+  }
+
+  .btn {
+    background-color: #fff;
+    color: #33cc99;
+    padding: 10px 20px;
+    font-size: 25px;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+    border-radius: 5px;
+  }
+}
