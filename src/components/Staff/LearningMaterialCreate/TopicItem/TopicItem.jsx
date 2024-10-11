@@ -7,10 +7,16 @@ import LessonItemPreview from "../LessonItemPreview";
 import styles from "./TopicItem.module.scss";
 const cx = classNames.bind(styles);
 
-function TopicItem({ topic, dragHandleProps }) {
+function TopicItem({
+  topic,
+  setTopics,
+  dragHandleProps,
+  setIsShowLessonTypeModal,
+}) {
   const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
   const handleClickCreateNewLesson = () => {
     setIsShowCreateLesson(true);
+    // setIsShowLessonTypeModal(true);
   };
 
   return (
@@ -68,6 +74,9 @@ function TopicItem({ topic, dragHandleProps }) {
             {isShowCreateLesson && (
               <div className={cx("lesson-content-preview")}>
                 <LessonItemPreview
+                  type="update"
+                  topic={topic}
+                  setTopics={setTopics}
                   setIsShowCreateLesson={setIsShowCreateLesson}
                 />
               </div>
@@ -91,8 +100,11 @@ function TopicItem({ topic, dragHandleProps }) {
 }
 
 TopicItem.propTypes = {
-  topic: PropTypes.object.isRequired,
-  dragHandleProps: PropTypes.object.isRequired,
+  topic: PropTypes.object,
+  dragHandleProps: PropTypes.object,
+  setLessons: PropTypes.func,
+  setTopics: PropTypes.func,
+  setIsShowLessonTypeModal: PropTypes.func,
 };
 
 export default TopicItem;
