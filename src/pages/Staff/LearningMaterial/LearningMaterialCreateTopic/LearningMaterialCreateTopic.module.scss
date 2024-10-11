@@ -24,6 +24,44 @@
     .create-topics-content {
       width: 100%;
       padding: 20px;
+
+      .create-topics-list {
+        width: 100%;
+        height: fit-content;
+      }
+
+      .create-topic-action {
+        cursor: pointer;
+        user-select: none;
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        column-gap: 12px;
+        padding: 24px;
+        border-radius: 5px;
+        background-image: url("~/assets/images/content/border.svg");
+        background-size: cover;
+        background-position: center;
+        transition: 0.2s linear;
+
+        &:hover {
+          background-color: #f8f8f8;
+        }
+
+        .create-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .icon {
+            font-size: 20px;
+          }
+        }
+        .create-text {
+          font-size: 20px;
+          font-weight: 600;
+        }
+      }
     }
 
     .create-topics-bottom {

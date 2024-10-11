@@ -1,0 +1,68 @@
+@import "~/styles/variables";
+
+.lesson-item {
+  width: 100%;
+  height: fit-content;
+  padding: 12px 20px 12px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $border-color;
+  background-color: $bg-primary-color;
+
+  .lesson-drag-handle {
+    cursor: grab;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+
+    .handle-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .icon {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .lesson-information {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .lesson-information-content {
+      .lesson-title {
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 600;
+        text-decoration: underline;
+        margin-bottom: 8px;
+      }
+      .lesson-type {
+        font-size: 16px;
+        font-style: italic;
+      }
+    }
+
+    .lesson-information-config {
+      .lesson-option {
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: 0.2s linear;
+
+        .option-icon {
+          font-size: 20px;
+        }
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+    }
+  }
+}
