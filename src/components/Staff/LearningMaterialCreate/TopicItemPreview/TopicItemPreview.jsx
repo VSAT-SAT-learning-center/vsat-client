@@ -6,7 +6,12 @@ import LessonItem from "../LessonItem";
 import LessonItemPreview from "../LessonItemPreview";
 import styles from "./TopicItemPreview.module.scss";
 const cx = classNames.bind(styles);
-function TopicItemPreview({ id, setTopics, onCancel, setIsShowLessonTypeModal }) {
+function TopicItemPreview({
+  id,
+  setTopics,
+  onCancel,
+  // setIsShowLessonTypeModal,
+}) {
   const [topicTitle, setTopicTitle] = useState("New topic");
   const [lessons, setLessons] = useState([]);
   const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);

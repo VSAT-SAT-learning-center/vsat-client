@@ -11,7 +11,7 @@ function TopicItem({
   topic,
   setTopics,
   dragHandleProps,
-  setIsShowLessonTypeModal,
+  // setIsShowLessonTypeModal,
 }) {
   const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
   const handleClickCreateNewLesson = () => {
