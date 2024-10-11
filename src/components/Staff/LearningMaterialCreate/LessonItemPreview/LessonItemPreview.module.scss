@@ -1,0 +1,90 @@
+@import "~/styles/variables";
+
+.lesson-item {
+  width: 100%;
+  height: fit-content;
+  padding: 12px 20px 12px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $border-color;
+
+  .lesson-drag-handle {
+    cursor: grab;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+
+    .handle-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .icon {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .lesson-information {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .lesson-information-content {
+      .lesson-input {
+        width: 500px;
+        padding: 8px 16px;
+        border-radius: 5px;
+        border: 1px solid $border-color;
+        margin-bottom: 8px;
+
+        .title-input {
+          width: 100%;
+          border: none;
+          outline: none;
+          background-color: transparent;
+        }
+      }
+
+      .lesson-type {
+        font-size: 16px;
+        font-style: italic;
+      }
+    }
+
+    .lesson-information-config {
+      display: flex;
+      align-items: center;
+      column-gap: 10px;
+
+      .cancel-action {
+        cursor: pointer;
+        user-select: none;
+        padding: 4px 16px;
+        border-radius: 25px;
+        color: $text-color;
+        border: 1px solid $text-color;
+        background-color: $bg-primary-color;
+        transition: 0.2s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .save-action {
+        cursor: pointer;
+        user-select: none;
+        padding: 4px 16px;
+        border-radius: 25px;
+        color: $white-color;
+        border: 1px solid $primary-color;
+        background-color: $primary-color;
+        transition: 0.2s linear;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}

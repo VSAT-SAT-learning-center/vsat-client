@@ -1,0 +1,126 @@
+@import "~/styles/variables";
+
+.topic-item-container {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 30px;
+  display: flex;
+  border-radius: 5px;
+  border: 1px solid $border-color;
+
+  .topic-drag-handle {
+    cursor: grab;
+    width: 33px;
+    display: flex;
+    justify-content: center;
+    padding: 0 5px;
+    border-radius: 5px 0 0 5px;
+    border-right: 1px solid $border-color;
+    background-color: #f8f8f8;
+
+    .handle-icon {
+      height: 73px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .icon {
+        font-size: 22px;
+      }
+    }
+  }
+
+  .topic-content {
+    flex: 1;
+    height: fit-content;
+
+    .topic-title-content {
+      width: 100%;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .topic-title-input {
+        width: 500px;
+        padding: 8px 16px;
+        border-radius: 5px;
+        border: 1px solid $border-color;
+
+        .title-input {
+          width: 100%;
+          border: none;
+          outline: none;
+          background-color: transparent;
+        }
+      }
+
+      .topic-title-config {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+
+        .cancel-action {
+          cursor: pointer;
+          user-select: none;
+          padding: 4px 16px;
+          border-radius: 25px;
+          color: $text-color;
+          border: 1px solid $text-color;
+          background-color: $bg-primary-color;
+          transition: 0.2s linear;
+
+          &:hover {
+            background-color: #f4f4f4;
+          }
+        }
+
+        .save-action {
+          cursor: pointer;
+          user-select: none;
+          padding: 4px 16px;
+          border-radius: 25px;
+          color: $white-color;
+          border: 1px solid $primary-color;
+          background-color: $primary-color;
+          transition: 0.2s linear;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+
+    .topic-main-content {
+      width: 100%;
+      height: fit-content;
+
+      .lesson-content-preview {
+        
+      }
+
+      .new-lesson-container {
+        user-select: none;
+        width: 100%;
+        padding: 20px;
+
+        .new-lesson-action {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+
+          .action-icon {
+            font-size: 20px;
+            margin-right: 10px;
+          }
+
+          .action-text {
+            font-size: 18px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}
