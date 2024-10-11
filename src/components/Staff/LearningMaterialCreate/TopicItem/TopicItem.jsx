@@ -11,12 +11,10 @@ function TopicItem({
   topic,
   setTopics,
   dragHandleProps,
-  // setIsShowLessonTypeModal,
 }) {
   const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
   const handleClickCreateNewLesson = () => {
     setIsShowCreateLesson(true);
-    // setIsShowLessonTypeModal(true);
   };
 
   return (
@@ -104,7 +102,6 @@ TopicItem.propTypes = {
   dragHandleProps: PropTypes.object,
   setLessons: PropTypes.func,
   setTopics: PropTypes.func,
-  setIsShowLessonTypeModal: PropTypes.func,
 };
 
 export default TopicItem;

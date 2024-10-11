@@ -10,14 +10,12 @@ function TopicItemPreview({
   id,
   setTopics,
   onCancel,
-  // setIsShowLessonTypeModal,
 }) {
   const [topicTitle, setTopicTitle] = useState("New topic");
   const [lessons, setLessons] = useState([]);
   const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
 
   const handleClickCreateNewLesson = () => {
-    // setIsShowLessonTypeModal(true)
     setIsShowCreateLesson(true);
   };
 
@@ -98,7 +96,6 @@ TopicItemPreview.propTypes = {
   setTopics: PropTypes.func,
   id: PropTypes.string,
   onCancel: PropTypes.func,
-  setIsShowLessonTypeModal: PropTypes.func,
 };
 
 export default TopicItemPreview;
