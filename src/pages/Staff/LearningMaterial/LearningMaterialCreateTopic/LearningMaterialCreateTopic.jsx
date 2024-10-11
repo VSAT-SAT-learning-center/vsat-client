@@ -2,6 +2,7 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import classNames from "classnames/bind";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import MultiStepProgressBar from "~/components/Staff/LearningMaterialCreate/MultiStepProgressBar";
@@ -10,54 +11,14 @@ import TopicItemPreview from "~/components/Staff/LearningMaterialCreate/TopicIte
 import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import styles from "./LearningMaterialCreateTopic.module.scss";
-
 const cx = classNames.bind(styles);
 
 function LearningMaterialCreateTopic() {
   const navigate = useNavigate();
   const currentStep = 1;
 
-  const [topics, setTopics] = useState([
-    {
-      id: "topic-1",
-      title: "Introduction",
-      lessons: [
-        {
-          id: "lesson-1",
-          title: "VSAT applications in big cities",
-          type: "1 Text & Images",
-        },
-        { id: "lesson-2", title: "VSAT Math", type: "Empty" },
-      ],
-    },
-    {
-      id: "topic-2",
-      title: "VSAT Installation",
-      lessons: [
-        {
-          id: "lesson-3",
-          title: "Site survey for VSAT installation in big cities",
-          type: "1 Text & Images",
-        },
-        {
-          id: "lesson-4",
-          title: "Monitoring VSAT performance in densely populated regions",
-          type: "1 Text & Images",
-        },
-        {
-          id: "lesson-5",
-          title: "Equipment required for VSAT installation in big cities",
-          type: "1 Text & Images",
-        },
-        {
-          id: "lesson-6",
-          title: "VSAT installation process in urban areas",
-          type: "1 Text & Images",
-        },
-      ],
-    },
-  ]);
-  const [isShowCreateTopicMain, setIsShowCreateTopicMain] = useState(false);
+  const [topics, setTopics] = useState([]);
+  const [createTopicPreviews, setCreateTopicPreviews] = useState([]);
 
   const onDragEnd = (result) => {
     const { source, destination, type } = result;
@@ -101,90 +62,104 @@ function LearningMaterialCreateTopic() {
   };
 
   const handleClickCreateNewTopic = () => {
-    setIsShowCreateTopicMain(true);
+    setCreateTopicPreviews((prevPreviews) => [
+      ...prevPreviews,
+      { id: uuidv4() },
+    ]);
+  };
+
+  const handleRemovePreview = (id) => {
+    setCreateTopicPreviews((prevPreviews) =>
+      prevPreviews.filter((preview) => preview.id !== id)
+    );
   };
 
   const handlePrevious = () => {
     navigate(steps[currentStep - 1].path);
   };
   const handleNext = () => {
-    navigate(steps[currentStep + 1].path);
+    console.log(topics);
+    // navigate(steps[currentStep + 1].path);
   };
 
   return (
-    <PageLayout>
-      <div className={cx("learning-material-create-topics-container")}>
-        <LearningMaterialCreateHeader title="Unit Topic" />
-        <MultiStepProgressBar steps={steps} currentStep={currentStep} />
-        <div className={cx("create-topics-container")}>
-          <div className={cx("create-topics-top")}>
-            <div className={cx("create-topics-title")}>Unit Topics</div>
-          </div>
-          <div className={cx("create-topics-content")}>
-            <DragDropContext onDragEnd={onDragEnd}>
-              <Droppable droppableId="all-topics" type="topic">
-                {(provided) => (
-                  <div
-                    className={cx("create-topics-list")}
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                  >
-                    {topics.map((topic, index) => (
-                      <Draggable
-                        key={topic.id}
-                        draggableId={topic.id}
-                        index={index}
-                      >
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                          >
-                            <TopicItem
-                              key={topic.id}
-                              topic={topic}
-                              dragHandleProps={provided.dragHandleProps}
-                            />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+    <>
+      <PageLayout>
+        <div className={cx("learning-material-create-topics-container")}>
+          <LearningMaterialCreateHeader title="Unit Topic" />
+          <MultiStepProgressBar steps={steps} currentStep={currentStep} />
+          <div className={cx("create-topics-container")}>
+            <div className={cx("create-topics-top")}>
+              <div className={cx("create-topics-title")}>Unit Topics</div>
+            </div>
+            <div className={cx("create-topics-content")}>
+              <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="all-topics" type="topic">
+                  {(provided) => (
+                    <div
+                      className={cx("create-topics-list")}
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                    >
+                      {topics.map((topic, index) => (
+                        <Draggable
+                          key={topic.id}
+                          draggableId={topic.id}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                            >
+                              <TopicItem
+                                key={topic.id}
+                                topic={topic}
+                                setTopics={setTopics}
+                                dragHandleProps={provided.dragHandleProps}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
 
-            {isShowCreateTopicMain && (
-              <div className={cx("create-topic-preview")}>
-                <TopicItemPreview
-                  setTopics={setTopics}
-                  setIsShowCreateTopicMain={setIsShowCreateTopicMain}
-                />
+              {createTopicPreviews.map((preview) => (
+                <div key={preview.id} className={cx("create-topic-preview")}>
+                  <TopicItemPreview
+                    id={preview.id}
+                    setTopics={setTopics}
+                    onCancel={handleRemovePreview}
+                  />
+                </div>
+              ))}
+              <div
+                className={cx("create-topic-action")}
+                onClick={handleClickCreateNewTopic}
+              >
+                <div className={cx("create-icon")}>
+                  <i className={cx("fa-regular fa-circle-plus", "icon")}></i>
+                </div>
+                <div className={cx("create-text")}>New topic</div>
               </div>
-            )}
-            <div
-              className={cx("create-topic-action")}
-              onClick={handleClickCreateNewTopic}
-            >
-              <div className={cx("create-icon")}>
-                <i className={cx("fa-regular fa-circle-plus", "icon")}></i>
-              </div>
-              <div className={cx("create-text")}>New topic</div>
+            </div>
+            <div className={cx("create-topics-bottom")}>
+              <button className={cx("back-btn")} onClick={handlePrevious}>
+                Back
+              </button>
+              <button className={cx("continue-btn")} onClick={handleNext}>
+                Continue
+              </button>
             </div>
           </div>
-          <div className={cx("create-topics-bottom")}>
-            <button className={cx("back-btn")} onClick={handlePrevious}>
-              Back
-            </button>
-            <button className={cx("continue-btn")} onClick={handleNext}>
-              Continue
-            </button>
-          </div>
         </div>
-      </div>
-      <LearningMaterialCreateFooter />
-    </PageLayout>
+        <LearningMaterialCreateFooter />
+      </PageLayout>
+    </>
   );
 }
 

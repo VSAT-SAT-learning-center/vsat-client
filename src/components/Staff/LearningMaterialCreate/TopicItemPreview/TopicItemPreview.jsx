@@ -1,28 +1,36 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import LessonItem from "../LessonItem";
 import LessonItemPreview from "../LessonItemPreview";
 import styles from "./TopicItemPreview.module.scss";
-import { v4 as uuidv4 } from "uuid";
 const cx = classNames.bind(styles);
-function TopicItemPreview({ setTopics, setIsShowCreateTopicMain }) {
-  const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
+function TopicItemPreview({
+  id,
+  setTopics,
+  onCancel,
+}) {
+  const [topicTitle, setTopicTitle] = useState("New topic");
   const [lessons, setLessons] = useState([]);
+  const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
 
   const handleClickCreateNewLesson = () => {
     setIsShowCreateLesson(true);
   };
 
+  const handleChangeTopicTitle = (e) => {
+    setTopicTitle(e.target.value);
+  };
+
   const handleCreateNewTopic = () => {
     const newTopic = {
       id: uuidv4(),
-      title: "Command of Evidence: Textual",
+      title: topicTitle,
       lessons: lessons,
     };
-
-    console.log(newTopic);
     setTopics((prevTopics) => [...prevTopics, newTopic]);
-    setIsShowCreateTopicMain(false);
+    onCancel(id);
   };
 
   return (
@@ -42,13 +50,11 @@ function TopicItemPreview({ setTopics, setIsShowCreateTopicMain }) {
               placeholder="New topic"
               autoFocus={true}
               className={cx("title-input")}
+              onChange={handleChangeTopicTitle}
             />
           </div>
           <div className={cx("topic-title-config")}>
-            <div
-              className={cx("cancel-action")}
-              onClick={() => setIsShowCreateTopicMain(false)}
-            >
+            <div className={cx("cancel-action")} onClick={() => onCancel(id)}>
               <div className={cx("action-text")}>Cancel</div>
             </div>
             <div className={cx("save-action")} onClick={handleCreateNewTopic}>
@@ -57,9 +63,15 @@ function TopicItemPreview({ setTopics, setIsShowCreateTopicMain }) {
           </div>
         </div>
         <div className={cx("topic-main-content")}>
+          <div className={cx("lesson-create-content")}>
+            {lessons.map((lesson) => (
+              <LessonItem key={lesson.id} lesson={lesson} />
+            ))}
+          </div>
           {isShowCreateLesson && (
             <div className={cx("lesson-content-preview")}>
               <LessonItemPreview
+                type="create"
                 setLessons={setLessons}
                 setIsShowCreateLesson={setIsShowCreateLesson}
               />
@@ -81,8 +93,9 @@ function TopicItemPreview({ setTopics, setIsShowCreateTopicMain }) {
 }
 
 TopicItemPreview.propTypes = {
-  setTopics: PropTypes.func.isRequired,
-  setIsShowCreateTopicMain: PropTypes.func.isRequired,
+  setTopics: PropTypes.func,
+  id: PropTypes.string,
+  onCancel: PropTypes.func,
 };
 
 export default TopicItemPreview;

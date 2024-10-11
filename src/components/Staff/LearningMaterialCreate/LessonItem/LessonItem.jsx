@@ -31,8 +31,8 @@ function LessonItem({ lesson, dragHandleProps }) {
 }
 
 LessonItem.propTypes = {
-  lesson: PropTypes.object.isRequired,
-  dragHandleProps: PropTypes.object.isRequired,
+  lesson: PropTypes.object,
+  dragHandleProps: PropTypes.object,
 };
 
 export default LessonItem;
