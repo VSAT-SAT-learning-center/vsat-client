@@ -1,19 +1,38 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./LessonItemPreview.module.scss";
 const cx = classNames.bind(styles);
 
-function LessonItemPreview({ setLessons, setIsShowCreateLesson }) {
+function LessonItemPreview({
+  type,
+  topic,
+  setTopics,
+  setLessons,
+  setIsShowCreateLesson,
+}) {
+  const [lessonTitle, setLessonTitle] = useState("New lesson");
+
+  const handleChangeLessonTitle = (e) => {
+    setLessonTitle(e.target.value);
+  };
   const handleCreateNewLesson = () => {
     const newLesson = {
       id: uuidv4(),
-      title: "VSAT applications in big cities boizz",
-      type: "1 Text & Images",
+      title: lessonTitle,
+      type: "Empty",
     };
-    console.log(newLesson);
+    if (type === "update") {
+      setTopics((prevTopics) =>
+        prevTopics.map((t) =>
+          t.id === topic.id ? { ...t, lessons: [...t.lessons, newLesson] } : t
+        )
+      );
+    } else if (type === "create") {
+      setLessons((prevLessons) => [...prevLessons, newLesson]);
+    }
 
-    setLessons((prevLessons) => [...prevLessons, newLesson]);
     setIsShowCreateLesson(false);
   };
   return (
@@ -33,6 +52,7 @@ function LessonItemPreview({ setLessons, setIsShowCreateLesson }) {
               placeholder="New lesson"
               autoFocus={true}
               className={cx("title-input")}
+              onChange={handleChangeLessonTitle}
             />
           </div>
           <div className={cx("lesson-type")}>Empty</div>
@@ -54,8 +74,11 @@ function LessonItemPreview({ setLessons, setIsShowCreateLesson }) {
 }
 
 LessonItemPreview.propTypes = {
-  setLessons: PropTypes.func.isRequired,
-  setIsShowCreateLesson: PropTypes.func.isRequired,
+  type: PropTypes.string,
+  topic: PropTypes.object,
+  setTopics: PropTypes.func,
+  setLessons: PropTypes.func,
+  setIsShowCreateLesson: PropTypes.func,
 };
 
 export default LessonItemPreview;
