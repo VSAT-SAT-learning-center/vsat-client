@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { renderLessonTypeIcon } from "~/utils/renderLessonTypeIcon";
 import styles from "./LessonItemPreview.module.scss";
 const cx = classNames.bind(styles);
 
@@ -11,6 +12,7 @@ function LessonItemPreview({
   setTopics,
   setLessons,
   setIsShowCreateLesson,
+  lessonType,
 }) {
   const [lessonTitle, setLessonTitle] = useState("New lesson");
 
@@ -21,7 +23,7 @@ function LessonItemPreview({
     const newLesson = {
       id: uuidv4(),
       title: lessonTitle,
-      type: "Empty",
+      type: lessonType,
     };
     if (type === "update") {
       setTopics((prevTopics) =>
@@ -55,7 +57,12 @@ function LessonItemPreview({
               onChange={handleChangeLessonTitle}
             />
           </div>
-          <div className={cx("lesson-type")}>Empty</div>
+          <div className={cx("lesson-type")}>
+            <div className={cx("lesson-type-icon")}>
+              <i className={cx(renderLessonTypeIcon(lessonType), "icon")}></i>
+            </div>
+            <div className={cx("lesson-type-text")}>{lessonType}</div>
+          </div>
         </div>
         <div className={cx("lesson-information-config")}>
           <div
@@ -79,6 +86,7 @@ LessonItemPreview.propTypes = {
   setTopics: PropTypes.func,
   setLessons: PropTypes.func,
   setIsShowCreateLesson: PropTypes.func,
+  lessonType: PropTypes.string,
 };
 
 export default LessonItemPreview;
