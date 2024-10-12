@@ -1,0 +1,25 @@
+@import "~/styles/variables";
+
+.lesson-type-modal-wrapper {
+  cursor: zoom-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 101;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+
+  .lesson-type-modal-container {
+    cursor: context-menu;
+    width: 750px;
+    height: 300px;
+    border-radius: 15px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: #fff;
+    animation: slideFromTop 0.5s ease forwards;
+  }
+}

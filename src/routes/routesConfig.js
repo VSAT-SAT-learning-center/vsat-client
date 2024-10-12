@@ -65,7 +65,7 @@ const routesConfig = [
   { path: '/staff', component: Dashboard, protected: true },
   // Staff learning material routes
   { path: '/staff/learning-material/overview', component: LearningMaterial, protected: true },
-  { path: '/staff/learning-material/create/details', component: LearningMaterialCreateDetails, protected: true },
+  { path: '/staff/learning-material/create', component: LearningMaterialCreateDetails, protected: true },
   { path: '/staff/learning-material/create/topics', component: LearningMaterialCreateTopic, protected: true },
   { path: '/staff/learning-material/create/lessons', component: LearningMaterialCreateLesson, protected: true },
   { path: '/staff/learning-material/assignments', component: LearningMaterialAss, protected: true },
