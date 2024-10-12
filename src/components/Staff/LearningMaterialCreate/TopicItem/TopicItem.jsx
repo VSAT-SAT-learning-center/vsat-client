@@ -1,7 +1,6 @@
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
-import { useState } from "react";
 import LessonItem from "../LessonItem";
 import LessonItemPreview from "../LessonItemPreview";
 import styles from "./TopicItem.module.scss";
@@ -11,10 +10,13 @@ function TopicItem({
   topic,
   setTopics,
   dragHandleProps,
+  setIsShowLessonTypeModal,
+  isShowCreateLesson,
+  setIsShowCreateLesson,
+  lessonType
 }) {
-  const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
   const handleClickCreateNewLesson = () => {
-    setIsShowCreateLesson(true);
+    setIsShowLessonTypeModal(true);
   };
 
   return (
@@ -76,6 +78,7 @@ function TopicItem({
                   topic={topic}
                   setTopics={setTopics}
                   setIsShowCreateLesson={setIsShowCreateLesson}
+                  lessonType={lessonType}
                 />
               </div>
             )}
@@ -102,6 +105,10 @@ TopicItem.propTypes = {
   dragHandleProps: PropTypes.object,
   setLessons: PropTypes.func,
   setTopics: PropTypes.func,
+  setIsShowLessonTypeModal: PropTypes.func,
+  isShowCreateLesson: PropTypes.bool,
+  setIsShowCreateLesson: PropTypes.func,
+  lessonType: PropTypes.string
 };
 
 export default TopicItem;

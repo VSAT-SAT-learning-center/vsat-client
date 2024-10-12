@@ -35,7 +35,7 @@
         padding: 8px 16px;
         border-radius: 5px;
         border: 1px solid $border-color;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
 
         .title-input {
           width: 100%;
@@ -46,8 +46,22 @@
       }
 
       .lesson-type {
-        font-size: 16px;
-        font-style: italic;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        .lesson-type-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .icon {
+            font-size: 16px;
+          }
+        }
+        .lesson-type-text {
+          font-size: 16px;
+          font-style: italic;
+        }
       }
     }
 
@@ -61,8 +75,8 @@
         user-select: none;
         padding: 4px 16px;
         border-radius: 25px;
-        color: $text-color;
-        border: 1px solid $text-color;
+        color: $primary-color;
+        border: 1px solid $primary-color;
         background-color: $bg-primary-color;
         transition: 0.2s linear;
 

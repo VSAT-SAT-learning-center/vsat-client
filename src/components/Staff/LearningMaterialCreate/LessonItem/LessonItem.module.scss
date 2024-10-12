@@ -36,11 +36,25 @@
         font-size: 18px;
         font-weight: 600;
         text-decoration: underline;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
       }
       .lesson-type {
-        font-size: 16px;
-        font-style: italic;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        .lesson-type-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .icon {
+            font-size: 16px;
+          }
+        }
+        .lesson-type-text {
+          font-size: 16px;
+          font-style: italic;
+        }
       }
     }
 
