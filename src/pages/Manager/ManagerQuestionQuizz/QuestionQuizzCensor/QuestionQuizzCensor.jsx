@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import PageLayout from "~/layouts/Staff/PageLayout";
+import PageLayout from "~/layouts/Manager/PageLayout";
 import styles from "./QuestionQuizzCensor.module.scss";
 const cx = classNames.bind(styles);
 function QuestionQuizzCensor() {
