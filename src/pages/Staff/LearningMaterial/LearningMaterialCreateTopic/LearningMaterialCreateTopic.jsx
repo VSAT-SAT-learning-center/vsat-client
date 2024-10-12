@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
+import LessonTypeModal from "~/components/Staff/LearningMaterialCreate/LessonTypeModal";
 import MultiStepProgressBar from "~/components/Staff/LearningMaterialCreate/MultiStepProgressBar";
 import TopicItem from "~/components/Staff/LearningMaterialCreate/TopicItem";
 import TopicItemPreview from "~/components/Staff/LearningMaterialCreate/TopicItemPreview";
@@ -19,6 +20,9 @@ function LearningMaterialCreateTopic() {
 
   const [topics, setTopics] = useState([]);
   const [createTopicPreviews, setCreateTopicPreviews] = useState([]);
+  const [lessonType, setLessonType] = useState("Empty");
+  const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
+  const [isShowLessonTypeModal, setIsShowLessonTypeModal] = useState(false);
 
   const onDragEnd = (result) => {
     const { source, destination, type } = result;
@@ -84,6 +88,13 @@ function LearningMaterialCreateTopic() {
 
   return (
     <>
+      {isShowLessonTypeModal && (
+        <LessonTypeModal
+          setIsShowLessonTypeModal={setIsShowLessonTypeModal}
+          setIsShowCreateLesson={setIsShowCreateLesson}
+          setLessonType={setLessonType}
+        />
+      )}
       <PageLayout>
         <div className={cx("learning-material-create-topics-container")}>
           <LearningMaterialCreateHeader title="Unit Topic" />
@@ -117,6 +128,12 @@ function LearningMaterialCreateTopic() {
                                 topic={topic}
                                 setTopics={setTopics}
                                 dragHandleProps={provided.dragHandleProps}
+                                setIsShowLessonTypeModal={
+                                  setIsShowLessonTypeModal
+                                }
+                                isShowCreateLesson={isShowCreateLesson}
+                                setIsShowCreateLesson={setIsShowCreateLesson}
+                                lessonType={lessonType}
                               />
                             </div>
                           )}
@@ -134,6 +151,10 @@ function LearningMaterialCreateTopic() {
                     id={preview.id}
                     setTopics={setTopics}
                     onCancel={handleRemovePreview}
+                    setIsShowLessonTypeModal={setIsShowLessonTypeModal}
+                    isShowCreateLesson={isShowCreateLesson}
+                    setIsShowCreateLesson={setIsShowCreateLesson}
+                    lessonType={lessonType}
                   />
                 </div>
               ))}

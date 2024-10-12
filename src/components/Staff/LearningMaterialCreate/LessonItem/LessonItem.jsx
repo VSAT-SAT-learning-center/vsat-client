@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
+import { renderLessonTypeIcon } from "~/utils/renderLessonTypeIcon";
 import styles from "./LessonItem.module.scss";
 const cx = classNames.bind(styles);
 
@@ -16,7 +17,12 @@ function LessonItem({ lesson, dragHandleProps }) {
       <div className={cx("lesson-information")}>
         <div className={cx("lesson-information-content")}>
           <div className={cx("lesson-title")}>{lesson.title}</div>
-          <div className={cx("lesson-type")}>{lesson.type}</div>
+          <div className={cx("lesson-type")}>
+            <div className={cx("lesson-type-icon")}>
+              <i className={cx(renderLessonTypeIcon(lesson.type), "icon")}></i>
+            </div>
+            <div className={cx("lesson-type-text")}>{lesson.type}</div>
+          </div>
         </div>
         <div className={cx("lesson-information-config")}>
           <div className={cx("lesson-option")}>

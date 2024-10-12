@@ -1,3 +1,4 @@
+import LessonTypeModal from "~/components/Staff/LearningMaterialCreate/LessonTypeModal";
 import About from "~/pages/Landing/About";
 import Contact from "~/pages/Landing/Contact";
 import Home from "~/pages/Landing/Home";
@@ -34,6 +35,7 @@ import LearningPartDetail from '~/pages/Student/LearningPartDetail';
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
+  { path: "/test", component: LessonTypeModal },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
