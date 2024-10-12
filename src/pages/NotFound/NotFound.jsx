@@ -14,15 +14,16 @@ function NotFound() {
         <div className={cx("cloud", "x4")}></div>
         <div className={cx("cloud", "x5")}></div>
       </div>
-      <div className={cx("oops-text")}>OOPSS...</div>
       <div className={cx("number-404")}>
         <span className={cx("four")}>4</span>
         <span className={cx("zero")}>0</span>
         <span className={cx("four")}>4</span>
       </div>
-      <div className={cx("page-not-found")}>Page Not Found</div>
-      
+      <a href="/" className={cx("btn")}>
+        Go Back to Home
+      </a>
     </div>
   );
 }
+
 export default NotFound;

@@ -29,7 +29,25 @@ import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
 import Learning from '~/pages/Student/Learning';
 import LearningPart from '~/pages/Student/LearningPart';
 import LearningPartDetail from '~/pages/Student/LearningPartDetail';
-
+import ManagerDashboard from '~/pages/Manager/ManagerDashboard';
+import ManagerLearningMaterial from '~/pages/Manager/ManagerLearningMaterial';
+import LearningMaterialCensor from '~/pages/Manager/ManagerLearningMaterial/LearningMaterialCensor';
+import FeedbackLearningMaterial from '~/pages/Manager/ManagerLearningMaterial/FeedbackLearningMaterial';
+import ManagerQuestionExam from '~/pages/Manager/ManagerQuestionExam';
+import QuestionExamCensor from '~/pages/Manager/ManagerQuestionExam/QuestionExamCensor';
+import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
+import ManagerQuestionQuizz from '~/pages/Manager/ManagerQuestionQuizz';
+import QuestionQuizzCensor from '~/pages/Manager/ManagerQuestionQuizz/QuestionQuizzCensor';
+import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
+import ManagerExam from "~/pages/Manager/ManagerExam";
+import ExamCensor from "~/pages/Manager/ManagerExam/ExamCensor";
+import ExamStructureCensor from "~/pages/Manager/ManagerExam/ExamStructureCensor";
+import ExamScoreCensor from "~/pages/Manager/ManagerExam/ExamScoreCensor";
+import FeedbackExam from "~/pages/Manager/ManagerExam/FeedbackExam";
+import ManagerPractice from "~/pages/Manager/ManagerPractice";
+import ManagerFeedback from "~/pages/Manager/ManagerFeedback";
+import ManagerAccountSetting from "~/pages/Manager/ManagerAccountSetting";
+import ManagerSettings from "~/pages/Manager/ManagerSettings";
 
 const routesConfig = [
   // Landing page routes
@@ -77,6 +95,35 @@ const routesConfig = [
   { path: '/staff/account-setting', component: AccountSetting, protected: true },
   // Staff settings routes
   { path: '/staff/setting', component: Settings, protected: true },
+
+  // Manger routes
+  { path: '/manager', component: ManagerDashboard, protected: true },
+  // Manger learning material routes
+  { path: '/manager/learning-material/overview', component: ManagerLearningMaterial, protected: true },
+  { path: '/manager/learning-material/censor', component: LearningMaterialCensor, protected: true },
+  { path: '/manager/learning-material/feedback', component: FeedbackLearningMaterial, protected: true },
+  // Manger question bank routes
+  { path: '/manager/question-bank/bank', component: ManagerQuestionExam, protected: true },
+  { path: '/manager/question-bank/censor', component: QuestionExamCensor, protected: true },
+  { path: '/manager/question-bank/feedback', component: FeedbackQuestionExam, protected: true },
+  // Manger quizz question bank routes
+  { path: '/manager/question-quizz/bank', component: ManagerQuestionQuizz, protected: true },
+  { path: '/manager/question-quizz/censor', component: QuestionQuizzCensor, protected: true },
+  { path: '/manager/question-quizz/feedback', component: FeedbackQuestionQuizz, protected: true },
+  // Manger exam routes
+  { path: '/manager/exams/overview', component: ManagerExam, protected: true },
+  { path: '/manager/exams/censor', component: ExamCensor, protected: true },
+  { path: '/manager/exams/structure/censor', component: ExamStructureCensor, protected: true },
+  { path: '/manager/exams/score/censor', component: ExamScoreCensor, protected: true },
+  { path: '/manager/exams/feedback', component: FeedbackExam, protected: true },
+  // Manger practice routes
+  { path: '/manager/practice/overview', component: ManagerPractice, protected: true },
+  // Manger manage feedback routes
+  { path: '/manager/feedback', component: ManagerFeedback, protected: true },
+  // Manger account setting routes
+  { path: '/manager/account-setting', component: ManagerAccountSetting, protected: true },
+  // Manger settings routes
+  { path: '/manager/setting', component: ManagerSettings, protected: true },
 
   // Not found route
   { path: "*", component: NotFound },
