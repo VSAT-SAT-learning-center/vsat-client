@@ -82,8 +82,8 @@ function LearningMaterialCreateTopic() {
     navigate(steps[currentStep - 1].path);
   };
   const handleNext = () => {
-    console.log(topics);
-    // navigate(steps[currentStep + 1].path);
+    // console.log(topics);
+    navigate(steps[currentStep + 1].path);
   };
 
   return (
