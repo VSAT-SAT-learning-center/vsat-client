@@ -1,0 +1,52 @@
+@import "~/styles/variables";
+
+.create-lesson-content-rw-list {
+  width: 100%;
+  display: flex;
+  column-gap: 12px;
+
+  .create-lesson-content-rw-item {
+    cursor: pointer;
+    user-select: none;
+    flex: 1;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid $border-color;
+    transition: 0.2s linear;
+
+    &:hover {
+      background-color: #f4f4f4;
+    }
+
+    .create-rw-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+
+      .icon {
+        font-size: 16px;
+      }
+    }
+
+    .create-rw-text {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+
+  .done-item {
+    cursor: not-allowed;
+    color: $white-color;
+    border: 1px solid $primary-color;
+    background-color: $primary-color;
+    opacity: 0.8;
+
+    &:hover {
+      background-color: $primary-color;
+    }
+  }
+}

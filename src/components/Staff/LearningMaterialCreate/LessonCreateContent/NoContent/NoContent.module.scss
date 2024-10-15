@@ -1,0 +1,20 @@
+.create-lessons-main-no-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  .no-content-information {
+    width: 460px;
+    .no-content-text {
+      font-size: 36px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .no-content-sub-text {
+      font-size: 20px;
+      font-weight: 400;
+      color: #666e7d;
+    }
+  }
+}
