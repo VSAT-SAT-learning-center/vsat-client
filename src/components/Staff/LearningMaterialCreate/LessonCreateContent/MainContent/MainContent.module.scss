@@ -1,0 +1,77 @@
+@import "~/styles/variables";
+
+.create-lessons-main-content-wrapper {
+  width: 100%;
+
+  .create-lesson-main-content-header {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .create-lesson-main-content {
+    width: 100%;
+    height: fit-content;
+
+    .create-lesson-title {
+      width: 100%;
+      margin-bottom: 15px;
+      .create-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 10px;
+
+        .required {
+          font-size: 13px;
+          font-weight: 300;
+          font-style: italic;
+        }
+      }
+
+      .create-input {
+        width: 100%;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid $border-color;
+
+        .title-input {
+          width: 100%;
+          outline: none;
+          border: none;
+          background-color: transparent;
+        }
+      }
+    }
+
+    .create-lesson-information {
+      width: 100%;
+
+      .create-content-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 10px;
+
+        .required {
+          font-size: 13px;
+          font-weight: 300;
+          font-style: italic;
+        }
+      }
+
+      .create-content-input {
+        width: 100%;
+        padding: 8px 12px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid $border-color;
+
+        .content-title-input {
+          width: 100%;
+          outline: none;
+          border: none;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}

@@ -1,8 +1,25 @@
-import LessonTypeModal from "~/components/Staff/LearningMaterialCreate/LessonTypeModal";
+import CreateDefinitionView from "~/components/Staff/LearningMaterialCreate/LessonCreateContent/MainContent/CreateDefinitionView";
 import About from "~/pages/Landing/About";
 import Contact from "~/pages/Landing/Contact";
 import Home from "~/pages/Landing/Home";
 import News from "~/pages/Landing/News";
+import ManagerAccountSetting from "~/pages/Manager/ManagerAccountSetting";
+import ManagerDashboard from '~/pages/Manager/ManagerDashboard';
+import ManagerExam from "~/pages/Manager/ManagerExam";
+import ExamCensor from "~/pages/Manager/ManagerExam/ExamCensor";
+import ExamScoreCensor from "~/pages/Manager/ManagerExam/ExamScoreCensor";
+import ExamStructureCensor from "~/pages/Manager/ManagerExam/ExamStructureCensor";
+import FeedbackExam from "~/pages/Manager/ManagerExam/FeedbackExam";
+import ManagerFeedback from "~/pages/Manager/ManagerFeedback";
+import ManagerLearningMaterial from '~/pages/Manager/ManagerLearningMaterial';
+import FeedbackLearningMaterial from '~/pages/Manager/ManagerLearningMaterial/FeedbackLearningMaterial';
+import LearningMaterialCensor from '~/pages/Manager/ManagerLearningMaterial/LearningMaterialCensor';
+import ManagerPractice from "~/pages/Manager/ManagerPractice";
+import ManagerQuestionExam from '~/pages/Manager/ManagerQuestionExam';
+import QuestionExamCensor from '~/pages/Manager/ManagerQuestionExam/QuestionExamCensor';
+import ManagerQuestionQuizz from '~/pages/Manager/ManagerQuestionQuizz';
+import QuestionQuizzCensor from '~/pages/Manager/ManagerQuestionQuizz/QuestionQuizzCensor';
+import ManagerSettings from "~/pages/Manager/ManagerSettings";
 import NotFound from '~/pages/NotFound';
 import AccountSetting from "~/pages/Staff/AccountSetting";
 import Dashboard from "~/pages/Staff/Dashboard";
@@ -30,30 +47,13 @@ import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
 import Learning from '~/pages/Student/Learning';
 import LearningPart from '~/pages/Student/LearningPart';
 import LearningPartDetail from '~/pages/Student/LearningPartDetail';
-import ManagerDashboard from '~/pages/Manager/ManagerDashboard';
-import ManagerLearningMaterial from '~/pages/Manager/ManagerLearningMaterial';
-import LearningMaterialCensor from '~/pages/Manager/ManagerLearningMaterial/LearningMaterialCensor';
-import FeedbackLearningMaterial from '~/pages/Manager/ManagerLearningMaterial/FeedbackLearningMaterial';
-import ManagerQuestionExam from '~/pages/Manager/ManagerQuestionExam';
-import QuestionExamCensor from '~/pages/Manager/ManagerQuestionExam/QuestionExamCensor';
 import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
-import ManagerQuestionQuizz from '~/pages/Manager/ManagerQuestionQuizz';
-import QuestionQuizzCensor from '~/pages/Manager/ManagerQuestionQuizz/QuestionQuizzCensor';
 import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
-import ManagerExam from "~/pages/Manager/ManagerExam";
-import ExamCensor from "~/pages/Manager/ManagerExam/ExamCensor";
-import ExamStructureCensor from "~/pages/Manager/ManagerExam/ExamStructureCensor";
-import ExamScoreCensor from "~/pages/Manager/ManagerExam/ExamScoreCensor";
-import FeedbackExam from "~/pages/Manager/ManagerExam/FeedbackExam";
-import ManagerPractice from "~/pages/Manager/ManagerPractice";
-import ManagerFeedback from "~/pages/Manager/ManagerFeedback";
-import ManagerAccountSetting from "~/pages/Manager/ManagerAccountSetting";
-import ManagerSettings from "~/pages/Manager/ManagerSettings";
 
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: LessonTypeModal },
+  { path: "/test", component: CreateDefinitionView },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
@@ -70,6 +70,7 @@ const routesConfig = [
   { path: '/staff/learning-material/create', component: LearningMaterialCreateDetails, protected: true },
   { path: '/staff/learning-material/create/topics', component: LearningMaterialCreateTopic, protected: true },
   { path: '/staff/learning-material/create/lessons', component: LearningMaterialCreateLesson, protected: true },
+  { path: '/staff/learning-material/create/lessons/:id', component: LearningMaterialCreateLesson, protected: true },
   { path: '/staff/learning-material/assignments', component: LearningMaterialAss, protected: true },
   // Staff question bank routes
   { path: '/staff/question-bank/bank', component: QuestionExam, protected: true },
