@@ -1,7 +1,7 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import classNames from "classnames/bind";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
@@ -17,7 +17,8 @@ const cx = classNames.bind(styles);
 function LearningMaterialCreateTopic() {
   const navigate = useNavigate();
   const currentStep = 1;
-
+  const location = useLocation();
+  const { unit } = location.state || {};
   const [topics, setTopics] = useState([]);
   const [createTopicPreviews, setCreateTopicPreviews] = useState([]);
   const [lessonType, setLessonType] = useState("Empty");
@@ -82,9 +83,11 @@ function LearningMaterialCreateTopic() {
     navigate(steps[currentStep - 1].path);
   };
   const handleNext = () => {
-    // console.log(topics);
-    navigate(steps[currentStep + 1].path);
+    console.log(topics);
+    navigate(steps[currentStep + 1].path, { state: { unit, topics } });
   };
+
+  const isContinueEnabled = topics.length > 0;
 
   return (
     <>
@@ -149,6 +152,7 @@ function LearningMaterialCreateTopic() {
                 <div key={preview.id} className={cx("create-topic-preview")}>
                   <TopicItemPreview
                     id={preview.id}
+                    unitId={unit.unitId}
                     setTopics={setTopics}
                     onCancel={handleRemovePreview}
                     setIsShowLessonTypeModal={setIsShowLessonTypeModal}
@@ -172,7 +176,13 @@ function LearningMaterialCreateTopic() {
               <button className={cx("back-btn")} onClick={handlePrevious}>
                 Back
               </button>
-              <button className={cx("continue-btn")} onClick={handleNext}>
+              <button
+                className={cx("continue-btn", {
+                  "disabled-btn": !isContinueEnabled,
+                })}
+                disabled={!isContinueEnabled}
+                onClick={handleNext}
+              >
                 Continue
               </button>
             </div>
