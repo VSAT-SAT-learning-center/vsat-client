@@ -1,19 +1,36 @@
 import classNames from "classnames/bind";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import MultiStepProgressBar from "~/components/Staff/LearningMaterialCreate/MultiStepProgressBar";
 import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import styles from "./LearningMaterialCreateDetails.module.scss";
+
 const cx = classNames.bind(styles);
 function LearningMaterialCreateDetails() {
   const fileInputImageRef = useRef();
   const navigate = useNavigate();
   const currentStep = 0;
 
+  const [unit, setUnit] = useState({
+    unitId: uuidv4(),
+    title: "",
+    description: "",
+    section: "",
+    level: "",
+  });
   const [countTitleInput, setCountTitleInput] = useState(0);
+  const isFormValid = () => {
+    return (
+      unit.title.trim() !== "" &&
+      unit.description.trim() !== "" &&
+      unit.section.trim() !== "" &&
+      unit.level.trim() !== ""
+    );
+  };
 
   const handleClickUploadImage = () => {
     fileInputImageRef.current.click();
@@ -21,11 +38,40 @@ function LearningMaterialCreateDetails() {
 
   const handleChangeTitleInput = (e) => {
     setCountTitleInput(e.target.value.length);
+    setUnit((prevUnit) => ({
+      ...prevUnit,
+      title: e.target.value,
+    }));
+  };
+
+  const handleSectionChange = (e) => {
+    setUnit((prevUnit) => ({
+      ...prevUnit,
+      section: e.target.value,
+    }));
+  };
+
+  const handleLevelChange = (e) => {
+    setUnit((prevUnit) => ({
+      ...prevUnit,
+      level: e.target.value,
+    }));
+  };
+
+  const handleChangeAboutUnitInput = (e) => {
+    setUnit((prevUnit) => ({
+      ...prevUnit,
+      description: e.target.value,
+    }));
   };
 
   const handleNext = () => {
-    navigate(steps[currentStep + 1].path);
+    if (isFormValid()) {
+      console.log(unit);
+      navigate(steps[currentStep + 1].path, { state: { unit } });
+    }
   };
+
   return (
     <PageLayout>
       <div className={cx("learning-material-create-details-container")}>
@@ -74,6 +120,7 @@ function LearningMaterialCreateDetails() {
                 <div className={cx("unit-title-input")}>
                   <input
                     type="text"
+                    value={unit.title}
                     className={cx("title-input")}
                     placeholder="Name of unit"
                     autoFocus={true}
@@ -89,10 +136,15 @@ function LearningMaterialCreateDetails() {
                     Unit Section{" "}
                     <span className={cx("required")}>(Required)</span>
                   </div>
-                  <select id="unit-section" className={cx("section-select")}>
+                  <select
+                    id="unit-section"
+                    value={unit.section}
+                    className={cx("section-select")}
+                    onChange={handleSectionChange}
+                  >
                     <option value="option1">Unit section</option>
-                    <option value="option2">Reading & Writing</option>
-                    <option value="option3">Math</option>
+                    <option value="reading_writing">Reading & Writing</option>
+                    <option value="math">Math</option>
                   </select>
                 </div>
                 <div className={cx("unit-level-details")}>
@@ -100,11 +152,16 @@ function LearningMaterialCreateDetails() {
                     Unit Level{" "}
                     <span className={cx("required")}>(Required)</span>
                   </div>
-                  <select id="unit-level" className={cx("level-select")}>
+                  <select
+                    id="unit-level"
+                    value={unit.level}
+                    className={cx("level-select")}
+                    onChange={handleLevelChange}
+                  >
                     <option value="option1">Unit level</option>
-                    <option value="option2">Foundation</option>
-                    <option value="option3">Medium</option>
-                    <option value="option4">Advance</option>
+                    <option value="foundation">Foundation</option>
+                    <option value="medium">Medium</option>
+                    <option value="advance">Advance</option>
                   </select>
                 </div>
               </div>
@@ -114,8 +171,10 @@ function LearningMaterialCreateDetails() {
                 </div>
                 <div className={cx("unit-about-input")}>
                   <textarea
+                    value={unit.description}
                     className={cx("about-input")}
                     placeholder="About information of unit"
+                    onChange={handleChangeAboutUnitInput}
                   ></textarea>
                 </div>
               </div>
@@ -123,14 +182,13 @@ function LearningMaterialCreateDetails() {
           </div>
           <div className={cx("create-details-bottom")}>
             <button className={cx("cancel-btn")}>Cancel</button>
-            {/* <button
-              className={cx("continue-btn", "disabled-btn")}
-              disabled={true}
+            <button
+              className={cx("continue-btn", {
+                "disabled-btn": !isFormValid(),
+              })}
+              disabled={!isFormValid()}
               onClick={handleNext}
             >
-              Continue
-            </button> */}
-            <button className={cx("continue-btn")} onClick={handleNext}>
               Continue
             </button>
           </div>

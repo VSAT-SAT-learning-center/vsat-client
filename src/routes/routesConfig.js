@@ -1,4 +1,3 @@
-import CreateDefinitionView from "~/components/Staff/LearningMaterialCreate/LessonCreateContent/MainContent/CreateDefinitionView";
 import About from "~/pages/Landing/About";
 import Contact from "~/pages/Landing/Contact";
 import Home from "~/pages/Landing/Home";
@@ -33,6 +32,7 @@ import LearningMaterialAss from "~/pages/Staff/LearningMaterial/LearningMaterial
 import LearningMaterialCreateDetails from "~/pages/Staff/LearningMaterial/LearningMaterialCreateDetails";
 import LearningMaterialCreateLesson from "~/pages/Staff/LearningMaterial/LearningMaterialCreateLesson";
 import LearningMaterialCreateTopic from "~/pages/Staff/LearningMaterial/LearningMaterialCreateTopic";
+import LearningMaterialPublish from "~/pages/Staff/LearningMaterial/LearningMaterialPublish";
 import Practice from "~/pages/Staff/Practice";
 import PracticeCreate from "~/pages/Staff/Practice/PracticeCreate";
 import QuestionExam from "~/pages/Staff/QuestionExam";
@@ -53,7 +53,7 @@ import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/Feedbac
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: CreateDefinitionView },
+  { path: "/test", component: LearningMaterialPublish },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
@@ -71,6 +71,7 @@ const routesConfig = [
   { path: '/staff/learning-material/create/topics', component: LearningMaterialCreateTopic, protected: true },
   { path: '/staff/learning-material/create/lessons', component: LearningMaterialCreateLesson, protected: true },
   { path: '/staff/learning-material/create/lessons/:id', component: LearningMaterialCreateLesson, protected: true },
+  { path: '/staff/learning-material/create/publish', component: LearningMaterialPublish, protected: true },
   { path: '/staff/learning-material/assignments', component: LearningMaterialAss, protected: true },
   // Staff question bank routes
   { path: '/staff/question-bank/bank', component: QuestionExam, protected: true },
