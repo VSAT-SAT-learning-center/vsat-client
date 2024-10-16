@@ -5,7 +5,7 @@ const cx = classNames.bind(styles);
 
 function CreateLessonContentAction({ setIsShowLessonContentRW }) {
   return (
-    <div
+    <button
       className={cx("create-lesson-content-action")}
       onClick={() => setIsShowLessonContentRW(true)}
     >
@@ -13,7 +13,7 @@ function CreateLessonContentAction({ setIsShowLessonContentRW }) {
         <i className={cx("fa-regular fa-circle-plus", "icon")}></i>
       </div>
       <div className={cx("create-text")}>New content</div>
-    </div>
+    </button>
   );
 }
 

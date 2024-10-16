@@ -1,46 +1,18 @@
 @import "~/styles/variables";
 
-.learning-material-create-lessons-container {
+.learning-material-publish-container {
   width: 100%;
   padding: 16px 24px;
 
-  .create-lessons-container {
+  .publish-container {
     width: 100%;
     height: fit-content;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     background-color: $bg-primary-color;
-    .create-lessons-top {
-      width: 100%;
-      padding: 20px;
-      border-bottom: 1px solid $border-color;
 
-      .create-lessons-title {
-        font-size: 20px;
-        font-weight: 700;
-      }
-    }
 
-    .create-lessons-content {
-      width: 100%;
-      display: flex;
-      border-bottom: 1px solid $border-color;
-
-      .create-lessons-sidebar-wrapper {
-        width: 300px;
-        height: fit-content;
-        // min-height: 310px;
-      }
-
-      .create-lessons-main-wrapper {
-        flex: 1;
-        height: fit-content;
-        padding: 20px 24px;
-        border-left: 1px solid $border-color;
-      }
-    }
-
-    .create-lessons-bottom {
+    .publish-bottom {
       width: 100%;
       padding: 20px;
       display: flex;
@@ -65,7 +37,7 @@
         }
       }
 
-      .continue-btn {
+      .publish-btn {
         cursor: pointer;
         user-select: none;
         padding: 8px 20px;
