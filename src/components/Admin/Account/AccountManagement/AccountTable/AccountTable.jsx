@@ -56,10 +56,10 @@ const users = [
     type: "Admin",
   },
 ];
-Modal.setAppElement('#root'); // Thiết lập vùng mà modal sẽ được áp dụng
+Modal.setAppElement('#root'); 
 
 function AccountTable() {
-  const [modalIsOpen, setModalIsOpen] = useState(false); // Trạng thái mở/đóng popup
+  const [modalIsOpen, setModalIsOpen] = useState(false); 
 
   const openModal = () => {
     setModalIsOpen(true);
