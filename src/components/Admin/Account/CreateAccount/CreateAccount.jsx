@@ -8,7 +8,6 @@ function CreateAccount() {
         <div className={cx("modal-header")}>
           <div className={cx("modal-title")}>Add a new user</div>
         </div>
-
         <div className={cx("form-container")}>
           <div className={cx("form-group")}>
             <label>User type</label>
@@ -18,7 +17,6 @@ function CreateAccount() {
               <option>Student</option>
             </select>
           </div>
-
           <div className={cx("form-group")}>
             <label>Name</label>
             <input type="text" placeholder="Enter name" />
