@@ -5,8 +5,8 @@
   user-select: none;
   width: 100%;
   padding: 16px;
-  transition: 0.2s ease-in;
-  border-bottom: 1px solid #ececec;
+  border-bottom: 1px solid $border-color;
+  transition: 0.2s linear;
 
   .unit-title {
     font-size: 14px;

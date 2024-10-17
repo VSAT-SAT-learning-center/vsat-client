@@ -1,0 +1,101 @@
+@import "~/styles/variables";
+
+.create-lessons-sidebar-item-container {
+  cursor: pointer;
+  width: 100%;
+  height: fit-content;
+  padding-bottom: 12px;
+  background-color: $bg-primary-color;
+  border-bottom: 1px solid $border-color;
+
+  &:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .create-lessons-sidebar-topic-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 12px;
+    transition: 0.2s linear;
+
+    &:hover {
+      background-color: #f4f4f4;
+    }
+
+    .topic-item-left {
+      display: flex;
+      align-items: center;
+      .topic-item-icon {
+        margin-right: 10px;
+      }
+
+      .topic-item-title {
+        font-size: 16px;
+        width: 200px;
+        word-wrap: break-word;
+        white-space: normal;
+        overflow: hidden;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+      }
+    }
+
+    .dropdown-icon {
+      font-size: 14px;
+    }
+  }
+
+  .create-lessons-sidebar-lesson-container {
+    width: 100%;
+    height: fit-content;
+
+    .sidebar-lesson-item {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-left: 14px;
+      padding: 16px 12px;
+      background-color: $bg-primary-color;
+      transition: 0.2s linear;
+
+      &:hover {
+        background-color: #f4f4f4;
+      }
+
+      .lesson-item-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .icon-lesson {
+          margin-right: 10px;
+        }
+      }
+
+      .lesson-item-title {
+        font-size: 16px;
+        width: 224px;
+        word-wrap: break-word;
+        white-space: normal;
+        overflow: hidden;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        transition: color 0.2s ease;
+      }
+    }
+
+    .active {
+      background-color: $active-bg;
+      border-left: 5px solid $primary-color;
+
+      &:hover {
+        background-color: $active-bg;
+      }
+    }
+  }
+}

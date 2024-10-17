@@ -8,12 +8,13 @@ import styles from "./TopicItemPreview.module.scss";
 const cx = classNames.bind(styles);
 function TopicItemPreview({
   id,
+  unitId,
   setTopics,
   onCancel,
   setIsShowLessonTypeModal,
   isShowCreateLesson,
   setIsShowCreateLesson,
-  lessonType
+  lessonType,
 }) {
   const [topicTitle, setTopicTitle] = useState("New topic");
   const [lessons, setLessons] = useState([]);
@@ -29,6 +30,7 @@ function TopicItemPreview({
   const handleCreateNewTopic = () => {
     const newTopic = {
       id: uuidv4(),
+      unitId: unitId,
       title: topicTitle,
       lessons: lessons,
     };
@@ -99,6 +101,7 @@ function TopicItemPreview({
 TopicItemPreview.propTypes = {
   setTopics: PropTypes.func,
   id: PropTypes.string,
+  unitId: PropTypes.string,
   onCancel: PropTypes.func,
   setIsShowLessonTypeModal: PropTypes.func,
   isShowCreateLesson: PropTypes.bool,

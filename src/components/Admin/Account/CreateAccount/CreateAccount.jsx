@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./CreateAccount.module.scss";
 const cx = classNames.bind(styles);
 
-function CreateAccount({ onClose }) {
+function CreateAccount() {
   return (
       <div className={cx("create-account-container")}>
         <div className={cx("modal-header")}>
