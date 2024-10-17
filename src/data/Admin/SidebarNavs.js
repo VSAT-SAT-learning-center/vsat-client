@@ -20,6 +20,11 @@ export const sidebarNavs = [
           title: "Accounts Management",
           path: "/admin/account/manage",
         },
+        {
+          id: 2,
+          title: "Create account",
+          path: "/admin/account/create",
+        },
       ],
     },
     {

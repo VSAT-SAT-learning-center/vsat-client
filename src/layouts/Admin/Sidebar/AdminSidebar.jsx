@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
 import Logo from "~/assets/images/logo/LOGO-06.png";
 import SidebarNavItem from "~/components/General/SidebarNavItem";
-import { sidebarNavs } from "~/data/Manager/SidebarNavs";
+import { sidebarNavs } from "~/data/Admin/SidebarNavs";
 import styles from "./AdminSidebar.module.scss";
 const cx = classNames.bind(styles);
 
