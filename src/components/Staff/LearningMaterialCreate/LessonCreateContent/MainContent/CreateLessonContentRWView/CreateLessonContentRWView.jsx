@@ -3,20 +3,18 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { v4 as uuidv4 } from "uuid";
 import RWRerender from "~/components/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentRW/RWRerender";
-import { generateLessonContentType } from "~/utils/generateLessonContentType";
 import CreateLessonContentQuestion from "./CreateLessonContentQuestion";
-import styles from "./CreateLessonContentView.module.scss";
-import EditorToolbar, { formats, modules } from "./EditorToolbar";
+import styles from "./CreateLessonContentRWView.module.scss";
 import PreviewLessonContentQuestion from "./PreviewLessonContentQuestion";
 
 const cx = classNames.bind(styles);
-function CreateLessonContentView({
+function CreateLessonContentRWView({
   nameLesson,
+  lesson,
   setLesson,
-  setIsShowLessonContentRW,
-  setLessonContentView,
+  setIsShowLessonContent,
+  setLessonContentRWView,
   lessonContentType,
   currentIndex,
   completedItems,
@@ -25,70 +23,70 @@ function CreateLessonContentView({
   contentTitleInput,
   setContentTitleInput,
 }) {
-  const [content, setContent] = useState("");
+  const [contents, setContents] = useState([
+    {
+      text: "",
+      examples: [],
+    },
+  ]);
   const [questionContent, setQuestionContent] = useState(null);
   const [isShowCreateQuestion, setIsShowCreateQuestion] = useState(false);
 
-  const handleContentChange = (value) => {
-    setContent(value);
+  const handleContentChange = (value, index) => {
+    const updatedContents = [...contents];
+    updatedContents[index].text = value;
+    setContents(updatedContents);
   };
 
   const handleClickSave = () => {
     const newLessonContent = {
-      contendId: uuidv4(),
-      contentType: generateLessonContentType(lessonContentType),
-      contentTitle: contentTitleInput,
-      content: content || "",
+      lessonId: lesson.lessonId,
+      contentType: lessonContentType,
+      title: contentTitleInput,
+      contents: contents,
       question: questionContent || null,
     };
     setLesson((prevLesson) => ({
       ...prevLesson,
-      lessonContent: [...prevLesson.lessonContent, newLessonContent],
+      lessonContents: [...prevLesson.lessonContents, newLessonContent],
     }));
     setCompletedItems([...completedItems, currentIndex]);
     setCurrentIndex((prev) => prev + 1);
-    setLessonContentView(false);
-    setIsShowLessonContentRW(true);
+    setLessonContentRWView(false);
+    setIsShowLessonContent(true);
     setContentTitleInput("");
   };
 
   const handleClickCancel = () => {
-    setLessonContentView(false);
-    setIsShowLessonContentRW(false);
+    setLessonContentRWView(false);
+    setIsShowLessonContent(false);
     setContentTitleInput("");
   };
 
   const isSaveDisabled =
     lessonContentType === "Definition"
-      ? !content || !questionContent
-      : !content && !questionContent;
+      ? !contents[0].text || !questionContent
+      : !contents[0].text && !questionContent;
 
   return (
-    <div className={cx("create-definiton-view-wrapper")}>
-      <div className={cx("create-definiton-view-header")}>
-        <div className={cx("lesson-title")}>{nameLesson}</div>
+    <div className={cx("create-rw-view-wrapper")}>
+      <div className={cx("create-rw-view-header")}>
+        <div className={cx("lesson-title")}>{contentTitleInput}</div>
       </div>
-      <div className={cx("create-definiton-view-container")}>
+      <div className={cx("create-rw-view-container")}>
         <div className={cx("create-lesson-editor")}>
-          {lessonContentType !== "Practice" && (
-            <div
-              className={cx("lesson-editor-input")}
-              style={{
-                height: lessonContentType === "Definition" ? "88%" : "100%",
-              }}
-            >
-              <EditorToolbar />
-              <ReactQuill
-                className={cx("editor-input")}
-                theme="snow"
-                value={content}
-                onChange={handleContentChange}
-                placeholder={"Write something content..."}
-                modules={modules}
-                formats={formats}
-              />
-            </div>
-          )}
+          {lessonContentType !== "Practice" &&
+            contents.map((contentItem, index) => (
+              <div key={index} className={cx("lesson-editor-input")} style={{ height: lessonContentType === "Definition" ? "90%" : "100%" }}>
+                <ReactQuill
+                  className={cx("editor-input")}
+                  theme="snow"
+                  value={contentItem.text}
+                  onChange={(value) => handleContentChange(value, index)}
+                  placeholder={"Write something content..."}
+                />
+              </div>
+            ))}
           {(lessonContentType === "Definition" ||
             lessonContentType === "Practice") &&
             (isShowCreateQuestion ? (
@@ -110,7 +108,7 @@ function CreateLessonContentView({
         </div>
         <div className={cx("create-lesson-preview")}>
           <div className={cx("lesson-preview")}>
-            {content && <RWRerender loadedContent={content} />}
+            {contents[0].text && <RWRerender loadedContent={contents[0].text} />}
             {questionContent && (
               <PreviewLessonContentQuestion
                 title={nameLesson}
@@ -120,7 +118,7 @@ function CreateLessonContentView({
           </div>
         </div>
       </div>
-      <div className={cx("create-definiton-view-footer")}>
+      <div className={cx("create-rw-view-footer")}>
         <button className={cx("back-btn")} onClick={handleClickCancel}>
           Cancel
         </button>
@@ -135,11 +133,12 @@ function CreateLessonContentView({
     </div>
   );
 }
-CreateLessonContentView.propTypes = {
+CreateLessonContentRWView.propTypes = {
   nameLesson: PropTypes.string,
+  lesson: PropTypes.object,
   setLesson: PropTypes.func,
-  setIsShowLessonContentRW: PropTypes.func,
-  setLessonContentView: PropTypes.func,
+  setIsShowLessonContent: PropTypes.func,
+  setLessonContentRWView: PropTypes.func,
   lessonContentType: PropTypes.string,
   currentIndex: PropTypes.number,
   setCurrentIndex: PropTypes.func,
@@ -149,4 +148,4 @@ CreateLessonContentView.propTypes = {
   setContentTitleInput: PropTypes.func,
 };
 
-export default CreateLessonContentView;
+export default CreateLessonContentRWView;

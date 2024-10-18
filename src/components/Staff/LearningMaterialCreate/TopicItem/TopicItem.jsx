@@ -13,7 +13,7 @@ function TopicItem({
   setIsShowLessonTypeModal,
   isShowCreateLesson,
   setIsShowCreateLesson,
-  lessonType
+  lessonType,
 }) {
   const handleClickCreateNewLesson = () => {
     setIsShowLessonTypeModal(true);
@@ -108,7 +108,7 @@ TopicItem.propTypes = {
   setIsShowLessonTypeModal: PropTypes.func,
   isShowCreateLesson: PropTypes.bool,
   setIsShowCreateLesson: PropTypes.func,
-  lessonType: PropTypes.string
+  lessonType: PropTypes.string,
 };
 
 export default TopicItem;

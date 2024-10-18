@@ -1,3 +1,4 @@
+import CreateLessonContentMathView from "~/components/Staff/LearningMaterialCreate/LessonCreateContent/MainContent/CreateLessonContentMathView";
 import About from "~/pages/Landing/About";
 import Contact from "~/pages/Landing/Contact";
 import Home from "~/pages/Landing/Home";
@@ -58,7 +59,7 @@ import AdminSettings from "~/pages/Admin/AdminSettings";
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: LearningMaterialPublish },
+  { path: "/test", component: CreateLessonContentMathView },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
