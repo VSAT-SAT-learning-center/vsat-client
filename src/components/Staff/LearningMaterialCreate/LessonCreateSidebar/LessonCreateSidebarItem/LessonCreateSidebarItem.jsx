@@ -5,7 +5,7 @@ import styles from "./LessonCreateSidebarItem.module.scss";
 import LessonInsideItem from "./LessonInsideItem";
 const cx = classNames.bind(styles);
 
-function LessonCreateSidebarItem({ topics, topic, lessonId }) {
+function LessonCreateSidebarItem({ newUnit, topic, lessonId }) {
   const [isShowLesson, setIsShowLesson] = useState(false);
   const handleClickShowLesson = () => {
     setIsShowLesson(!isShowLesson);
@@ -35,7 +35,12 @@ function LessonCreateSidebarItem({ topics, topic, lessonId }) {
       {isShowLesson && (
         <div className={cx("create-lessons-sidebar-lesson-container")}>
           {topic.lessons.map((lesson) => (
-            <LessonInsideItem key={lesson.id} topics={topics} lesson={lesson} lessonId={lessonId}/>
+            <LessonInsideItem
+              key={lesson.id}
+              newUnit={newUnit}
+              lesson={lesson}
+              lessonId={lessonId}
+            />
           ))}
         </div>
       )}
@@ -44,7 +49,7 @@ function LessonCreateSidebarItem({ topics, topic, lessonId }) {
 }
 
 LessonCreateSidebarItem.propTypes = {
-  topics: PropTypes.array,
+  newUnit: PropTypes.object,
   topic: PropTypes.object,
   lessonId: PropTypes.string,
 };

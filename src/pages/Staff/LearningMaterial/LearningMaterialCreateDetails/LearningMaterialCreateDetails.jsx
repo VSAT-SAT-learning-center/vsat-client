@@ -1,12 +1,12 @@
 import classNames from "classnames/bind";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import MultiStepProgressBar from "~/components/Staff/LearningMaterialCreate/MultiStepProgressBar";
 import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
+import apiClient from "~/services/apiService";
 import styles from "./LearningMaterialCreateDetails.module.scss";
 
 const cx = classNames.bind(styles);
@@ -15,22 +15,42 @@ function LearningMaterialCreateDetails() {
   const navigate = useNavigate();
   const currentStep = 0;
 
+  const [levels, setLevels] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [countTitleInput, setCountTitleInput] = useState(0);
+
   const [unit, setUnit] = useState({
-    unitId: uuidv4(),
     title: "",
     description: "",
-    section: "",
-    level: "",
+    sectionId: "",
+    levelId: "",
   });
-  const [countTitleInput, setCountTitleInput] = useState(0);
+
   const isFormValid = () => {
     return (
       unit.title.trim() !== "" &&
       unit.description.trim() !== "" &&
-      unit.section.trim() !== "" &&
-      unit.level.trim() !== ""
+      unit.sectionId.trim() !== "" &&
+      unit.levelId.trim() !== ""
     );
   };
+
+  useEffect(() => {
+    const fetchLevelsAndSections = async () => {
+      try {
+        const [levelsResponse, sectionsResponse] = await Promise.all([
+          apiClient.get("/level"),
+          apiClient.get("/section"),
+        ]);
+        setLevels(levelsResponse.data.data);
+        setSections(sectionsResponse.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchLevelsAndSections();
+  }, []);
 
   const handleClickUploadImage = () => {
     fileInputImageRef.current.click();
@@ -47,14 +67,14 @@ function LearningMaterialCreateDetails() {
   const handleSectionChange = (e) => {
     setUnit((prevUnit) => ({
       ...prevUnit,
-      section: e.target.value,
+      sectionId: e.target.value,
     }));
   };
 
   const handleLevelChange = (e) => {
     setUnit((prevUnit) => ({
       ...prevUnit,
-      level: e.target.value,
+      levelId: e.target.value,
     }));
   };
 
@@ -65,10 +85,32 @@ function LearningMaterialCreateDetails() {
     }));
   };
 
-  const handleNext = () => {
+  const handleCancel = () => {
+    setUnit({
+      title: "",
+      description: "",
+      sectionId: "",
+      levelId: "",
+    });
+    setCountTitleInput(0);
+  };
+
+  const handleNext = async () => {
     if (isFormValid()) {
-      console.log(unit);
-      navigate(steps[currentStep + 1].path, { state: { unit } });
+      try {
+        const response = await apiClient.post("/units", unit);
+        const newUnit = response.data.data;
+        setUnit({
+          title: "",
+          description: "",
+          sectionId: "",
+          levelId: "",
+        });
+        setCountTitleInput(0);
+        navigate(steps[currentStep + 1].path, { state: { newUnit } });
+      } catch (error) {
+        console.error("Error creating unit:", error);
+      }
     }
   };
 
@@ -138,13 +180,16 @@ function LearningMaterialCreateDetails() {
                   </div>
                   <select
                     id="unit-section"
-                    value={unit.section}
+                    value={unit.sectionId}
                     className={cx("section-select")}
                     onChange={handleSectionChange}
                   >
-                    <option value="option1">Unit section</option>
-                    <option value="reading_writing">Reading & Writing</option>
-                    <option value="math">Math</option>
+                    <option value="">Unit section</option>
+                    {sections.map((section) => (
+                      <option value={section.id} key={section.id}>
+                        {section.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className={cx("unit-level-details")}>
@@ -154,14 +199,16 @@ function LearningMaterialCreateDetails() {
                   </div>
                   <select
                     id="unit-level"
-                    value={unit.level}
+                    value={unit.levelId}
                     className={cx("level-select")}
                     onChange={handleLevelChange}
                   >
-                    <option value="option1">Unit level</option>
-                    <option value="foundation">Foundation</option>
-                    <option value="medium">Medium</option>
-                    <option value="advance">Advance</option>
+                    <option value="">Unit level</option>
+                    {levels.map((level) => (
+                      <option value={level.id} key={level.id}>
+                        {level.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -181,7 +228,9 @@ function LearningMaterialCreateDetails() {
             </div>
           </div>
           <div className={cx("create-details-bottom")}>
-            <button className={cx("cancel-btn")}>Cancel</button>
+            <button className={cx("cancel-btn")} onClick={handleCancel}>
+              Cancel
+            </button>
             <button
               className={cx("continue-btn", {
                 "disabled-btn": !isFormValid(),

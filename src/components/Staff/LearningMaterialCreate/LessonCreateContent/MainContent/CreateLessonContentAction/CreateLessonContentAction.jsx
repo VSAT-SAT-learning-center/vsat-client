@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import styles from "./CreateLessonContentAction.module.scss";
 const cx = classNames.bind(styles);
 
-function CreateLessonContentAction({ setIsShowLessonContentRW }) {
+function CreateLessonContentAction({ setIsShowLessonContent }) {
   return (
     <button
       className={cx("create-lesson-content-action")}
-      onClick={() => setIsShowLessonContentRW(true)}
+      onClick={() => setIsShowLessonContent(true)}
     >
       <div className={cx("create-icon")}>
         <i className={cx("fa-regular fa-circle-plus", "icon")}></i>
@@ -18,7 +18,7 @@ function CreateLessonContentAction({ setIsShowLessonContentRW }) {
 }
 
 CreateLessonContentAction.propTypes = {
-  setIsShowLessonContentRW: PropTypes.func,
+  setIsShowLessonContent: PropTypes.func,
 };
 
 export default CreateLessonContentAction;

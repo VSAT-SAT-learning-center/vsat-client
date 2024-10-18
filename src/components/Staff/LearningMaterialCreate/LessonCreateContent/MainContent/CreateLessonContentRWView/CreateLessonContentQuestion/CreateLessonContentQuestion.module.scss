@@ -3,13 +3,13 @@
 .create-question-editor {
   width: 100%;
   height: fit-content;
-  border: 1px solid $border-color;
+  border: 1px solid #cccccc;
   background-color: $bg-primary-color;
 
   .create-question-main {
     width: 100%;
     padding: 16px;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid #cccccc;
 
     .question-main-top {
       width: 100%;
@@ -169,6 +169,6 @@
   .create-explanation-answer {
     width: 100%;
     padding: 16px;
-    border-topf: 1px solid $border-color;
+    border-topf: 1px solid #cccccc;
   }
 }

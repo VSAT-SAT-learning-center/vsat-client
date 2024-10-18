@@ -11,6 +11,7 @@ import TopicItem from "~/components/Staff/LearningMaterialCreate/TopicItem";
 import TopicItemPreview from "~/components/Staff/LearningMaterialCreate/TopicItemPreview";
 import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
+import apiClient from "~/services/apiService";
 import styles from "./LearningMaterialCreateTopic.module.scss";
 const cx = classNames.bind(styles);
 
@@ -18,7 +19,7 @@ function LearningMaterialCreateTopic() {
   const navigate = useNavigate();
   const currentStep = 1;
   const location = useLocation();
-  const { unit } = location.state || {};
+  const { newUnit } = location.state || {};
   const [topics, setTopics] = useState([]);
   const [createTopicPreviews, setCreateTopicPreviews] = useState([]);
   const [lessonType, setLessonType] = useState("Empty");
@@ -82,9 +83,13 @@ function LearningMaterialCreateTopic() {
   const handlePrevious = () => {
     navigate(steps[currentStep - 1].path);
   };
-  const handleNext = () => {
-    console.log(topics);
-    navigate(steps[currentStep + 1].path, { state: { unit, topics } });
+  const handleNext = async () => {
+    try {
+      await apiClient.post("/unit-areas/create", topics);
+      navigate(steps[currentStep + 1].path, { state: { newUnit } });
+    } catch (error) {
+      console.error("Error creating unit:", error);
+    }
   };
 
   const isContinueEnabled = topics.length > 0;
@@ -152,7 +157,7 @@ function LearningMaterialCreateTopic() {
                 <div key={preview.id} className={cx("create-topic-preview")}>
                   <TopicItemPreview
                     id={preview.id}
-                    unitId={unit.unitId}
+                    unitId={newUnit.id}
                     setTopics={setTopics}
                     onCancel={handleRemovePreview}
                     setIsShowLessonTypeModal={setIsShowLessonTypeModal}

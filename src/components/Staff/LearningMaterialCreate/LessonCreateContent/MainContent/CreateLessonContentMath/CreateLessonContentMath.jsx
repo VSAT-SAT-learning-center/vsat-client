@@ -1,11 +1,11 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
-import { lessonRWContents } from "~/data/Staff/LessonRWContents";
-import styles from "./CreateLessonContentRW.module.scss";
+import styles from "./CreateLessonContentMath.module.scss";
+import { lessonMathContents } from "~/data/Staff/LessonMathContents";
 const cx = classNames.bind(styles);
 
-function CreateLessonContentRW({
-  setLessonContentRWView,
+function CreateLessonContentMath({
+  setLessonContentMathView,
   setLessonContentType,
   contentTitleInput,
   currentIndex,
@@ -13,15 +13,15 @@ function CreateLessonContentRW({
 }) {
   const handleChooseLessonContentItem = (lessonContent, index) => {
     if (index === currentIndex && contentTitleInput !== "") {
-      setLessonContentRWView(true);
+      setLessonContentMathView(true);
       setLessonContentType(lessonContent.text);
     }
   };
   return (
-    <div className={cx("create-lesson-content-rw-list")}>
-      {lessonRWContents.map((lessonContent, index) => (
+    <div className={cx("create-lesson-content-math-list")}>
+      {lessonMathContents.map((lessonContent, index) => (
         <div
-          className={cx("create-lesson-content-rw-item", {
+          className={cx("create-lesson-content-math-item", {
             "active-item": index === currentIndex,
             "disabled-item":
               (index !== currentIndex && !completedItems.includes(index)) ||
@@ -31,22 +31,22 @@ function CreateLessonContentRW({
           key={lessonContent.id}
           onClick={() => handleChooseLessonContentItem(lessonContent, index)}
         >
-          <div className={cx("create-rw-icon")}>
+          <div className={cx("create-math-icon")}>
             <i className={cx(lessonContent.icon, "icon")}></i>
           </div>
-          <div className={cx("create-rw-text")}>{lessonContent.text}</div>
+          <div className={cx("create-math-text")}>{lessonContent.text}</div>
         </div>
       ))}
     </div>
   );
 }
 
-CreateLessonContentRW.propTypes = {
-  setLessonContentRWView: PropTypes.func,
+CreateLessonContentMath.propTypes = {
+  setLessonContentMathView: PropTypes.func,
   setLessonContentType: PropTypes.func,
   contentTitleInput: PropTypes.string,
   currentIndex: PropTypes.number,
   completedItems: PropTypes.array,
 };
 
-export default CreateLessonContentRW;
+export default CreateLessonContentMath;
