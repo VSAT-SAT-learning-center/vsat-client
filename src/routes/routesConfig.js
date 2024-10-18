@@ -14,12 +14,10 @@ import ManagerFeedback from "~/pages/Manager/ManagerFeedback";
 import ManagerLearningMaterial from '~/pages/Manager/ManagerLearningMaterial';
 import FeedbackLearningMaterial from '~/pages/Manager/ManagerLearningMaterial/FeedbackLearningMaterial';
 import LearningMaterialCensor from '~/pages/Manager/ManagerLearningMaterial/LearningMaterialCensor';
-import ManagerPractice from "~/pages/Manager/ManagerPractice";
 import ManagerQuestionExam from '~/pages/Manager/ManagerQuestionExam';
 import QuestionExamCensor from '~/pages/Manager/ManagerQuestionExam/QuestionExamCensor';
 import ManagerQuestionQuizz from '~/pages/Manager/ManagerQuestionQuizz';
 import QuestionQuizzCensor from '~/pages/Manager/ManagerQuestionQuizz/QuestionQuizzCensor';
-import ManagerSettings from "~/pages/Manager/ManagerSettings";
 import NotFound from '~/pages/NotFound';
 import AccountSetting from "~/pages/Staff/AccountSetting";
 import Dashboard from "~/pages/Staff/Dashboard";
@@ -50,6 +48,13 @@ import LearningPart from '~/pages/Student/LearningPart';
 import LearningPartDetail from '~/pages/Student/LearningPartDetail';
 import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
 import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
+import ManagerPractice from "~/pages/Manager/ManagerPractice";
+import ManagerSettings from "~/pages/Manager/ManagerSettings";
+import AdminDashboard from "~/pages/Admin/AdminDashboard";
+import Account from "~/pages/Admin/Account";
+import CreateAccount from "~/pages/Admin/Account/CreateAccount";
+import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
+import AdminSettings from "~/pages/Admin/AdminSettings";
 
 const routesConfig = [
   // Landing page routes
@@ -129,6 +134,16 @@ const routesConfig = [
   { path: '/manager/account-setting', component: ManagerAccountSetting, protected: true },
   // Manger settings routes
   { path: '/manager/setting', component: ManagerSettings, protected: true },
+
+  // Admin routes
+  { path: '/admin', component: AdminDashboard, protected: true },
+  // Admin account routes
+  { path: '/admin/account/manage', component: Account, protected: true },
+  { path: '/admin/account/create', component: CreateAccount, protected: true },
+  // Admin account setting routes
+  { path: '/admin/account-setting', component: AdminAccountSetting, protected: true },
+  // Admin settings routes
+  { path: '/admin/setting', component: AdminSettings, protected: true },
 
   // Not found route
   { path: "*", component: NotFound },
