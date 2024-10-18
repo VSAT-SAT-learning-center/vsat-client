@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import classNames from "classnames/bind";
 import { useState } from "react";
 import styles from "./CreateAccount.module.scss";
@@ -5,7 +6,7 @@ import axios from "axios";
 
 const cx = classNames.bind(styles);
 
-function CreateAccount({ closeModal, fetchData, currentPage }) {  // Nhận fetchData và currentPage từ props
+function CreateAccount({ closeModal, fetchData, currentPage }) {
   const [formValid, setFormValid] = useState(true);
   const [formData, setFormData] = useState({
     role: "",
@@ -59,6 +60,7 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {  // Nhận fetc
 
         if (response.status === 201) {
           closeModal();
+          fetchData(currentPage); 
         }
       } catch (error) {
         console.error("Error creating account:", error.response?.data || error.message);
@@ -193,5 +195,11 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {  // Nhận fetc
     </div>
   );
 }
+
+CreateAccount.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  fetchData: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+};
 
 export default CreateAccount;
