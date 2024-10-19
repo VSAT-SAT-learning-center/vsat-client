@@ -55,6 +55,9 @@ import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
 import AdminSettings from "~/pages/Admin/AdminSettings";
+import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
+import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
+import TeacherSettings from "~/pages/Teacher/TeacherSettings";
 
 const routesConfig = [
   // Landing page routes
@@ -144,6 +147,13 @@ const routesConfig = [
   { path: '/admin/account-setting', component: AdminAccountSetting, protected: true },
   // Admin settings routes
   { path: '/admin/setting', component: AdminSettings, protected: true },
+
+  // Teacher routes
+  { path: '/teacher', component: TeacherDashboard, protected: true },
+  // Teacher account setting routes
+  { path: '/teacher/account-setting', component: TeacherAccountSetting, protected: true },
+  // Teacher settings routes
+  { path: '/teacher/setting', component: TeacherSettings, protected: true },
 
   // Not found route
   { path: "*", component: NotFound },
