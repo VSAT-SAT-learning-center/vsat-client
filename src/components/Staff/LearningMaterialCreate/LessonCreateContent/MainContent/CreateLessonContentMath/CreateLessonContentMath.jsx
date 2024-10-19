@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
-import styles from "./CreateLessonContentMath.module.scss";
 import { lessonMathContents } from "~/data/Staff/LessonMathContents";
+import styles from "./CreateLessonContentMath.module.scss";
 const cx = classNames.bind(styles);
 
 function CreateLessonContentMath({

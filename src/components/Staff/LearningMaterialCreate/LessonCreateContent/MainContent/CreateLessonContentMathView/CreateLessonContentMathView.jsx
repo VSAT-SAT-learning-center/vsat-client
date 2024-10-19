@@ -8,6 +8,7 @@ import CreateLessonContentQuestion from "../CreateLessonContentRWView/CreateLess
 import CreateLessonContentMathConcModal from "./CreateLessonContentMathConcModal";
 import CreateLessonContentMathConcView from "./CreateLessonContentMathConcView";
 import styles from "./CreateLessonContentMathView.module.scss";
+import PreviewLessonContentConc from "./PreviewLessonContentConc";
 import PreviewLessonContentMathQuestion from "./PreviewLessonContentMathQuestion";
 
 const cx = classNames.bind(styles);
@@ -18,7 +19,7 @@ function CreateLessonContentMathView({
   setLesson,
   setIsShowLessonContent,
   setLessonContentMathView,
-  lessonContentType = "Conceptual",
+  lessonContentType,
   currentIndex,
   completedItems,
   setCurrentIndex,
@@ -26,21 +27,19 @@ function CreateLessonContentMathView({
   contentTitleInput,
   setContentTitleInput,
 }) {
-  const [contents, setContents] = useState([
-    {
-      text: "",
-      examples: [],
-    },
-  ]);
+  const [contents, setContents] = useState([]);
   const [questionContent, setQuestionContent] = useState(null);
   const [isShowCreateQuestion, setIsShowCreateQuestion] = useState(false);
   const [isShowCreateConcContent, setIsShowCreateConcContent] = useState(false)
 
-  const handleContentChange = (value, index) => {
-    const updatedContents = [...contents];
-    updatedContents[index].text = value;
-    setContents(updatedContents);
+  const handleContentChange = (value, index = 0) => {
+    setContents((prev) => {
+      const updatedContents = [...prev];
+      updatedContents[index] = { ...updatedContents[index], text: value };
+      return updatedContents;
+    });
   };
+
 
   const handleClickCancel = () => {
     setLessonContentMathView(false);
@@ -54,7 +53,7 @@ function CreateLessonContentMathView({
       contentType: lessonContentType,
       title: contentTitleInput,
       contents: contents,
-      question: questionContent || null,
+      question: questionContent,
     };
     setLesson((prevLesson) => ({
       ...prevLesson,
@@ -67,33 +66,34 @@ function CreateLessonContentMathView({
     setContentTitleInput("");
   };
 
+  const isSaveEnabled =
+    lessonContentType === "Conceptual"
+      ? contents.length > 0 && questionContent !== null
+      : contents.length > 0 || questionContent !== null;
   return (
     <>
-      {isShowCreateConcContent && <CreateLessonContentMathConcModal setContents={setContents} setIsShowCreateConcContent={setIsShowCreateConcContent} />}
+      {isShowCreateConcContent && <CreateLessonContentMathConcModal contents={contents} setContents={setContents} setIsShowCreateConcContent={setIsShowCreateConcContent} />}
       <div className={cx("create-math-view-wrapper")}>
         <div className={cx("create-math-view-header")}>
           <div className={cx("lesson-title")}>{contentTitleInput}</div>
+          <div className={cx("lesson-type")}>{lessonContentType}</div>
         </div>
         <div className={cx("create-math-view-container")}>
           <div className={cx("create-lesson-editor")}>
             {lessonContentType === "Conceptual" && (
-              <CreateLessonContentMathConcView setIsShowCreateConcContent={setIsShowCreateConcContent} />
+              <CreateLessonContentMathConcView contents={contents} setQuestionContent={setQuestionContent} setIsShowCreateConcContent={setIsShowCreateConcContent} />
             )}
-
             {(lessonContentType === "Definition" || lessonContentType === "Tips & Tricks") &&
-              contents.map((contentItem, index) => (
-                <div key={index} className={cx("lesson-editor-input")} style={{ height: lessonContentType === "Definition" ? "90%" : "100%" }}>
-                  <ReactQuill
-                    className={cx("editor-input")}
-                    theme="snow"
-                    value={contentItem.text}
-                    onChange={(value) => handleContentChange(value, index)}
-                    placeholder={"Write something content..."}
-                  />
-                </div>
-              ))}
-            {(lessonContentType === "Definition" ||
-              lessonContentType === "Practice") &&
+              <div className={cx("lesson-editor-input")}>
+                <ReactQuill
+                  className={cx("editor-input")}
+                  theme="snow"
+                  onChange={(value) => handleContentChange(value, 0)}
+                  placeholder={"Write something content..."}
+                />
+              </div>
+            }
+            {lessonContentType === "Practice" &&
               (isShowCreateQuestion ? (
                 <CreateLessonContentQuestion
                   setQuestionContent={setQuestionContent}
@@ -113,27 +113,51 @@ function CreateLessonContentMathView({
           </div>
           <div className={cx("create-lesson-preview")}>
             <div className={cx("lesson-preview")}>
-              {contents && contents.length > 0 &&
-                contents.map((content, index) => (
-                  content ? (
-                    <MathRenderer key={index} loadedContent={content.text} />
-                  ) : null
-                ))
-              }
-              {questionContent && (
-                <PreviewLessonContentMathQuestion
-                  title={nameLesson}
-                  questionData={questionContent}
-                />
+              {lessonContentType === "Conceptual" ? (
+                <>
+                  {contents &&
+                    contents.length > 0 &&
+                    contents.map((content, index) => (
+                      <PreviewLessonContentConc key={index} content={content} />
+                    ))}
+                  {questionContent && (
+                    <div className={cx("conc-try-it")}>
+                      <div className={cx("try-it-title")}>Try it!</div>
+                      <PreviewLessonContentMathQuestion
+                        title={nameLesson}
+                        questionData={questionContent}
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  {contents &&
+                    contents.length > 0 &&
+                    contents.map((content, index) =>
+                      content ? (
+                        <MathRenderer key={index} loadedContent={content.text} />
+                      ) : null
+                    )}
+                  {questionContent && (
+                    <PreviewLessonContentMathQuestion
+                      title={nameLesson}
+                      questionData={questionContent}
+                    />
+                  )}
+                </>
               )}
             </div>
           </div>
+
         </div>
         <div className={cx("create-math-view-footer")}>
           <button className={cx("back-btn")} onClick={handleClickCancel}>
             Cancel
           </button>
-          <button className={cx("save-btn")} onClick={handleClickSave}>
+          <button className={cx("save-btn", { "disabled-btn": !isSaveEnabled })}
+            disabled={!isSaveEnabled}
+            onClick={handleClickSave}>
             Save
           </button>
         </div>
@@ -155,10 +179,6 @@ CreateLessonContentMathView.propTypes = {
   completedItems: PropTypes.array,
   contentTitleInput: PropTypes.string,
   setContentTitleInput: PropTypes.func,
-};
-
-CreateLessonContentMathView.defaultProps = {
-  lessonContentType: "Conceptual",
 };
 
 export default CreateLessonContentMathView;

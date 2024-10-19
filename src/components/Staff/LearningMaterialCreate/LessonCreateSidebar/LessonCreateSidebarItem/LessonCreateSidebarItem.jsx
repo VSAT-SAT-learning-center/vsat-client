@@ -34,14 +34,16 @@ function LessonCreateSidebarItem({ newUnit, topic, lessonId }) {
       </div>
       {isShowLesson && (
         <div className={cx("create-lessons-sidebar-lesson-container")}>
-          {topic.lessons.map((lesson) => (
-            <LessonInsideItem
-              key={lesson.id}
-              newUnit={newUnit}
-              lesson={lesson}
-              lessonId={lessonId}
-            />
-          ))}
+          {topic.lessons
+            .filter((lesson) => lesson.type === "Text" || lesson.type === "Math")
+            .map((lesson) => (
+              <LessonInsideItem
+                key={lesson.id}
+                newUnit={newUnit}
+                lesson={lesson}
+                lessonId={lessonId}
+              />
+            ))}
         </div>
       )}
     </div>

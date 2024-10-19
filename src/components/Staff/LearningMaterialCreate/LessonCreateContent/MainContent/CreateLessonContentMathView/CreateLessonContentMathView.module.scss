@@ -14,11 +14,19 @@
     width: 100%;
     height: 60px;
     padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid $text-color;
 
     .lesson-title {
       font-size: 20px;
       font-weight: 600;
+    }
+
+    .lesson-type {
+      font-size: 16px;
+      font-weight: 400;
     }
   }
 
@@ -40,6 +48,7 @@
 
       .lesson-editor-input {
         width: 100%;
+        height: 100%;
         margin-bottom: 10px;
 
         .editor-input {
@@ -96,6 +105,16 @@
         &::-webkit-scrollbar {
           display: none;
         }
+
+        .conc-try-it {
+          margin-top: 32px;
+          border-bottom: 1px solid #c0c0c0;
+
+          .try-it-title {
+            font-size: 26px;
+            font-weight: 700;
+          }
+        }
       }
     }
   }
@@ -109,6 +128,7 @@
     justify-content: flex-end;
     column-gap: 10px;
     border-top: 1px solid $text-color;
+    background-color: $bg-primary-color;
 
     .back-btn {
       cursor: pointer;

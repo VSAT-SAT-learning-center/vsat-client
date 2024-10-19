@@ -24,23 +24,35 @@ function LearningMaterialCreateLesson() {
   const [loadTopics, setLoadTopics] = useState([]);
   const [lesson, setLesson] = useState(null);
   const [completedItems, setCompletedItems] = useState([]);
+  const [lessonIds, setLessonIds] = useState([]);
+  const [currentLessonIndex, setCurrentLessonIndex] = useState(-1);
 
   useEffect(() => {
-    if (!newUnit?.id) return;
-
     const fetchUnitAreas = async () => {
       try {
         const topicsResponse = await apiClient.get(
           `/unit-areas/by-unit/${newUnit.id}`
         );
-        setLoadTopics(topicsResponse.data.data);
+        const topics = topicsResponse.data.data;
+        const collectedLessonIds = topics.flatMap((topic) =>
+          topic.lessons.map((lesson) => lesson.id)
+        );
+
+        setLoadTopics(topics);
+        setLessonIds(collectedLessonIds);
+
+        // If there's a lesson ID in the URL, set the current lesson index
+        const initialLessonIndex = collectedLessonIds.indexOf(id);
+        setCurrentLessonIndex(initialLessonIndex);
       } catch (error) {
         console.error("Error fetching unit areas:", error);
       }
     };
 
-    fetchUnitAreas();
-  }, [newUnit?.id]);
+    if (newUnit?.id) {
+      fetchUnitAreas();
+    }
+  }, [newUnit?.id, id]);
 
   useEffect(() => {
     if (!id) return;
@@ -67,13 +79,23 @@ function LearningMaterialCreateLesson() {
     navigate(steps[currentStep - 1].path);
   };
   const handleNext = async () => {
-    console.log(lesson);
     try {
+      // Call API to save the current lesson
       const response = await apiClient.post("/lessons", lesson);
-      console.log(response.data.data);
-      // navigate(steps[currentStep + 1].path);
+      console.log("Lesson saved:", response.data.data);
+
+      // Check if there is a next lesson available
+      if (currentLessonIndex >= 0 && currentLessonIndex < lessonIds.length - 1) {
+        const nextLessonId = lessonIds[currentLessonIndex + 1]; // Get the next lesson ID
+        setCurrentLessonIndex(currentLessonIndex + 1); // Update the current lesson index
+
+        // Navigate to the next lesson with the correct path format
+        navigate(`/staff/learning-material/create/lessons/${nextLessonId}`);
+      } else {
+        console.log("No more lessons available.");
+      }
     } catch (error) {
-      console.error("Error creating lesson:", error);
+      console.error("Error saving lesson:", error);
     }
   };
 
@@ -117,7 +139,7 @@ function LearningMaterialCreateLesson() {
               className={cx("continue-btn", {
                 "disabled-btn": !isContinueEnabled,
               })}
-              disabled={!isContinueEnabled}
+              // disabled={!isContinueEnabled}
               onClick={handleNext}
             >
               Continue

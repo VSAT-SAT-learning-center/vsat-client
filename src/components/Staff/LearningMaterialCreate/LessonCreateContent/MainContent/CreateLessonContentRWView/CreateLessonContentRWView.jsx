@@ -72,6 +72,7 @@ function CreateLessonContentRWView({
     <div className={cx("create-rw-view-wrapper")}>
       <div className={cx("create-rw-view-header")}>
         <div className={cx("lesson-title")}>{contentTitleInput}</div>
+        <div className={cx("lesson-type")}>{lessonContentType}</div>
       </div>
       <div className={cx("create-rw-view-container")}>
         <div className={cx("create-lesson-editor")}>
