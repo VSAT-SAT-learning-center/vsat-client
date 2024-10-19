@@ -26,6 +26,10 @@ function CreateLessonContentMathConcModal({ setContents, setIsShowCreateConcCont
     setContents((prevContents) => [...prevContents, content]);
     setIsShowCreateConcContent(false);
   }
+
+  const isSaveEnabled =
+    content.text.trim().length > 0 && content.examples.length > 0;
+
   return (
     <div className={cx("create-conc-modal-wrapper")}>
       <div className={cx("create-conc-modal-container")}>
@@ -68,7 +72,9 @@ function CreateLessonContentMathConcModal({ setContents, setIsShowCreateConcCont
           <button className={cx("back-btn")} onClick={() => setIsShowCreateConcContent(false)}>
             Cancel
           </button>
-          <button className={cx("save-btn")} onClick={handleClickSaveContent}>
+          <button className={cx("save-btn", { "disabled-btn": !isSaveEnabled })}
+            disabled={!isSaveEnabled}
+            onClick={handleClickSaveContent}>
             Save
           </button>
         </div>
