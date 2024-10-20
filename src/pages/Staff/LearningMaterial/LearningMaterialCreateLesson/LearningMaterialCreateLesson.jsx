@@ -7,12 +7,12 @@ import MainContent from "~/components/Staff/LearningMaterialCreate/LessonCreateC
 import NoContent from "~/components/Staff/LearningMaterialCreate/LessonCreateContent/NoContent";
 import LessonCreateSidebar from "~/components/Staff/LearningMaterialCreate/LessonCreateSidebar";
 import MultiStepProgressBar from "~/components/Staff/LearningMaterialCreate/MultiStepProgressBar";
+import { lessonMathContents } from "~/data/Staff/LessonMathContents";
 import { lessonRWContents } from "~/data/Staff/LessonRWContents";
 import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./LearningMaterialCreateLesson.module.scss";
-import { lessonMathContents } from "~/data/Staff/LessonMathContents";
 
 const cx = classNames.bind(styles);
 function LearningMaterialCreateLesson() {
@@ -83,16 +83,13 @@ function LearningMaterialCreateLesson() {
   }, [lessonId]);
 
   const handleNext = async () => {
-    
     try {
       if (!isLessonContentSaved) {
-        console.log(lesson);
         const response = await apiClient.post("/lessons", lesson);
         console.log("Lesson contents created:", response.data.data);
         setIsLessonContentSaved(true);
       } else {
-        // To do: Move to Publish
-        console.log("Lesson already has contents, skipping save.");
+        navigate(`${steps[currentStep + 1].path}/${unitId}/${lessonIds[0]}`);
       }
 
       // Move to the next lesson
@@ -101,7 +98,7 @@ function LearningMaterialCreateLesson() {
         setCurrentLessonIndex(currentLessonIndex + 1);
         navigate(`/staff/learning-material/create/lessons/${unitId}/${nextLessonId}`);
       } else {
-        console.log("No more lessons available.");
+        navigate(`${steps[currentStep + 1].path}/${unitId}/${lessonIds[0]}`);
       }
     } catch (error) {
       console.error("Error saving lesson:", error);

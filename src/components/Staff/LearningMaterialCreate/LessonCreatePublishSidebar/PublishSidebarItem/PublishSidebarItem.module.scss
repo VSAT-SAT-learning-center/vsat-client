@@ -1,25 +1,21 @@
 @import "~/styles/variables";
 
-.create-lessons-sidebar-item-container {
+.publish-sidebar_item {
   cursor: pointer;
+  user-select: none;
   width: 100%;
   height: fit-content;
-  padding-bottom: 12px;
   background-color: $bg-primary-color;
-  border-bottom: 1px solid $border-color;
 
-  &:last-child {
-    padding-bottom: 0;
-    border-bottom: none;
-  }
-
-  .create-lessons-sidebar-topic-item {
+  .sidebar-topic-item {
+    width: 100%;
+    height: fit-content;
+    padding: 20px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 16px;
-    border-bottom: 1px solid $border-color;
     transition: 0.2s linear;
+    border-bottom: 1px solid $border-color;
 
     &:hover {
       background-color: #f4f4f4;
@@ -35,7 +31,7 @@
       .topic-item-title {
         font-size: 16px;
         font-weight: 600;
-        width: 250px;
+        width: 245px;
         word-wrap: break-word;
         white-space: normal;
         overflow: hidden;
@@ -51,9 +47,8 @@
     }
   }
 
-  .create-lessons-sidebar-lesson-container {
+  .sidebar-lesson-list {
     width: 100%;
-    height: fit-content;
     border-bottom: 1px solid $border-color;
 
     .sidebar-lesson-item {
@@ -61,7 +56,6 @@
       display: flex;
       align-items: center;
       padding: 20px 16px;
-      background-color: $bg-primary-color;
       transition: 0.2s linear;
 
       &:hover {
@@ -79,7 +73,7 @@
 
       .lesson-item-title {
         font-size: 16px;
-        width: 250px;
+        width: 270px;
         word-wrap: break-word;
         white-space: normal;
         overflow: hidden;
