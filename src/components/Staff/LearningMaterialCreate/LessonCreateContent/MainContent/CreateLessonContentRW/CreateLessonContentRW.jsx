@@ -22,10 +22,9 @@ function CreateLessonContentRW({
       {lessonRWContents.map((lessonContent, index) => (
         <div
           className={cx("create-lesson-content-rw-item", {
-            "active-item": index === currentIndex,
             "disabled-item":
-              (index !== currentIndex && !completedItems.includes(index)) ||
-              (index === currentIndex && contentTitleInput === ""),
+              (index !== currentIndex && !completedItems.includes(index)),
+              // || (index === currentIndex && contentTitleInput === ""),
             "done-item": completedItems.includes(index),
           })}
           key={lessonContent.id}

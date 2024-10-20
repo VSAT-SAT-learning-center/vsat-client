@@ -6,18 +6,21 @@ const cx = classNames.bind(styles);
 
 function LessonTypeModal({
   setIsShowLessonTypeModal,
-  setIsShowCreateLesson,
   setLessonType,
+  inputLessonRef,
 }) {
   const handleClickChooseLessonType = (lesson) => {
+
     if (
       lesson.text === "Text" ||
       lesson.text === "Math" ||
       lesson.text === "Quiz"
     ) {
       setLessonType(lesson.text);
-      setIsShowCreateLesson(true);
       setIsShowLessonTypeModal(false);
+      if (inputLessonRef.current) {
+        inputLessonRef.current.focus();
+      }
     }
   };
   return (
@@ -53,8 +56,8 @@ function LessonTypeModal({
 
 LessonTypeModal.propTypes = {
   setIsShowLessonTypeModal: PropTypes.func,
-  setIsShowCreateLesson: PropTypes.func,
   setLessonType: PropTypes.func,
+  inputLessonRef: PropTypes.object,
 };
 
 export default LessonTypeModal;

@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import styles from "./LessonCreateSidebar.module.scss";
 import LessonCreateSidebarItem from "./LessonCreateSidebarItem";
 const cx = classNames.bind(styles);
-function LessonCreateSidebar({ newUnit, topics, lessonId }) {
+function LessonCreateSidebar({ unitId, topics, lessonId }) {
   return (
     <div className={cx("create-lessons-sidebar-container")}>
       {topics?.map((topic) => (
         <LessonCreateSidebarItem
           key={topic.id}
-          newUnit={newUnit}
+          unitId={unitId}
           topic={topic}
           lessonId={lessonId}
         />
@@ -19,7 +19,7 @@ function LessonCreateSidebar({ newUnit, topics, lessonId }) {
 }
 
 LessonCreateSidebar.propTypes = {
-  newUnit: PropTypes.object,
+  unitId: PropTypes.string,
   topics: PropTypes.array,
   lessonId: PropTypes.string,
 };

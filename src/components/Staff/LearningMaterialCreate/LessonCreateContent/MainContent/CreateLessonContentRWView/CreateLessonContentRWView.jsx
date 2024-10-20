@@ -13,7 +13,6 @@ function CreateLessonContentRWView({
   nameLesson,
   lesson,
   setLesson,
-  setIsShowLessonContent,
   setLessonContentRWView,
   lessonContentType,
   currentIndex,
@@ -53,13 +52,11 @@ function CreateLessonContentRWView({
     setCompletedItems([...completedItems, currentIndex]);
     setCurrentIndex((prev) => prev + 1);
     setLessonContentRWView(false);
-    setIsShowLessonContent(true);
     setContentTitleInput("");
   };
 
   const handleClickCancel = () => {
     setLessonContentRWView(false);
-    setIsShowLessonContent(false);
     setContentTitleInput("");
   };
 
@@ -138,7 +135,6 @@ CreateLessonContentRWView.propTypes = {
   nameLesson: PropTypes.string,
   lesson: PropTypes.object,
   setLesson: PropTypes.func,
-  setIsShowLessonContent: PropTypes.func,
   setLessonContentRWView: PropTypes.func,
   lessonContentType: PropTypes.string,
   currentIndex: PropTypes.number,

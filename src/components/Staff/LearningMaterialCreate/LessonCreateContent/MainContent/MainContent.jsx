@@ -1,7 +1,6 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import CreateLessonContentAction from "./CreateLessonContentAction";
 import CreateLessonContentMath from "./CreateLessonContentMath";
 import CreateLessonContentMathView from "./CreateLessonContentMathView";
 import CreateLessonContentRW from "./CreateLessonContentRW";
@@ -9,14 +8,12 @@ import CreateLessonContentRWView from "./CreateLessonContentRWView";
 import styles from "./MainContent.module.scss";
 const cx = classNames.bind(styles);
 
-function MainContent({ lesson, setLesson, completedItems, setCompletedItems }) {
+function MainContent({ lesson, setLesson, completedItems, setCompletedItems, currentIndex, setCurrentIndex }) {
   const [nameLesson, setNameLesson] = useState("");
-  const [isShowLessonContent, setIsShowLessonContent] = useState(false);
   const [lessonContentRWView, setLessonContentRWView] = useState(false);
   const [lessonContentMathView, setLessonContentMathView] = useState(false);
   const [lessonContentType, setLessonContentType] = useState("");
   const [contentTitleInput, setContentTitleInput] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     setNameLesson(lesson?.title);
@@ -32,6 +29,33 @@ function MainContent({ lesson, setLesson, completedItems, setCompletedItems }) {
       title: e.target.value,
     }));
   };
+
+
+  const renderLessonContent = () => {
+    if (lesson.type === "Text") {
+      return (
+        <CreateLessonContentRW
+          setLessonContentRWView={setLessonContentRWView}
+          setLessonContentType={setLessonContentType}
+          contentTitleInput={contentTitleInput}
+          currentIndex={currentIndex}
+          completedItems={completedItems}
+        />
+      );
+    } else if (lesson.type === "Math") {
+      return (
+        <CreateLessonContentMath
+          setLessonContentMathView={setLessonContentMathView}
+          setLessonContentType={setLessonContentType}
+          contentTitleInput={contentTitleInput}
+          currentIndex={currentIndex}
+          completedItems={completedItems}
+        />
+      );
+    } else {
+      return <div>No content available for this lesson type</div>;
+    }
+  };
   return (
     <>
       {lessonContentRWView && (
@@ -39,7 +63,6 @@ function MainContent({ lesson, setLesson, completedItems, setCompletedItems }) {
           nameLesson={nameLesson}
           lesson={lesson}
           setLesson={setLesson}
-          setIsShowLessonContent={setIsShowLessonContent}
           setLessonContentRWView={setLessonContentRWView}
           lessonContentType={lessonContentType}
           currentIndex={currentIndex}
@@ -51,19 +74,21 @@ function MainContent({ lesson, setLesson, completedItems, setCompletedItems }) {
         />
       )}
 
-      {lessonContentMathView && <CreateLessonContentMathView
-        nameLesson={nameLesson}
-        lesson={lesson}
-        setLesson={setLesson}
-        setIsShowLessonContent={setIsShowLessonContent}
-        setLessonContentMathView={setLessonContentMathView}
-        lessonContentType={lessonContentType}
-        currentIndex={currentIndex}
-        setCurrentIndex={setCurrentIndex}
-        completedItems={completedItems}
-        setCompletedItems={setCompletedItems}
-        contentTitleInput={contentTitleInput}
-        setContentTitleInput={setContentTitleInput} />}
+      {lessonContentMathView && (
+        <CreateLessonContentMathView
+          nameLesson={nameLesson}
+          lesson={lesson}
+          setLesson={setLesson}
+          setLessonContentMathView={setLessonContentMathView}
+          lessonContentType={lessonContentType}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+          completedItems={completedItems}
+          setCompletedItems={setCompletedItems}
+          contentTitleInput={contentTitleInput}
+          setContentTitleInput={setContentTitleInput}
+        />
+      )}
       <div className={cx("create-lessons-main-content-wrapper")}>
         <div className={cx("create-lesson-main-content-header")}>
           {nameLesson}
@@ -101,31 +126,7 @@ function MainContent({ lesson, setLesson, completedItems, setCompletedItems }) {
                 onChange={handleContentTitleChange}
               />
             </div>
-            {isShowLessonContent ? (
-              lesson.type === "Text" ? (
-                <CreateLessonContentRW
-                  setLessonContentRWView={setLessonContentRWView}
-                  setLessonContentType={setLessonContentType}
-                  contentTitleInput={contentTitleInput}
-                  currentIndex={currentIndex}
-                  completedItems={completedItems}
-                />
-              ) : lesson.type === "Math" ? (
-                <CreateLessonContentMath
-                  setLessonContentMathView={setLessonContentMathView}
-                  setLessonContentType={setLessonContentType}
-                  contentTitleInput={contentTitleInput}
-                  currentIndex={currentIndex}
-                  completedItems={completedItems}
-                />
-              ) : (
-                <div>No content available for this lesson type</div>
-              )
-            ) : (
-              <CreateLessonContentAction
-                setIsShowLessonContent={setIsShowLessonContent}
-              />
-            )}
+            {renderLessonContent()}
           </div>
         </div>
       </div>
@@ -138,6 +139,8 @@ MainContent.propTypes = {
   setLesson: PropTypes.func,
   setCompletedItems: PropTypes.func,
   completedItems: PropTypes.array,
+  currentIndex: PropTypes.number,
+  setCurrentIndex: PropTypes.func,
 };
 
 export default MainContent;

@@ -13,7 +13,7 @@ function CreateLessonContentExample({ setContent, setIsShowCreateExample }) {
 
   const handleClickDone = () => {
     const newExample = {
-      id: uuidv4(),
+      exampleId: uuidv4(),
       content: exampleContent,
       explain: exampleExplain,
     };
