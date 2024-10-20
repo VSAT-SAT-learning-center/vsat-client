@@ -55,6 +55,9 @@ import LearningPart from '~/pages/Student/LearningPart';
 import LearningPartDetail from '~/pages/Student/LearningPartDetail';
 import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
 import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
+import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
+import TeacherSettings from "~/pages/Teacher/TeacherSettings";
+import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 
 const routesConfig = [
   // Landing page routes
@@ -146,6 +149,13 @@ const routesConfig = [
   { path: '/admin/account-setting', component: AdminAccountSetting, protected: true },
   // Admin settings routes
   { path: '/admin/setting', component: AdminSettings, protected: true },
+
+  // Teacher routes
+  { path: '/teacher', component: TeacherDashboard, protected: true },
+  // Teacher account setting routes
+  { path: '/teacher/account-setting', component: TeacherAccountSetting, protected: true },
+  // Teacher settings routes
+  { path: '/teacher/setting', component: TeacherSettings, protected: true },
 
   // Not found route
   { path: "*", component: NotFound },
