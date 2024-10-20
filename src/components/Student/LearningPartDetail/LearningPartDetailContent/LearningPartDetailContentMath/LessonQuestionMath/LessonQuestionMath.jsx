@@ -1,11 +1,10 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { questionMathData } from "~/data/LearningPartDetailContent/questionMathData";
 import { renderMathAndText } from "~/utils/renderMathAndText";
 import styles from "./LessonQuestionMath.module.scss";
 const cx = classNames.bind(styles);
-function LessonQuestionMath({ title }) {
+function LessonQuestionMath({ title, questionMathData }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [isCheckError, setIsCheckError] = useState(false);
   const [isShowExplain, setIsShowExplain] = useState(false);
@@ -23,25 +22,25 @@ function LessonQuestionMath({ title }) {
       setIsCheckError(true);
       return;
     }
-    const selectedIndex = questionMathData.options.findIndex(
-      (option) => option.label === selectedOption
+    const selectedIndex = questionMathData?.answers.findIndex(
+      (answer) => answer.label === selectedOption
     );
 
     setCheckedAnswers((prev) => ({
       ...prev,
       [selectedOption]:
-        selectedOption === questionMathData.correctAnswer
+        selectedOption === questionMathData?.correctAnswer
           ? "correct"
           : "incorrect",
     }));
 
-    if (selectedOption !== questionMathData.correctAnswer) {
+    if (selectedOption !== questionMathData?.correctAnswer) {
       setIncorrectIndex(selectedIndex);
     } else {
       setCorrectIndex(selectedIndex);
     }
 
-    if (selectedOption === questionMathData.correctAnswer) {
+    if (selectedOption === questionMathData?.correctAnswer) {
       setIsAnswerCorrect(true);
     }
   };
@@ -56,18 +55,18 @@ function LessonQuestionMath({ title }) {
       <div
         className={cx("question-content")}
         dangerouslySetInnerHTML={{
-          __html: renderMathAndText(questionMathData.prompt),
+          __html: renderMathAndText(questionMathData?.prompt),
         }}
       ></div>
       <div className={cx("question-answers")}>
         <div className={cx("answers-title")}>Choose 1 answer:</div>
         <div className={cx("answers-list")}>
-          {questionMathData.options.map((option, index) => (
+          {questionMathData?.answers.map((answer, index) => (
             <div
-              key={option.optionId}
+              key={answer.answerId}
               className={cx("answer", {
-                correctAnswer: checkedAnswers[option.label] === "correct",
-                incorrectAnswer: checkedAnswers[option.label] === "incorrect",
+                correctAnswer: checkedAnswers[answer.label] === "correct",
+                incorrectAnswer: checkedAnswers[answer.label] === "incorrect",
                 disabled: isAnswerCorrect,
                 "no-border-bottom":
                   incorrectIndex === index + 1 || correctIndex === index + 1,
@@ -78,25 +77,25 @@ function LessonQuestionMath({ title }) {
               >
                 <input
                   type="radio"
-                  value={option.label}
-                  checked={selectedOption === option.label}
+                  value={answer.label}
+                  checked={selectedOption === answer.label}
                   onChange={handleOptionChange}
                   className={cx("answer-select", {
-                    correctAnswer: checkedAnswers[option.label] === "correct",
+                    correctAnswer: checkedAnswers[answer.label] === "correct",
                     incorrectAnswer:
-                      checkedAnswers[option.label] === "incorrect",
+                      checkedAnswers[answer.label] === "incorrect",
                     disabled: isAnswerCorrect,
                   })}
                   disabled={isAnswerCorrect}
                 />
                 <div
                   className={cx("answer-text", {
-                    correctAnswer: checkedAnswers[option.label] === "correct",
+                    correctAnswer: checkedAnswers[answer.label] === "correct",
                     incorrectAnswer:
-                      checkedAnswers[option.label] === "incorrect",
+                      checkedAnswers[answer.label] === "incorrect",
                   })}
                   dangerouslySetInnerHTML={{
-                    __html: renderMathAndText(option.text),
+                    __html: renderMathAndText(answer.text),
                   }}
                 />
               </label>
@@ -152,6 +151,7 @@ function LessonQuestionMath({ title }) {
 
 LessonQuestionMath.propTypes = {
   title: PropTypes.string,
+  questionMathData: PropTypes.object,
 };
 
 export default LessonQuestionMath;

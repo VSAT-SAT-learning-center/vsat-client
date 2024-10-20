@@ -2,11 +2,10 @@ import classNames from "classnames/bind";
 import DOMPurify from "dompurify";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { questionData } from "~/data/LearningPartDetailContent/questionData";
 import styles from "./LessonQuestion.module.scss";
-const cx = classNames.bind(styles);
+const cx = classNames.bind(styles); 
 
-function LessonQuestion({ title }) {
+function LessonQuestion({ title, questionData }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [isCheckError, setIsCheckError] = useState(false);
   const [isShowExplain, setIsShowExplain] = useState(false);
@@ -24,23 +23,26 @@ function LessonQuestion({ title }) {
       setIsCheckError(true);
       return;
     }
-    const selectedIndex = questionData.options.findIndex(
-      (option) => option.label === selectedOption
+    const selectedIndex = questionData?.answers.findIndex(
+      (answer) => answer.label === selectedOption
     );
 
     setCheckedAnswers((prev) => ({
       ...prev,
       [selectedOption]:
-        selectedOption === questionData.correctAnswer ? "correct" : "incorrect",
+        selectedOption === questionData?.correctAnswer
+          ? "correct" : "incorrect",
     }));
 
-    if (selectedOption !== questionData.correctAnswer) {
+    if (selectedOption !== questionData?.correctAnswer
+    ) {
       setIncorrectIndex(selectedIndex);
     } else {
       setCorrectIndex(selectedIndex);
     }
 
-    if (selectedOption === questionData.correctAnswer) {
+    if (selectedOption === questionData?.correctAnswer
+    ) {
       setIsAnswerCorrect(true);
     }
   };
@@ -49,8 +51,8 @@ function LessonQuestion({ title }) {
     setIsShowExplain(!isShowExplain);
   };
 
-  const sanitizedQuestion = DOMPurify.sanitize(questionData.prompt);
-  const sanitizedExplain = DOMPurify.sanitize(questionData.explanation);
+  const sanitizedQuestion = DOMPurify.sanitize(questionData?.prompt);
+  const sanitizedExplain = DOMPurify.sanitize(questionData?.explanation);
 
   return (
     <div className={cx("question-container")}>
@@ -62,12 +64,12 @@ function LessonQuestion({ title }) {
       <div className={cx("question-answers")}>
         <div className={cx("answers-title")}>Choose 1 answer:</div>
         <div className={cx("answers-list")}>
-          {questionData.options.map((option, index) => (
+          {questionData?.answers.map((answer, index) => (
             <div
-              key={option.optionId}
+              key={answer.answerId}
               className={cx("answer", {
-                correctAnswer: checkedAnswers[option.label] === "correct",
-                incorrectAnswer: checkedAnswers[option.label] === "incorrect",
+                correctAnswer: checkedAnswers[answer.label] === "correct",
+                incorrectAnswer: checkedAnswers[answer.label] === "incorrect",
                 disabled: isAnswerCorrect,
                 "no-border-bottom":
                   incorrectIndex === index + 1 || correctIndex === index + 1,
@@ -78,25 +80,25 @@ function LessonQuestion({ title }) {
               >
                 <input
                   type="radio"
-                  value={option.label}
-                  checked={selectedOption === option.label}
+                  value={answer.label}
+                  checked={selectedOption === answer.label}
                   onChange={handleOptionChange}
                   className={cx("answer-select", {
-                    correctAnswer: checkedAnswers[option.label] === "correct",
+                    correctAnswer: checkedAnswers[answer.label] === "correct",
                     incorrectAnswer:
-                      checkedAnswers[option.label] === "incorrect",
+                      checkedAnswers[answer.label] === "incorrect",
                     disabled: isAnswerCorrect,
                   })}
                   disabled={isAnswerCorrect}
                 />
                 <div
                   className={cx("answer-text", {
-                    correctAnswer: checkedAnswers[option.label] === "correct",
+                    correctAnswer: checkedAnswers[answer.label] === "correct",
                     incorrectAnswer:
-                      checkedAnswers[option.label] === "incorrect",
+                      checkedAnswers[answer.label] === "incorrect",
                   })}
                   dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(option.text),
+                    __html: DOMPurify.sanitize(answer.text),
                   }}
                 />
               </label>
@@ -150,6 +152,7 @@ function LessonQuestion({ title }) {
 
 LessonQuestion.propTypes = {
   title: PropTypes.string,
+  questionData: PropTypes.object,
 };
 
 export default LessonQuestion;

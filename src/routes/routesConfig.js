@@ -1,4 +1,3 @@
-import CreateLessonContentMathView from "~/components/Staff/LearningMaterialCreate/LessonCreateContent/MainContent/CreateLessonContentMathView";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -53,16 +52,16 @@ import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
 import Learning from '~/pages/Student/Learning';
 import LearningPart from '~/pages/Student/LearningPart';
 import LearningPartDetail from '~/pages/Student/LearningPartDetail';
-import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
-import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
+import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
-import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
+import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
+import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
 
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: CreateLessonContentMathView },
+  { path: "/test", component: LearningMaterialPublish },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
@@ -83,6 +82,7 @@ const routesConfig = [
   { path: '/staff/learning-material/create/lessons/:unitId', component: LearningMaterialCreateLesson, protected: true },
   { path: '/staff/learning-material/create/lessons/:unitId/:lessonId', component: LearningMaterialCreateLesson, protected: true },
   { path: '/staff/learning-material/create/publish', component: LearningMaterialPublish, protected: true },
+  { path: '/staff/learning-material/create/publish/:unitId/:lessonId', component: LearningMaterialPublish, protected: true },
   { path: '/staff/learning-material/assignments', component: LearningMaterialAss, protected: true },
   // Staff question bank routes
   { path: '/staff/question-bank/bank', component: QuestionExam, protected: true },
