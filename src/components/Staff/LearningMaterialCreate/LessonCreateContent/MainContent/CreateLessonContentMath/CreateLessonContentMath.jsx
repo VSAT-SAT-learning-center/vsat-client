@@ -24,8 +24,8 @@ function CreateLessonContentMath({
           className={cx("create-lesson-content-math-item", {
             "active-item": index === currentIndex,
             "disabled-item":
-              (index !== currentIndex && !completedItems.includes(index)) ||
-              (index === currentIndex && contentTitleInput === ""),
+              (index !== currentIndex && !completedItems.includes(index)), 
+              // || (index === currentIndex && contentTitleInput === ""),
             "done-item": completedItems.includes(index),
           })}
           key={lessonContent.id}

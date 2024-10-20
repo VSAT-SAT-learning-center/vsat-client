@@ -4,12 +4,10 @@ import { useNavigate } from "react-router-dom";
 import styles from "./LessonCreateSidebarItem.module.scss";
 const cx = classNames.bind(styles);
 
-function LessonInsideItem({ newUnit, lesson, lessonId }) {
+function LessonInsideItem({ unitId, lesson, lessonId }) {
   const navigate = useNavigate();
   const handleClickLessonItem = () => {
-    navigate(`/staff/learning-material/create/lessons/${lesson.id}`, {
-      state: { newUnit },
-    });
+    navigate(`/staff/learning-material/create/lessons/${unitId}/${lesson.id}`);
   };
   return (
     <div
@@ -25,7 +23,7 @@ function LessonInsideItem({ newUnit, lesson, lessonId }) {
 }
 
 LessonInsideItem.propTypes = {
-  newUnit: PropTypes.object,
+  unitId: PropTypes.string,
   lesson: PropTypes.object,
   lessonId: PropTypes.string,
 };

@@ -1,12 +1,18 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./LessonCreateSidebarItem.module.scss";
 import LessonInsideItem from "./LessonInsideItem";
 const cx = classNames.bind(styles);
 
-function LessonCreateSidebarItem({ newUnit, topic, lessonId }) {
+function LessonCreateSidebarItem({ unitId, topic, lessonId }) {
   const [isShowLesson, setIsShowLesson] = useState(false);
+
+  useEffect(() => {
+    if (topic.lessons.some((lesson) => lesson.id === lessonId)) {
+      setIsShowLesson(true);
+    }
+  }, [lessonId, topic.lessons]);
   const handleClickShowLesson = () => {
     setIsShowLesson(!isShowLesson);
   };
@@ -39,7 +45,7 @@ function LessonCreateSidebarItem({ newUnit, topic, lessonId }) {
             .map((lesson) => (
               <LessonInsideItem
                 key={lesson.id}
-                newUnit={newUnit}
+                unitId={unitId}
                 lesson={lesson}
                 lessonId={lessonId}
               />
@@ -51,7 +57,7 @@ function LessonCreateSidebarItem({ newUnit, topic, lessonId }) {
 }
 
 LessonCreateSidebarItem.propTypes = {
-  newUnit: PropTypes.object,
+  unitId: PropTypes.string,
   topic: PropTypes.object,
   lessonId: PropTypes.string,
 };

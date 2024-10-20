@@ -17,7 +17,6 @@ function CreateLessonContentMathView({
   nameLesson,
   lesson,
   setLesson,
-  setIsShowLessonContent,
   setLessonContentMathView,
   lessonContentType,
   currentIndex,
@@ -43,7 +42,6 @@ function CreateLessonContentMathView({
 
   const handleClickCancel = () => {
     setLessonContentMathView(false);
-    setIsShowLessonContent(false);
     setContentTitleInput("");
   };
 
@@ -62,7 +60,6 @@ function CreateLessonContentMathView({
     setCompletedItems([...completedItems, currentIndex]);
     setCurrentIndex((prev) => prev + 1);
     setLessonContentMathView(false);
-    setIsShowLessonContent(true);
     setContentTitleInput("");
   };
 
@@ -170,7 +167,6 @@ CreateLessonContentMathView.propTypes = {
   nameLesson: PropTypes.string,
   lesson: PropTypes.object,
   setLesson: PropTypes.func,
-  setIsShowLessonContent: PropTypes.func,
   setLessonContentMathView: PropTypes.func,
   lessonContentType: PropTypes.string,
   currentIndex: PropTypes.number,

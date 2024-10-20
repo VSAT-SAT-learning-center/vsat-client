@@ -1,7 +1,7 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import classNames from "classnames/bind";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
@@ -18,12 +18,11 @@ const cx = classNames.bind(styles);
 function LearningMaterialCreateTopic() {
   const navigate = useNavigate();
   const currentStep = 1;
-  const location = useLocation();
-  const { newUnit } = location.state || {};
+  const { unitId } = useParams();
+  const inputLessonRef = useRef(null);
   const [topics, setTopics] = useState([]);
   const [createTopicPreviews, setCreateTopicPreviews] = useState([]);
   const [lessonType, setLessonType] = useState("Empty");
-  const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
   const [isShowLessonTypeModal, setIsShowLessonTypeModal] = useState(false);
 
   const onDragEnd = (result) => {
@@ -80,17 +79,15 @@ function LearningMaterialCreateTopic() {
     );
   };
 
-  const handlePrevious = () => {
-    navigate(steps[currentStep - 1].path);
-  };
   const handleNext = async () => {
     try {
       await apiClient.post("/unit-areas/create", topics);
-      navigate(steps[currentStep + 1].path, { state: { newUnit } });
+      navigate(`${steps[currentStep + 1].path}/${unitId}`);
     } catch (error) {
       console.error("Error creating unit:", error);
     }
   };
+
 
   const isContinueEnabled = topics.length > 0;
 
@@ -99,8 +96,8 @@ function LearningMaterialCreateTopic() {
       {isShowLessonTypeModal && (
         <LessonTypeModal
           setIsShowLessonTypeModal={setIsShowLessonTypeModal}
-          setIsShowCreateLesson={setIsShowCreateLesson}
           setLessonType={setLessonType}
+          inputLessonRef={inputLessonRef}
         />
       )}
       <PageLayout>
@@ -132,6 +129,7 @@ function LearningMaterialCreateTopic() {
                               {...provided.draggableProps}
                             >
                               <TopicItem
+                                inputLessonRef={inputLessonRef}
                                 key={topic.id}
                                 topic={topic}
                                 setTopics={setTopics}
@@ -139,8 +137,6 @@ function LearningMaterialCreateTopic() {
                                 setIsShowLessonTypeModal={
                                   setIsShowLessonTypeModal
                                 }
-                                isShowCreateLesson={isShowCreateLesson}
-                                setIsShowCreateLesson={setIsShowCreateLesson}
                                 lessonType={lessonType}
                               />
                             </div>
@@ -156,13 +152,12 @@ function LearningMaterialCreateTopic() {
               {createTopicPreviews.map((preview) => (
                 <div key={preview.id} className={cx("create-topic-preview")}>
                   <TopicItemPreview
+                    inputLessonRef={inputLessonRef}
                     id={preview.id}
-                    unitId={newUnit.id}
+                    unitId={unitId}
                     setTopics={setTopics}
                     onCancel={handleRemovePreview}
                     setIsShowLessonTypeModal={setIsShowLessonTypeModal}
-                    isShowCreateLesson={isShowCreateLesson}
-                    setIsShowCreateLesson={setIsShowCreateLesson}
                     lessonType={lessonType}
                   />
                 </div>
@@ -178,9 +173,6 @@ function LearningMaterialCreateTopic() {
               </div>
             </div>
             <div className={cx("create-topics-bottom")}>
-              <button className={cx("back-btn")} onClick={handlePrevious}>
-                Back
-              </button>
               <button
                 className={cx("continue-btn", {
                   "disabled-btn": !isContinueEnabled,

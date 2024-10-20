@@ -7,20 +7,23 @@ import LessonItemPreview from "../LessonItemPreview";
 import styles from "./TopicItemPreview.module.scss";
 const cx = classNames.bind(styles);
 function TopicItemPreview({
+  inputLessonRef,
   id,
   unitId,
   setTopics,
   onCancel,
   setIsShowLessonTypeModal,
-  isShowCreateLesson,
-  setIsShowCreateLesson,
   lessonType,
 }) {
   const [topicTitle, setTopicTitle] = useState("New topic");
   const [lessons, setLessons] = useState([]);
+  const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
+
 
   const handleClickCreateNewLesson = () => {
     setIsShowLessonTypeModal(true);
+    setIsShowCreateLesson(true)
+
   };
 
   const handleChangeTopicTitle = (e) => {
@@ -76,6 +79,7 @@ function TopicItemPreview({
           {isShowCreateLesson && (
             <div className={cx("lesson-content-preview")}>
               <LessonItemPreview
+                inputLessonRef={inputLessonRef}
                 type="create"
                 setLessons={setLessons}
                 setIsShowCreateLesson={setIsShowCreateLesson}
@@ -99,13 +103,12 @@ function TopicItemPreview({
 }
 
 TopicItemPreview.propTypes = {
+  inputLessonRef: PropTypes.object,
   setTopics: PropTypes.func,
   id: PropTypes.string,
   unitId: PropTypes.string,
   onCancel: PropTypes.func,
   setIsShowLessonTypeModal: PropTypes.func,
-  isShowCreateLesson: PropTypes.bool,
-  setIsShowCreateLesson: PropTypes.func,
   lessonType: PropTypes.string,
 };
 

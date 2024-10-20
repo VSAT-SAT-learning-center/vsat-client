@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import PageLayout from "~/layouts/Teacher/PageLayout";
 import styles from "./TeacherAccountSetting.module.scss";
 const cx = classNames.bind(styles);
-function AdminAccountSetting() {
+function TeacherAccountSetting() {
   return (
     <PageLayout>
       <div className={cx("teacher-account-setting-title")}>Account Setting</div>
@@ -10,4 +10,4 @@ function AdminAccountSetting() {
   );
 }
 
-export default AdminAccountSetting;
+export default TeacherAccountSetting;

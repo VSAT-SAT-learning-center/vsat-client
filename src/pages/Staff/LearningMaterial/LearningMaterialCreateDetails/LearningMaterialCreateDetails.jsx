@@ -107,7 +107,7 @@ function LearningMaterialCreateDetails() {
           levelId: "",
         });
         setCountTitleInput(0);
-        navigate(steps[currentStep + 1].path, { state: { newUnit } });
+        navigate(`${steps[currentStep + 1].path}/${newUnit.id}`);
       } catch (error) {
         console.error("Error creating unit:", error);
       }

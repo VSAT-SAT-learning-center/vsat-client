@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import MainContent from "~/components/Staff/LearningMaterialCreate/LessonCreateContent/MainContent";
@@ -12,85 +12,94 @@ import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./LearningMaterialCreateLesson.module.scss";
+import { lessonMathContents } from "~/data/Staff/LessonMathContents";
 
 const cx = classNames.bind(styles);
 function LearningMaterialCreateLesson() {
   const navigate = useNavigate();
   const currentStep = 2;
-  const { id } = useParams();
-  const location = useLocation();
-  const { newUnit } = location.state || {};
+  const { unitId, lessonId } = useParams();
 
   const [loadTopics, setLoadTopics] = useState([]);
   const [lesson, setLesson] = useState(null);
   const [completedItems, setCompletedItems] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [lessonIds, setLessonIds] = useState([]);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(-1);
+  const [isLessonContentSaved, setIsLessonContentSaved] = useState(false);
 
   useEffect(() => {
     const fetchUnitAreas = async () => {
       try {
         const topicsResponse = await apiClient.get(
-          `/unit-areas/by-unit/${newUnit.id}`
+          `/unit-areas/by-unit/${unitId}`
         );
         const topics = topicsResponse.data.data;
         const collectedLessonIds = topics.flatMap((topic) =>
           topic.lessons.map((lesson) => lesson.id)
         );
-
         setLoadTopics(topics);
         setLessonIds(collectedLessonIds);
-
-        // If there's a lesson ID in the URL, set the current lesson index
-        const initialLessonIndex = collectedLessonIds.indexOf(id);
+        const initialLessonIndex = collectedLessonIds.indexOf(lessonId);
         setCurrentLessonIndex(initialLessonIndex);
       } catch (error) {
         console.error("Error fetching unit areas:", error);
       }
     };
 
-    if (newUnit?.id) {
+    if (unitId) {
       fetchUnitAreas();
     }
-  }, [newUnit?.id, id]);
+  }, [unitId, lessonId]);
 
   useEffect(() => {
-    if (!id) return;
+    if (!lessonId) return;
 
     const fetchLesson = async () => {
       try {
-        const lessonResponse = await apiClient.get(`/lessons/${id}`);
-        const { id: lessonId, title, type, lessonContents } = lessonResponse.data.data;
+        const lessonResponse = await apiClient.get(`/lessons/${lessonId}`);
+        const { id: lessonNewId, title, type, lessonContents } = lessonResponse.data.data;
         setLesson({
-          lessonId: lessonId,
+          lessonId: lessonNewId,
           title,
           type,
           lessonContents,
         });
+        if (lessonContents?.length > 0) {
+          const itemsArray = Array.from({ length: lessonContents.length }, (_, i) => i);
+          setCompletedItems(itemsArray);
+          setIsLessonContentSaved(true);
+        } else {
+          setCompletedItems([]);
+          setCurrentIndex(0);
+          setIsLessonContentSaved(false);
+        }
       } catch (error) {
         console.error("Error fetching lesson information:", error);
       }
     };
 
     fetchLesson();
-  }, [id]);
+  }, [lessonId]);
 
-  const handlePrevious = () => {
-    navigate(steps[currentStep - 1].path);
-  };
   const handleNext = async () => {
+    
     try {
-      // Call API to save the current lesson
-      const response = await apiClient.post("/lessons", lesson);
-      console.log("Lesson saved:", response.data.data);
+      if (!isLessonContentSaved) {
+        console.log(lesson);
+        const response = await apiClient.post("/lessons", lesson);
+        console.log("Lesson contents created:", response.data.data);
+        setIsLessonContentSaved(true);
+      } else {
+        // To do: Move to Publish
+        console.log("Lesson already has contents, skipping save.");
+      }
 
-      // Check if there is a next lesson available
+      // Move to the next lesson
       if (currentLessonIndex >= 0 && currentLessonIndex < lessonIds.length - 1) {
-        const nextLessonId = lessonIds[currentLessonIndex + 1]; // Get the next lesson ID
-        setCurrentLessonIndex(currentLessonIndex + 1); // Update the current lesson index
-
-        // Navigate to the next lesson with the correct path format
-        navigate(`/staff/learning-material/create/lessons/${nextLessonId}`);
+        const nextLessonId = lessonIds[currentLessonIndex + 1];
+        setCurrentLessonIndex(currentLessonIndex + 1);
+        navigate(`/staff/learning-material/create/lessons/${unitId}/${nextLessonId}`);
       } else {
         console.log("No more lessons available.");
       }
@@ -99,7 +108,7 @@ function LearningMaterialCreateLesson() {
     }
   };
 
-  const isContinueEnabled = completedItems.length === lessonRWContents.length;
+  const isContinueEnabled = completedItems.length === lessonRWContents.length || completedItems.length === lessonMathContents.length;
 
   return (
     <PageLayout>
@@ -113,9 +122,9 @@ function LearningMaterialCreateLesson() {
           <div className={cx("create-lessons-content")}>
             <div className={cx("create-lessons-sidebar-wrapper")}>
               <LessonCreateSidebar
-                newUnit={newUnit}
+                unitId={unitId}
                 topics={loadTopics}
-                lessonId={id}
+                lessonId={lessonId}
               />
             </div>
             <div className={cx("create-lessons-main-wrapper")}>
@@ -125,6 +134,8 @@ function LearningMaterialCreateLesson() {
                   setLesson={setLesson}
                   completedItems={completedItems}
                   setCompletedItems={setCompletedItems}
+                  currentIndex={currentIndex}
+                  setCurrentIndex={setCurrentIndex}
                 />
               ) : (
                 <NoContent />
@@ -132,14 +143,11 @@ function LearningMaterialCreateLesson() {
             </div>
           </div>
           <div className={cx("create-lessons-bottom")}>
-            <button className={cx("back-btn")} onClick={handlePrevious}>
-              Back
-            </button>
             <button
               className={cx("continue-btn", {
                 "disabled-btn": !isContinueEnabled,
               })}
-              // disabled={!isContinueEnabled}
+              disabled={!isContinueEnabled}
               onClick={handleNext}
             >
               Continue

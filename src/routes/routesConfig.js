@@ -1,4 +1,9 @@
 import CreateLessonContentMathView from "~/components/Staff/LearningMaterialCreate/LessonCreateContent/MainContent/CreateLessonContentMathView";
+import Account from "~/pages/Admin/Account";
+import CreateAccount from "~/pages/Admin/Account/CreateAccount";
+import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
+import AdminDashboard from "~/pages/Admin/AdminDashboard";
+import AdminSettings from "~/pages/Admin/AdminSettings";
 import About from "~/pages/Landing/About";
 import Contact from "~/pages/Landing/Contact";
 import Home from "~/pages/Landing/Home";
@@ -14,10 +19,12 @@ import ManagerFeedback from "~/pages/Manager/ManagerFeedback";
 import ManagerLearningMaterial from '~/pages/Manager/ManagerLearningMaterial';
 import FeedbackLearningMaterial from '~/pages/Manager/ManagerLearningMaterial/FeedbackLearningMaterial';
 import LearningMaterialCensor from '~/pages/Manager/ManagerLearningMaterial/LearningMaterialCensor';
+import ManagerPractice from "~/pages/Manager/ManagerPractice";
 import ManagerQuestionExam from '~/pages/Manager/ManagerQuestionExam';
 import QuestionExamCensor from '~/pages/Manager/ManagerQuestionExam/QuestionExamCensor';
 import ManagerQuestionQuizz from '~/pages/Manager/ManagerQuestionQuizz';
 import QuestionQuizzCensor from '~/pages/Manager/ManagerQuestionQuizz/QuestionQuizzCensor';
+import ManagerSettings from "~/pages/Manager/ManagerSettings";
 import NotFound from '~/pages/NotFound';
 import AccountSetting from "~/pages/Staff/AccountSetting";
 import Dashboard from "~/pages/Staff/Dashboard";
@@ -48,16 +55,9 @@ import LearningPart from '~/pages/Student/LearningPart';
 import LearningPartDetail from '~/pages/Student/LearningPartDetail';
 import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
 import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
-import ManagerPractice from "~/pages/Manager/ManagerPractice";
-import ManagerSettings from "~/pages/Manager/ManagerSettings";
-import AdminDashboard from "~/pages/Admin/AdminDashboard";
-import Account from "~/pages/Admin/Account";
-import CreateAccount from "~/pages/Admin/Account/CreateAccount";
-import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
-import AdminSettings from "~/pages/Admin/AdminSettings";
 import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
-import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
+import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 
 const routesConfig = [
   // Landing page routes
@@ -78,8 +78,10 @@ const routesConfig = [
   { path: '/staff/learning-material/overview', component: LearningMaterial, protected: true },
   { path: '/staff/learning-material/create', component: LearningMaterialCreateDetails, protected: true },
   { path: '/staff/learning-material/create/topics', component: LearningMaterialCreateTopic, protected: true },
+  { path: '/staff/learning-material/create/topics/:unitId', component: LearningMaterialCreateTopic, protected: true },
   { path: '/staff/learning-material/create/lessons', component: LearningMaterialCreateLesson, protected: true },
-  { path: '/staff/learning-material/create/lessons/:id', component: LearningMaterialCreateLesson, protected: true },
+  { path: '/staff/learning-material/create/lessons/:unitId', component: LearningMaterialCreateLesson, protected: true },
+  { path: '/staff/learning-material/create/lessons/:unitId/:lessonId', component: LearningMaterialCreateLesson, protected: true },
   { path: '/staff/learning-material/create/publish', component: LearningMaterialPublish, protected: true },
   { path: '/staff/learning-material/assignments', component: LearningMaterialAss, protected: true },
   // Staff question bank routes

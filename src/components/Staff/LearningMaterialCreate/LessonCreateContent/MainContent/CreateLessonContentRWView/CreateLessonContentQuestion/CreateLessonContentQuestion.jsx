@@ -109,7 +109,7 @@ function CreateLessonContentQuestion({
       </div>
       <div className={cx("create-question-answer")}>
         <div className={cx("question-answer-title")}>
-          ANSWER: Choose a single correct answer
+          Answer: Choose a single correct answer
         </div>
         <div className={cx("question-answer-list")}>
           {answers.map((answer, index) => (
@@ -154,6 +154,9 @@ function CreateLessonContentQuestion({
       </div>
       {correctAnswerId !== null && (
         <div className={cx("create-explanation-answer")}>
+          <div className={cx("question-explanation-title")}>
+            Explanation: Write explain about correct answer
+          </div>
           <ReactQuill
             className={cx("explanation-input")}
             theme="snow"
