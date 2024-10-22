@@ -1,13 +1,13 @@
 @import "~/styles/variables";
 
 .detail-item {
-  cursor: pointer;
   user-select: none;
   width: 100%;
   height: fit-content;
   background-color: $bg-primary-color;
 
   .detail-topic-item {
+    cursor: pointer;
     width: 100%;
     height: fit-content;
     padding: 20px 16px;
@@ -63,7 +63,6 @@
     border-bottom: 1px solid $border-color;
 
     .detail-lesson-item {
-      cursor: pointer;
       width: 100%;
       height: fit-content;
       display: flex;
