@@ -43,17 +43,22 @@
   font-display: swap;
 }
 
-$primary-color: #2446b6;
-$secondary-color: #f4cf39;
-$third-color: #d7354f;
-$fourth-color: #51bfb3;
+$primary-color: rgb(36, 70, 182);
+$secondary-color: rgb(244, 207, 57);
+$third-color: rgb(215, 53, 79);
+$fourth-color: rgb(81, 191, 179);
 $text-color: #1b212f;
 $text-color-gray: #707070;
 $black-color: #21242c;
 $white-color: #ffffff;
-$success-color: #00a60e;
+$success-color: rgb(0, 166, 14);
+$bg-success-color: rgba(0, 166, 14, 0.1);
 $bg-primary-color: #ffffff;
 $bg-secondary-color: rgba(36, 70, 182, 0.1);
+$bg-primary-color-trans: rgba(36, 70, 182, 0.1);
+$bg-secondary-color-trans: rgba(244, 207, 57, 0.1);
+$bg-third-color-trans: rgba(215, 53, 79, 0.1);
+$bg-fourth-color-trans: rgba(81, 191, 179, 0.1);
 $font-family-base: "Aptos", sans-serif;
 $font-size-base: 16px;
 $btn-br: 40px;

@@ -1,7 +1,7 @@
 import classNames from "classnames/bind"
 import PropTypes from "prop-types"
 import { useEffect, useState } from "react"
-import PublishSidebarIInsidetem from "./PublishSidebarIInsidetem"
+import PublishSidebarInsideItem from "./PublishSidebarInsideItem"
 import styles from "./PublishSidebarItem.module.scss"
 const cx = classNames.bind(styles)
 
@@ -20,7 +20,7 @@ function PublishSidebarItem({ topic, unitId, lessonId }) {
     <div className={cx("publish-sidebar_item")}>
       <div className={cx("sidebar-topic-item")} onClick={handleClickShowLesson}>
         <div className={cx("topic-item-left")}>
-          <i className={cx("fa-regular fa-book-open", "topic-item-icon")}></i>
+          <div className={cx("topic-item-icon")}><i className={cx("fa-regular fa-book-open", "item-icon")}></i></div>
           <div className={cx("topic-item-title")}>{topic.title}</div>
         </div>
         <i
@@ -36,11 +36,10 @@ function PublishSidebarItem({ topic, unitId, lessonId }) {
         <div className={cx("sidebar-lesson-list")}>
           {topic.lessons.filter((lesson) => lesson.type === "Text" || lesson.type === "Math")
             .map((lesson) => (
-              <PublishSidebarIInsidetem key={lesson.id} unitId={unitId} lessonId={lessonId} lesson={lesson} />
+              <PublishSidebarInsideItem key={lesson.id} unitId={unitId} lessonId={lessonId} lesson={lesson} />
             ))}
         </div>
       )}
-
     </div>
   )
 }

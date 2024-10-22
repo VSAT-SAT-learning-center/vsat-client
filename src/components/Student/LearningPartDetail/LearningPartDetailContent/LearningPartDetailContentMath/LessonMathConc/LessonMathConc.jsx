@@ -12,13 +12,13 @@ function LessonMathConc({ lessonContent }) {
         {lessonContent?.title}
       </div>
       <div className={cx("conc-content")}>
-        {lessonContent.contents.map((lesson) => (
-          <LessonMathConcDetail lesson={lesson} key={lesson.id} />
+        {lessonContent.contents.map((lesson, index) => (
+          <LessonMathConcDetail lesson={lesson} key={index} />
         ))}
       </div>
       <div className={cx("conc-try-it")}>
         <div className={cx("try-it-title")}>Try it!</div>
-        <LessonQuestionMath title="Try: factor a quadratic expression" />
+        <LessonQuestionMath title={lessonContent?.title} questionMathData={lessonContent?.question} />
       </div>
     </div>
   );

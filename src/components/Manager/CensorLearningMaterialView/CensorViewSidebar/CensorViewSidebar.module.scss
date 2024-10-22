@@ -1,13 +1,13 @@
 @import "~/styles/variables";
 
-.publish-sidebar_item {
+.detail-item {
   cursor: pointer;
   user-select: none;
   width: 100%;
   height: fit-content;
   background-color: $bg-primary-color;
 
-  .sidebar-topic-item {
+  .detail-topic-item {
     width: 100%;
     height: fit-content;
     padding: 20px 16px;
@@ -42,7 +42,7 @@
       .topic-item-title {
         font-size: 16px;
         font-weight: 600;
-        width: 245px;
+        width: 290px;
         word-wrap: break-word;
         white-space: normal;
         overflow: hidden;
@@ -58,12 +58,14 @@
     }
   }
 
-  .sidebar-lesson-list {
+  .detail-lesson-list {
     width: 100%;
     border-bottom: 1px solid $border-color;
 
-    .sidebar-lesson-item {
+    .detail-lesson-item {
       cursor: pointer;
+      width: 100%;
+      height: fit-content;
       display: flex;
       align-items: center;
       padding: 20px 16px;
@@ -89,7 +91,7 @@
 
       .lesson-item-title {
         font-size: 16px;
-        width: 270px;
+        width: 290px;
         word-wrap: break-word;
         white-space: normal;
         overflow: hidden;

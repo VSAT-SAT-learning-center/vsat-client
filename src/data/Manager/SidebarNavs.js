@@ -21,12 +21,12 @@ export const sidebarNavs = [
         },
         {
           id: 2,
-          title: "Censor Unit",
+          title: "Censor Material",
           path: "/manager/learning-material/censor",
         },
         {
           id: 3,
-          title: "Feedback Unit",
+          title: "Feedback Material",
           path: "/manager/learning-material/feedback",
         }
       ],

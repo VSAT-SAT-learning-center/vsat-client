@@ -8,8 +8,6 @@ import styles from "./LearningPartDetailContentMath.module.scss";
 const cx = classNames.bind(styles);
 
 function LearningPartDetailContentMath({ lesson }) {
-  console.log(lesson?.lessonContents);
-
   return (
     <div className={cx("learning-part-detail-content-math-container")}>
       <div className={cx("lesson-main-title")}>

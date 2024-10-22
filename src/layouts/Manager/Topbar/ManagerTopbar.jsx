@@ -6,7 +6,7 @@ import styles from "./ManagerTopbar.module.scss";
 const cx = classNames.bind(styles);
 
 function ManagerTopbar() {
-  const [isFocused, setIsFocused] = useState(false); 
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -21,13 +21,13 @@ function ManagerTopbar() {
         <div className={cx("manager-topbar-left")}>
           <div className={cx("manager-topbar-search", { focused: isFocused })}>
             <i
-              className={cx("manager-fa-regular fa-magnifying-glass", "manager-search-icon")}
+              className={cx("fa-regular fa-magnifying-glass", "manager-search-icon")}
             ></i>
             <input
               type="text"
               placeholder="Search..."
               className={cx("manager-search-input")}
-              onFocus={handleFocus} 
+              onFocus={handleFocus}
               onBlur={handleBlur}
             />
           </div>
