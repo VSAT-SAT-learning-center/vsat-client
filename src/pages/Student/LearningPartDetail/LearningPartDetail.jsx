@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 function LearningPartDetail() {
   return (
     <div className={cx("learning-part-detail-wrapper")}>
-      <HeaderAuthen/>
+      <HeaderAuthen />
       <div className={cx("learning-part-detail-container")}>
         <LearningPartDetailSidebar />
         <LearningPartDetailContent />

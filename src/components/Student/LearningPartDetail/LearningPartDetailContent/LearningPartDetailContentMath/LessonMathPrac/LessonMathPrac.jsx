@@ -5,12 +5,10 @@ import styles from "./LessonMathPrac.module.scss";
 const cx = classNames.bind(styles);
 
 function LessonMathPrac({ lessonContent }) {
-  console.log(lessonContent);
-
   return (
     <div className={cx("lesson-content-your-turn")}>
       <div className={cx("your-turn-title")}>{lessonContent?.title}</div>
-      <LessonQuestionMath title={lessonContent?.title} questionMathData={lessonContent?.question}/>
+      <LessonQuestionMath title={lessonContent?.title} questionMathData={lessonContent?.question} />
     </div>
   );
 }

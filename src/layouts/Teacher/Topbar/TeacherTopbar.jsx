@@ -21,7 +21,7 @@ function TeacherTopbar() {
         <div className={cx("teacher-topbar-left")}>
           <div className={cx("teacher-topbar-search", { focused: isFocused })}>
             <i
-              className={cx("teacher-fa-regular fa-magnifying-glass", "teacher-search-icon")}
+              className={cx("fa-regular fa-magnifying-glass", "teacher-search-icon")}
             ></i>
             <input
               type="text"

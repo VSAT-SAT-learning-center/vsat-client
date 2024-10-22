@@ -22,9 +22,9 @@ function LearningPartSidebar({ learningContent }) {
         <div className={cx("introduction-infor")}>
           <div className={cx("infor-title")}>Digital {content} </div>
           <div className={cx("infor-details")}>
-            <span className={cx("infor-units")}>11 UNITS</span>
+            <span className={cx("infor-units")}>11 TOPICS</span>
             {" - "}
-            <span className={cx("infor-skills")}>41 SKILLS</span>
+            <span className={cx("infor-skills")}>41 LESSONS</span>
           </div>
         </div>
       </Link>

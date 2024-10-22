@@ -6,7 +6,7 @@ import styles from "./AdminTopbar.module.scss";
 const cx = classNames.bind(styles);
 
 function AdminTopbar() {
-  const [isFocused, setIsFocused] = useState(false); 
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -21,13 +21,13 @@ function AdminTopbar() {
         <div className={cx("admin-topbar-left")}>
           <div className={cx("admin-topbar-search", { focused: isFocused })}>
             <i
-              className={cx("admin-fa-regular fa-magnifying-glass", "admin-search-icon")}
+              className={cx("fa-regular fa-magnifying-glass", "admin-search-icon")}
             ></i>
             <input
               type="text"
               placeholder="Search..."
               className={cx("admin-search-input")}
-              onFocus={handleFocus} 
+              onFocus={handleFocus}
               onBlur={handleBlur}
             />
           </div>

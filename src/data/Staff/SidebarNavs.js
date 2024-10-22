@@ -22,7 +22,7 @@ export const sidebarNavs = [
       },
       {
         id: 2,
-        title: "Create Unit",
+        title: "Create Material",
         path: "/staff/learning-material/create",
       },
       {

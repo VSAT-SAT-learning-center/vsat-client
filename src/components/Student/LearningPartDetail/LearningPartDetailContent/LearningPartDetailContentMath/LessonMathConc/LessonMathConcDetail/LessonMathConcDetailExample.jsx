@@ -35,7 +35,7 @@ function LessonMathConcDetailExample({ example }) {
 }
 
 LessonMathConcDetailExample.propTypes = {
-  example: PropTypes.string,
+  example: PropTypes.object,
 };
 
 export default LessonMathConcDetailExample;

@@ -57,11 +57,12 @@ import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
 import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
 import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
+import CensorLearningMaterialView from "~/components/Manager/CensorLearningMaterialView";
 
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: LearningMaterialPublish },
+  { path: "/test", component: CensorLearningMaterialView },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
