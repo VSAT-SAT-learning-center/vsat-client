@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import PublishSidebarItem from "~/components/Staff/LearningMaterialCreate/LessonCreatePublishSidebar/PublishSidebarItem";
@@ -14,6 +14,7 @@ import styles from "./LearningMaterialPublish.module.scss";
 const cx = classNames.bind(styles);
 
 function LearningMaterialPublish() {
+  const navigate = useNavigate()
   const currentStep = 3;
   const { unitId, lessonId } = useParams();
   const [loadTopics, setLoadTopics] = useState([]);
@@ -56,6 +57,16 @@ function LearningMaterialPublish() {
 
     fetchLesson();
   }, [lessonId]);
+
+  const handlePublishUnit = async () => {
+    try {
+      await apiClient.post(`/units/${unitId}/submit`);
+      console.log("Success publish")
+      navigate("/staff/learning-material/create")
+    } catch (error) {
+      console.error("Error publish unit:", error);
+    }
+  }
   return (
     <PageLayout>
       <div className={cx("learning-material-publish-container")}>
@@ -78,7 +89,7 @@ function LearningMaterialPublish() {
               )}
             </div>
             <div className={cx("publish-bottom")}>
-              <button className={cx("publish-btn")}>Publish</button>
+              <button className={cx("publish-btn")} onClick={handlePublishUnit}>Publish</button>
             </div>
           </div>
 

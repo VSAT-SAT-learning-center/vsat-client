@@ -19,14 +19,14 @@ function LearningMaterial() {
   useEffect(() => {
     const fetchLearningMaterials = async () => {
       try {
-        const response = await apiClient.get(`/units`, {
+        const response = await apiClient.get(`/units/pending`, {
           params: {
             page: currentPage,
             pageSize: itemsPerPage,
           },
         });
-        setLearningMaterials(response.data.data);
-        setTotalItems(response.data.paging.totalItems);
+        setLearningMaterials(response.data.data.data);
+        setTotalItems(response.data.data.totalItems);
       } catch (error) {
         console.error("Error fetching learning materials:", error);
       }
