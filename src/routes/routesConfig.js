@@ -1,3 +1,4 @@
+import CensorConfirmFeedback from "~/components/Manager/CensorLearningMaterialView/CensorConfirmFeedback";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -61,7 +62,7 @@ import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/Feedbac
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: LearningMaterialPublish },
+  { path: "/test", component: CensorConfirmFeedback },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },

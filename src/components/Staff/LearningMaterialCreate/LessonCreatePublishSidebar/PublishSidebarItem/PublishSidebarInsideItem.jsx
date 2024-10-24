@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./PublishSidebarItem.module.scss";
 const cx = classNames.bind(styles)
 
-function PublishSidebarIInsidetem({ unitId, lessonId, lesson }) {
+function PublishSidebarInsideItem({ unitId, lessonId, lesson }) {
   const navigate = useNavigate();
   const handleClickLessonItem = () => {
     navigate(`/staff/learning-material/create/publish/${unitId}/${lesson.id}`);
@@ -20,10 +20,10 @@ function PublishSidebarIInsidetem({ unitId, lessonId, lesson }) {
   )
 }
 
-PublishSidebarIInsidetem.propTypes = {
+PublishSidebarInsideItem.propTypes = {
   lesson: PropTypes.object,
   unitId: PropTypes.string,
   lessonId: PropTypes.string,
 };
 
-export default PublishSidebarIInsidetem
+export default PublishSidebarInsideItem
