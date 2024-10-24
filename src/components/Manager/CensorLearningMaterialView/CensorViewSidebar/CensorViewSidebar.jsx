@@ -38,7 +38,7 @@ function CensorViewSidebar({ unitArea, lessonData }) {
       {isShowLesson && (
         <div className={cx("detail-lesson-list")}>
           {unitArea?.lessons && unitArea?.lessons.length > 0 && unitArea?.lessons.map((lesson) => (
-            <CensorViewSidebarInside key={lesson.id} lesson={lesson} lessonData={lessonData}/>
+            <CensorViewSidebarInside key={lesson.id} lesson={lesson} lessonData={lessonData} />
           ))}
         </div>
       )}

@@ -1,13 +1,11 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { satFeedbackReportDatas } from "~/data/Manager/satFeedbackReportDatas";
 import styles from "./CensorFeedbackReason.module.scss";
 const cx = classNames.bind(styles);
 
-function CensorFeedbackReason({ setIsShowCensorFeedback, markRejectLesson }) {
+function CensorFeedbackReason({ lessonData, setIsShowCensorFeedback, markRejectLesson }) {
   const [selectedReason, setSelectedReason] = useState(null);
   const [reasonFeedback, setReasonFeedback] = useState(null);
   const [typeShowFeedback, setTypeShowFeedback] = useState("choose")
@@ -18,8 +16,8 @@ function CensorFeedbackReason({ setIsShowCensorFeedback, markRejectLesson }) {
     setReasonFeedback(reasonData.title);
   };
 
-  const handleFeedbackContentChange = (value) => {
-    setFeedbackContent(value)
+  const handleFeedbackContentChange = (e) => {
+    setFeedbackContent(e.target.value)
   }
 
   const handleClickContinue = () => {
@@ -33,7 +31,7 @@ function CensorFeedbackReason({ setIsShowCensorFeedback, markRejectLesson }) {
   const handleClickSaveFeedback = () => {
     markRejectLesson(reasonFeedback, feedbackContent);
   };
-  
+
   return (
     <div className={cx("censor-feedback-reason-wrapper")}>
       <div className={cx("censor-feedback-reason-container")}>
@@ -48,7 +46,7 @@ function CensorFeedbackReason({ setIsShowCensorFeedback, markRejectLesson }) {
                 <i className={cx("fa-solid fa-arrow-left", "back-icon")}></i>
               </div>
             )}
-            <div className={cx("view-title")}>Factoring quadratic and polynomial expressions | Lesson</div>
+            <div className={cx("view-title")}>{lessonData?.title}</div>
           </div>
         </div>
         <div className={cx("censor-feedback-reason-content")}>
@@ -82,13 +80,12 @@ function CensorFeedbackReason({ setIsShowCensorFeedback, markRejectLesson }) {
             <div className={cx("reason-input-container")}>
               <div className={cx("reason-name")}>Reason: <span className={cx("name-highlight")}>{reasonFeedback}</span></div>
               <div className={cx("reason-editor-input")}>
-                <ReactQuill
-                  className={cx("editor-input")}
-                  theme="snow"
+                <textarea
                   value={feedbackContent}
-                  onChange={(value) => handleFeedbackContentChange(value)}
-                  placeholder={"Write feedback content..."}
-                />
+                  className={cx("reason-input")}
+                  placeholder="Write reason content...."
+                  onChange={handleFeedbackContentChange}
+                ></textarea>
               </div>
             </div>
           )}
@@ -108,6 +105,7 @@ function CensorFeedbackReason({ setIsShowCensorFeedback, markRejectLesson }) {
 }
 
 CensorFeedbackReason.propTypes = {
+  lessonData: PropTypes.object,
   setIsShowCensorFeedback: PropTypes.func,
   markRejectLesson: PropTypes.func
 }

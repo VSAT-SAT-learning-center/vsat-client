@@ -37,6 +37,7 @@
       font-size: 17px;
       font-weight: 700;
       line-height: 20px;
+      text-decoration: underline;
       word-wrap: break-word;
       white-space: normal;
       overflow: hidden;
@@ -48,6 +49,7 @@
   }
 
   .learning-material-about {
+    min-height: 42px;
     margin-bottom: 12px;
     font-size: 14px;
     font-style: italic;

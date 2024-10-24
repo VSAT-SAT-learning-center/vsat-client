@@ -1,3 +1,4 @@
+import CensorConfirmFeedback from "~/components/Manager/CensorLearningMaterialView/CensorConfirmFeedback";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -57,12 +58,11 @@ import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
 import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
 import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
-import CensorLearningMaterialView from "~/components/Manager/CensorLearningMaterialView";
 
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: CensorLearningMaterialView },
+  { path: "/test", component: CensorConfirmFeedback },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
