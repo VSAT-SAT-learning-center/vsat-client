@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import { useState } from "react";
 import styles from "./CreateAccount.module.scss";
 import axios from "axios";
+import { toast } from "react-toastify"; // Import toast từ react-toastify
 
 const cx = classNames.bind(styles);
 
@@ -36,8 +37,8 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
@@ -59,12 +60,15 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {
         });
 
         if (response.status === 201) {
+          toast.success("Tạo tài khoản thành công!"); // Success notification
           closeModal();
-          fetchData(currentPage); 
+          fetchData(currentPage);
         }
       } catch (error) {
-        console.error("Error creating account:", error.response?.data || error.message);
-        alert("Error creating account. Please try again.");
+        const errorMessage =
+          error.response?.data?.details.message ||
+          "Lỗi khi tạo tài khoản. Vui lòng thử lại.";
+        toast.error(errorMessage); // Show specific error message from server or fallback
       }
     }
   };
@@ -187,9 +191,18 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {
             </p>
           )}
 
-          <button className={cx("submit-btn")} type="submit">
-            Save
-          </button>
+          <div className={cx("form-actions")}>
+            <button className={cx("submit-btn")} type="submit">
+              Save
+            </button>
+            <button
+              className={cx("cancel-btn")}
+              type="button"
+              onClick={closeModal}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </form>
     </div>

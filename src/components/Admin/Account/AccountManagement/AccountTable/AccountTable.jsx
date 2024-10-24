@@ -4,6 +4,9 @@ import Modal from "react-modal";
 import styles from "./AccountTable.module.scss";
 import CreateAccount from "../../../../../components/Admin/Account/CreateAccount";
 import axios from "axios";
+import { PlusCircleOutlined } from "@ant-design/icons";
+import { toast, ToastContainer } from "react-toastify"; // Import toast và ToastContainer
+import "react-toastify/dist/ReactToastify.css"; // Import CSS cho toast
 
 const cx = classNames.bind(styles);
 
@@ -14,16 +17,16 @@ function AccountTable() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [pageSize] = useState(7);
+  const [pageSize] = useState(6);
   const [searchName, setSearchName] = useState("");
 
   const openModal = () => {
     setModalIsOpen(true);
   };
-  
+
   const closeModal = () => {
     setModalIsOpen(false);
-    fetchData(currentPage, searchName); 
+    fetchData(currentPage, searchName);
   };
 
   const fetchData = (page, name = "") => {
@@ -55,7 +58,7 @@ function AccountTable() {
       });
       fetchData(currentPage, searchName);
     } catch (error) {
-      console.error("Error updating status:", error);
+      toast.error("Error updating status:", error);
     }
   };
 
@@ -89,7 +92,7 @@ function AccountTable() {
               Search
             </button>
             <button className={cx("add-user-btn")} onClick={openModal}>
-              + Add User
+              <PlusCircleOutlined style={{ marginRight: "5px" }} /> Add User
             </button>
           </div>
         </div>
@@ -122,9 +125,16 @@ function AccountTable() {
                   <td className={cx("status-cell")}>
                     <div
                       className={cx("status-toggle")}
-                      onClick={user.status !== "Inactive" ? () => updateStatus(user.id, user.status) : null}
+                      onClick={
+                        user.status !== "Inactive"
+                          ? () => updateStatus(user.id, user.status)
+                          : null
+                      }
                       style={{
-                        cursor: user.status !== "Inactive" ? "pointer" : "not-allowed",
+                        cursor:
+                          user.status !== "Inactive"
+                            ? "pointer"
+                            : "not-allowed",
                         opacity: user.status === "Inactive" ? 0.5 : 1,
                       }}
                     >
@@ -169,12 +179,14 @@ function AccountTable() {
           className={cx("modal")}
           overlayClassName={cx("modal-overlay")}
         >
-          <button className={cx("close-btn")} onClick={closeModal}>
-            ×
-          </button>
-          <CreateAccount closeModal={closeModal} fetchData={fetchData} currentPage={currentPage} /> 
+          <CreateAccount
+            closeModal={closeModal}
+            fetchData={fetchData}
+            currentPage={currentPage}
+          />
         </Modal>
       </div>
+      <ToastContainer /> 
     </div>
   );
 }
