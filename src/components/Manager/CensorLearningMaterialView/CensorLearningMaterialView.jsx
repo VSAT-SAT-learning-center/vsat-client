@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import LearningPartDetailContentMath from "~/layouts/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentMath";
 import LearningPartDetailContentRW from "~/layouts/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentRW";
 import apiClient from "~/services/apiService";
+import CensorConfirmFeedback from "./CensorConfirmFeedback";
 import CensorFeedbackReason from "./CensorFeedbackReason";
 import styles from "./CensorLearningMaterialView.module.scss";
 import CensorViewSidebar from "./CensorViewSidebar";
@@ -18,6 +19,7 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
   const [censorStatus, setCensorStatus] = useState([]);
   const [finalCensorResult, setFinalCensorResult] = useState(null);
   const [isShowCensorFeedback, setIsShowCensorFeedback] = useState(false);
+  const [isShowConfirmFeedback, setIsShowConfirmFeedback] = useState();
   const contentRef = useRef(null);
   useEffect(() => {
     const fetchUnitDetails = async () => {
@@ -68,42 +70,6 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
     };
   }, []);
 
-  const handleContinueLesson = () => {
-    if (currentLessonIndex < lessonIds.length - 1) {
-      // Save this lesson as approved
-      const nextLessonId = lessonIds[currentLessonIndex + 1];
-      setCurrentLessonIndex(currentLessonIndex + 1);
-
-      setCensorStatus((prevStatus) => [
-        ...prevStatus,
-        { lessonId: lessonIds[currentLessonIndex], status: "Approved" },
-      ]);
-
-      // Fetch the next lesson data
-      const fetchNextLesson = async () => {
-        try {
-          const response = await apiClient.get(`/lessons/${nextLessonId}`);
-          setLessonData(response.data.data);
-          if (contentRef.current) {
-            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        } catch (error) {
-          console.error("Error fetching next lesson:", error);
-        }
-      };
-
-      fetchNextLesson();
-    } else {
-      // All lessons processed, check the censor status array
-      if (censorStatus.some((lesson) => lesson.status === "Rejected")) {
-        setFinalCensorResult("Rejected");
-      } else {
-        setFinalCensorResult("Approved");
-      }
-      console.log("Final result: ", finalCensorResult);
-    }
-  };
-
   const handleBackLesson = () => {
     if (currentLessonIndex > 0) {
       const prevLessonId = lessonIds[currentLessonIndex - 1];
@@ -130,39 +96,122 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
     setIsShowCensorFeedback(true)
   };
 
-  const markRejectLesson = (reasonFeedback, feedbackContent) => {
+  const handleContinueLesson = () => {
     setCensorStatus((prevStatus) => {
       const existingLessonIndex = prevStatus.findIndex(
         (lesson) => lesson.lessonId === lessonIds[currentLessonIndex]
       );
 
+      let updatedStatus;
       if (existingLessonIndex !== -1) {
-        const updatedStatus = [...prevStatus];
+        // Update previously rejected lesson to approved
+        updatedStatus = [...prevStatus];
         updatedStatus[existingLessonIndex] = {
           ...updatedStatus[existingLessonIndex],
-          reasonFeedback,
-          feedbackContent
+          status: "Approved",
+          reason: null,
+          content: null,
         };
-        return updatedStatus;
       } else {
-        return [
+        // First time approving this lesson
+        updatedStatus = [
+          ...prevStatus,
+          {
+            lessonId: lessonIds[currentLessonIndex],
+            lessonTitle: lessonData.title,
+            status: "Approved",
+          },
+        ];
+      }
+
+      // Check if all lessons are approved
+      const allApproved = updatedStatus.every((lesson) => lesson.status === "Approved");
+      if (allApproved) {
+        setFinalCensorResult("Approved");
+      }
+
+      return updatedStatus;
+    });
+
+    // Proceed to next lesson or finalize
+    if (currentLessonIndex === lessonIds.length - 1) {
+      setIsShowConfirmFeedback(true);
+      setIsShowCensorFeedback(false);
+    } else if (currentLessonIndex < lessonIds.length - 1) {
+      const nextLessonId = lessonIds[currentLessonIndex + 1];
+      setCurrentLessonIndex(currentLessonIndex + 1);
+
+      const fetchNextLesson = async () => {
+        try {
+          const response = await apiClient.get(`/lessons/${nextLessonId}`);
+          setLessonData(response.data.data);
+          if (contentRef.current) {
+            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        } catch (error) {
+          console.error("Error fetching next lesson:", error);
+        }
+      };
+
+      fetchNextLesson();
+    } else {
+      // Final check after all lessons
+      setCensorStatus((currentStatus) => {
+        const isRejected = currentStatus.some((lesson) => lesson.status === "Rejected");
+        setFinalCensorResult(isRejected ? "Rejected" : "Approved");
+        return currentStatus;
+      });
+      setIsShowCensorFeedback(false);
+    }
+  };
+
+  const markRejectLesson = (reason, content) => {
+    setCensorStatus((prevStatus) => {
+      const existingLessonIndex = prevStatus.findIndex(
+        (lesson) => lesson.lessonId === lessonIds[currentLessonIndex]
+      );
+
+      let updatedStatus;
+      if (existingLessonIndex !== -1) {
+        // Update previously approved lesson to rejected
+        updatedStatus = [...prevStatus];
+        updatedStatus[existingLessonIndex] = {
+          ...updatedStatus[existingLessonIndex],
+          status: "Rejected",
+          reason,
+          content,
+        };
+      } else {
+        // First time rejecting this lesson
+        updatedStatus = [
           ...prevStatus,
           {
             lessonId: lessonIds[currentLessonIndex],
             lessonTitle: lessonData.title,
             status: "Rejected",
-            reasonFeedback,
-            feedbackContent
+            reason,
+            content,
           },
         ];
       }
+
+      // Check if there are any rejected lessons
+      const hasRejected = updatedStatus.some((lesson) => lesson.status === "Rejected");
+      if (hasRejected) {
+        setFinalCensorResult("Rejected");
+      }
+
+      return updatedStatus;
     });
 
-    if (currentLessonIndex < lessonIds.length - 1) {
+    // Proceed to next lesson or finalize
+    if (currentLessonIndex === lessonIds.length - 1) {
+      setIsShowConfirmFeedback(true);
+      setIsShowCensorFeedback(false);
+    } else if (currentLessonIndex < lessonIds.length - 1) {
       const nextLessonId = lessonIds[currentLessonIndex + 1];
       setCurrentLessonIndex(currentLessonIndex + 1);
 
-      // Fetch the next lesson data
       const fetchNextLesson = async () => {
         try {
           const response = await apiClient.get(`/lessons/${nextLessonId}`);
@@ -178,26 +227,19 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
 
       fetchNextLesson();
     } else {
-      if (censorStatus.some((lesson) => lesson.status === "Rejected")) {
-        setFinalCensorResult("Rejected");
-        setIsShowCensorFeedback(false);
-      } else {
-        setFinalCensorResult("Approved");
-        setIsShowCensorFeedback(false);
-      }
+      // Final check after all lessons
+      setCensorStatus((currentStatus) => {
+        const isRejected = currentStatus.some((lesson) => lesson.status === "Rejected");
+        setFinalCensorResult(isRejected ? "Rejected" : "Approved");
+        return currentStatus;
+      });
+      setIsShowCensorFeedback(false);
     }
   };
-
-  const handleApproveLesson = () => {
-
-  }
-  const handleRejectLesson = () => {
-    console.log(censorStatus);
-  }
-
   return (
     <>
-      {isShowCensorFeedback && <CensorFeedbackReason setIsShowCensorFeedback={setIsShowCensorFeedback} markRejectLesson={markRejectLesson} />}
+      {isShowCensorFeedback && <CensorFeedbackReason lessonData={lessonData} setIsShowCensorFeedback={setIsShowCensorFeedback} markRejectLesson={markRejectLesson} />}
+      {isShowConfirmFeedback && <CensorConfirmFeedback unitDetails={unitDetails} censorStatus={censorStatus} finalCensorResult={finalCensorResult} setIsShowConfirmFeedback={setIsShowConfirmFeedback} />}
       <div className={cx("censor-learning-material-view-wrapper")}>
         <div className={cx("censor-learning-material-view-container")}>
           <div className={cx("censor-learning-material-view-header")}>
@@ -206,21 +248,6 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
                 <i className={cx("fa-solid fa-arrow-left", "back-icon")}></i>
               </div>
               <div className={cx("view-title")}>{unitDetails?.title}</div>
-            </div>
-            <div className={cx("header-censor")}>
-              {finalCensorResult && (
-                finalCensorResult === "Approved" ? (
-                  <button className={cx("approved-btn")} onClick={handleApproveLesson}>
-                    <i className={cx("fa-sharp fa-regular fa-check", "btn-icon")}></i>
-                    <span className={cx("btn-text")}>Approved</span>
-                  </button>
-                ) : (
-                  <button className={cx("rejected-btn")} onClick={handleRejectLesson}>
-                    <i className={cx("fa-sharp fa-regular fa-ban", "btn-icon")}></i>
-                    <span className={cx("btn-text")}>Rejected</span>
-                  </button>
-                )
-              )}
             </div>
           </div>
           <div className={cx("censor-learning-material-view-main")}>

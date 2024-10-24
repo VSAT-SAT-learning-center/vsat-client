@@ -6,8 +6,6 @@ import styles from "./LearningMaterialItem.module.scss";
 const cx = classNames.bind(styles);
 
 function LearningMaterialItem({ item, setIsShowCensorView, setCensorViewUnitId }) {
-  console.log(item);
-
   const handleClickItem = (itemId) => {
     setIsShowCensorView(true)
     setCensorViewUnitId(itemId);
@@ -40,9 +38,15 @@ function LearningMaterialItem({ item, setIsShowCensorView, setCensorViewUnitId }
         </div>
         <div className={cx("learning-material-detail")}>
           <div className={cx("date-create")}>Created at: {formatDate(item?.createdat)}</div>
-          <div className={cx("status-detail", { "pending": item?.status === "Pending" })}>
+          <div className={cx(
+            "status-detail",
+            item?.status === "Pending" ? "pending" :
+              item?.status === "Approved" ? "approved" :
+                "rejected"
+          )}>
             {item?.status}
           </div>
+
         </div>
       </div>
     </div>

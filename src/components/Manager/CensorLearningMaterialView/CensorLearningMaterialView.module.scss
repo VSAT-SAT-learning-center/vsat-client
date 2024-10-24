@@ -60,56 +60,6 @@
           font-weight: 700;
         }
       }
-
-      .header-censor {
-        display: flex;
-        align-items: center;
-
-        .rejected-btn {
-          padding: 6px 20px;
-          font-size: 17px;
-          border-radius: 25px;
-          border: 1px solid $third-color;
-          color: $third-color;
-          background-color: $bg-third-color-trans;
-          transition: all 0.2s linear;
-
-          .btn-icon {
-            padding-right: 10px;
-          }
-
-          &:hover {
-            opacity: 0.7;
-          }
-        }
-
-        .approved-btn {
-          padding: 6px 20px;
-          font-size: 17px;
-          border-radius: 25px;
-          border: 1px solid $success-color;
-          color: $success-color;
-          background-color: $bg-success-color;
-          transition: all 0.2s linear;
-
-          .btn-icon {
-            padding-right: 10px;
-          }
-
-          &:hover {
-            opacity: 0.7;
-          }
-        }
-
-        .disabled-btn {
-          cursor: not-allowed;
-          opacity: 0.5;
-
-          &:hover {
-            opacity: 0.5;
-          }
-        }
-      }
     }
 
     .censor-learning-material-view-main {
