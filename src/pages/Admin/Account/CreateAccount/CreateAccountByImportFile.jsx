@@ -3,15 +3,17 @@ import PageLayout from "~/layouts/Admin/PageLayout";
 import styles from "./CreateAccountByImportFile.module.scss";
 import Papa from "papaparse";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const cx = classNames.bind(styles);
 
 function CreateAccountByImportFile() {
   const [csvData, setCsvData] = useState([]);
   const [isUploaded, setIsUploaded] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  //const [progress, setProgress] = useState(0);
+  const [savedAccounts, setSavedAccounts] = useState([]);
+  const [errorAccounts, setErrorAccounts] = useState([]);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -25,61 +27,30 @@ function CreateAccountByImportFile() {
             return Object.values(row).some((value) => value.trim() !== "");
           });
 
-          console.log("Dữ liệu đã lọc:", filteredData);
-
           if (filteredData && filteredData.length > 0) {
             setCsvData(filteredData);
             setIsUploaded(true);
-            setProgress(0);
-            setErrorMessage("");
+            //setProgress(0);
           } else {
-            setErrorMessage(
-              "File CSV không chứa dữ liệu hợp lệ. Vui lòng kiểm tra lại file."
+            toast.error(
+              "The CSV file does not contain valid data. Please check the file again."
             );
           }
         },
         error: function (error) {
           console.error("Error parsing CSV:", error);
-          setErrorMessage(
-            "Có lỗi xảy ra khi xử lý file CSV. Vui lòng thử lại."
-          );
+          toast.error("An error occurred while processing the CSV file. Please try again.");
         },
       });
     } else {
-      setErrorMessage("Vui lòng chọn file CSV.");
+      toast.error("Please select CSV file.");
     }
-  };
-
-  const validateCsvData = (data) => {
-    const requiredFields = [
-      "Role",
-      "First name",
-      "Last name",
-      "Email",
-      "Gender",
-      "Date Of Birth",
-      "Phone number",
-    ];
-    for (let row of data) {
-      for (let field of requiredFields) {
-        if (!row[field]) {
-          return `Trường '${field}' là bắt buộc. Vui lòng kiểm tra lại file CSV.`;
-        }
-      }
-    }
-    return "";
   };
 
   const handleSubmit = async () => {
-    const validationError = validateCsvData(csvData);
-    if (validationError) {
-      setErrorMessage(validationError);
-      return;
-    }
-
     if (csvData.length > 0) {
-      setErrorMessage("");
-      setSuccessMessage("");
+      setSavedAccounts([]);
+      setErrorAccounts([]);
 
       const jsonData = csvData.map((row) => ({
         role: row.Role.trim(),
@@ -92,13 +63,12 @@ function CreateAccountByImportFile() {
       }));
 
       const jsonString = JSON.stringify(jsonData, null, 2);
-      console.log("Chuỗi JSON được gửi:", jsonString);
 
       let fakeProgress = 0;
       const progressInterval = setInterval(() => {
         if (fakeProgress < 90) {
           fakeProgress += 10;
-          setProgress(fakeProgress);
+          //setProgress(fakeProgress);
         }
       }, 300);
 
@@ -113,18 +83,26 @@ function CreateAccountByImportFile() {
         .then((result) => {
           clearInterval(progressInterval);
           if (result.success) {
-            setProgress(100);
-            setSuccessMessage("Dữ liệu đã được gửi thành công!");
-            setErrorMessage("");
+            //setProgress(100);
+
+            // Cập nhật savedAccounts và errorAccounts từ API
+            setSavedAccounts(result.data.savedAccounts);
+            setErrorAccounts(result.data.errors);
+
+            if (result.data.errors.length === 0) {
+              toast.success("Create account successfully.");
+            } else {
+              toast.error("Some accounts were not created successfully.");
+            }
           } else {
-            setProgress(0);
-            setErrorMessage(result.message.replace("Bad request: ", ""));
+            //setProgress(0);
+            toast.error(result.message.replace("Bad request: ", ""));
           }
         })
         .catch((error) => {
           clearInterval(progressInterval);
-          setProgress(0);
-          setErrorMessage("Có lỗi xảy ra trong quá trình gửi dữ liệu.");
+          //setProgress(0);
+          toast.error("Có lỗi xảy ra trong quá trình gửi dữ liệu.");
           console.error("Error processing chunk:", error);
         });
     }
@@ -154,7 +132,6 @@ function CreateAccountByImportFile() {
 
           {isUploaded && csvData.length > 0 && (
             <div className={cx("import-csv-preview")}>
-              <h2>Preview dữ liệu từ CSV</h2>
               <table className={cx("import-csv-table")}>
                 <thead>
                   <tr>
@@ -182,21 +159,80 @@ function CreateAccountByImportFile() {
                   Confirm and create list account
                 </button>
                 <div className={cx("import-progress-bar")}>
-                  <label>Tiến trình: {Math.round(progress)}%</label>
-                  <progress value={progress} max="100"></progress>
                 </div>
               </div>
             </div>
           )}
 
-          {errorMessage && (
-            <div className={cx("import-error-message")}>{errorMessage}</div>
+          {savedAccounts.length > 0 && (
+            <div className={cx("saved-accounts-container")}>
+              <h2>Saved Accounts</h2>
+              <table className={cx("import-csv-table")}>
+                <thead>
+                  <tr>
+                    <th>Role</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Phone Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {savedAccounts.map((account, index) => (
+                    <tr key={index}>
+                      <td>{account.role}</td>
+                      <td>{account.firstname}</td>
+                      <td>{account.lastname}</td>
+                      <td>{account.email}</td>
+                      <td>{account.gender ? "Male" : "Female"}</td>
+                      <td>{account.dateofbirth}</td>
+                      <td>{account.phonenumber}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
 
-          {successMessage && (
-            <div className={cx("import-success-message")}>{successMessage}</div>
+          {errorAccounts.length > 0 && (
+            <div className={cx("error-accounts-container")}>
+              <h2 className={cx("error-title")}>Issues Found with Accounts</h2>{" "}
+              <table className={cx("import-csv-table")}>
+                <thead>
+                  <tr>
+                    <th>Index</th>
+                    <th>Role</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Phone Number</th>
+                    <th>Error Message</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {errorAccounts.map((error, rowIndex) => (
+                    <tr key={rowIndex}>
+                      <td>{rowIndex + 1}</td>
+                      <td>{error.account.role}</td>
+                      <td>{error.account.firstname}</td>
+                      <td>{error.account.lastname}</td>
+                      <td>{error.account.email}</td>
+                      <td>{error.account.gender ? "Male" : "Female"}</td>
+                      <td>{error.account.dateofbirth}</td>
+                      <td>{error.account.phonenumber}</td>
+                      <td>{error.message}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
+        <ToastContainer />
       </div>
     </PageLayout>
   );

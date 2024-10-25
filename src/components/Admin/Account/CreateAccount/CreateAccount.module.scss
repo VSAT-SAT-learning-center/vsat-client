@@ -40,7 +40,7 @@
   }
 
   .form-container {
-    padding: 15px;
+    padding: 0 15px;
 
     .form-group {
       margin-bottom: 13px;
@@ -75,19 +75,20 @@
 
         input {
           width: 100%;
-          padding: 10px; 
+          padding: 10px;
           border: 1px solid #ccc;
           border-radius: 4px;
           font-size: 16px;
           margin-top: 4px;
-          box-sizing: border-box; 
+          box-sizing: border-box;
         }
+
         label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 5px;
-            font-weight: 600;
-          }
+          display: block;
+          font-size: 14px;
+          margin-bottom: 5px;
+          font-weight: 600;
+        }
       }
     }
 
@@ -127,11 +128,36 @@
         background-color: #4962b5;
       }
     }
+
     .error-message {
-        color: red;
-        margin-top: 10px;
-        font-weight: bold;
-      }
-      
+      color: red;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
   }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  .cancel-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #83858b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 16px;
+
+    &:hover {
+      background-color: #4962b5;
+    }
+  }
+
 }
