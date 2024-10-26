@@ -6,39 +6,51 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { v4 as uuidv4 } from "uuid";
 import apiClient from "~/services/apiService";
-import QuestionExamCreatePreview from "../QuestionExamCreatePreview";
-import styles from "./QuestionExamCreateModal.module.scss";
+import styles from "./QuestionExamEditModal.module.scss";
 const cx = classNames.bind(styles);
-function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions }) {
-  const [questionData, setQuestionData] = useState({})
+function QuestionExamEditModal({
+  questionEdit,
+  fetchQuestions,
+  setIsShowUpdateQuestionModal,
+}) {
+  const [questionData, setQuestionData] = useState({
+    levelId: questionEdit?.level.id,
+    skillId: questionEdit?.skill.id,
+    sectionId: questionEdit?.section.id,
+    content: questionEdit?.content,
+    explain: questionEdit?.explain || "",
+    isSingleChoiceQuestion: questionEdit?.isSingleChoiceQuestion,
+  });
   const [sections, setSections] = useState([]);
   const [levels, setLevels] = useState([]);
-  const [domains, setDomains] = useState([])
+  const [domains, setDomains] = useState([]);
   const [skills, setSkills] = useState([]);
-  const [answers, setAnswers] = useState([
-    { id: uuidv4(), text: "", label: "A", isCorrectAnswer: false },
-    { id: uuidv4(), text: "", label: "B", isCorrectAnswer: false },
-    { id: uuidv4(), text: "", label: "C", isCorrectAnswer: false },
-    { id: uuidv4(), text: "", label: "D", isCorrectAnswer: false },
-  ]);
-  const [isShowQuestionPreview, setIsShowQuestionPreview] = useState(false)
-  const [questionPreviewData, setQuestionPreviewData] = useState({})
+  const [answers, setAnswers] = useState(questionEdit?.answers);
   useEffect(() => {
     const fetchLevelsAndSections = async () => {
       try {
-        const [levelsResponse, sectionsResponse] = await Promise.all([
+        const [
+          levelsResponse,
+          sectionsResponse,
+          domainsResponse,
+          skillsResponse,
+        ] = await Promise.all([
           apiClient.get("/level"),
           apiClient.get("/section"),
+          apiClient.get(`/domains/section/${questionData?.sectionId}`),
+          apiClient.get(`/skills/domain/${questionEdit?.skill.domain.id}`),
         ]);
         setLevels(levelsResponse.data.data);
         setSections(sectionsResponse.data.data);
+        setDomains(domainsResponse.data);
+        setSkills(skillsResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchLevelsAndSections();
-  }, []);
+  }, [questionData?.sectionId, questionEdit?.skill.domain.id]);
 
   const handleQuestionTypeChange = (event) => {
     const selectedValue = event.target.value;
@@ -51,7 +63,7 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
   const handleLevelChange = (e) => {
     setQuestionData((prev) => ({
       ...prev,
-      levelId: e.target.value
+      levelId: e.target.value,
     }));
   };
 
@@ -59,12 +71,14 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
     const selectedSectionId = e.target.value;
     setQuestionData((prev) => ({
       ...prev,
-      sectionId: selectedSectionId
+      sectionId: selectedSectionId,
     }));
 
     if (selectedSectionId) {
       try {
-        const response = await apiClient.get(`/domains/section/${selectedSectionId}`);
+        const response = await apiClient.get(
+          `/domains/section/${selectedSectionId}`
+        );
         setDomains(response.data);
       } catch (error) {
         console.error("Error fetching domains:", error);
@@ -78,7 +92,9 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
     const selectedDomainId = e.target.value;
     if (selectedDomainId) {
       try {
-        const response = await apiClient.get(`/skills/domain/${selectedDomainId}`);
+        const response = await apiClient.get(
+          `/skills/domain/${selectedDomainId}`
+        );
         setSkills(response.data);
       } catch (error) {
         console.error("Error fetching skills:", error);
@@ -86,22 +102,22 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
     } else {
       setSkills([]);
     }
-  }
+  };
 
   const handleSkillChange = (e) => {
     const selectedSkillId = e.target.value;
     setQuestionData((prev) => ({
       ...prev,
-      skillId: selectedSkillId
+      skillId: selectedSkillId,
     }));
-  }
+  };
 
   const handleContentQuestionChange = (value) => {
     setQuestionData((prev) => ({
       ...prev,
-      content: value
+      content: value,
     }));
-  }
+  };
 
   const handleAnswerChange = (answerId, value) => {
     setAnswers(
@@ -141,7 +157,9 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
 
   const handleRemoveAnswer = (answerId) => {
     if (answers.length > 1) {
-      const filteredAnswers = answers.filter((answer) => answer.id !== answerId);
+      const filteredAnswers = answers.filter(
+        (answer) => answer.id !== answerId
+      );
       const updatedAnswers = filteredAnswers.map((answer, index) => ({
         ...answer,
         label: String.fromCharCode(65 + index),
@@ -150,18 +168,28 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
     }
   };
 
-  const handlePreviewQuestion = () => {
+  const handleEditQuestion = async () => {
     const updatedQuestionData = {
       ...questionData,
       answers: answers,
     };
-    setIsShowQuestionPreview(true)
-    setQuestionPreviewData(updatedQuestionData);
+    try {
+      await apiClient.put(
+        `/questions/updateQuestion/${questionEdit?.id}`,
+        updatedQuestionData
+      );
+      setIsShowUpdateQuestionModal(false);
+      fetchQuestions();
+    } catch (error) {
+      console.error("Error updating question:", error);
+    }
   };
 
-  const isPreviewButtonEnabled = () => {
-    const areAnswersFilled = answers.every(answer => answer.text.trim() !== '');
-    const hasCorrectAnswer = answers.some(answer => answer.isCorrectAnswer);
+  const isEditButtonEnabled = () => {
+    const areAnswersFilled = answers.every(
+      (answer) => answer.text.trim() !== ""
+    );
+    const hasCorrectAnswer = answers.some((answer) => answer.isCorrectAnswer);
     return (
       questionData.isSingleChoiceQuestion !== undefined &&
       questionData.levelId &&
@@ -175,19 +203,14 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
 
   return (
     <>
-      {isShowQuestionPreview && (
-        <QuestionExamCreatePreview
-          questionPreviewData={questionPreviewData}
-          setIsShowQuestionPreview={setIsShowQuestionPreview}
-          setIsShowCreateQuestionModal={setIsShowCreateQuestionModal}
-          fetchQuestions={fetchQuestions}
-        />
-      )}
       <div className={cx("question-create-modal-wrapper")}>
         <div className={cx("question-create-modal-container")}>
           <div className={cx("question-create-modal-header")}>
             <div className={cx("question-title")}>Create question</div>
-            <div className={cx("question-close")} onClick={() => setIsShowCreateQuestionModal(false)}>
+            <div
+              className={cx("question-close")}
+              onClick={() => setIsShowUpdateQuestionModal(false)}
+            >
               <i className={cx("fa-regular fa-xmark")}></i>
             </div>
           </div>
@@ -198,6 +221,7 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
                 <div className={cx("config-selection")}>
                   <select
                     id="question-type"
+                    value={questionData.isSingleChoiceQuestion === true ? "singleChoice" : "fillBlank"}
                     className={cx("question-select")}
                     onChange={handleQuestionTypeChange}
                   >
@@ -248,9 +272,9 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
                 <div className={cx("config-selection")}>
                   <select
                     id="domain-type"
+                    value={questionEdit?.skill.domain.id}
                     className={cx("question-select")}
                     onChange={handleDomainChange}
-                    disabled={domains.length === 0}
                   >
                     <option value="">Select Domain</option>
                     {domains.map((domain) => (
@@ -269,7 +293,6 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
                     value={questionData.skillId}
                     className={cx("question-select")}
                     onChange={handleSkillChange}
-                    disabled={skills.length === 0}
                   >
                     <option value="">Select Skill</option>
                     {skills.map((skill) => (
@@ -294,27 +317,36 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
                   />
                 </div>
               </div>
-              <div className={cx("content-right")}>
-              </div>
+              <div className={cx("content-right")}></div>
             </div>
             <div className={cx("question-answer-create-content")}>
               {answers.map((answer, index) => (
                 <div className={cx("answer-create-item")} key={answer.id}>
                   <div className={cx("answer-create-select")}>
                     <div className={cx("select-answer")}>
-                      <Radio className={cx("answer-input-radio")}
+                      <Radio
+                        className={cx("answer-input-radio")}
                         checked={answer.isCorrectAnswer}
                         onChange={() => handleCorrectAnswerChange(answer.id)}
                       />
-                      <span className={cx("answer-input-text")} onClick={() => handleCorrectAnswerChange(answer.id)}>Choice {index + 1}</span>
+                      <span
+                        className={cx("answer-input-text")}
+                        onClick={() => handleCorrectAnswerChange(answer.id)}
+                      >
+                        Choice {index + 1}
+                      </span>
                     </div>
                     <div className={cx("delete-answer")}>
                       <button
-                        className={cx("delete-btn", { "disabled-delete-btn": answers.length === 1 })}
+                        className={cx("delete-btn", {
+                          "disabled-delete-btn": answers.length === 1,
+                        })}
                         onClick={() => handleRemoveAnswer(answer.id)}
                         disabled={answers.length === 1}
                       >
-                        <i className={cx("fa-regular fa-trash", "trash-icon")}></i>
+                        <i
+                          className={cx("fa-regular fa-trash", "trash-icon")}
+                        ></i>
                       </button>
                     </div>
                   </div>
@@ -323,9 +355,7 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
                       className={cx("answer-editor-input")}
                       theme="snow"
                       value={answer.text}
-                      onChange={(value) =>
-                        handleAnswerChange(answer.id, value)
-                      }
+                      onChange={(value) => handleAnswerChange(answer.id, value)}
                       placeholder={`Answer...`}
                     />
                   </div>
@@ -343,21 +373,32 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
             </div>
           </div>
           <div className={cx("question-create-modal-footer")}>
-            <button className={cx("cancel-btn")} onClick={() => setIsShowCreateQuestionModal(false)}>Cancel</button>
-            <button className={cx("preview-btn", { "disabled-btn": !isPreviewButtonEnabled() })} onClick={handlePreviewQuestion} disabled={!isPreviewButtonEnabled()}>
-              <i className={cx("fa-regular fa-eye", "preview-icon")}></i>
-              <span>Preview</span>
+            <button
+              className={cx("cancel-btn")}
+              onClick={() => setIsShowUpdateQuestionModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className={cx("preview-btn", {
+                "disabled-btn": !isEditButtonEnabled(),
+              })}
+              onClick={handleEditQuestion}
+              disabled={!isEditButtonEnabled()}
+            >
+              <span>Edit</span>
             </button>
           </div>
         </div>
-      </div >
+      </div>
     </>
-  )
+  );
 }
 
-QuestionExamCreateModal.propTypes = {
+QuestionExamEditModal.propTypes = {
+  setIsShowUpdateQuestionModal: PropTypes.func,
   fetchQuestions: PropTypes.func,
-  setIsShowCreateQuestionModal: PropTypes.func,
-}
+  questionEdit: PropTypes.object,
+};
 
-export default QuestionExamCreateModal
+export default QuestionExamEditModal;

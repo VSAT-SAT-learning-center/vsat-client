@@ -43,6 +43,7 @@ import Practice from "~/pages/Staff/Practice";
 import PracticeCreate from "~/pages/Staff/Practice/PracticeCreate";
 import QuestionExam from "~/pages/Staff/QuestionExam";
 import QuestionExamCreate from "~/pages/Staff/QuestionExam/QuestionExamCreate";
+import QuestionFeedback from "~/pages/Staff/QuestionExam/QuestionFeedback";
 import QuestionQuizz from "~/pages/Staff/QuestionQuizz";
 import QuestionQuizzCreate from "~/pages/Staff/QuestionQuizz/QuestionQuizzCreate";
 import Settings from "~/pages/Staff/Settings";
@@ -88,6 +89,7 @@ const routesConfig = [
   // Staff question bank routes
   { path: '/staff/question-bank/bank', component: QuestionExam, protected: true },
   { path: '/staff/question-bank/create', component: QuestionExamCreate, protected: true },
+  { path: '/staff/question-bank/feedback', component: QuestionFeedback, protected: true },
   // Staff quizz question bank routes
   { path: '/staff/question-quizz/bank', component: QuestionQuizz, protected: true },
   { path: '/staff/question-quizz/create', component: QuestionQuizzCreate, protected: true },

@@ -50,6 +50,11 @@ export const sidebarNavs = [
         title: "Create Question",
         path: "/staff/question-bank/create",
       },
+      {
+        id: 3,
+        title: "Feedback Question",
+        path: "/staff/question-bank/feedback",
+      },
     ],
   },
   {
