@@ -1,19 +1,67 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
+import { useEffect, useMemo, useState } from "react";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionExamCreatePreview.module.scss";
 const cx = classNames.bind(styles);
 
-function QuestionExamCreatePreview({ questionPreviewData, setIsShowQuestionPreview, setIsShowCreatQuestionModal }) {
+function QuestionExamCreatePreview({ questionPreviewData, setIsShowQuestionPreview, setIsShowCreateQuestionModal, fetchQuestions }) {
+  const [sectionName, setSectionName] = useState("");
+  const [levelName, setLevelName] = useState("");
+
+  const fetchSectionAndLevel = useMemo(() => {
+    const fetchSectionName = async () => {
+      try {
+        if (questionPreviewData?.sectionId) {
+          const response = await apiClient.get(`/section/${questionPreviewData.sectionId}`);
+          return response.data.data.name;
+        }
+      } catch (error) {
+        console.error("Error fetching section name:", error);
+        return "Unknown Section";
+      }
+    };
+
+    const fetchLevelName = async () => {
+      try {
+        if (questionPreviewData?.levelId) {
+          const response = await apiClient.get(`/level/${questionPreviewData.levelId}`);
+          return response.data.data.name;
+        }
+      } catch (error) {
+        console.error("Error fetching level name:", error);
+        return "Unknown Level";
+      }
+    };
+
+    return { fetchSectionName, fetchLevelName };
+  }, [questionPreviewData?.sectionId, questionPreviewData?.levelId]);
+
+  useEffect(() => {
+    const loadSectionAndLevelData = async () => {
+      const [section, level] = await Promise.all([
+        fetchSectionAndLevel.fetchSectionName(),
+        fetchSectionAndLevel.fetchLevelName(),
+      ]);
+      setSectionName(section);
+      setLevelName(level);
+    };
+
+    if (questionPreviewData?.sectionId || questionPreviewData?.levelId) {
+      loadSectionAndLevelData();
+    }
+  }, [fetchSectionAndLevel, questionPreviewData?.levelId, questionPreviewData?.sectionId]);
   const handleSaveQuestion = async () => {
     try {
       await apiClient.post('/questions', questionPreviewData);
       setIsShowQuestionPreview(false)
-      setIsShowCreatQuestionModal(false)
+      setIsShowCreateQuestionModal(false)
+      fetchQuestions()
     } catch (error) {
       console.error("Error saving question:", error);
     }
   }
+
   return (
     <div className={cx("question-create-preview-wrapper")}>
       <div className={cx("question-create-preview-container")}>
@@ -21,8 +69,8 @@ function QuestionExamCreatePreview({ questionPreviewData, setIsShowQuestionPrevi
           <div className={cx("preview-back")} onClick={() => setIsShowQuestionPreview(false)}>
             <i className={cx("fa-regular fa-arrow-left")}></i>
           </div>
-          <div className={cx("preview-section")}>Reading & Writing</div>
-          <div className={cx("preview-level")}>Foundation</div>
+          <div className={cx("preview-section")}>{sectionName}</div>
+          <div className={cx("preview-level")}>{levelName}</div>
         </div>
         <div className={cx("question-create-preview-content")}>
           <div className={cx("long-dashes")}></div>
@@ -71,7 +119,8 @@ function QuestionExamCreatePreview({ questionPreviewData, setIsShowQuestionPrevi
 QuestionExamCreatePreview.propTypes = {
   questionPreviewData: PropTypes.object,
   setIsShowQuestionPreview: PropTypes.func,
-  setIsShowCreatQuestionModal: PropTypes.func,
+  setIsShowCreateQuestionModal: PropTypes.func,
+  fetchQuestions: PropTypes.func,
 }
 
 export default QuestionExamCreatePreview

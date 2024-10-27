@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import classNames from "classnames/bind";
-import { useState } from "react";
-import styles from "./CreateAccount.module.scss";
 import axios from "axios";
-import { toast } from "react-toastify"; 
+import classNames from "classnames/bind";
+import PropTypes from "prop-types";
+import { useState } from "react";
+import { toast } from "react-toastify"; // Import toast từ react-toastify
+import styles from "./CreateAccount.module.scss";
 
 const cx = classNames.bind(styles);
 
