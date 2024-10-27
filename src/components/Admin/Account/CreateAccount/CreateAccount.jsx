@@ -60,15 +60,15 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {
         });
 
         if (response.status === 201) {
-          toast.success("Tạo tài khoản thành công!"); // Success notification
+          toast.success("Create account successfully.");
           closeModal();
           fetchData(currentPage);
         }
       } catch (error) {
         const errorMessage =
           error.response?.data?.details.message ||
-          "Lỗi khi tạo tài khoản. Vui lòng thử lại.";
-        toast.error(errorMessage); // Show specific error message from server or fallback
+          "Error creating account. Please try again.";
+        toast.error(errorMessage);
       }
     }
   };
