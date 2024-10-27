@@ -1,2 +1,14 @@
 @import "~/styles/variables";
 
+.overview-container {
+    padding: 20px;
+    background-color: #f9fafb;
+    width: 95%;
+    margin-top: 16px;
+    border-radius: 15px;
+
+    h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+}

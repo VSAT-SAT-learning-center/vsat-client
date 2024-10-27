@@ -1,11 +1,19 @@
-import classNames from "classnames/bind";
+import classNames from "classnames/bind"; // Ensure classNames is imported
 import PageLayout from "~/layouts/Staff/PageLayout";
-import styles from "./LearningMaterial.module.scss";
-const cx = classNames.bind(styles);
+import CourseOverview from "~/components/Staff/OverviewLearningMaterial/CourseOverview";
+import RecentCourses from "~/components/Staff/OverviewLearningMaterial/RecentCourses";
+import styles from "./LearningMaterial.module.scss"; // Import your styles
+
+const cx = classNames.bind(styles); // Bind the styles for use
+
 function LearningMaterial() {
   return (
     <PageLayout>
-      <div className={cx("learning-material-title")}>Learning material</div>
+      <div className={cx("overview-container")}>
+      <h2>Course Overview</h2>
+        <CourseOverview />
+        <RecentCourses />
+      </div>
     </PageLayout>
   );
 }

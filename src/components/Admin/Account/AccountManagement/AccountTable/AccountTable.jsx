@@ -5,8 +5,8 @@ import styles from "./AccountTable.module.scss";
 import CreateAccount from "../../../../../components/Admin/Account/CreateAccount";
 import axios from "axios";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import { toast, ToastContainer } from "react-toastify"; // Import toast và ToastContainer
-import "react-toastify/dist/ReactToastify.css"; // Import CSS cho toast
+import { toast, ToastContainer } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css"; 
 
 const cx = classNames.bind(styles);
 

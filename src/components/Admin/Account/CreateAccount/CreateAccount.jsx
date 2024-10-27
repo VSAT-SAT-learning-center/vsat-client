@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import { useState } from "react";
 import styles from "./CreateAccount.module.scss";
 import axios from "axios";
-import { toast } from "react-toastify"; // Import toast từ react-toastify
+import { toast } from "react-toastify"; 
 
 const cx = classNames.bind(styles);
 
@@ -60,15 +60,15 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {
         });
 
         if (response.status === 201) {
-          toast.success("Tạo tài khoản thành công!"); // Success notification
+          toast.success("Create account successfully.");
           closeModal();
           fetchData(currentPage);
         }
       } catch (error) {
         const errorMessage =
           error.response?.data?.details.message ||
-          "Lỗi khi tạo tài khoản. Vui lòng thử lại.";
-        toast.error(errorMessage); // Show specific error message from server or fallback
+          "Error creating account. Please try again.";
+        toast.error(errorMessage);
       }
     }
   };
