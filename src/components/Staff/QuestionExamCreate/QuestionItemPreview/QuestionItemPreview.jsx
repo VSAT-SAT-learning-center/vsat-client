@@ -88,10 +88,10 @@ function QuestionItemPreview({
               <div className={cx("long-dashes")}></div>
               {questionPreviewData?.isSingleChoiceQuestion === true ? (
                 <div className={cx("answer-list-container")}>
-                  {questionPreviewData?.answers.map((answer) => (
+                  {questionPreviewData?.answers.map((answer, index) => (
                     <div key={answer.id} className={cx("answer-item")}>
                       <span className={cx("answer-label")}>
-                        {answer.label + ":"}
+                        {String.fromCharCode(65 + index) + ":"}
                       </span>
                       {questionPreviewData?.section.name === "Math" ? (
                         <span
@@ -137,6 +137,24 @@ function QuestionItemPreview({
                   </div>
                 </div>
               )}
+              <div className={cx("explain-answer-container")}>
+                <div className={cx("explain-text")}>Explaination: </div>
+                {(questionPreviewData?.section.name === "Math") === "Math" ? (
+                  <div
+                    className={cx("explain-rerender-content")}
+                    dangerouslySetInnerHTML={{
+                      __html: renderMathAndText(questionPreviewData?.explain),
+                    }}
+                  />
+                ) : (
+                  <div
+                    className={cx("explain-rerender-content")}
+                    dangerouslySetInnerHTML={{
+                      __html: questionPreviewData?.explain,
+                    }}
+                  ></div>
+                )}
+              </div>
             </div>
           </div>
           <div className={cx("long-dashes")}></div>
