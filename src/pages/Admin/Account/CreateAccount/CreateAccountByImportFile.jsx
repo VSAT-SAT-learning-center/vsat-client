@@ -11,7 +11,6 @@ const cx = classNames.bind(styles);
 function CreateAccountByImportFile() {
   const [csvData, setCsvData] = useState([]);
   const [isUploaded, setIsUploaded] = useState(false);
-  //const [progress, setProgress] = useState(0);
   const [savedAccounts, setSavedAccounts] = useState([]);
   const [errorAccounts, setErrorAccounts] = useState([]);
 
@@ -30,7 +29,6 @@ function CreateAccountByImportFile() {
           if (filteredData && filteredData.length > 0) {
             setCsvData(filteredData);
             setIsUploaded(true);
-            //setProgress(0);
           } else {
             toast.error(
               "The CSV file does not contain valid data. Please check the file again."
@@ -68,7 +66,6 @@ function CreateAccountByImportFile() {
       const progressInterval = setInterval(() => {
         if (fakeProgress < 90) {
           fakeProgress += 10;
-          //setProgress(fakeProgress);
         }
       }, 300);
 
@@ -83,9 +80,6 @@ function CreateAccountByImportFile() {
         .then((result) => {
           clearInterval(progressInterval);
           if (result.success) {
-            //setProgress(100);
-
-            // Cập nhật savedAccounts và errorAccounts từ API
             setSavedAccounts(result.data.savedAccounts);
             setErrorAccounts(result.data.errors);
 
@@ -95,14 +89,12 @@ function CreateAccountByImportFile() {
               toast.error("Some accounts were not created successfully.");
             }
           } else {
-            //setProgress(0);
             toast.error(result.message.replace("Bad request: ", ""));
           }
         })
         .catch((error) => {
           clearInterval(progressInterval);
-          //setProgress(0);
-          toast.error("Có lỗi xảy ra trong quá trình gửi dữ liệu.");
+          toast.error("An error occurred while processing the CSV file. Please try again.");
           console.error("Error processing chunk:", error);
         });
     }
