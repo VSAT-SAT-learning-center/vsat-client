@@ -2,6 +2,7 @@ import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import QuestionExamCreateModal from "~/components/Staff/QuestionExamCreate/QuestionExamCreateModal";
 import QuestionExamEditModal from "~/components/Staff/QuestionExamCreate/QuestionExamEditModal";
 import QuestionExamItem from "~/components/Staff/QuestionExamCreate/QuestionExamItem";
@@ -11,7 +12,7 @@ import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionExamCreate.module.scss";
 const cx = classNames.bind(styles);
-const itemsPerPage = 10;
+const itemsPerPage = 5;
 
 function QuestionExamCreate() {
   const [questionList, setQuestionList] = useState([]);
@@ -75,7 +76,10 @@ function QuestionExamCreate() {
         />
       )}
       {isShowUploadFileModal && (
-        <UploadFileModal setIsShowUploadFileModal={setIsShowUploadFileModal} />
+        <UploadFileModal
+          fetchQuestions={fetchQuestions}
+          setIsShowUploadFileModal={setIsShowUploadFileModal}
+        />
       )}
       {isShowUpdateQuestionModal && (
         <QuestionExamEditModal
@@ -131,9 +135,9 @@ function QuestionExamCreate() {
               </div>
             </div>
             <div className={cx("question-exam-create-content")}>
-              <div className={cx("question-exam-create-list")}>
-                {questionList?.length > 0 &&
-                  questionList?.map((question, index) => (
+              {questionList?.length > 0 ? (
+                <div className={cx("question-exam-create-list")}>
+                  {questionList?.map((question, index) => (
                     <QuestionExamItem
                       key={index}
                       index={index}
@@ -148,18 +152,23 @@ function QuestionExamCreate() {
                       }
                     />
                   ))}
-              </div>
-              <div className={cx("pagination-controls")}>
-                <Pagination
-                  align="center"
-                  current={currentPage}
-                  pageSize={itemsPerPage}
-                  total={totalItems}
-                  onChange={handlePageChange}
-                  showSizeChanger={false}
-                  showLessItems={true}
-                />
-              </div>
+                </div>
+              ) : (
+                <NoQuestionData />
+              )}
+              {questionList?.length > 0 && (
+                <div className={cx("pagination-controls")}>
+                  <Pagination
+                    align="center"
+                    current={currentPage}
+                    pageSize={itemsPerPage}
+                    total={totalItems}
+                    onChange={handlePageChange}
+                    showSizeChanger={false}
+                    showLessItems={true}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

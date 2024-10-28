@@ -33,7 +33,7 @@
         gap: 12px;
 
         .approve-btn {
-          padding: 8px 20px;
+          padding: 6px 16px;
           border-radius: 35px;
           font-size: 16px;
           font-weight: 600;
@@ -48,7 +48,7 @@
         }
 
         .pending-btn {
-          padding: 8px 20px;
+          padding: 6px 16px;
           border-radius: 35px;
           font-size: 16px;
           font-weight: 600;
@@ -78,6 +78,14 @@
       .question-exam-list {
         width: 100%;
         flex-grow: 1;
+      }
+
+      .pagination-controls {
+        width: 100%;
+        padding-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
   }

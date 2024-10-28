@@ -13,5 +13,45 @@
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     background-color: $bg-primary-color;
+
+    .question-feedback-header {
+      width: 100%;
+      height: 79px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .question-text {
+        font-size: 20px;
+        font-weight: 700;
+      }
+    }
+
+    .question-feedback-content {
+      width: 100%;
+      flex-grow: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .question-feedback-list {
+        width: 100%;
+        flex-grow: 1;
+      }
+
+      .pagination-controls {
+        width: 100%;
+        padding-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
 }

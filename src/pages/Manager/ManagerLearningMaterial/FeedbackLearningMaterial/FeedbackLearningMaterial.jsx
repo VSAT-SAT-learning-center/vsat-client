@@ -1,7 +1,7 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import LearningMaterialItem from "~/components/Manager/LearningMaterialItem";
+import LearningMaterialItem from "~/components/Manager/CensorLearningMaterial/LearningMaterialItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
@@ -41,7 +41,9 @@ function LearningMaterial() {
     <PageLayout>
       <div className={cx("feedback-learning-material-wrapper")}>
         <div className={cx("feedback-learning-material-container")}>
-          <div className={cx("feedback-learning-material-header")}>Feedback Material</div>
+          <div className={cx("feedback-learning-material-header")}>
+            Feedback Material
+          </div>
           <div className={cx("feedback-learning-material-content")}>
             {learningMaterials?.map((item) => (
               <LearningMaterialItem key={item.id} item={item} />

@@ -54,32 +54,24 @@ import katex from "katex";
 import "katex/dist/katex.min.css";
 
 export const renderMathAndText = (input) => {
-  // Sanitize the input to remove potentially harmful content
   const sanitizedHTML = DOMPurify.sanitize(input);
-
-  // Regex to match both block (\[...\]) and inline (\[...\]) math expressions
   const mathRegex = /\\\[(.*?)\\\]/gs;
-
-  // Function to handle rendering math based on position (block or inline)
   const renderMath = (mathExpr, isBlock) => {
     try {
       return katex.renderToString(mathExpr.trim(), {
-        displayMode: isBlock, // True for block math, false for inline math
+        displayMode: isBlock,
       });
     } catch (error) {
       console.error("KaTeX rendering error:", error);
       return `<span class="math-error">Error rendering math</span>`;
     }
   };
-
-  // Process both block and inline math in one pass
   const output = sanitizedHTML.replace(mathRegex, (match, mathExpr) => {
-    const isBlock = match.includes("\n"); // Block math typically includes line breaks
+    const isBlock = match.includes("\n");
     const renderedMath = renderMath(mathExpr, isBlock);
     return isBlock
       ? `<div class="math-block">${renderedMath}</div>`
       : `<span class="math-inline">${renderedMath}</span>`;
   });
-
   return output;
 };
