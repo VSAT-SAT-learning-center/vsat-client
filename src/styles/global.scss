@@ -2,6 +2,10 @@
 @import "variables";
 @import "mixins";
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: $font-family-base;
   font-size: $font-size-base;

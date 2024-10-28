@@ -157,7 +157,7 @@
           .answer-list-container {
             width: 100%;
             height: fit-content;
-            margin-top: 25px;
+            margin: 20px 0;
 
             .answer-item {
               cursor: pointer;
@@ -168,7 +168,7 @@
               padding: 8px 16px;
               text-align: start;
               line-height: 1.8;
-              border-radius: 4px;
+              border-radius: 5px;
               border: 1px solid rgb(33, 46, 88);
               background-color: $bg-primary-color;
               transition: all 0.15s linear;
@@ -187,7 +187,7 @@
           .answer-text-input-container {
             width: 100%;
             height: fit-content;
-            margin-top: 25px;
+            margin: 20px 0;
 
             .text-input-rerender-content {
               font-family: "system-ui";
@@ -210,6 +210,22 @@
                 outline: none;
                 background-color: transparent;
               }
+            }
+          }
+
+          .explain-answer-container {
+            width: 100%;
+
+            .explain-text {
+              font-size: 17px;
+              font-weight: 600;
+              margin-bottom: 10px;
+            }
+
+            .explain-rerender-content {
+              font-family: "system-ui";
+              font-size: 17px;
+              line-height: 1.8;
             }
           }
         }

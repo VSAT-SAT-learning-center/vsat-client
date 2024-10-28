@@ -231,12 +231,12 @@
       }
 
       .rejected-btn {
-        padding: 6px 16px;
+        padding: 6px 12px;
         font-size: 17px;
         border-radius: 25px;
-        border: 1px solid $third-color;
-        color: $third-color;
-        background-color: $bg-third-color-trans;
+        border: 1px solid $primary-color;
+        color: $white-color;
+        background-color: $primary-color;
         transition: all 0.2s linear;
 
         .btn-icon {
@@ -249,12 +249,12 @@
       }
 
       .approved-btn {
-        padding: 6px 16px;
+        padding: 6px 12px;
         font-size: 17px;
         border-radius: 25px;
-        border: 1px solid $success-color;
-        color: $success-color;
-        background-color: $bg-success-color;
+        border: 1px solid $primary-color;
+        color: $white-color;
+        background-color: $primary-color;
         transition: all 0.2s linear;
 
         .btn-icon {

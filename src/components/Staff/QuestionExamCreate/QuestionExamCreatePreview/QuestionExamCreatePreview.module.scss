@@ -159,7 +159,7 @@
           .answer-list-container {
             width: 100%;
             height: fit-content;
-            margin-top: 25px;
+            margin: 20px 0;
 
             .answer-item {
               cursor: pointer;
@@ -190,7 +190,7 @@
           .answer-text-input-container {
             width: 100%;
             height: fit-content;
-            margin-top: 25px;
+            margin: 20px 0;
 
             .text-input-rerender-content {
               font-family: "system-ui";
@@ -213,6 +213,22 @@
                 outline: none;
                 background-color: transparent;
               }
+            }
+          }
+
+          .explain-answer-container {
+            width: 100%;
+
+            .explain-text {
+              font-size: 17px;
+              font-weight: 600;
+              margin-bottom: 10px;
+            }
+
+            .explain-rerender-content {
+              font-family: "system-ui";
+              font-size: 17px;
+              line-height: 1.8;
             }
           }
         }

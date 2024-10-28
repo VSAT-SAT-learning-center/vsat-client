@@ -110,6 +110,13 @@ function QuestionExamCreateModal({
     }));
   };
 
+  const handleExplainAnswerChange = (value) => {
+    setQuestionData((prev) => ({
+      ...prev,
+      explain: value,
+    }));
+  };
+
   const handleAnswerChange = (answerId, value) => {
     setAnswers(
       answers.map((answer) =>
@@ -179,6 +186,7 @@ function QuestionExamCreateModal({
       questionData.sectionId &&
       questionData.skillId &&
       questionData.content &&
+      questionData.explain &&
       areAnswersFilled &&
       hasCorrectAnswer
     );
@@ -352,6 +360,18 @@ function QuestionExamCreateModal({
                   </div>
                 </div>
               ))}
+            </div>
+            <div className={cx("explain-answer-create-content")}>
+              <div className={cx("explain-create-title")}>Explain answer</div>
+              <div className={cx("explain-create-editor")}>
+                <ReactQuill
+                  className={cx("editor-input")}
+                  value={questionData.explain}
+                  theme="snow"
+                  placeholder={"Write explain answer..."}
+                  onChange={(value) => handleExplainAnswerChange(value)}
+                />
+              </div>
             </div>
             <div
               className={cx("create-answer-action")}
