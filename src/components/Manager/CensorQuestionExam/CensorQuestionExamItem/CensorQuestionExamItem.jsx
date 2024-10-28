@@ -2,26 +2,27 @@ import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { formatDate } from "~/utils/formatDate";
 import { renderMathAndText } from "~/utils/renderMathAndText";
-import styles from "./QuestionExamItem.module.scss";
+import styles from "./CensorQuestionExamItem.module.scss";
 const cx = classNames.bind(styles);
 
-function QuestionExamItem({
+function CensorQuestionExamItem({
   question,
   index,
   setQuestionPreview,
-  setQuestionEdit,
   setIsShowQuestionItemPreview,
-  setIsShowUpdateQuestionModal,
+  setQuestionCensorView,
+  setIsShowCensorQuestionView,
 }) {
   const handlePreviewQuestion = () => {
     setIsShowQuestionItemPreview(true);
     setQuestionPreview(question);
   };
 
-  const handleEditQuestion = () => {
-    setIsShowUpdateQuestionModal(true);
-    setQuestionEdit(question);
+  const handleCensorQuestion = () => {
+    setIsShowCensorQuestionView(true);
+    setQuestionCensorView(question);
   };
+
   return (
     <div className={cx("question-exam-create-item")}>
       <div className={cx("question-item-top")}>
@@ -68,15 +69,9 @@ function QuestionExamItem({
           <button className={cx("preview-btn")} onClick={handlePreviewQuestion}>
             <i className={cx("fa-regular fa-eye")}></i>
           </button>
-          {question?.status !== "Approved" &&
-            question?.status !== "Pending" && (
-              <button className={cx("edit-btn")} onClick={handleEditQuestion}>
-                <i className={cx("fa-regular fa-pen-to-square")}></i>
-              </button>
-            )}
-          {question?.status === "Reject" && (
-            <button className={cx("feedback-list-btn")}>
-              <i className={cx("fa-regular fa-clipboard-list")}></i>
+          {question?.status === "Pending" && (
+            <button className={cx("censor-btn")} onClick={handleCensorQuestion}>
+              <i className={cx("fa-regular fa-gear")}></i>
             </button>
           )}
         </div>
@@ -85,13 +80,13 @@ function QuestionExamItem({
   );
 }
 
-QuestionExamItem.propTypes = {
+CensorQuestionExamItem.propTypes = {
   question: PropTypes.object,
   index: PropTypes.number,
   setIsShowQuestionItemPreview: PropTypes.func,
-  setIsShowUpdateQuestionModal: PropTypes.func,
   setQuestionPreview: PropTypes.func,
-  setQuestionEdit: PropTypes.func,
+  setQuestionCensorView: PropTypes.func,
+  setIsShowCensorQuestionView: PropTypes.func,
 };
 
-export default QuestionExamItem;
+export default CensorQuestionExamItem;

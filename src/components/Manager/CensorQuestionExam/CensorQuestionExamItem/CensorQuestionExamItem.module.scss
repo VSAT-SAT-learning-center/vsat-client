@@ -126,33 +126,17 @@
         }
       }
 
-      .edit-btn {
+      .censor-btn {
         width: 35px;
         height: 35px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.2s linear;
+        font-size: 18px;
         color: $primary-color;
         border: 1px solid $primary-color;
-
-        &:hover {
-          background-color: $primary-color;
-          color: $white-color;
-        }
-      }
-
-      .feedback-list-btn {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         transition: all 0.2s linear;
-        color: $primary-color;
-        border: 1px solid $primary-color;
 
         &:hover {
           background-color: $primary-color;

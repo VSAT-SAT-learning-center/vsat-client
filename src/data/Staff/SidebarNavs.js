@@ -27,9 +27,9 @@ export const sidebarNavs = [
       },
       {
         id: 3,
-        title: "Assignments",
-        path: "/staff/learning-material/assignments",
-      }
+        title: "Feedback Material",
+        path: "/staff/learning-material/feedbacks",
+      },
     ],
   },
   {
@@ -104,7 +104,7 @@ export const sidebarNavs = [
         id: 4,
         title: "Exam Score",
         path: "/staff/exams/score",
-      }
+      },
     ],
   },
   {
@@ -124,7 +124,7 @@ export const sidebarNavs = [
         id: 2,
         title: "Create Practice",
         path: "/staff/practice/create",
-      }
+      },
     ],
   },
   {
@@ -144,7 +144,7 @@ export const sidebarNavs = [
         id: 2,
         title: "Study Profile",
         path: "/staff/students/study-profile",
-      }
+      },
     ],
   },
   {
@@ -164,7 +164,7 @@ export const sidebarNavs = [
         id: 2,
         title: "Assign Students",
         path: "/staff/teachers/assign-students",
-      }
+      },
     ],
   },
   {
@@ -190,5 +190,5 @@ export const sidebarNavs = [
     title: "Settings",
     path: "/staff/setting",
     show: false,
-  }
+  },
 ];

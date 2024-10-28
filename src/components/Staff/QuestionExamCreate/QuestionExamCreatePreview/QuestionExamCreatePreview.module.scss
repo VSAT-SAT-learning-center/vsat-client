@@ -73,13 +73,57 @@
           flex: 1;
           height: 95%;
           padding: 20px;
-          border-right: 1px solid #c5c5c5;
+          border-right: 1px solid #aaaaaa;
           overflow-y: auto;
           &::-webkit-scrollbar {
             display: none;
           }
 
-          .question-rw-rerender-content {
+          .preview-answer-example {
+            font-family: "system-ui";
+            line-height: 1.8;
+            .answer-example {
+              font-size: 17px;
+
+              p {
+                font-size: 20px;
+                margin-bottom: 16px;
+                margin-top: 0;
+              }
+
+              li {
+                margin-bottom: 5px;
+              }
+
+              ul {
+                list-style-type: disc;
+                padding-left: 42px;
+              }
+            }
+            .example-text {
+              width: 100%;
+              font-size: 20px;
+              margin-bottom: 16px;
+              margin-top: 16px;
+              text-align: center;
+            }
+
+            .example-image {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .ex-img {
+                width: 90%;
+                height: 100%;
+                object-fit: cover;
+                border-bottom: 2px solid #a7a7a7;
+              }
+            }
+          }
+
+          .question-rerender-content {
             font-family: "system-ui";
             font-size: 17px;
             line-height: 1.8;
@@ -91,7 +135,7 @@
           height: 95%;
           max-height: 95%;
           padding: 20px;
-          border-left: 1px solid #c5c5c5;
+          border-left: 1px solid #aaaaaa;
           overflow-y: auto;
           &::-webkit-scrollbar {
             display: none;
@@ -139,6 +183,35 @@
               &:hover {
                 background-color: $primary-color;
                 color: $white-color;
+              }
+            }
+          }
+
+          .answer-text-input-container {
+            width: 100%;
+            height: fit-content;
+            margin-top: 25px;
+
+            .text-input-rerender-content {
+              font-family: "system-ui";
+              font-size: 17px;
+              line-height: 1.8;
+              margin-bottom: 20px;
+            }
+
+            .text-input-content {
+              width: 223px;
+              padding: 15px;
+              font-size: 18px;
+              border-radius: 4px;
+              border: 1px solid #767676;
+              background-color: $bg-primary-color;
+
+              .input-text {
+                width: 100%;
+                border: none;
+                outline: none;
+                background-color: transparent;
               }
             }
           }

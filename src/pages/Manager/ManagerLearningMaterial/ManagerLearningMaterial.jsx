@@ -1,7 +1,7 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import LearningMaterialItem from "~/components/Manager/LearningMaterialItem";
+import LearningMaterialItem from "~/components/Manager/CensorLearningMaterial/LearningMaterialItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
@@ -40,7 +40,9 @@ function ManagerLearningMaterial() {
     <PageLayout>
       <div className={cx("manager-learning-material-wrapper")}>
         <div className={cx("manager-learning-material-container")}>
-          <div className={cx("manager-learning-material-header")}>Overview Material</div>
+          <div className={cx("manager-learning-material-header")}>
+            Overview Material
+          </div>
           <div className={cx("manager-learning-material-content")}>
             {learningMaterials?.map((item) => (
               <LearningMaterialItem key={item.id} item={item} />

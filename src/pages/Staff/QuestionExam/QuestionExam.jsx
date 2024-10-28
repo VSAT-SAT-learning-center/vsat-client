@@ -2,13 +2,14 @@ import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import QuestionExamItem from "~/components/Staff/QuestionExamCreate/QuestionExamItem";
 import QuestionItemPreview from "~/components/Staff/QuestionExamCreate/QuestionItemPreview";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionExam.module.scss";
 const cx = classNames.bind(styles);
-const itemsPerPage = 10;
+const itemsPerPage = 5;
 
 function QuestionExam() {
   const [bankType, setBankType] = useState("Approved");
@@ -75,9 +76,9 @@ function QuestionExam() {
               </div>
             </div>
             <div className={cx("question-exam-content")}>
-              <div className={cx("question-exam-list")}>
-                {questionList?.length > 0 ? (
-                  questionList.map((question, index) => (
+              {questionList?.length > 0 ? (
+                <div className={cx("question-exam-list")}>
+                  {questionList.map((question, index) => (
                     <QuestionExamItem
                       key={index}
                       index={index}
@@ -87,22 +88,24 @@ function QuestionExam() {
                         setIsShowQuestionItemPreview
                       }
                     />
-                  ))
-                ) : (
-                  <div>No questions available.</div>
-                )}
-              </div>
-              <div className={cx("pagination-controls")}>
-                <Pagination
-                  align="center"
-                  current={currentPage}
-                  pageSize={itemsPerPage}
-                  total={totalItems}
-                  onChange={handlePageChange}
-                  showSizeChanger={false}
-                  showLessItems={true}
-                />
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <NoQuestionData />
+              )}
+              {questionList?.length > 0 && (
+                <div className={cx("pagination-controls")}>
+                  <Pagination
+                    align="center"
+                    current={currentPage}
+                    pageSize={itemsPerPage}
+                    total={totalItems}
+                    onChange={handlePageChange}
+                    showSizeChanger={false}
+                    showLessItems={true}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

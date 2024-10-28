@@ -1,8 +1,8 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import CensorLearningMaterialView from "~/components/Manager/CensorLearningMaterialView";
-import LearningMaterialItem from "~/components/Manager/LearningMaterialItem";
+import LearningMaterialItem from "~/components/Manager/CensorLearningMaterial/LearningMaterialItem";
+import CensorLearningMaterialView from "~/components/Manager/CensorLearningMaterial/CensorLearningMaterialView";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
@@ -13,8 +13,8 @@ function LearningMaterial() {
   const [learningMaterials, setLearningMaterials] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [isShowCensorView, setIsShowCensorView] = useState(false)
-  const [censorViewUnitId, setCensorViewUnitId] = useState("")
+  const [isShowCensorView, setIsShowCensorView] = useState(false);
+  const [censorViewUnitId, setCensorViewUnitId] = useState("");
 
   useEffect(() => {
     const fetchLearningMaterials = async () => {
@@ -40,14 +40,26 @@ function LearningMaterial() {
   };
   return (
     <>
-      {isShowCensorView && <CensorLearningMaterialView unitId={censorViewUnitId} setIsShowCensorView={setIsShowCensorView} />}
+      {isShowCensorView && (
+        <CensorLearningMaterialView
+          unitId={censorViewUnitId}
+          setIsShowCensorView={setIsShowCensorView}
+        />
+      )}
       <PageLayout>
         <div className={cx("censor-learning-material-wraaper")}>
           <div className={cx("censor-learning-material-container")}>
-            <div className={cx("censor-learning-material-header")}>Censor Material</div>
+            <div className={cx("censor-learning-material-header")}>
+              Censor Material
+            </div>
             <div className={cx("censor-learning-material-content")}>
               {learningMaterials?.map((item) => (
-                <LearningMaterialItem key={item.id} item={item} setIsShowCensorView={setIsShowCensorView} setCensorViewUnitId={setCensorViewUnitId} />
+                <LearningMaterialItem
+                  key={item.id}
+                  item={item}
+                  setIsShowCensorView={setIsShowCensorView}
+                  setCensorViewUnitId={setCensorViewUnitId}
+                />
               ))}
             </div>
             <div className={cx("pagination-controls")}>
