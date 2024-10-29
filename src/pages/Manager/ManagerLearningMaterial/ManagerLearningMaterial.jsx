@@ -6,6 +6,7 @@ import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCre
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ManagerLearningMaterial.module.scss";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 const cx = classNames.bind(styles);
 const itemsPerPage = 6;
 function ManagerLearningMaterial() {
@@ -43,22 +44,28 @@ function ManagerLearningMaterial() {
           <div className={cx("manager-learning-material-header")}>
             Overview Material
           </div>
-          <div className={cx("manager-learning-material-content")}>
-            {learningMaterials?.map((item) => (
-              <LearningMaterialItem key={item.id} item={item} />
-            ))}
-          </div>
-          <div className={cx("pagination-controls")}>
-            <Pagination
-              align="center"
-              current={currentPage}
-              pageSize={itemsPerPage}
-              total={totalItems}
-              onChange={handlePageChange}
-              showSizeChanger={false}
-              showLessItems={true}
-            />
-          </div>
+          {learningMaterials?.length > 0 ? (
+            <div className={cx("manager-learning-material-content")}>
+              {learningMaterials?.map((item) => (
+                <LearningMaterialItem key={item.id} item={item} />
+              ))}
+            </div>
+          ) : (
+            <NoQuestionData />
+          )}
+          {learningMaterials?.length > 0 && (
+            <div className={cx("pagination-controls")}>
+              <Pagination
+                align="center"
+                current={currentPage}
+                pageSize={itemsPerPage}
+                total={totalItems}
+                onChange={handlePageChange}
+                showSizeChanger={false}
+                showLessItems={true}
+              />
+            </div>
+          )}
         </div>
       </div>
       <LearningMaterialCreateFooter />
