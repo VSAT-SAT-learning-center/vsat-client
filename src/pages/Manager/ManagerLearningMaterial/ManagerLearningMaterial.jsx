@@ -1,11 +1,12 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import LearningMaterialItem from "~/components/Manager/LearningMaterialItem";
+import LearningMaterialItem from "~/components/Manager/CensorLearningMaterial/LearningMaterialItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ManagerLearningMaterial.module.scss";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 const cx = classNames.bind(styles);
 const itemsPerPage = 6;
 function ManagerLearningMaterial() {
@@ -40,23 +41,31 @@ function ManagerLearningMaterial() {
     <PageLayout>
       <div className={cx("manager-learning-material-wrapper")}>
         <div className={cx("manager-learning-material-container")}>
-          <div className={cx("manager-learning-material-header")}>Overview Material</div>
-          <div className={cx("manager-learning-material-content")}>
-            {learningMaterials?.map((item) => (
-              <LearningMaterialItem key={item.id} item={item} />
-            ))}
+          <div className={cx("manager-learning-material-header")}>
+            Overview Material
           </div>
-          <div className={cx("pagination-controls")}>
-            <Pagination
-              align="center"
-              current={currentPage}
-              pageSize={itemsPerPage}
-              total={totalItems}
-              onChange={handlePageChange}
-              showSizeChanger={false}
-              showLessItems={true}
-            />
-          </div>
+          {learningMaterials?.length > 0 ? (
+            <div className={cx("manager-learning-material-content")}>
+              {learningMaterials?.map((item) => (
+                <LearningMaterialItem key={item.id} item={item} />
+              ))}
+            </div>
+          ) : (
+            <NoQuestionData />
+          )}
+          {learningMaterials?.length > 0 && (
+            <div className={cx("pagination-controls")}>
+              <Pagination
+                align="center"
+                current={currentPage}
+                pageSize={itemsPerPage}
+                total={totalItems}
+                onChange={handlePageChange}
+                showSizeChanger={false}
+                showLessItems={true}
+              />
+            </div>
+          )}
         </div>
       </div>
       <LearningMaterialCreateFooter />

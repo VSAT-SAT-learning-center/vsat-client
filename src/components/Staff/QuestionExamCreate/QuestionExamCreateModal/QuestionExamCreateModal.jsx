@@ -9,11 +9,14 @@ import apiClient from "~/services/apiService";
 import QuestionExamCreatePreview from "../QuestionExamCreatePreview";
 import styles from "./QuestionExamCreateModal.module.scss";
 const cx = classNames.bind(styles);
-function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions }) {
-  const [questionData, setQuestionData] = useState({})
+function QuestionExamCreateModal({
+  setIsShowCreateQuestionModal,
+  fetchQuestions,
+}) {
+  const [questionData, setQuestionData] = useState({});
   const [sections, setSections] = useState([]);
   const [levels, setLevels] = useState([]);
-  const [domains, setDomains] = useState([])
+  const [domains, setDomains] = useState([]);
   const [skills, setSkills] = useState([]);
   const [answers, setAnswers] = useState([
     { id: uuidv4(), text: "", label: "A", isCorrectAnswer: false },
@@ -21,8 +24,8 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
     { id: uuidv4(), text: "", label: "C", isCorrectAnswer: false },
     { id: uuidv4(), text: "", label: "D", isCorrectAnswer: false },
   ]);
-  const [isShowQuestionPreview, setIsShowQuestionPreview] = useState(false)
-  const [questionPreviewData, setQuestionPreviewData] = useState({})
+  const [isShowQuestionPreview, setIsShowQuestionPreview] = useState(false);
+  const [questionPreviewData, setQuestionPreviewData] = useState({});
   useEffect(() => {
     const fetchLevelsAndSections = async () => {
       try {
@@ -51,7 +54,7 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
   const handleLevelChange = (e) => {
     setQuestionData((prev) => ({
       ...prev,
-      levelId: e.target.value
+      levelId: e.target.value,
     }));
   };
 
@@ -59,12 +62,14 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
     const selectedSectionId = e.target.value;
     setQuestionData((prev) => ({
       ...prev,
-      sectionId: selectedSectionId
+      sectionId: selectedSectionId,
     }));
 
     if (selectedSectionId) {
       try {
-        const response = await apiClient.get(`/domains/section/${selectedSectionId}`);
+        const response = await apiClient.get(
+          `/domains/section/${selectedSectionId}`
+        );
         setDomains(response.data);
       } catch (error) {
         console.error("Error fetching domains:", error);
@@ -78,7 +83,9 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
     const selectedDomainId = e.target.value;
     if (selectedDomainId) {
       try {
-        const response = await apiClient.get(`/skills/domain/${selectedDomainId}`);
+        const response = await apiClient.get(
+          `/skills/domain/${selectedDomainId}`
+        );
         setSkills(response.data);
       } catch (error) {
         console.error("Error fetching skills:", error);
@@ -86,22 +93,29 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
     } else {
       setSkills([]);
     }
-  }
+  };
 
   const handleSkillChange = (e) => {
     const selectedSkillId = e.target.value;
     setQuestionData((prev) => ({
       ...prev,
-      skillId: selectedSkillId
+      skillId: selectedSkillId,
     }));
-  }
+  };
 
   const handleContentQuestionChange = (value) => {
     setQuestionData((prev) => ({
       ...prev,
-      content: value
+      content: value,
     }));
-  }
+  };
+
+  const handleExplainAnswerChange = (value) => {
+    setQuestionData((prev) => ({
+      ...prev,
+      explain: value,
+    }));
+  };
 
   const handleAnswerChange = (answerId, value) => {
     setAnswers(
@@ -141,7 +155,9 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
 
   const handleRemoveAnswer = (answerId) => {
     if (answers.length > 1) {
-      const filteredAnswers = answers.filter((answer) => answer.id !== answerId);
+      const filteredAnswers = answers.filter(
+        (answer) => answer.id !== answerId
+      );
       const updatedAnswers = filteredAnswers.map((answer, index) => ({
         ...answer,
         label: String.fromCharCode(65 + index),
@@ -155,19 +171,22 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
       ...questionData,
       answers: answers,
     };
-    setIsShowQuestionPreview(true)
+    setIsShowQuestionPreview(true);
     setQuestionPreviewData(updatedQuestionData);
   };
 
   const isPreviewButtonEnabled = () => {
-    const areAnswersFilled = answers.every(answer => answer.text.trim() !== '');
-    const hasCorrectAnswer = answers.some(answer => answer.isCorrectAnswer);
+    const areAnswersFilled = answers.every(
+      (answer) => answer.text.trim() !== ""
+    );
+    const hasCorrectAnswer = answers.some((answer) => answer.isCorrectAnswer);
     return (
       questionData.isSingleChoiceQuestion !== undefined &&
       questionData.levelId &&
       questionData.sectionId &&
       questionData.skillId &&
       questionData.content &&
+      questionData.explain &&
       areAnswersFilled &&
       hasCorrectAnswer
     );
@@ -187,7 +206,10 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
         <div className={cx("question-create-modal-container")}>
           <div className={cx("question-create-modal-header")}>
             <div className={cx("question-title")}>Create question</div>
-            <div className={cx("question-close")} onClick={() => setIsShowCreateQuestionModal(false)}>
+            <div
+              className={cx("question-close")}
+              onClick={() => setIsShowCreateQuestionModal(false)}
+            >
               <i className={cx("fa-regular fa-xmark")}></i>
             </div>
           </div>
@@ -203,7 +225,7 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
                   >
                     <option value="">Select Question</option>
                     <option value="singleChoice">Single Choice</option>
-                    <option value="fillBlank">Fill in the Blank</option>
+                    <option value="textInput">Text Input</option>
                   </select>
                 </div>
               </div>
@@ -294,27 +316,36 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
                   />
                 </div>
               </div>
-              <div className={cx("content-right")}>
-              </div>
+              <div className={cx("content-right")}></div>
             </div>
             <div className={cx("question-answer-create-content")}>
               {answers.map((answer, index) => (
                 <div className={cx("answer-create-item")} key={answer.id}>
                   <div className={cx("answer-create-select")}>
                     <div className={cx("select-answer")}>
-                      <Radio className={cx("answer-input-radio")}
+                      <Radio
+                        className={cx("answer-input-radio")}
                         checked={answer.isCorrectAnswer}
                         onChange={() => handleCorrectAnswerChange(answer.id)}
                       />
-                      <span className={cx("answer-input-text")} onClick={() => handleCorrectAnswerChange(answer.id)}>Choice {index + 1}</span>
+                      <span
+                        className={cx("answer-input-text")}
+                        onClick={() => handleCorrectAnswerChange(answer.id)}
+                      >
+                        Choice {index + 1}
+                      </span>
                     </div>
                     <div className={cx("delete-answer")}>
                       <button
-                        className={cx("delete-btn", { "disabled-delete-btn": answers.length === 1 })}
+                        className={cx("delete-btn", {
+                          "disabled-delete-btn": answers.length === 1,
+                        })}
                         onClick={() => handleRemoveAnswer(answer.id)}
                         disabled={answers.length === 1}
                       >
-                        <i className={cx("fa-regular fa-trash", "trash-icon")}></i>
+                        <i
+                          className={cx("fa-regular fa-trash", "trash-icon")}
+                        ></i>
                       </button>
                     </div>
                   </div>
@@ -323,14 +354,24 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
                       className={cx("answer-editor-input")}
                       theme="snow"
                       value={answer.text}
-                      onChange={(value) =>
-                        handleAnswerChange(answer.id, value)
-                      }
+                      onChange={(value) => handleAnswerChange(answer.id, value)}
                       placeholder={`Answer...`}
                     />
                   </div>
                 </div>
               ))}
+            </div>
+            <div className={cx("explain-answer-create-content")}>
+              <div className={cx("explain-create-title")}>Explain answer</div>
+              <div className={cx("explain-create-editor")}>
+                <ReactQuill
+                  className={cx("editor-input")}
+                  value={questionData.explain}
+                  theme="snow"
+                  placeholder={"Write explain answer..."}
+                  onChange={(value) => handleExplainAnswerChange(value)}
+                />
+              </div>
             </div>
             <div
               className={cx("create-answer-action")}
@@ -343,21 +384,32 @@ function QuestionExamCreateModal({ setIsShowCreateQuestionModal, fetchQuestions 
             </div>
           </div>
           <div className={cx("question-create-modal-footer")}>
-            <button className={cx("cancel-btn")} onClick={() => setIsShowCreateQuestionModal(false)}>Cancel</button>
-            <button className={cx("preview-btn", { "disabled-btn": !isPreviewButtonEnabled() })} onClick={handlePreviewQuestion} disabled={!isPreviewButtonEnabled()}>
+            <button
+              className={cx("cancel-btn")}
+              onClick={() => setIsShowCreateQuestionModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className={cx("preview-btn", {
+                "disabled-btn": !isPreviewButtonEnabled(),
+              })}
+              onClick={handlePreviewQuestion}
+              disabled={!isPreviewButtonEnabled()}
+            >
               <i className={cx("fa-regular fa-eye", "preview-icon")}></i>
               <span>Preview</span>
             </button>
           </div>
         </div>
-      </div >
+      </div>
     </>
-  )
+  );
 }
 
 QuestionExamCreateModal.propTypes = {
   fetchQuestions: PropTypes.func,
   setIsShowCreateQuestionModal: PropTypes.func,
-}
+};
 
-export default QuestionExamCreateModal
+export default QuestionExamCreateModal;

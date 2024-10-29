@@ -1,58 +1,45 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { satFeedbackReportDatas } from "~/data/Manager/satFeedbackReportDatas";
-import styles from "./CensorFeedbackReason.module.scss";
+import styles from "./CensorQuestionExamFeedback.module.scss";
+import { satFeedbackReportQuestionDatas } from "~/data/Manager/satFeedbackReportQuestionDatas";
 const cx = classNames.bind(styles);
-
-function CensorFeedbackReason({ lessonData, setIsShowCensorFeedback, markRejectLesson }) {
+function CensorQuestionExamFeedback({ setIsShowCensorFeedback }) {
   const [selectedReason, setSelectedReason] = useState(null);
   const [reasonFeedback, setReasonFeedback] = useState(null);
-  const [typeShowFeedback, setTypeShowFeedback] = useState("choose")
+  const [typeShowFeedback, setTypeShowFeedback] = useState("choose");
   const [feedbackContent, setFeedbackContent] = useState("");
-
   const handleChooseReason = (reasonData) => {
     setSelectedReason(reasonData.id);
     setReasonFeedback(reasonData.title);
   };
-
   const handleFeedbackContentChange = (e) => {
-    setFeedbackContent(e.target.value)
-  }
-
+    setFeedbackContent(e.target.value);
+  };
   const handleClickContinue = () => {
     if (typeShowFeedback === "choose") {
-      setTypeShowFeedback("input")
+      setTypeShowFeedback("input");
     } else {
-      setIsShowCensorFeedback(false)
+      setIsShowCensorFeedback(false);
     }
-  }
-
-  const handleClickSaveFeedback = () => {
-    markRejectLesson(reasonFeedback, feedbackContent);
   };
-
   return (
-    <div className={cx("censor-feedback-reason-wrapper")}>
-      <div className={cx("censor-feedback-reason-container")}>
-        <div className={cx("censor-feedback-reason-heeader")}>
-          <div className={cx("header-left")}>
-            {typeShowFeedback === "choose" ? (
-              <div className={cx("view-back")} onClick={() => setIsShowCensorFeedback(false)}>
-                <i className={cx("fa-solid fa-arrow-left", "back-icon")}></i>
-              </div>
-            ) : (
-              <div className={cx("view-back")} onClick={() => setTypeShowFeedback("choose")}>
-                <i className={cx("fa-solid fa-arrow-left", "back-icon")}></i>
-              </div>
-            )}
-            <div className={cx("view-title")}>{lessonData?.title}</div>
+    <div className={cx("censor-question-exam-feedback-wrapper")}>
+      <div className={cx("censor-question-exam-feedback-container")}>
+        <div className={cx("censor-question-exam-feedback-header")}>
+          <div
+            className={cx("censor-back")}
+            onClick={() => setIsShowCensorFeedback(false)}
+          >
+            <i className={cx("fa-regular fa-arrow-left")}></i>
           </div>
+          <div className={cx("censor-title")}>Censor Question</div>
+          <div className={cx("censor-empty")}></div>
         </div>
-        <div className={cx("censor-feedback-reason-content")}>
+        <div className={cx("censor-question-exam-feedback-content")}>
           {typeShowFeedback === "choose" ? (
             <div className={cx("reason-list-container")}>
-              {satFeedbackReportDatas.map((reason) => (
+              {satFeedbackReportQuestionDatas.map((reason) => (
                 <div className={cx("reason-item")} key={reason.id}>
                   <div className={cx("select-reason")}>
                     <input
@@ -78,7 +65,10 @@ function CensorFeedbackReason({ lessonData, setIsShowCensorFeedback, markRejectL
             </div>
           ) : (
             <div className={cx("reason-input-container")}>
-              <div className={cx("reason-name")}>Reason: <span className={cx("name-highlight")}>{reasonFeedback}</span></div>
+              <div className={cx("reason-name")}>
+                Reason:{" "}
+                <span className={cx("name-highlight")}>{reasonFeedback}</span>
+              </div>
               <div className={cx("reason-editor-input")}>
                 <textarea
                   value={feedbackContent}
@@ -89,25 +79,42 @@ function CensorFeedbackReason({ lessonData, setIsShowCensorFeedback, markRejectL
               </div>
             </div>
           )}
-
         </div>
-        <div className={cx("censor-feedback-reason-footer")}>
-          <button className={cx("cancel-btn")} onClick={() => setIsShowCensorFeedback(false)}>Cancel</button>
+        <div className={cx("censor-question-exam-feedback-footer")}>
+          <button
+            className={cx("cancel-btn")}
+            onClick={() => setIsShowCensorFeedback(false)}
+          >
+            Cancel
+          </button>
           {typeShowFeedback === "choose" ? (
-            <button className={cx("continue-btn", { "disabled-btn": selectedReason === null })} disabled={selectedReason === null} onClick={handleClickContinue}>Continue</button>
+            <button
+              className={cx("continue-btn", {
+                "disabled-btn": selectedReason === null,
+              })}
+              disabled={selectedReason === null}
+              onClick={handleClickContinue}
+            >
+              Continue
+            </button>
           ) : (
-            <button className={cx("continue-btn", { "disabled-btn": feedbackContent === "" })} disabled={feedbackContent === ""} onClick={handleClickSaveFeedback}>Save</button>
+            <button
+              className={cx("continue-btn", {
+                "disabled-btn": feedbackContent === "",
+              })}
+              disabled={feedbackContent === ""}
+            >
+              Save
+            </button>
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-CensorFeedbackReason.propTypes = {
-  lessonData: PropTypes.object,
+CensorQuestionExamFeedback.propTypes = {
   setIsShowCensorFeedback: PropTypes.func,
-  markRejectLesson: PropTypes.func
-}
+};
 
-export default CensorFeedbackReason
+export default CensorQuestionExamFeedback;
