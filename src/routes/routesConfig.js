@@ -59,6 +59,7 @@ import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
 import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
 import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
+import QuizzFeedback from "~/pages/Staff/QuestionQuizz/QuizzFeedback/QuizzFeedback";
 
 const routesConfig = [
   // Landing page routes
@@ -93,6 +94,7 @@ const routesConfig = [
   // Staff quizz question bank routes
   { path: '/staff/question-quizz/bank', component: QuestionQuizz, protected: true },
   { path: '/staff/question-quizz/create', component: QuestionQuizzCreate, protected: true },
+  { path: '/staff/question-quizz/feedback', component: QuizzFeedback, protected: true },
   // Staff exam routes
   { path: '/staff/exams/overview', component: Exam, protected: true },
   { path: '/staff/exams/create', component: ExamCreate, protected: true },

@@ -1,0 +1,192 @@
+@import "~/styles/variables";
+
+.question-quizz-create-preview-wrapper { /* Đổi tên class chính */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 105;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .question-quizz-create-preview-container { /* Đổi tên class */
+    position: relative;
+    width: 85%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .question-quizz-create-preview-header { /* Đổi tên class */
+      width: 100%;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .preview-back {
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .preview-section {
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      .preview-level {
+        font-size: 16px;
+      }
+    }
+
+    .question-quizz-create-preview-content { /* Đổi tên class */
+      width: 100%;
+      flex-grow: 1;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .preview-content-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+
+        .preview-content-question {
+          flex: 1;
+          height: 95%;
+          padding: 20px;
+          border-right: 1px solid #c5c5c5;
+          overflow-y: auto;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          .question-rw-rerender-content {
+            font-family: "system-ui";
+            font-size: 17px;
+            line-height: 1.8;
+          }
+        }
+
+        .preview-content-answer {
+          flex: 1;
+          height: 95%;
+          max-height: 95%;
+          padding: 20px;
+          border-left: 1px solid #c5c5c5;
+          overflow-y: auto;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          .mark-answer-container {
+            width: 100%;
+            padding: 6px 14px;
+            background-color: #eeeeee;
+
+            .mark-answer {
+              cursor: pointer;
+              width: fit-content;
+              font-size: 17px;
+
+              .icon-mark {
+                margin-right: 8px;
+              }
+            }
+          }
+
+          .answer-list-container {
+            width: 100%;
+            height: fit-content;
+            margin-top: 25px;
+
+            .answer-item {
+              cursor: pointer;
+              width: 100%;
+              height: fit-content;
+              display: flex;
+              margin: 8px 0;
+              padding: 8px 16px;
+              text-align: start;
+              font-size: 17px;
+              line-height: 1.8;
+              border-radius: 4px;
+              border: 1px solid rgb(33, 46, 88);
+              background-color: $bg-primary-color;
+              transition: all 0.15s linear;
+
+              .answer-label {
+                margin-right: 8px;
+              }
+
+              &:hover {
+                background-color: $primary-color;
+                color: $white-color;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .question-quizz-create-preview-footer { /* Đổi tên class */
+      width: 100%;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      column-gap: 10px;
+      border-top: 1px solid $border-color;
+
+      .save-btn {
+        user-select: none;
+        padding: 6px 16px;
+        font-weight: 600;
+        border-radius: 25px;
+        color: $white-color;
+        border: 1px solid $primary-color;
+        background-color: $primary-color;
+        transition: 0.3s linear;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .cancel-btn {
+        user-select: none;
+        padding: 6px 16px;
+        font-weight: 600;
+        border-radius: 25px;
+        color: $primary-color;
+        border: 1px solid $primary-color;
+        background-color: $bg-primary-color;
+        transition: 0.3s linear;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
