@@ -1,9 +1,10 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import LearningMaterialItem from "~/components/Manager/CensorLearningMaterial/LearningMaterialItem";
 import CensorLearningMaterialView from "~/components/Manager/CensorLearningMaterial/CensorLearningMaterialView";
+import LearningMaterialItem from "~/components/Manager/CensorLearningMaterial/LearningMaterialItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./LearningMaterialCensor.module.scss";
@@ -52,27 +53,33 @@ function LearningMaterial() {
             <div className={cx("censor-learning-material-header")}>
               Censor Material
             </div>
-            <div className={cx("censor-learning-material-content")}>
-              {learningMaterials?.map((item) => (
-                <LearningMaterialItem
-                  key={item.id}
-                  item={item}
-                  setIsShowCensorView={setIsShowCensorView}
-                  setCensorViewUnitId={setCensorViewUnitId}
+            {learningMaterials?.length > 0 ? (
+              <div className={cx("censor-learning-material-content")}>
+                {learningMaterials?.map((item) => (
+                  <LearningMaterialItem
+                    key={item.id}
+                    item={item}
+                    setIsShowCensorView={setIsShowCensorView}
+                    setCensorViewUnitId={setCensorViewUnitId}
+                  />
+                ))}
+              </div>
+            ) : (
+              <NoQuestionData />
+            )}
+            {learningMaterials?.length > 0 && (
+              <div className={cx("pagination-controls")}>
+                <Pagination
+                  align="center"
+                  current={currentPage}
+                  pageSize={itemsPerPage}
+                  total={totalItems}
+                  onChange={handlePageChange}
+                  showSizeChanger={false}
+                  showLessItems={true}
                 />
-              ))}
-            </div>
-            <div className={cx("pagination-controls")}>
-              <Pagination
-                align="center"
-                current={currentPage}
-                pageSize={itemsPerPage}
-                total={totalItems}
-                onChange={handlePageChange}
-                showSizeChanger={false}
-                showLessItems={true}
-              />
-            </div>
+              </div>
+            )}
           </div>
         </div>
         <LearningMaterialCreateFooter />

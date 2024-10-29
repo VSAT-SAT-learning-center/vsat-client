@@ -49,4 +49,9 @@ export const satFeedbackReportDatas = [
     title: "Lack of Engagement",
     desc: "The lesson is too monotonous or does not engage the student effectively.",
   },
+  {
+    id: 11,
+    title: "Other",
+    desc: "The issue does not fall into any of the above categories. Please specify further details in the feedback.",
+  },
 ];

@@ -139,7 +139,7 @@ function QuestionItemPreview({
               )}
               <div className={cx("explain-answer-container")}>
                 <div className={cx("explain-text")}>Explaination: </div>
-                {(questionPreviewData?.section.name === "Math") === "Math" ? (
+                {questionPreviewData?.section.name === "Math" ? (
                   <div
                     className={cx("explain-rerender-content")}
                     dangerouslySetInnerHTML={{

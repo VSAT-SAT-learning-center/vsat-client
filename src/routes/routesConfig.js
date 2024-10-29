@@ -1,4 +1,4 @@
-import QuestionExamCreatePreview from "~/components/Staff/QuestionExamCreate/QuestionExamCreatePreview";
+import CensorQuestionExamGPT from "~/components/Manager/CensorQuestionExam/CensorQuestionExamGPT";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -34,10 +34,10 @@ import ExamScore from "~/pages/Staff/Exam/ExamScore";
 import ExamStructure from "~/pages/Staff/Exam/ExamStructure";
 import Feedback from "~/pages/Staff/Feedback";
 import LearningMaterial from "~/pages/Staff/LearningMaterial";
-import LearningMaterialFeedback from "~/pages/Staff/LearningMaterial/LearningMaterialFeedback";
 import LearningMaterialCreateDetails from "~/pages/Staff/LearningMaterial/LearningMaterialCreateDetails";
 import LearningMaterialCreateLesson from "~/pages/Staff/LearningMaterial/LearningMaterialCreateLesson";
 import LearningMaterialCreateTopic from "~/pages/Staff/LearningMaterial/LearningMaterialCreateTopic";
+import LearningMaterialFeedback from "~/pages/Staff/LearningMaterial/LearningMaterialFeedback";
 import LearningMaterialPublish from "~/pages/Staff/LearningMaterial/LearningMaterialPublish";
 import Practice from "~/pages/Staff/Practice";
 import PracticeCreate from "~/pages/Staff/Practice/PracticeCreate";
@@ -63,7 +63,7 @@ import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/Feedbac
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: QuestionExamCreatePreview },
+  { path: "/test", component: CensorQuestionExamGPT },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },

@@ -1,12 +1,15 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import AIImg from "~/assets/images/content/ai.svg";
+import Loader from "~/components/General/Loader";
 import apiClient from "~/services/apiService";
+import { convertToJSON } from "~/utils/convertToJSON";
 import { formatDate } from "~/utils/formatDate";
 import { renderMathAndText } from "~/utils/renderMathAndText";
 import CensorQuestionExamFeedback from "../CensorQuestionExamFeedback";
+import CensorQuestionExamGPT from "../CensorQuestionExamGPT";
 import styles from "./CensorQuestionExamView.module.scss";
-import AIImg from "~/assets/images/content/ai.svg"
 const cx = classNames.bind(styles);
 function CensorQuestionExamView({
   questionCensorData,
@@ -14,6 +17,9 @@ function CensorQuestionExamView({
   fetchQuestions,
 }) {
   const [isShowCensorFeedback, setIsShowCensorFeedback] = useState(false);
+  const [isShowCensorGpt, setIsShowCensorGpt] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [dataCensorWithAI, setDataCensorWithAI] = useState(null);
   const handleApproveQuestion = async () => {
     const status = {
       status: "Approved",
@@ -33,11 +39,61 @@ function CensorQuestionExamView({
   const handleRejectedQuestion = () => {
     setIsShowCensorFeedback(true);
   };
+
+  const handleCensorWithAI = async () => {
+    setLoading(true);
+    if (dataCensorWithAI) {
+      setLoading(false);
+      setIsShowCensorGpt(true);
+      return;
+    }
+    const correctAnswer = questionCensorData.answers.find(
+      (answer) => answer.isCorrectAnswer
+    );
+    const censorAIData = {
+      content: questionCensorData.content,
+      answers: [
+        {
+          label: correctAnswer?.label || "",
+          text: correctAnswer?.text || "",
+          isCorrectAnswer: true,
+        },
+      ],
+      explain: questionCensorData.explain || "",
+    };
+    try {
+      const response = await apiClient.post(
+        "gpts/censor-question",
+        censorAIData
+      );
+      if (questionCensorData?.section.name === "Math") {
+        const convertData = convertToJSON(response.data);
+        setDataCensorWithAI(convertData);
+      } else {
+        setDataCensorWithAI(response.data);
+      }
+      setLoading(false);
+      setIsShowCensorGpt(true);
+    } catch (error) {
+      console.error("Error censoring question with AI:", error);
+      setLoading(false);
+    }
+  };
+
   return (
     <>
+      {loading && <Loader />}
+
       {isShowCensorFeedback && (
         <CensorQuestionExamFeedback
           setIsShowCensorFeedback={setIsShowCensorFeedback}
+        />
+      )}
+
+      {isShowCensorGpt && (
+        <CensorQuestionExamGPT
+          dataCensorWithAI={dataCensorWithAI}
+          setIsShowCensorGpt={setIsShowCensorGpt}
         />
       )}
       <div className={cx("censor-question-exam-view-wrapper")}>
@@ -50,8 +106,11 @@ function CensorQuestionExamView({
               <i className={cx("fa-regular fa-arrow-left")}></i>
             </div>
             <div className={cx("censor-title")}>Censor Question</div>
-            <button className={cx("censor-with-ai")}>
-              <img src={AIImg} alt="ai-img" className={cx("ai-img")}/>
+            <button
+              className={cx("censor-with-ai")}
+              onClick={handleCensorWithAI}
+            >
+              <img src={AIImg} alt="ai-img" className={cx("ai-img")} />
               <div className={cx("ai-text")}>Censor with AI</div>
             </button>
           </div>
