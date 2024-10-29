@@ -22,7 +22,7 @@ export const sidebarNavs = [
         },
         {
           id: 2,
-          title: "Import file to create account",
+          title: "Create account",
           path: "/admin/account/create",
         },
       ],
