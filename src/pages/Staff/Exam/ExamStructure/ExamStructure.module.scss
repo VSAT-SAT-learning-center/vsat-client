@@ -1,0 +1,54 @@
+@import "~/styles/variables";
+
+.create-structure-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+
+  .create-structure-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .create-structure-header {
+      width: 100%;
+      height: 79px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .create-structure-text {
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .create-structure-action {
+        padding: 6px 14px;
+        border-radius: 10px;
+        border: 1px solid $primary-color;
+        color: $white-color;
+        background-color: $primary-color;
+        transition: all 0.2s linear;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        .structure-icon {
+          margin-right: 8px;
+        }
+
+        .structure-text {
+          font-size: 16px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
