@@ -81,10 +81,83 @@
             display: none;
           }
 
-          .question-rw-rerender-content {
+          .preview-answer-example {
+            font-family: "system-ui";
+            line-height: 1.8;
+            .answer-example {
+              font-size: 17px;
+
+              p {
+                font-size: 20px;
+                margin-bottom: 16px;
+                margin-top: 0;
+              }
+
+              li {
+                margin-bottom: 5px;
+              }
+
+              ul {
+                list-style-type: disc;
+                padding-left: 42px;
+              }
+            }
+            .example-text {
+              width: 100%;
+              font-size: 20px;
+              margin-bottom: 16px;
+              margin-top: 16px;
+              text-align: center;
+            }
+
+            .example-image {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .ex-img {
+                width: 90%;
+                height: 100%;
+                object-fit: cover;
+                border-bottom: 2px solid #a7a7a7;
+              }
+            }
+          }
+
+          .question-rerender-content {
             font-family: "system-ui";
             font-size: 17px;
             line-height: 1.8;
+
+            h3 {
+              font-size: 26px;
+              font-weight: 700;
+              margin-bottom: 16px;
+            }
+
+            p {
+              margin-bottom: 24px;
+              margin-top: 0;
+            }
+
+            blockquote {
+              padding: 0 32px;
+              margin-bottom: 24px;
+
+              strong {
+                font-weight: 700;
+              }
+            }
+
+            li {
+              margin-bottom: 16px;
+            }
+
+            ul {
+              list-style-type: disc;
+              padding-left: 42px;
+            }
           }
         }
 
@@ -118,7 +191,7 @@
           .answer-list-container {
             width: 100%;
             height: fit-content;
-            margin-top: 25px;
+            margin: 20px 0;
 
             .answer-item {
               cursor: pointer;
@@ -142,6 +215,80 @@
               &:hover {
                 background-color: $primary-color;
                 color: $white-color;
+              }
+            }
+          }
+
+          .answer-text-input-container {
+            width: 100%;
+            height: fit-content;
+            margin: 20px 0;
+
+            .text-input-rerender-content {
+              font-family: "system-ui";
+              font-size: 17px;
+              line-height: 1.8;
+              margin-bottom: 20px;
+            }
+
+            .text-input-content {
+              width: 223px;
+              padding: 15px;
+              font-size: 18px;
+              border-radius: 4px;
+              border: 1px solid #767676;
+              background-color: $bg-primary-color;
+
+              .input-text {
+                width: 100%;
+                border: none;
+                outline: none;
+                background-color: transparent;
+              }
+            }
+          }
+
+          .explain-answer-container {
+            width: 100%;
+
+            .explain-text {
+              font-size: 18px;
+              font-weight: 600;
+              margin: 10px 0;
+            }
+
+            .explain-rerender-content {
+              font-family: "system-ui";
+              font-size: 17px;
+              line-height: 1.8;
+
+              h3 {
+                font-size: 26px;
+                font-weight: 700;
+                margin-bottom: 16px;
+              }
+
+              p {
+                margin-bottom: 24px;
+                margin-top: 0;
+              }
+
+              blockquote {
+                padding: 0 32px;
+                margin-bottom: 24px;
+
+                strong {
+                  font-weight: 700;
+                }
+              }
+
+              li {
+                margin-bottom: 16px;
+              }
+
+              ul {
+                list-style-type: disc;
+                padding-left: 42px;
               }
             }
           }

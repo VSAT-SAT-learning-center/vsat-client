@@ -1,12 +1,11 @@
-import classNames from "classnames/bind";
-import { useState, useEffect } from "react";
-import Modal from "react-modal";
-import styles from "./AccountTable.module.scss";
-import CreateAccount from "../../../../../components/Admin/Account/CreateAccount";
-import axios from "axios";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import { toast, ToastContainer } from "react-toastify"; 
-import "react-toastify/dist/ReactToastify.css"; 
+import axios from "axios";
+import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
+import Modal from "react-modal";
+import { toast } from "react-toastify";
+import CreateAccount from "../../../../../components/Admin/Account/CreateAccount";
+import styles from "./AccountTable.module.scss";
 
 const cx = classNames.bind(styles);
 
@@ -186,7 +185,6 @@ function AccountTable() {
           />
         </Modal>
       </div>
-      <ToastContainer /> 
     </div>
   );
 }

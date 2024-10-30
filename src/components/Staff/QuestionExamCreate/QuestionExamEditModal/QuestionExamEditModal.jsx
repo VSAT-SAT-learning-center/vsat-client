@@ -119,6 +119,13 @@ function QuestionExamEditModal({
     }));
   };
 
+  const handleExplainAnswerChange = (value) => {
+    setQuestionData((prev) => ({
+      ...prev,
+      explain: value,
+    }));
+  };
+
   const handleAnswerChange = (answerId, value) => {
     setAnswers(
       answers.map((answer) =>
@@ -196,6 +203,7 @@ function QuestionExamEditModal({
       questionData.sectionId &&
       questionData.skillId &&
       questionData.content &&
+      questionData.explain &&
       areAnswersFilled &&
       hasCorrectAnswer
     );
@@ -221,7 +229,11 @@ function QuestionExamEditModal({
                 <div className={cx("config-selection")}>
                   <select
                     id="question-type"
-                    value={questionData.isSingleChoiceQuestion === true ? "singleChoice" : "fillBlank"}
+                    value={
+                      questionData.isSingleChoiceQuestion === true
+                        ? "singleChoice"
+                        : "fillBlank"
+                    }
                     className={cx("question-select")}
                     onChange={handleQuestionTypeChange}
                   >
@@ -361,6 +373,18 @@ function QuestionExamEditModal({
                   </div>
                 </div>
               ))}
+            </div>
+            <div className={cx("explain-answer-create-content")}>
+              <div className={cx("explain-create-title")}>Explain answer</div>
+              <div className={cx("explain-create-editor")}>
+                <ReactQuill
+                  className={cx("editor-input")}
+                  value={questionData.explain}
+                  theme="snow"
+                  placeholder={"Write explain answer..."}
+                  onChange={(value) => handleExplainAnswerChange(value)}
+                />
+              </div>
             </div>
             <div
               className={cx("create-answer-action")}

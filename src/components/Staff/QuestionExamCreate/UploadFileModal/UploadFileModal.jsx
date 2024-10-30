@@ -2,8 +2,7 @@ import classNames from "classnames/bind";
 import Papa from "papaparse";
 import PropTypes from "prop-types";
 import { useRef, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import * as XLSX from "xlsx";
 import csvImg from "~/assets/images/content/csv.png";
 import csvIcon from "~/assets/images/content/csvIcon.png";
@@ -12,7 +11,12 @@ import wordIcon from "~/assets/images/content/wordIcon.png";
 import apiClient from "~/services/apiService";
 import styles from "./UploadFileModal.module.scss";
 const cx = classNames.bind(styles);
-function UploadFileModal({ fetchQuestions, setIsShowUploadFileModal }) {
+function UploadFileModal({
+  fetchQuestions,
+  setIsShowUploadFileModal,
+  setQuestionListEror,
+  setIsShowQuestionListError,
+}) {
   const fileInputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
 
@@ -74,12 +78,27 @@ function UploadFileModal({ fetchQuestions, setIsShowUploadFileModal }) {
         const worksheet = workbook.Sheets[sheetName];
         const rows = XLSX.utils.sheet_to_json(worksheet);
         const formattedData = formatExcelData(rows);
+        console.log(formattedData);
         const response = await apiClient.post(
           "/questions/import-file",
           formattedData
         );
-        setIsShowUploadFileModal(false);
-        fetchQuestions();
+        console.log(response.data);
+
+        if (response.data.data.savedQuestions.length > 0) {
+          toast.success("Questions created successfully!", {
+            autoClose: 2000,
+          });
+          setIsShowUploadFileModal(false);
+          fetchQuestions();
+        } else if (response.data.data.errors.length > 0) {
+          toast.error(`Questions created fail!`, {
+            autoClose: 1000,
+          });
+          setIsShowUploadFileModal(false);
+          setIsShowQuestionListError(true);
+          setQuestionListEror(response.data.data.errors);
+        }
         console.log("Questions successfully imported:", response.data);
       } catch (error) {
         console.error("Error importing questions:", error);
@@ -97,30 +116,46 @@ function UploadFileModal({ fetchQuestions, setIsShowUploadFileModal }) {
       );
       if (!existingQuestion) {
         result.push({
-          level: row.Level,
-          skill: row.Skill,
+          level: row.Level ?? "",
+          skill: row.Skill ?? "",
           section:
-            row.Section === "Reading_Writing" ? "Reading & Writing" : "Math",
-          content: `<p>${row.Content}</p>`,
-          explain: row.Explain,
+            row.Section === "Reading_Writing"
+              ? "Reading & Writing"
+              : row.Section === "Math"
+              ? "Math"
+              : "",
+          content: row.Content ? `<p>${row.Content}</p>` : "",
+          explain: row.Explain ?? "",
           answers: [
             {
-              label: row["Label"],
-              text: `<p>${row["Text"]}</p>`,
-              isCorrectAnswer:
-                row.isCorrectAnswer === "TRUE" || row.isCorrectAnswer === true,
+              label: "A",
+              text: row["Answer 1"] ? `<p>${row["Answer 1"]}</p>` : "",
+              isCorrectAnswer: row["Answer 1"] === row.CorrectAnswer,
+            },
+            {
+              label: "B",
+              text: row["Answer 2"] ? `<p>${row["Answer 2"]}</p>` : "",
+              isCorrectAnswer: row["Answer 2"] === row.CorrectAnswer,
+            },
+            {
+              label: "C",
+              text: row["Answer 3"] ? `<p>${row["Answer 3"]}</p>` : "",
+              isCorrectAnswer: row["Answer 3"] === row.CorrectAnswer,
+            },
+            {
+              label: "D",
+              text: row["Answer 4"] ? `<p>${row["Answer 4"]}</p>` : "",
+              isCorrectAnswer: row["Answer 4"] === row.CorrectAnswer,
             },
           ],
           isSingleChoiceQuestion:
             row.isSingleChoiceQuestion === "TRUE" ||
-            row.isSingleChoiceQuestion === true,
-        });
-      } else {
-        existingQuestion.answers.push({
-          label: row["Label"],
-          text: `<p>${row["Text"]}</p>`,
-          isCorrectAnswer:
-            row.isCorrectAnswer === "TRUE" || row.isCorrectAnswer === true,
+            row.isSingleChoiceQuestion === true
+              ? true
+              : row.isSingleChoiceQuestion === "" ||
+                row.isSingleChoiceQuestion === undefined
+              ? null
+              : false,
         });
       }
     });
@@ -145,7 +180,7 @@ function UploadFileModal({ fetchQuestions, setIsShowUploadFileModal }) {
     const link = document.createElement("a");
     if (type === "excel") {
       link.href = "../../../../../public/TemplateCreateQuestion.xlsx";
-      link.download = "template.xlsx";
+      link.download = "TemplateCreateQuestion.xlsx";
       setIsShowUploadFileModal(false);
     } else if (type === "word") {
       toast.info("Word template is currently not available!", {
@@ -234,7 +269,6 @@ function UploadFileModal({ fetchQuestions, setIsShowUploadFileModal }) {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }
@@ -242,6 +276,8 @@ function UploadFileModal({ fetchQuestions, setIsShowUploadFileModal }) {
 UploadFileModal.propTypes = {
   fetchQuestions: PropTypes.func,
   setIsShowUploadFileModal: PropTypes.func,
+  setQuestionListEror: PropTypes.func,
+  setIsShowQuestionListError: PropTypes.func,
 };
 
 export default UploadFileModal;

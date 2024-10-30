@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import exampleImg from "~/assets/images/content/example.png";
 import apiClient from "~/services/apiService";
 import { renderMathAndText } from "~/utils/renderMathAndText";
@@ -76,13 +77,20 @@ function QuestionExamCreatePreview({
     questionPreviewData?.sectionId,
   ]);
   const handleSaveQuestion = async () => {
+    console.log(questionPreviewData);
+    
     try {
       await apiClient.post("/questions", questionPreviewData);
+      toast.success("Question created successfully!", {
+        autoClose: 2000,
+      });
       setIsShowQuestionPreview(false);
       setIsShowCreateQuestionModal(false);
       fetchQuestions();
     } catch (error) {
-      console.error("Error saving question:", error);
+      toast.error(`${error.response.data.details.message}`, {
+        autoClose: 3000,
+      });
     }
   };
 

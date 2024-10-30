@@ -1,7 +1,8 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { formatDate } from "~/utils/formatDate";
-import styles from "./QuestionQuizzItem.module.scss"; 
+import { renderMathAndText } from "~/utils/renderMathAndText";
+import styles from "./QuestionQuizzItem.module.scss";
 const cx = classNames.bind(styles);
 
 function QuestionQuizzItem({
@@ -23,7 +24,7 @@ function QuestionQuizzItem({
   };
 
   return (
-    <div className={cx("question-quizz-create-item")}> 
+    <div className={cx("question-quizz-create-item")}>
       <div className={cx("question-item-top")}>
         <div className={cx("question-author")}>
           <i className={cx("fa-solid fa-circle-question", "author-icon")}></i>
@@ -46,10 +47,19 @@ function QuestionQuizzItem({
       </div>
       <div className={cx("question-item-main")}>
         <div className={cx("question-number")}>{index + 1}</div>
-        <div
-          className={cx("question-content")}
-          dangerouslySetInnerHTML={{ __html: question?.content }}
-        ></div>
+        {question?.section.name === "Math" ? (
+          <div
+            className={cx("question-content")}
+            dangerouslySetInnerHTML={{
+              __html: renderMathAndText(question?.content),
+            }}
+          />
+        ) : (
+          <div
+            className={cx("question-content")}
+            dangerouslySetInnerHTML={{ __html: question?.content }}
+          ></div>
+        )}
       </div>
       <div className={cx("question-item-bottom")}>
         <div className={cx("question-create-date")}>

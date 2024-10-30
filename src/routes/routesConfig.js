@@ -1,4 +1,4 @@
-import CensorQuestionExamGPT from "~/components/Manager/CensorQuestionExam/CensorQuestionExamGPT";
+import ErrorQuestionView from "~/components/Staff/QuestionExamCreate/ErrorQuestionView";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -46,6 +46,7 @@ import QuestionExamCreate from "~/pages/Staff/QuestionExam/QuestionExamCreate";
 import QuestionFeedback from "~/pages/Staff/QuestionExam/QuestionFeedback";
 import QuestionQuizz from "~/pages/Staff/QuestionQuizz";
 import QuestionQuizzCreate from "~/pages/Staff/QuestionQuizz/QuestionQuizzCreate";
+import QuizzFeedback from "~/pages/Staff/QuestionQuizz/QuizzFeedback/QuizzFeedback";
 import Settings from "~/pages/Staff/Settings";
 import Students from "~/pages/Staff/Students";
 import StudyProfile from "~/pages/Staff/Students/StudyProfile";
@@ -59,12 +60,11 @@ import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
 import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
 import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
-import QuizzFeedback from "~/pages/Staff/QuestionQuizz/QuizzFeedback/QuizzFeedback";
 
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: CensorQuestionExamGPT },
+  { path: "/test", component: ErrorQuestionView },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
