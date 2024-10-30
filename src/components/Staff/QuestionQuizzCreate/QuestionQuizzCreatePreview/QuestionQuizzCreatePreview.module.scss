@@ -1,7 +1,6 @@
 @import "~/styles/variables";
 
-.question-quizz-create-preview-wrapper {
-  /* Đổi tên class chính */
+.question-quizz-create-preview-wrapper { 
   position: fixed;
   top: 0;
   left: 0;
@@ -12,8 +11,7 @@
   justify-content: center;
   align-items: center;
 
-  .question-quizz-create-preview-container {
-    /* Đổi tên class */
+  .question-quizz-create-preview-container { 
     position: relative;
     width: 85%;
     height: 95%;
@@ -24,8 +22,7 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     background-color: $bg-primary-color;
 
-    .question-quizz-create-preview-header {
-      /* Đổi tên class */
+    .question-quizz-create-preview-header { 
       width: 100%;
       padding: 10px 20px;
       display: flex;
@@ -59,8 +56,7 @@
       }
     }
 
-    .question-quizz-create-preview-content {
-      /* Đổi tên class */
+    .question-quizz-create-preview-content { 
       width: 100%;
       flex-grow: 1;
       padding: 40px 20px;
@@ -300,8 +296,7 @@
       }
     }
 
-    .question-quizz-create-preview-footer {
-      /* Đổi tên class */
+    .question-quizz-create-preview-footer { 
       width: 100%;
       padding: 10px 20px;
       display: flex;
