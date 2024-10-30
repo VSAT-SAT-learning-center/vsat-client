@@ -1,10 +1,13 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import styles from "./CensorQuestionExamFeedback.module.scss";
 import { satFeedbackReportQuestionDatas } from "~/data/Manager/satFeedbackReportQuestionDatas";
+import styles from "./CensorQuestionExamFeedback.module.scss";
 const cx = classNames.bind(styles);
-function CensorQuestionExamFeedback({ setIsShowCensorFeedback }) {
+function CensorQuestionExamFeedback({
+  setIsShowCensorFeedback,
+  censorRejectQuestion,
+}) {
   const [selectedReason, setSelectedReason] = useState(null);
   const [reasonFeedback, setReasonFeedback] = useState(null);
   const [typeShowFeedback, setTypeShowFeedback] = useState("choose");
@@ -22,6 +25,10 @@ function CensorQuestionExamFeedback({ setIsShowCensorFeedback }) {
     } else {
       setIsShowCensorFeedback(false);
     }
+  };
+
+  const handleSaveFeedback = () => {
+    censorRejectQuestion(reasonFeedback, feedbackContent);
   };
   return (
     <div className={cx("censor-question-exam-feedback-wrapper")}>
@@ -103,6 +110,7 @@ function CensorQuestionExamFeedback({ setIsShowCensorFeedback }) {
                 "disabled-btn": feedbackContent === "",
               })}
               disabled={feedbackContent === ""}
+              onClick={handleSaveFeedback}
             >
               Save
             </button>
@@ -115,6 +123,7 @@ function CensorQuestionExamFeedback({ setIsShowCensorFeedback }) {
 
 CensorQuestionExamFeedback.propTypes = {
   setIsShowCensorFeedback: PropTypes.func,
+  censorRejectQuestion: PropTypes.func,
 };
 
 export default CensorQuestionExamFeedback;

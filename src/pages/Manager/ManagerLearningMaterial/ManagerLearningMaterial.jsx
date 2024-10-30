@@ -3,10 +3,10 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import LearningMaterialItem from "~/components/Manager/CensorLearningMaterial/LearningMaterialItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ManagerLearningMaterial.module.scss";
-import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 const cx = classNames.bind(styles);
 const itemsPerPage = 6;
 function ManagerLearningMaterial() {

@@ -1,4 +1,4 @@
-import CensorQuestionExamGPT from "~/components/Manager/CensorQuestionExam/CensorQuestionExamGPT";
+import DuplicatedQuestionView from "~/components/Staff/QuestionExamCreate/DuplicatedQuestionView";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -63,7 +63,7 @@ import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/Feedbac
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: CensorQuestionExamGPT },
+  { path: "/test", component: DuplicatedQuestionView },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },

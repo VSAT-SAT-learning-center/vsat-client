@@ -24,7 +24,7 @@ function QuestionFeedback() {
         params: {
           page: currentPage,
           pageSize: itemsPerPage,
-          status: "Reject",
+          status: "Rejected",
         },
       });
       setQuestionList(response.data.data.data);

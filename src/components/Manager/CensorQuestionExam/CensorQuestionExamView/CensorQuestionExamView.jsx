@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AIImg from "~/assets/images/content/ai.svg";
 import Loader from "~/components/General/Loader";
 import apiClient from "~/services/apiService";
@@ -14,8 +15,8 @@ const cx = classNames.bind(styles);
 function CensorQuestionExamView({
   questionCensorData,
   setIsShowCensorQuestionView,
-  fetchQuestions,
 }) {
+  const navigate = useNavigate();
   const [isShowCensorFeedback, setIsShowCensorFeedback] = useState(false);
   const [isShowCensorGpt, setIsShowCensorGpt] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,8 +30,7 @@ function CensorQuestionExamView({
         `/questions/update-status/${questionCensorData.id}`,
         status
       );
-      setIsShowCensorQuestionView(false);
-      fetchQuestions();
+      navigate("/manager/question-bank/bank");
     } catch (error) {
       console.error("Error censor approve question:", error);
     }
@@ -66,9 +66,17 @@ function CensorQuestionExamView({
         "gpts/censor-question",
         censorAIData
       );
+
       if (questionCensorData?.section.name === "Math") {
-        const convertData = convertToJSON(response.data);
-        setDataCensorWithAI(convertData);
+        if (
+          response.data?.answer?.reason ||
+          response.data?.explaination?.reason
+        ) {
+          setDataCensorWithAI(response.data);
+        } else {
+          const convertData = convertToJSON(response.data);
+          setDataCensorWithAI(convertData);
+        }
       } else {
         setDataCensorWithAI(response.data);
       }
@@ -80,6 +88,22 @@ function CensorQuestionExamView({
     }
   };
 
+  const censorRejectQuestion = async (reason, content) => {
+    const rejectData = {
+      questionId: questionCensorData?.id,
+      content: content,
+      reason: reason,
+      accountFromId: "6eee6cac-cb87-447a-8b79-d785d19d75e1",
+      accountToId: "548ee83b-8f63-431f-9733-df210a1448c1",
+    };
+    try {
+      await apiClient.post(`/questions/censor/reject`, rejectData);
+      navigate("/manager/question-bank/feedback");
+    } catch (error) {
+      console.error("Error censor reject question:", error);
+    }
+  };
+
   return (
     <>
       {loading && <Loader />}
@@ -87,6 +111,7 @@ function CensorQuestionExamView({
       {isShowCensorFeedback && (
         <CensorQuestionExamFeedback
           setIsShowCensorFeedback={setIsShowCensorFeedback}
+          censorRejectQuestion={censorRejectQuestion}
         />
       )}
 
@@ -310,7 +335,6 @@ function CensorQuestionExamView({
 CensorQuestionExamView.propTypes = {
   questionCensorData: PropTypes.object,
   setIsShowCensorQuestionView: PropTypes.func,
-  fetchQuestions: PropTypes.func,
 };
 
 export default CensorQuestionExamView;
