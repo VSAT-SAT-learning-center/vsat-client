@@ -62,7 +62,6 @@ function UploadFileModal({ fetchQuestions, setIsShowUploadFileModal }) {
       handleFiles(files);
     }
   };
-  // Function to read and parse the Excel file
   const readExcelFile = async (file) => {
     const reader = new FileReader();
 
@@ -93,19 +92,15 @@ function UploadFileModal({ fetchQuestions, setIsShowUploadFileModal }) {
     const result = [];
 
     rows.forEach((row) => {
-      // Check if the question already exists by comparing the original content (without <p> tags)
       const existingQuestion = result.find(
         (q) => q.content === `<p>${row.Content}</p>`
       );
-
-      // If the question doesn't exist, create a new one
       if (!existingQuestion) {
         result.push({
           level: row.Level,
           skill: row.Skill,
           section:
             row.Section === "Reading_Writing" ? "Reading & Writing" : "Math",
-          // Wrap content with <p> tag after checking for existing question
           content: `<p>${row.Content}</p>`,
           explain: row.Explain,
           answers: [
@@ -121,7 +116,6 @@ function UploadFileModal({ fetchQuestions, setIsShowUploadFileModal }) {
             row.isSingleChoiceQuestion === true,
         });
       } else {
-        // If the question exists, add the answer to the answers array
         existingQuestion.answers.push({
           label: row["Label"],
           text: `<p>${row["Text"]}</p>`,
@@ -133,7 +127,6 @@ function UploadFileModal({ fetchQuestions, setIsShowUploadFileModal }) {
 
     return result;
   };
-  // Function to read and parse the CSV file
   const readCSVFile = (file) => {
     const reader = new FileReader();
     reader.onload = (e) => {

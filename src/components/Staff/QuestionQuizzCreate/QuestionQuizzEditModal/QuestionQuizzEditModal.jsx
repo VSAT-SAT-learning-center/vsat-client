@@ -208,7 +208,7 @@ function QuestionQuizzEditModal({
       <div className={cx("question-create-modal-wrapper")}>
         <div className={cx("question-create-modal-container")}>
           <div className={cx("question-create-modal-header")}>
-            <div className={cx("question-title")}>Edit question</div> {/* Sửa lại tiêu đề */}
+            <div className={cx("question-title")}>Edit question</div> 
             <div
               className={cx("question-close")}
               onClick={() => setIsShowUpdateQuestionModal(false)}

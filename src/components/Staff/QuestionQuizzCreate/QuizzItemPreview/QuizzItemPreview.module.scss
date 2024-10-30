@@ -1,6 +1,6 @@
 @import "~/styles/variables";
 
-.quizz-create-preview-wrapper { /* Đổi tên class chính */
+.quizz-create-preview-wrapper { 
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   align-items: center;
   background-color: rgba(0, 0, 0, 0.3);
 
-  .quizz-create-preview-container { /* Đổi tên class */
+  .quizz-create-preview-container { 
     width: 85%;
     height: 95%;
     display: flex;
@@ -22,7 +22,7 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     background-color: $bg-primary-color;
 
-    .quizz-create-preview-header { /* Đổi tên class */
+    .quizz-create-preview-header { 
       width: 100%;
       padding: 10px 20px;
       display: flex;
@@ -56,7 +56,7 @@
       }
     }
 
-    .quizz-create-preview-content { /* Đổi tên class */
+    .quizz-create-preview-content { 
       width: 100%;
       flex-grow: 1;
       padding: 40px 20px;
@@ -81,7 +81,7 @@
             display: none;
           }
 
-          .quizz-rw-rerender-content { /* Đổi tên class */
+          .quizz-rw-rerender-content { 
             font-family: "system-ui";
             line-height: 1.8;
           }
