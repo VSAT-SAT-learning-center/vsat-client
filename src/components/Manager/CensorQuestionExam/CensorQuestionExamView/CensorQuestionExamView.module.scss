@@ -132,19 +132,17 @@
 
           .overview-item {
             font-size: 17px;
+            display: flex;
+            align-items: center;
+            column-gap: 10px;
 
             .item-icon {
               font-size: 18px;
             }
 
             .overview-item-title {
-              margin-left: 10px;
               font-weight: 600;
               text-decoration: underline;
-            }
-
-            .overview-item-text {
-              margin-left: 8px;
             }
           }
         }

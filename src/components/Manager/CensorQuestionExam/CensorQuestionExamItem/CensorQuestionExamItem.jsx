@@ -74,6 +74,11 @@ function CensorQuestionExamItem({
               <i className={cx("fa-regular fa-gear")}></i>
             </button>
           )}
+          {question?.status === "Rejected" && (
+            <button className={cx("feedback-list-btn")}>
+              <i className={cx("fa-regular fa-clipboard-list")}></i>
+            </button>
+          )}
         </div>
       </div>
     </div>

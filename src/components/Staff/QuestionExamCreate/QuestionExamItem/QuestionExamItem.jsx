@@ -74,7 +74,7 @@ function QuestionExamItem({
                 <i className={cx("fa-regular fa-pen-to-square")}></i>
               </button>
             )}
-          {question?.status === "Reject" && (
+          {question?.status === "Rejected" && (
             <button className={cx("feedback-list-btn")}>
               <i className={cx("fa-regular fa-clipboard-list")}></i>
             </button>
