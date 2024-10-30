@@ -67,13 +67,18 @@ export const sidebarNavs = [
     subNavs: [
       {
         id: 1,
-        title: "Quizz Bank",
+        title: "Quiz Bank",
         path: "/staff/question-quizz/bank",
       },
       {
         id: 2,
-        title: "Create Quizz Question",
+        title: "Create Quiz Question",
         path: "/staff/question-quizz/create",
+      },
+      {
+        id: 3,
+        title: "Feedback Quiz Question",
+        path: "/staff/question-quizz/feedback",
       },
     ],
   },
