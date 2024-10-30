@@ -6,10 +6,10 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { v4 as uuidv4 } from "uuid";
 import apiClient from "~/services/apiService";
-import styles from "./QuestionQuizzEditModal.module.scss"; 
+import styles from "./QuestionQuizzEditModal.module.scss";
 const cx = classNames.bind(styles);
 
-function QuestionQuizzEditModal({ 
+function QuestionQuizzEditModal({
   questionEdit,
   fetchQuestions,
   setIsShowUpdateQuestionModal,
@@ -121,6 +121,13 @@ function QuestionQuizzEditModal({
     }));
   };
 
+  const handleExplainAnswerChange = (value) => {
+    setQuestionData((prev) => ({
+      ...prev,
+      explain: value,
+    }));
+  };
+
   const handleAnswerChange = (answerId, value) => {
     setAnswers(
       answers.map((answer) =>
@@ -208,7 +215,8 @@ function QuestionQuizzEditModal({
       <div className={cx("question-create-modal-wrapper")}>
         <div className={cx("question-create-modal-container")}>
           <div className={cx("question-create-modal-header")}>
-            <div className={cx("question-title")}>Edit question</div> {/* Sửa lại tiêu đề */}
+            <div className={cx("question-title")}>Edit question</div>{" "}
+            {/* Sửa lại tiêu đề */}
             <div
               className={cx("question-close")}
               onClick={() => setIsShowUpdateQuestionModal(false)}
@@ -223,7 +231,11 @@ function QuestionQuizzEditModal({
                 <div className={cx("config-selection")}>
                   <select
                     id="question-type"
-                    value={questionData.isSingleChoiceQuestion === true ? "singleChoice" : "fillBlank"}
+                    value={
+                      questionData.isSingleChoiceQuestion === true
+                        ? "singleChoice"
+                        : "fillBlank"
+                    }
                     className={cx("question-select")}
                     onChange={handleQuestionTypeChange}
                   >
@@ -363,6 +375,18 @@ function QuestionQuizzEditModal({
                   </div>
                 </div>
               ))}
+            </div>
+            <div className={cx("explain-answer-create-content")}>
+              <div className={cx("explain-create-title")}>Explain answer</div>
+              <div className={cx("explain-create-editor")}>
+                <ReactQuill
+                  className={cx("editor-input")}
+                  value={questionData.explain}
+                  theme="snow"
+                  placeholder={"Write explain answer..."}
+                  onChange={(value) => handleExplainAnswerChange(value)}
+                />
+              </div>
             </div>
             <div
               className={cx("create-answer-action")}

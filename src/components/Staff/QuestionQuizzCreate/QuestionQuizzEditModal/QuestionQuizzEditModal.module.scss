@@ -183,6 +183,26 @@
         }
       }
 
+      .explain-answer-create-content {
+        width: 100%;
+        margin-bottom: 20px;
+        .explain-create-title {
+          font-size: 18px;
+          font-weight: 600;
+          margin-bottom: 15px;
+        }
+
+        .explain-create-editor {
+          width: 100%;
+          height: 200px;
+
+          .editor-input {
+            width: 100%;
+            height: calc(100% - 43px);
+          }
+        }
+      }
+
       .create-answer-action {
         cursor: pointer;
         user-select: none;

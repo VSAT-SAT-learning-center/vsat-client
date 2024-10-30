@@ -1,7 +1,9 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import ErrorQuestionView from "~/components/Staff/QuestionExamCreate/ErrorQuestionView";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import QuestionExamCreateModal from "~/components/Staff/QuestionExamCreate/QuestionExamCreateModal";
 import QuestionExamEditModal from "~/components/Staff/QuestionExamCreate/QuestionExamEditModal";
@@ -27,6 +29,8 @@ function QuestionExamCreate() {
   const [isShowUpdateQuestionModal, setIsShowUpdateQuestionModal] =
     useState(false);
   const [questionEdit, setQuestionEdit] = useState({});
+  const [isShowQuestionListError, setIsShowQuestionListError] = useState(false);
+  const [questionListError, setQuestionListEror] = useState([]);
 
   const fetchQuestions = useCallback(async () => {
     try {
@@ -56,6 +60,9 @@ function QuestionExamCreate() {
     try {
       const questionIds = questionList.map((question) => question.id);
       await apiClient.patch(`/questions/publish`, { questionIds });
+      toast.success("Publish question successfully!", {
+        autoClose: 2000,
+      });
       fetchQuestions();
     } catch (error) {
       console.error("Error publishing questions:", error);
@@ -79,6 +86,8 @@ function QuestionExamCreate() {
         <UploadFileModal
           fetchQuestions={fetchQuestions}
           setIsShowUploadFileModal={setIsShowUploadFileModal}
+          setQuestionListEror={setQuestionListEror}
+          setIsShowQuestionListError={setIsShowQuestionListError}
         />
       )}
       {isShowUpdateQuestionModal && (
@@ -86,6 +95,13 @@ function QuestionExamCreate() {
           questionEdit={questionEdit}
           fetchQuestions={fetchQuestions}
           setIsShowUpdateQuestionModal={setIsShowUpdateQuestionModal}
+        />
+      )}
+
+      {isShowQuestionListError && (
+        <ErrorQuestionView
+          questionListError={questionListError}
+          setIsShowQuestionListError={setIsShowQuestionListError}
         />
       )}
       <PageLayout>
