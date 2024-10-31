@@ -99,6 +99,13 @@
       .question-exam-create-list {
         width: 100%;
         flex-grow: 1;
+
+        .question-exam-create-item-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          column-gap: 15px;
+        }
       }
 
       .pagination-controls {

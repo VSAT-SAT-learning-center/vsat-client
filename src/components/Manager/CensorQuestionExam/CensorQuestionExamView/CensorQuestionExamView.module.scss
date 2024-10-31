@@ -134,9 +134,11 @@
             font-size: 17px;
             display: flex;
             align-items: center;
-            column-gap: 10px;
+            column-gap: 5px;
 
             .item-icon {
+              width: 25px;
+              text-align: center;
               font-size: 18px;
             }
 

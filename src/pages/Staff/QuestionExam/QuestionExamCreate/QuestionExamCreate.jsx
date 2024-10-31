@@ -13,6 +13,7 @@ import UploadFileModal from "~/components/Staff/QuestionExamCreate/UploadFileMod
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionExamCreate.module.scss";
+
 const cx = classNames.bind(styles);
 const itemsPerPage = 5;
 
@@ -154,19 +155,23 @@ function QuestionExamCreate() {
               {questionList?.length > 0 ? (
                 <div className={cx("question-exam-create-list")}>
                   {questionList?.map((question, index) => (
-                    <QuestionExamItem
+                    <div
+                      className={cx("question-exam-create-item-container")}
                       key={index}
-                      index={index}
-                      question={question}
-                      setQuestionPreview={setQuestionPreview}
-                      setQuestionEdit={setQuestionEdit}
-                      setIsShowQuestionItemPreview={
-                        setIsShowQuestionItemPreview
-                      }
-                      setIsShowUpdateQuestionModal={
-                        setIsShowUpdateQuestionModal
-                      }
-                    />
+                    >
+                      <QuestionExamItem
+                        index={index}
+                        question={question}
+                        setQuestionPreview={setQuestionPreview}
+                        setQuestionEdit={setQuestionEdit}
+                        setIsShowQuestionItemPreview={
+                          setIsShowQuestionItemPreview
+                        }
+                        setIsShowUpdateQuestionModal={
+                          setIsShowUpdateQuestionModal
+                        }
+                      />
+                    </div>
                   ))}
                 </div>
               ) : (

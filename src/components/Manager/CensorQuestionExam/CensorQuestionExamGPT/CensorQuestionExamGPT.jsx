@@ -124,7 +124,7 @@ function CensorQuestionExamGPT({ dataCensorWithAI, setIsShowCensorGpt }) {
           <div className={cx("censor-feedback-general")}>
             <div className={cx("feedback-content-title")}>
               <div className={cx("number")}>5</div>
-              <div className={cx("feedback-title-text")}>Overal Feedback</div>
+              <div className={cx("feedback-title-text")}>Overall Feedback</div>
             </div>
             <div className={cx("feedback-content-container")}>
               <div className={cx("feedback-item")}>
