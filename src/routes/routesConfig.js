@@ -1,4 +1,4 @@
-import ErrorQuestionView from "~/components/Staff/QuestionExamCreate/ErrorQuestionView";
+import ExamScoreCreateView from "~/components/Staff/ExamScoreCreate/ExamScoreCreateView";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -58,9 +58,8 @@ import LearningPartDetail from "~/pages/Student/LearningPartDetail";
 import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
-import FeedbackQuestionExam from '../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam';
-import FeedbackQuestionQuizz from '../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz';
-import ExamScoreCreateView from "~/components/Staff/ExamScoreCreate/ExamScoreCreateView";
+import FeedbackQuestionExam from "../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam";
+import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz";
 
 const routesConfig = [
   // Landing page routes
@@ -153,9 +152,21 @@ const routesConfig = [
     protected: true,
   },
   // Staff quizz question bank routes
-  { path: '/staff/question-quizz/bank', component: QuestionQuizz, protected: true },
-  { path: '/staff/question-quizz/create', component: QuestionQuizzCreate, protected: true },
-  { path: '/staff/question-quizz/feedback', component: QuizzFeedback, protected: true },
+  {
+    path: "/staff/question-quizz/bank",
+    component: QuestionQuizz,
+    protected: true,
+  },
+  {
+    path: "/staff/question-quizz/create",
+    component: QuestionQuizzCreate,
+    protected: true,
+  },
+  {
+    path: "/staff/question-quizz/feedback",
+    component: QuizzFeedback,
+    protected: true,
+  },
   // Staff exam routes
   { path: "/staff/exams/overview", component: Exam, protected: true },
   { path: "/staff/exams/create", component: ExamCreate, protected: true },

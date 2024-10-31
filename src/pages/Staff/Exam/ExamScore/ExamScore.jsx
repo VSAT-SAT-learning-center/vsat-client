@@ -1,15 +1,18 @@
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CreateExamScoreModal from "~/components/Staff/ExamScoreCreate/CreateExamScoreModal";
 import ExamScoreCreateView from "~/components/Staff/ExamScoreCreate/ExamScoreCreateView";
+import ExamScoreItem from "~/components/Staff/ExamScoreCreate/ExamScoreItem";
 import UploadFileScore from "~/components/Staff/ExamScoreCreate/UploadFileScore";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import PageLayout from "~/layouts/Staff/PageLayout";
+import apiClient from "~/services/apiService";
 import styles from "./ExamScore.module.scss";
 const cx = classNames.bind(styles);
 const initialReadingWritingData = [];
 const initialMathData = [];
 function ExamScore() {
+  const [examScoreList, setExamScoreList] = useState([]);
   const [dataSource, setDataSource] = useState(initialReadingWritingData);
   const [mathData, setMathData] = useState(initialMathData);
   const [rwData, setRwData] = useState(initialReadingWritingData);
@@ -19,6 +22,25 @@ function ExamScore() {
   const [isShowExamScoreResult, setIsShowExamScoreResult] = useState(false);
   const [isShowCreateExamScoreModal, setIsShowCreateExamScoreModal] =
     useState(false);
+
+  const fetchExamScoreList = useCallback(async () => {
+    try {
+      const response = await apiClient.get("/exam-scores", {
+        params: {
+          page: 1,
+          pageSize: 0,
+        },
+      });
+      setExamScoreList(response.data.data.examScore);
+    } catch (error) {
+      console.error("Failed to fetch exam score list:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchExamScoreList();
+  }, [fetchExamScoreList]);
+
   return (
     <>
       {isShowCreateExamScoreModal && (
@@ -50,6 +72,7 @@ function ExamScore() {
           setDataSource={setDataSource}
           setIsShowExamScoreResult={setIsShowExamScoreResult}
           setIsShowCreateExamScoreModal={setIsShowCreateExamScoreModal}
+          fetchExamScoreList={fetchExamScoreList}
         />
       )}
       <PageLayout>
@@ -66,6 +89,12 @@ function ExamScore() {
                 ></i>
                 <span className={cx("import-text")}>New Score</span>
               </button>
+            </div>
+            <div className={cx("create-score-content")}>
+              {examScoreList?.length > 0 &&
+                examScoreList?.map((examScore) => (
+                  <ExamScoreItem key={examScore.id} examScore={examScore} />
+                ))}
             </div>
           </div>
         </div>

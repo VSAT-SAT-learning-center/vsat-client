@@ -13,6 +13,7 @@ function ExamScoreCreateView({
   setDataSource,
   setIsShowExamScoreResult,
   setIsShowCreateExamScoreModal,
+  fetchExamScoreList,
 }) {
   const [section, setSection] = useState("Reading & Writing");
   const loadDataBySection = (selectedSection) => {
@@ -27,9 +28,9 @@ function ExamScoreCreateView({
       type: examType,
       createExamScoreDetail: mergedData,
     };
-    console.log(examScoreData);
     try {
       await apiClient.post("/exam-scores", examScoreData);
+      fetchExamScoreList();
       setIsShowCreateExamScoreModal(false);
       setIsShowExamScoreResult(false);
     } catch (error) {
