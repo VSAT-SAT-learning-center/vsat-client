@@ -10,12 +10,12 @@ function QuestionQuizzItem({
   index,
   setQuestionPreview,
   setQuestionEdit,
-  setIsShowQuizzItemPreview, // Đổi tên hàm cho đúng
+  setIsShowQuizzItemPreview, 
   setIsShowUpdateQuestionModal,
 }) {
   const handlePreviewQuestion = () => {
     setQuestionPreview(question);
-    setIsShowQuizzItemPreview(true); // Sử dụng đúng tên hàm
+    setIsShowQuizzItemPreview(true); 
   };
 
   const handleEditQuestion = () => {
@@ -84,7 +84,7 @@ function QuestionQuizzItem({
 QuestionQuizzItem.propTypes = {
   question: PropTypes.object,
   index: PropTypes.number,
-  setIsShowQuizzItemPreview: PropTypes.func, // Cập nhật tên hàm cho đúng
+  setIsShowQuizzItemPreview: PropTypes.func, 
   setIsShowUpdateQuestionModal: PropTypes.func,
   setQuestionPreview: PropTypes.func,
   setQuestionEdit: PropTypes.func,
