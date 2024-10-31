@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { formatDate } from "~/utils/formatDate";
 import { renderMathAndText } from "~/utils/renderMathAndText";
-import styles from "./CensorQuestionExamItem.module.scss";
+import styles from "./CensorQuestionQuizzItem.module.scss";
 const cx = classNames.bind(styles);
 
 function CensorQuestionQuizzItem({

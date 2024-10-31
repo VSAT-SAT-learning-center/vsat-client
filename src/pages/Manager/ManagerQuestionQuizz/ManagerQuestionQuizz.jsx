@@ -1,11 +1,10 @@
-
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
-import CensorQuestionExamItem from "~/components/Manager/CensorQuestionExam/CensorQuestionExamItem";
+import CensorQuestionExamItem from "~/components/Manager/CensorQuestionQuizz/CensorQuestionQuizzItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
-import QuestionItemPreview from "~/components/Staff/QuestionExamCreate/QuestionItemPreview";
+import QuestionItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ManagerQuestionQuizz.module.scss";
@@ -21,7 +20,7 @@ function ManagerQuestionQuizz() {
   const [questionPreview, setQuestionPreview] = useState({});
   const fetchQuestions = useCallback(async () => {
     try {
-      const response = await apiClient.get(`/questions`, {
+      const response = await apiClient.get(`/quizz-questions`, {
         params: {
           page: currentPage,
           pageSize: itemsPerPage,
