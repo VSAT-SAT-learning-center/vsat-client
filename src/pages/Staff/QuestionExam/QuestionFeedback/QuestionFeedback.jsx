@@ -3,7 +3,9 @@ import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
+import QuestionExamEditModal from "~/components/Staff/QuestionExamCreate/QuestionExamEditModal";
 import QuestionExamItem from "~/components/Staff/QuestionExamCreate/QuestionExamItem";
+import QuestionFeedbackView from "~/components/Staff/QuestionExamCreate/QuestionFeedbackView";
 import QuestionItemPreview from "~/components/Staff/QuestionExamCreate/QuestionItemPreview";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
@@ -18,6 +20,12 @@ function QuestionFeedback() {
   const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
     useState(false);
   const [questionPreview, setQuestionPreview] = useState({});
+  const [isShowFeedbackView, setIsShowFeedbackView] = useState(false);
+  const [questionFeedback, setQuestionFeedback] = useState({});
+  const [isShowUpdateQuestionModal, setIsShowUpdateQuestionModal] =
+    useState(false);
+  const [questionEdit, setQuestionEdit] = useState({});
+
   const fetchQuestions = useCallback(async () => {
     try {
       const response = await apiClient.get(`/questions`, {
@@ -41,12 +49,28 @@ function QuestionFeedback() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
   return (
     <>
       {isShowQuestionItemPreview && (
         <QuestionItemPreview
           questionPreviewData={questionPreview}
           setIsShowQuestionItemPreview={setIsShowQuestionItemPreview}
+        />
+      )}
+
+      {isShowFeedbackView && (
+        <QuestionFeedbackView
+          questionFeedback={questionFeedback}
+          setIsShowFeedbackView={setIsShowFeedbackView}
+        />
+      )}
+
+      {isShowUpdateQuestionModal && (
+        <QuestionExamEditModal
+          questionEdit={questionEdit}
+          fetchQuestions={fetchQuestions}
+          setIsShowUpdateQuestionModal={setIsShowUpdateQuestionModal}
         />
       )}
       <PageLayout>
@@ -66,6 +90,12 @@ function QuestionFeedback() {
                       setQuestionPreview={setQuestionPreview}
                       setIsShowQuestionItemPreview={
                         setIsShowQuestionItemPreview
+                      }
+                      setQuestionEdit={setQuestionEdit}
+                      setQuestionFeedback={setQuestionFeedback}
+                      setIsShowFeedbackView={setIsShowFeedbackView}
+                      setIsShowUpdateQuestionModal={
+                        setIsShowUpdateQuestionModal
                       }
                     />
                   ))}

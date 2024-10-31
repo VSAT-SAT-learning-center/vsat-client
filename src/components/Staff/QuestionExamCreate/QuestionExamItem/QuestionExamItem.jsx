@@ -10,8 +10,10 @@ function QuestionExamItem({
   index,
   setQuestionPreview,
   setQuestionEdit,
+  setQuestionFeedback,
   setIsShowQuestionItemPreview,
   setIsShowUpdateQuestionModal,
+  setIsShowFeedbackView,
 }) {
   const handlePreviewQuestion = () => {
     setIsShowQuestionItemPreview(true);
@@ -21,6 +23,11 @@ function QuestionExamItem({
   const handleEditQuestion = () => {
     setIsShowUpdateQuestionModal(true);
     setQuestionEdit(question);
+  };
+
+  const handleViewFeedback = () => {
+    setIsShowFeedbackView(true);
+    setQuestionFeedback(question);
   };
   return (
     <div className={cx("question-exam-create-item")}>
@@ -75,7 +82,10 @@ function QuestionExamItem({
               </button>
             )}
           {question?.status === "Rejected" && (
-            <button className={cx("feedback-list-btn")}>
+            <button
+              className={cx("feedback-list-btn")}
+              onClick={handleViewFeedback}
+            >
               <i className={cx("fa-regular fa-clipboard-list")}></i>
             </button>
           )}
@@ -92,6 +102,8 @@ QuestionExamItem.propTypes = {
   setIsShowUpdateQuestionModal: PropTypes.func,
   setQuestionPreview: PropTypes.func,
   setQuestionEdit: PropTypes.func,
+  setIsShowFeedbackView: PropTypes.func,
+  setQuestionFeedback: PropTypes.func,
 };
 
 export default QuestionExamItem;

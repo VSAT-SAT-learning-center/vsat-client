@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionExamEditModal.module.scss";
@@ -13,6 +14,7 @@ function QuestionExamEditModal({
   fetchQuestions,
   setIsShowUpdateQuestionModal,
 }) {
+  const navigate = useNavigate();
   const [questionData, setQuestionData] = useState({
     levelId: questionEdit?.level.id,
     skillId: questionEdit?.skill.id,
@@ -180,15 +182,23 @@ function QuestionExamEditModal({
       ...questionData,
       answers: answers,
     };
-    try {
-      await apiClient.put(
-        `/questions/updateQuestion/${questionEdit?.id}`,
-        updatedQuestionData
-      );
-      setIsShowUpdateQuestionModal(false);
-      fetchQuestions();
-    } catch (error) {
-      console.error("Error updating question:", error);
+
+    if (["Draft", "Rejected"].includes(questionEdit?.status)) {
+      try {
+        await apiClient.put(
+          `/questions/updateQuestion/${questionEdit?.id}`,
+          updatedQuestionData
+        );
+
+        if (questionEdit.status === "Draft") {
+          setIsShowUpdateQuestionModal(false);
+          fetchQuestions();
+        } else if (questionEdit.status === "Rejected") {
+          navigate("/staff/question-bank/create");
+        }
+      } catch (error) {
+        console.error("Error updating question:", error);
+      }
     }
   };
 

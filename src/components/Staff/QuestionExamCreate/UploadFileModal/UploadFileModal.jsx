@@ -79,7 +79,6 @@ function UploadFileModal({
         const worksheet = workbook.Sheets[sheetName];
         const rows = XLSX.utils.sheet_to_json(worksheet);
         const formattedData = formatExcelData(rows);
-        console.log(formattedData);
         const response = await apiClient.post(
           "/questions/import-file",
           formattedData

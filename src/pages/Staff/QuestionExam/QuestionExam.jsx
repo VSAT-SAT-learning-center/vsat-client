@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 const itemsPerPage = 5;
 
 function QuestionExam() {
-  const [bankType, setBankType] = useState("Approved");
+  const [bankType, setBankType] = useState("Pending");
   const [questionList, setQuestionList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
