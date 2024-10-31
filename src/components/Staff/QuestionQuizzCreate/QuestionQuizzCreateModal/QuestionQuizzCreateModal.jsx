@@ -6,11 +6,13 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { v4 as uuidv4 } from "uuid";
 import apiClient from "~/services/apiService";
-import QuestionQuizCreatePreview from "../QuestionQuizzCreatePreview";
+import QuestionExamCreatePreview from "../QuestionQuizzCreatePreview";
 import styles from "./QuestionQuizzCreateModal.module.scss";
 const cx = classNames.bind(styles);
-
-function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions }) { 
+function QuestionQuizzCreateModal({
+  setIsShowCreateQuestionModal,
+  fetchQuestions,
+}) {
   const [questionData, setQuestionData] = useState({});
   const [sections, setSections] = useState([]);
   const [levels, setLevels] = useState([]);
@@ -24,7 +26,6 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
   ]);
   const [isShowQuestionPreview, setIsShowQuestionPreview] = useState(false);
   const [questionPreviewData, setQuestionPreviewData] = useState({});
-
   useEffect(() => {
     const fetchLevelsAndSections = async () => {
       try {
@@ -66,7 +67,9 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
 
     if (selectedSectionId) {
       try {
-        const response = await apiClient.get(`/domains/section/${selectedSectionId}`);
+        const response = await apiClient.get(
+          `/domains/section/${selectedSectionId}`
+        );
         setDomains(response.data);
       } catch (error) {
         console.error("Error fetching domains:", error);
@@ -80,7 +83,9 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
     const selectedDomainId = e.target.value;
     if (selectedDomainId) {
       try {
-        const response = await apiClient.get(`/skills/domain/${selectedDomainId}`);
+        const response = await apiClient.get(
+          `/skills/domain/${selectedDomainId}`
+        );
         setSkills(response.data);
       } catch (error) {
         console.error("Error fetching skills:", error);
@@ -102,6 +107,13 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
     setQuestionData((prev) => ({
       ...prev,
       content: value,
+    }));
+  };
+
+  const handleExplainAnswerChange = (value) => {
+    setQuestionData((prev) => ({
+      ...prev,
+      explain: value,
     }));
   };
 
@@ -143,7 +155,9 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
 
   const handleRemoveAnswer = (answerId) => {
     if (answers.length > 1) {
-      const filteredAnswers = answers.filter((answer) => answer.id !== answerId);
+      const filteredAnswers = answers.filter(
+        (answer) => answer.id !== answerId
+      );
       const updatedAnswers = filteredAnswers.map((answer, index) => ({
         ...answer,
         label: String.fromCharCode(65 + index),
@@ -162,7 +176,9 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
   };
 
   const isPreviewButtonEnabled = () => {
-    const areAnswersFilled = answers.every((answer) => answer.text.trim() !== "");
+    const areAnswersFilled = answers.every(
+      (answer) => answer.text.trim() !== ""
+    );
     const hasCorrectAnswer = answers.some((answer) => answer.isCorrectAnswer);
     return (
       questionData.isSingleChoiceQuestion !== undefined &&
@@ -170,6 +186,7 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
       questionData.sectionId &&
       questionData.skillId &&
       questionData.content &&
+      questionData.explain &&
       areAnswersFilled &&
       hasCorrectAnswer
     );
@@ -178,44 +195,47 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
   return (
     <>
       {isShowQuestionPreview && (
-        <QuestionQuizCreatePreview
+        <QuestionExamCreatePreview
           questionPreviewData={questionPreviewData}
           setIsShowQuestionPreview={setIsShowQuestionPreview}
           setIsShowCreateQuestionModal={setIsShowCreateQuestionModal}
           fetchQuestions={fetchQuestions}
         />
       )}
-      <div className={cx("question-quizz-create-modal-wrapper")}>
-        <div className={cx("question-quizz-create-modal-container")}>
-          <div className={cx("question-quizz-create-modal-header")}>
-            <div className={cx("question-quizz-title")}>Create question</div>
-            <div className={cx("question-quizz-close")} onClick={() => setIsShowCreateQuestionModal(false)}>
+      <div className={cx("question-create-modal-wrapper")}>
+        <div className={cx("question-create-modal-container")}>
+          <div className={cx("question-create-modal-header")}>
+            <div className={cx("question-title")}>Create question</div>
+            <div
+              className={cx("question-close")}
+              onClick={() => setIsShowCreateQuestionModal(false)}
+            >
               <i className={cx("fa-regular fa-xmark")}></i>
             </div>
           </div>
-          <div className={cx("question-quizz-create-modal-content")}>
-            <div className={cx("question-quizz-create-config")}>
-              <div className={cx("question-quizz-config-item")}>
-                <div className={cx("config-quizz-title")}>Question Type</div>
-                <div className={cx("config-quizz-selection")}>
+          <div className={cx("question-create-modal-content")}>
+            <div className={cx("question-create-config")}>
+              <div className={cx("question-config-item")}>
+                <div className={cx("config-title")}>Question Type</div>
+                <div className={cx("config-selection")}>
                   <select
-                    id="question-quizz-type"
-                    className={cx("question-quizz-select")}
+                    id="question-type"
+                    className={cx("question-select")}
                     onChange={handleQuestionTypeChange}
                   >
                     <option value="">Select Question</option>
                     <option value="singleChoice">Single Choice</option>
-                    <option value="fillBlank">Fill in the Blank</option>
+                    <option value="textInput">Text Input</option>
                   </select>
                 </div>
               </div>
-              <div className={cx("question-quizz-config-item")}>
-                <div className={cx("config-quizz-title")}>Level</div>
-                <div className={cx("config-quizz-selection")}>
+              <div className={cx("question-config-item")}>
+                <div className={cx("config-title")}>Level</div>
+                <div className={cx("config-selection")}>
                   <select
                     id="level-type"
                     value={questionData.levelId}
-                    className={cx("question-quizz-select")}
+                    className={cx("question-select")}
                     onChange={handleLevelChange}
                   >
                     <option value="">Select Level</option>
@@ -227,13 +247,13 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
                   </select>
                 </div>
               </div>
-              <div className={cx("question-quizz-config-item")}>
-                <div className={cx("config-quizz-title")}>Section</div>
-                <div className={cx("config-quizz-selection")}>
+              <div className={cx("question-config-item")}>
+                <div className={cx("config-title")}>Section</div>
+                <div className={cx("config-selection")}>
                   <select
                     id="section-type"
                     value={questionData.sectionId}
-                    className={cx("question-quizz-select")}
+                    className={cx("question-select")}
                     onChange={handleSectionChange}
                   >
                     <option value="">Select Section</option>
@@ -245,12 +265,12 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
                   </select>
                 </div>
               </div>
-              <div className={cx("question-quizz-config-item")}>
-                <div className={cx("config-quizz-title")}>Domain</div>
-                <div className={cx("config-quizz-selection")}>
+              <div className={cx("question-config-item")}>
+                <div className={cx("config-title")}>Domain</div>
+                <div className={cx("config-selection")}>
                   <select
                     id="domain-type"
-                    className={cx("question-quizz-select")}
+                    className={cx("question-select")}
                     onChange={handleDomainChange}
                     disabled={domains.length === 0}
                   >
@@ -263,13 +283,13 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
                   </select>
                 </div>
               </div>
-              <div className={cx("question-quizz-config-item")}>
-                <div className={cx("config-quizz-title")}>Skill</div>
-                <div className={cx("config-quizz-selection")}>
+              <div className={cx("question-config-item")}>
+                <div className={cx("config-title")}>Skill</div>
+                <div className={cx("config-selection")}>
                   <select
-                    id="skill-quizz-type"
+                    id="skill-type"
                     value={questionData.skillId}
-                    className={cx("question-quizz-select")}
+                    className={cx("question-select")}
                     onChange={handleSkillChange}
                     disabled={skills.length === 0}
                   >
@@ -283,12 +303,12 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
                 </div>
               </div>
             </div>
-            <div className={cx("question-quizz-create-content")}>
-              <div className={cx("content-quizz-left")}>
-                <div className={cx("question-quizz-create-title")}>Question</div>
-                <div className={cx("question-quizz-create-editor")}>
+            <div className={cx("question-create-content")}>
+              <div className={cx("content-left")}>
+                <div className={cx("question-create-title")}>Question</div>
+                <div className={cx("question-create-editor")}>
                   <ReactQuill
-                    className={cx("editor-quizz-input")}
+                    className={cx("editor-input")}
                     value={questionData.content}
                     theme="snow"
                     placeholder={"Write question content..."}
@@ -296,46 +316,65 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
                   />
                 </div>
               </div>
-              <div className={cx("content-quizz-right")}>
-              </div>
+              <div className={cx("content-right")}></div>
             </div>
-            <div className={cx("question-quizz-answer-create-content")}>
+            <div className={cx("question-answer-create-content")}>
               {answers.map((answer, index) => (
-                <div className={cx("answer-quizz-create-item")} key={answer.id}>
-                  <div className={cx("answer-quizz-create-select")}>
+                <div className={cx("answer-create-item")} key={answer.id}>
+                  <div className={cx("answer-create-select")}>
                     <div className={cx("select-answer")}>
-                      <Radio className={cx("answer-quizz-input-radio")}
+                      <Radio
+                        className={cx("answer-input-radio")}
                         checked={answer.isCorrectAnswer}
                         onChange={() => handleCorrectAnswerChange(answer.id)}
                       />
-                      <span className={cx("answer-quizz-input-text")} onClick={() => handleCorrectAnswerChange(answer.id)}>Choice {index + 1}</span>
+                      <span
+                        className={cx("answer-input-text")}
+                        onClick={() => handleCorrectAnswerChange(answer.id)}
+                      >
+                        Choice {index + 1}
+                      </span>
                     </div>
-                    <div className={cx("delete-quizz-answer")}>
+                    <div className={cx("delete-answer")}>
                       <button
-                        className={cx("delete-quizz-btn", { "disabled-delete-quizz-btn": answers.length === 1 })}
+                        className={cx("delete-btn", {
+                          "disabled-delete-btn": answers.length === 1,
+                        })}
                         onClick={() => handleRemoveAnswer(answer.id)}
                         disabled={answers.length === 1}
                       >
-                        <i className={cx("fa-regular fa-trash", "trash-icon")}></i>
+                        <i
+                          className={cx("fa-regular fa-trash", "trash-icon")}
+                        ></i>
                       </button>
                     </div>
                   </div>
-                  <div className={cx("quizz-answer-create-editor")}>
+                  <div className={cx("answer-create-editor")}>
                     <ReactQuill
-                      className={cx("quizz-answer-editor-input")}
+                      className={cx("answer-editor-input")}
                       theme="snow"
                       value={answer.text}
-                      onChange={(value) =>
-                        handleAnswerChange(answer.id, value)
-                      }
+                      onChange={(value) => handleAnswerChange(answer.id, value)}
                       placeholder={`Answer...`}
                     />
                   </div>
                 </div>
               ))}
             </div>
+            <div className={cx("explain-answer-create-content")}>
+              <div className={cx("explain-create-title")}>Explain answer</div>
+              <div className={cx("explain-create-editor")}>
+                <ReactQuill
+                  className={cx("editor-input")}
+                  value={questionData.explain}
+                  theme="snow"
+                  placeholder={"Write explain answer..."}
+                  onChange={(value) => handleExplainAnswerChange(value)}
+                />
+              </div>
+            </div>
             <div
-              className={cx("create-quizz-answer-action")}
+              className={cx("create-answer-action")}
               onClick={handleAddAnswer}
             >
               <div className={cx("create-icon")}>
@@ -344,17 +383,28 @@ function QuestionQuizzCreateModal({ setIsShowCreateQuestionModal, fetchQuestions
               <div className={cx("create-text")}>Add answer</div>
             </div>
           </div>
-          <div className={cx("question-quizz-create-modal-footer")}>
-            <button className={cx("cancel-btn")} onClick={() => setIsShowCreateQuestionModal(false)}>Cancel</button>
-            <button className={cx("preview-btn", { "disabled-btn": !isPreviewButtonEnabled() })} onClick={handlePreviewQuestion} disabled={!isPreviewButtonEnabled()}>
+          <div className={cx("question-create-modal-footer")}>
+            <button
+              className={cx("cancel-btn")}
+              onClick={() => setIsShowCreateQuestionModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className={cx("preview-btn", {
+                "disabled-btn": !isPreviewButtonEnabled(),
+              })}
+              onClick={handlePreviewQuestion}
+              disabled={!isPreviewButtonEnabled()}
+            >
               <i className={cx("fa-regular fa-eye", "preview-icon")}></i>
               <span>Preview</span>
             </button>
           </div>
         </div>
-      </div >
+      </div>
     </>
-  )
+  );
 }
 
 QuestionQuizzCreateModal.propTypes = {
