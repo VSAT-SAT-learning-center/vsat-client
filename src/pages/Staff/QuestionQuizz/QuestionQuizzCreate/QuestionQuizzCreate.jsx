@@ -2,6 +2,7 @@ import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import QuestionQuizzCreateModal from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzCreateModal";
 import QuestionQuizzEditModal from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzEditModal";
 import QuestionQuizzItem from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzItem";
@@ -52,9 +53,11 @@ function QuestionQuizzCreate() {
 
   const handlePulishQuestions = async () => {
     try {
-      const quizQuestionIds = questionList.map((quizQuestionIds) => quizQuestionIds.id);
+      const quizQuestionIds = questionList.map(
+        (quizQuestionIds) => quizQuestionIds.id
+      );
       console.log(quizQuestionIds);
-      
+
       await apiClient.patch(`/quiz-questions/publish`, { quizQuestionIds });
       fetchQuestions();
     } catch (error) {
@@ -133,9 +136,9 @@ function QuestionQuizzCreate() {
               </div>
             </div>
             <div className={cx("question-quizz-create-content")}>
-              <div className={cx("question-quizz-create-list")}>
-                {questionList?.length > 0 &&
-                  questionList?.map((question, index) => (
+              {questionList?.length > 0 ? (
+                <div className={cx("question-quizz-create-list")}>
+                  {questionList.map((question, index) => (
                     <QuestionQuizzItem
                       key={index}
                       index={index}
@@ -148,7 +151,11 @@ function QuestionQuizzCreate() {
                       }
                     />
                   ))}
-              </div>
+                </div>
+              ) : (
+                <NoQuestionData />
+              )}
+
               <div className={cx("pagination-controls")}>
                 <Pagination
                   align="center"
