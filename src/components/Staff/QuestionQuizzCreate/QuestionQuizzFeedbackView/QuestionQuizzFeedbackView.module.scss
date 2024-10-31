@@ -1,0 +1,112 @@
+@import "~/styles/variables";
+
+.question-view-feedback-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 105;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .question-view-feedback-container {
+    position: relative;
+    width: 550px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .question-view-feedback-header {
+      width: 100%;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .view-title {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+
+        .feedback-icon {
+          width: 33px;
+          height: 33px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $white-color;
+          background-color: $text-color;
+        }
+
+        .feedback-text {
+          font-size: 18px;
+          font-weight: 600;
+        }
+      }
+
+      .view-back {
+        cursor: pointer;
+        width: 33px;
+        height: 33px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+    }
+
+    .question-view-feedback-content {
+      width: 100%;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 15px;
+
+      .feedback-item {
+        width: 100%;
+        display: flex;
+        column-gap: 10px;
+
+        .item-infor {
+          width: fit-content;
+          display: flex;
+          column-gap: 5px;
+          font-size: 17px;
+
+          .item-icon {
+            width: 25px;
+          }
+
+          .item-title {
+            text-decoration: underline;
+            font-weight: 600;
+          }
+        }
+
+        .item-detail {
+          flex: 1;
+          word-wrap: break-word;
+          word-break: break-word;
+          font-size: 17px;
+          font-weight: 600;
+          line-height: 1.4;
+        }
+      }
+    }
+  }
+}

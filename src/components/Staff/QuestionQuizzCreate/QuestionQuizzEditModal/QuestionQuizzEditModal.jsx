@@ -4,16 +4,17 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionQuizzEditModal.module.scss";
 const cx = classNames.bind(styles);
-
 function QuestionQuizzEditModal({
   questionEdit,
   fetchQuestions,
   setIsShowUpdateQuestionModal,
 }) {
+  const navigate = useNavigate();
   const [questionData, setQuestionData] = useState({
     levelId: questionEdit?.level.id,
     skillId: questionEdit?.skill.id,
@@ -27,7 +28,6 @@ function QuestionQuizzEditModal({
   const [domains, setDomains] = useState([]);
   const [skills, setSkills] = useState([]);
   const [answers, setAnswers] = useState(questionEdit?.answers);
-
   useEffect(() => {
     const fetchLevelsAndSections = async () => {
       try {
@@ -182,15 +182,23 @@ function QuestionQuizzEditModal({
       ...questionData,
       answers: answers,
     };
-    try {
-      await apiClient.put(
-        `/questions/updateQuestion/${questionEdit?.id}`,
-        updatedQuestionData
-      );
-      setIsShowUpdateQuestionModal(false);
-      fetchQuestions();
-    } catch (error) {
-      console.error("Error updating question:", error);
+
+    if (["Draft", "Rejected"].includes(questionEdit?.status)) {
+      try {
+        await apiClient.put(
+          `/quiz-questions/updateQuizQuestion/${questionEdit?.id}`,
+          updatedQuestionData
+        );
+
+        if (questionEdit.status === "Draft") {
+          setIsShowUpdateQuestionModal(false);
+          fetchQuestions();
+        } else if (questionEdit.status === "Rejected") {
+          navigate("/staff/question-quizz/create");
+        }
+      } catch (error) {
+        console.error("Error updating question:", error);
+      }
     }
   };
 
@@ -205,6 +213,7 @@ function QuestionQuizzEditModal({
       questionData.sectionId &&
       questionData.skillId &&
       questionData.content &&
+      questionData.explain &&
       areAnswersFilled &&
       hasCorrectAnswer
     );
@@ -215,8 +224,7 @@ function QuestionQuizzEditModal({
       <div className={cx("question-create-modal-wrapper")}>
         <div className={cx("question-create-modal-container")}>
           <div className={cx("question-create-modal-header")}>
-
-            <div className={cx("question-title")}>Edit question</div>{" "}
+            <div className={cx("question-title")}>Create question</div>
             <div
               className={cx("question-close")}
               onClick={() => setIsShowUpdateQuestionModal(false)}

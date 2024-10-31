@@ -10,21 +10,27 @@ function QuestionQuizzItem({
   index,
   setQuestionPreview,
   setQuestionEdit,
-  setIsShowQuizzItemPreview, 
+  setQuestionFeedback,
+  setIsShowQuestionItemPreview,
   setIsShowUpdateQuestionModal,
+  setIsShowFeedbackView,
 }) {
   const handlePreviewQuestion = () => {
+    setIsShowQuestionItemPreview(true);
     setQuestionPreview(question);
-    setIsShowQuizzItemPreview(true); 
   };
 
   const handleEditQuestion = () => {
-    setQuestionEdit(question);
     setIsShowUpdateQuestionModal(true);
+    setQuestionEdit(question);
   };
 
+  const handleViewFeedback = () => {
+    setIsShowFeedbackView(true);
+    setQuestionFeedback(question);
+  };
   return (
-    <div className={cx("question-quizz-create-item")}>
+    <div className={cx("question-exam-create-item")}>
       <div className={cx("question-item-top")}>
         <div className={cx("question-author")}>
           <i className={cx("fa-solid fa-circle-question", "author-icon")}></i>
@@ -75,6 +81,14 @@ function QuestionQuizzItem({
                 <i className={cx("fa-regular fa-pen-to-square")}></i>
               </button>
             )}
+          {question?.status === "Rejected" && (
+            <button
+              className={cx("feedback-list-btn")}
+              onClick={handleViewFeedback}
+            >
+              <i className={cx("fa-regular fa-clipboard-list")}></i>
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -84,10 +98,12 @@ function QuestionQuizzItem({
 QuestionQuizzItem.propTypes = {
   question: PropTypes.object,
   index: PropTypes.number,
-  setIsShowQuizzItemPreview: PropTypes.func, 
+  setIsShowQuestionItemPreview: PropTypes.func,
   setIsShowUpdateQuestionModal: PropTypes.func,
   setQuestionPreview: PropTypes.func,
   setQuestionEdit: PropTypes.func,
+  setIsShowFeedbackView: PropTypes.func,
+  setQuestionFeedback: PropTypes.func,
 };
 
 export default QuestionQuizzItem;
