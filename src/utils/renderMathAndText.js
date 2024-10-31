@@ -48,7 +48,6 @@
 //   return output;
 // };
 
-
 import DOMPurify from "dompurify";
 import katex from "katex";
 import "katex/dist/katex.min.css";

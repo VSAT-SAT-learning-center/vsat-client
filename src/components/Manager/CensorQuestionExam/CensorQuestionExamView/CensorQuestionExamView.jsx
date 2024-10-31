@@ -152,9 +152,11 @@ function CensorQuestionExamView({
               </div>
               <div className={cx("question-overview-content")}>
                 <div className={cx("overview-item")}>
-                  <i
-                    className={cx("fa-regular fa-circle-question", "item-icon")}
-                  ></i>
+                  <div className={cx("item-icon")}>
+                    <i
+                      className={cx("fa-regular fa-circle-question", "icon")}
+                    ></i>
+                  </div>
                   <span className={cx("overview-item-title")}>
                     Question Type:
                   </span>
@@ -165,37 +167,42 @@ function CensorQuestionExamView({
                   </span>
                 </div>
                 <div className={cx("overview-item")}>
-                  <i
-                    className={cx("fa-regular fa-layer-group", "item-icon")}
-                  ></i>
+                  <div className={cx("item-icon")}>
+                    <i className={cx("fa-regular fa-layer-group", "icon")}></i>
+                  </div>
                   <span className={cx("overview-item-title")}>Level:</span>
                   <span className={cx("overview-item-text")}>
                     {questionCensorData?.level.name}
                   </span>
                 </div>
                 <div className={cx("overview-item")}>
-                  <i className={cx("fa-regular fa-book", "item-icon")}></i>
+                  <div className={cx("item-icon")}>
+                    {" "}
+                    <i className={cx("fa-regular fa-book", "icon")}></i>
+                  </div>
                   <span className={cx("overview-item-title")}>Section:</span>
                   <span className={cx("overview-item-text")}>
                     {questionCensorData?.section.name}
                   </span>
                 </div>
                 <div className={cx("overview-item")}>
-                  <i
-                    className={cx(
-                      "fa-regular fa-clipboard-list-check",
-                      "item-icon"
-                    )}
-                  ></i>
+                  <div className={cx("item-icon")}>
+                    <i
+                      className={cx(
+                        "fa-regular fa-clipboard-list-check",
+                        "icon"
+                      )}
+                    ></i>
+                  </div>
                   <span className={cx("overview-item-title")}>Domain:</span>
                   <span className={cx("overview-item-text")}>
                     {questionCensorData?.skill.domain.content}
                   </span>
                 </div>
                 <div className={cx("overview-item")}>
-                  <i
-                    className={cx("fa-regular fa-file-lines", "item-icon")}
-                  ></i>
+                  <div className={cx("item-icon")}>
+                    <i className={cx("fa-regular fa-file-lines", "icon")}></i>
+                  </div>
                   <span className={cx("overview-item-title")}>Skill:</span>
                   <span className={cx("overview-item-text")}>
                     {questionCensorData?.skill.content}
