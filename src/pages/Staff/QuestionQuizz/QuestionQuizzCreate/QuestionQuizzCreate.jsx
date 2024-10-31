@@ -28,7 +28,7 @@ function QuestionQuizzCreate() {
 
   const fetchQuestions = useCallback(async () => {
     try {
-      const response = await apiClient.get(`/questions`, {
+      const response = await apiClient.get(`/quiz-questions`, {
         params: {
           page: currentPage,
           pageSize: itemsPerPage,
@@ -52,8 +52,10 @@ function QuestionQuizzCreate() {
 
   const handlePulishQuestions = async () => {
     try {
-      const questionIds = questionList.map((question) => question.id);
-      await apiClient.patch(`/questions/publish`, { questionIds });
+      const quizQuestionIds = questionList.map((quizQuestionIds) => quizQuestionIds.id);
+      console.log(quizQuestionIds);
+      
+      await apiClient.patch(`/quiz-questions/publish`, { quizQuestionIds });
       fetchQuestions();
     } catch (error) {
       console.error("Error publishing questions:", error);

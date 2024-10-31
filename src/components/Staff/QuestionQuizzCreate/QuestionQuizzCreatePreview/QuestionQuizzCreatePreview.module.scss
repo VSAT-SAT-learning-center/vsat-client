@@ -1,7 +1,6 @@
 @import "~/styles/variables";
 
-.question-quizz-create-preview-wrapper {
-  /* Đổi tên class chính */
+.question-create-preview-wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,9 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  .question-quizz-create-preview-container {
-    /* Đổi tên class */
+  .question-create-preview-container {
     position: relative;
     width: 85%;
     height: 95%;
@@ -24,15 +21,13 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     background-color: $bg-primary-color;
 
-    .question-quizz-create-preview-header {
-      /* Đổi tên class */
+    .question-create-preview-header {
       width: 100%;
       padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid $border-color;
-
       .preview-back {
         cursor: pointer;
         width: 35px;
@@ -59,8 +54,7 @@
       }
     }
 
-    .question-quizz-create-preview-content {
-      /* Đổi tên class */
+    .question-create-preview-content {
       width: 100%;
       flex-grow: 1;
       padding: 40px 20px;
@@ -79,7 +73,7 @@
           flex: 1;
           height: 95%;
           padding: 20px;
-          border-right: 1px solid #c5c5c5;
+          border-right: 1px solid #aaaaaa;
           overflow-y: auto;
           &::-webkit-scrollbar {
             display: none;
@@ -170,7 +164,7 @@
           height: 95%;
           max-height: 95%;
           padding: 20px;
-          border-left: 1px solid #c5c5c5;
+          border-left: 1px solid #aaaaaa;
           overflow-y: auto;
           &::-webkit-scrollbar {
             display: none;
@@ -185,7 +179,6 @@
               cursor: pointer;
               width: fit-content;
               font-size: 17px;
-
               .icon-mark {
                 margin-right: 8px;
               }
@@ -300,8 +293,7 @@
       }
     }
 
-    .question-quizz-create-preview-footer {
-      /* Đổi tên class */
+    .question-create-preview-footer {
       width: 100%;
       padding: 10px 20px;
       display: flex;

@@ -2,29 +2,29 @@ import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { formatDate } from "~/utils/formatDate";
 import { renderMathAndText } from "~/utils/renderMathAndText";
-import styles from "./QuestionQuizzItem.module.scss";
+import styles from "./CensorQuestionExamItem.module.scss";
 const cx = classNames.bind(styles);
 
-function QuestionQuizzItem({
+function CensorQuestionQuizzItem({
   question,
   index,
   setQuestionPreview,
-  setQuestionEdit,
-  setIsShowQuizzItemPreview, 
-  setIsShowUpdateQuestionModal,
+  setIsShowQuestionItemPreview,
+  setQuestionCensorView,
+  setIsShowCensorQuestionView,
 }) {
   const handlePreviewQuestion = () => {
+    setIsShowQuestionItemPreview(true);
     setQuestionPreview(question);
-    setIsShowQuizzItemPreview(true); 
   };
 
-  const handleEditQuestion = () => {
-    setQuestionEdit(question);
-    setIsShowUpdateQuestionModal(true);
+  const handleCensorQuestion = () => {
+    setIsShowCensorQuestionView(true);
+    setQuestionCensorView(question);
   };
 
   return (
-    <div className={cx("question-quizz-create-item")}>
+    <div className={cx("question-exam-create-item")}>
       <div className={cx("question-item-top")}>
         <div className={cx("question-author")}>
           <i className={cx("fa-solid fa-circle-question", "author-icon")}></i>
@@ -69,25 +69,29 @@ function QuestionQuizzItem({
           <button className={cx("preview-btn")} onClick={handlePreviewQuestion}>
             <i className={cx("fa-regular fa-eye")}></i>
           </button>
-          {question?.status !== "Approved" &&
-            question?.status !== "Pending" && (
-              <button className={cx("edit-btn")} onClick={handleEditQuestion}>
-                <i className={cx("fa-regular fa-pen-to-square")}></i>
-              </button>
-            )}
+          {question?.status === "Pending" && (
+            <button className={cx("censor-btn")} onClick={handleCensorQuestion}>
+              <i className={cx("fa-regular fa-gear")}></i>
+            </button>
+          )}
+          {question?.status === "Rejected" && (
+            <button className={cx("feedback-list-btn")}>
+              <i className={cx("fa-regular fa-clipboard-list")}></i>
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-QuestionQuizzItem.propTypes = {
+CensorQuestionQuizzItem.propTypes = {
   question: PropTypes.object,
   index: PropTypes.number,
-  setIsShowQuizzItemPreview: PropTypes.func, 
-  setIsShowUpdateQuestionModal: PropTypes.func,
+  setIsShowQuestionItemPreview: PropTypes.func,
   setQuestionPreview: PropTypes.func,
-  setQuestionEdit: PropTypes.func,
+  setQuestionCensorView: PropTypes.func,
+  setIsShowCensorQuestionView: PropTypes.func,
 };
 
-export default QuestionQuizzItem;
+export default CensorQuestionQuizzItem;

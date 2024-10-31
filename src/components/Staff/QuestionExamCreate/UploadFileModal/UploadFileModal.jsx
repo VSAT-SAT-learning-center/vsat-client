@@ -66,7 +66,6 @@ function UploadFileModal({
       handleFiles(files);
     }
   };
-  // Function to read and parse the Excel file
   const readExcelFile = async (file) => {
     const reader = new FileReader();
 
@@ -114,7 +113,6 @@ function UploadFileModal({
       const existingQuestion = result.find(
         (q) => q.content === `<p>${row.Content}</p>`
       );
-
       if (!existingQuestion) {
         result.push({
           level: row.Level ?? "",

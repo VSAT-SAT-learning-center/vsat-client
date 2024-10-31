@@ -29,8 +29,7 @@ function ExamScoreCreateView({
     };
     console.log(examScoreData);
     try {
-      const response = await apiClient.post("/exam-scores", examScoreData);
-      console.log("Exam score created successfully:", response.data);
+      await apiClient.post("/exam-scores", examScoreData);
       setIsShowCreateExamScoreModal(false);
       setIsShowExamScoreResult(false);
     } catch (error) {
