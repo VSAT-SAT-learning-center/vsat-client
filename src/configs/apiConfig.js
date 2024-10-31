@@ -1,6 +1,6 @@
 const config = {
   development: {
-    apiUrl: 'http://localhost:5000', // Development API URL
+    apiUrl: "https://server.vsatcenter.edu.vn/",
   },
   // production: {
   //   apiUrl: 'https://api.yourapp.com',
@@ -8,4 +8,4 @@ const config = {
 };
 
 // eslint-disable-next-line no-undef
-export default config[process.env.NODE_ENV || 'development'];
+export default config[process.env.NODE_ENV || "development"];

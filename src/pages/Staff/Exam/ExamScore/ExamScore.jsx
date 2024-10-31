@@ -1,26 +1,77 @@
 import classNames from "classnames/bind";
+import { useState } from "react";
+import CreateExamScoreModal from "~/components/Staff/ExamScoreCreate/CreateExamScoreModal";
+import ExamScoreCreateView from "~/components/Staff/ExamScoreCreate/ExamScoreCreateView";
+import UploadFileScore from "~/components/Staff/ExamScoreCreate/UploadFileScore";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import styles from "./ExamScore.module.scss";
 const cx = classNames.bind(styles);
+const initialReadingWritingData = [];
+const initialMathData = [];
 function ExamScore() {
+  const [dataSource, setDataSource] = useState(initialReadingWritingData);
+  const [mathData, setMathData] = useState(initialMathData);
+  const [rwData, setRwData] = useState(initialReadingWritingData);
+  const [examTitle, setExamTitle] = useState("");
+  const [examType, setExamType] = useState("");
+  const [isShowImportExamScore, setIsShowImportExamScore] = useState(false);
+  const [isShowExamScoreResult, setIsShowExamScoreResult] = useState(false);
+  const [isShowCreateExamScoreModal, setIsShowCreateExamScoreModal] =
+    useState(false);
   return (
-    <PageLayout>
-      <div className={cx("create-score-wrapper")}>
-        <div className={cx("create-score-container")}>
-          <div className={cx("create-score-header")}>
-            <div className={cx("create-score-text")}>Exam Score</div>
-            <button className={cx("create-score-import")}>
-              <i
-                className={cx("fa-regular fa-cloud-arrow-up", "import-icon")}
-              ></i>
-              <span className={cx("import-text")}>Import</span>
-            </button>
+    <>
+      {isShowCreateExamScoreModal && (
+        <CreateExamScoreModal
+          examTitle={examTitle}
+          examType={examType}
+          setExamTitle={setExamTitle}
+          setExamType={setExamType}
+          setIsShowCreateExamScoreModal={setIsShowCreateExamScoreModal}
+          setIsShowImportExamScore={setIsShowImportExamScore}
+        />
+      )}
+      {isShowImportExamScore && (
+        <UploadFileScore
+          setDataSource={setDataSource}
+          setMathData={setMathData}
+          setRwData={setRwData}
+          setIsShowImportExamScore={setIsShowImportExamScore}
+          setIsShowExamScoreResult={setIsShowExamScoreResult}
+        />
+      )}
+      {isShowExamScoreResult && (
+        <ExamScoreCreateView
+          dataSource={dataSource}
+          rwData={rwData}
+          mathData={mathData}
+          examTitle={examTitle}
+          examType={examType}
+          setDataSource={setDataSource}
+          setIsShowExamScoreResult={setIsShowExamScoreResult}
+          setIsShowCreateExamScoreModal={setIsShowCreateExamScoreModal}
+        />
+      )}
+      <PageLayout>
+        <div className={cx("create-score-wrapper")}>
+          <div className={cx("create-score-container")}>
+            <div className={cx("create-score-header")}>
+              <div className={cx("create-score-text")}>Exam Score</div>
+              <button
+                className={cx("create-score-import")}
+                onClick={() => setIsShowCreateExamScoreModal(true)}
+              >
+                <i
+                  className={cx("fa-regular fa-plus-circle", "import-icon")}
+                ></i>
+                <span className={cx("import-text")}>New Score</span>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <LearningMaterialCreateFooter />
-    </PageLayout>
+        <LearningMaterialCreateFooter />
+      </PageLayout>
+    </>
   );
 }
 
