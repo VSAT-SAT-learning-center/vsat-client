@@ -21,7 +21,7 @@ function QuestionQuizz() {
 
   const fetchQuestions = useCallback(async () => {
     try {
-      const response = await apiClient.get(`/questions`, {
+      const response = await apiClient.get(`/quiz-questions`, {
         params: {
           page: currentPage,
           pageSize: itemsPerPage,

@@ -1,11 +1,11 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import exampleImg from "~/assets/images/content/example.png";
 import apiClient from "~/services/apiService";
 import { renderMathAndText } from "~/utils/renderMathAndText";
 import styles from "./QuestionQuizzCreatePreview.module.scss";
-
 const cx = classNames.bind(styles);
 const example = `<p>Student-produced response directions</p>
 <ul>
@@ -16,6 +16,7 @@ const example = `<p>Student-produced response directions</p>
   <li>If your answer is a mixed number (such as \\[5\\frac{1}{2}\\]), enter it as an improper fraction (\\[\\frac{11}{2}\\]) or decimal (\\[5.5\\]).</li>
   <li>Don't enter symbols such as percent sign, comma, or dollar sign.</li>
 </ul>`;
+
 function QuestionQuizzCreatePreview({
   questionPreviewData,
   setIsShowQuestionPreview,
@@ -75,22 +76,28 @@ function QuestionQuizzCreatePreview({
     questionPreviewData?.levelId,
     questionPreviewData?.sectionId,
   ]);
-
   const handleSaveQuestion = async () => {
+    console.log(questionPreviewData);
+    
     try {
-      await apiClient.post("/questions", questionPreviewData);
+      await apiClient.post("/quiz-questions", questionPreviewData);
+      toast.success("Question created successfully!", {
+        autoClose: 2000,
+      });
       setIsShowQuestionPreview(false);
       setIsShowCreateQuestionModal(false);
       fetchQuestions();
     } catch (error) {
-      console.error("Error saving question:", error);
+      toast.error(`${error.response.data.details.message}`, {
+        autoClose: 3000,
+      });
     }
   };
 
   return (
-    <div className={cx("question-quizz-create-preview-wrapper")}>
-      <div className={cx("question-quizz-create-preview-container")}>
-        <div className={cx("question-quizz-create-preview-header")}>
+    <div className={cx("question-create-preview-wrapper")}>
+      <div className={cx("question-create-preview-container")}>
+        <div className={cx("question-create-preview-header")}>
           <div
             className={cx("preview-back")}
             onClick={() => setIsShowQuestionPreview(false)}
@@ -100,43 +107,45 @@ function QuestionQuizzCreatePreview({
           <div className={cx("preview-section")}>{sectionName}</div>
           <div className={cx("preview-level")}>{levelName}</div>
         </div>
-        <div className={cx("question-quizz-create-preview-content")}>
+        <div className={cx("question-create-preview-content")}>
           <div className={cx("long-dashes")}></div>
           <div className={cx("preview-content-container")}>
-            {questionPreviewData?.isSingleChoiceQuestion === true ? (
-              sectionName === "Math" ? (
-                <div
-                  className={cx("question-rerender-content")}
-                  dangerouslySetInnerHTML={{
-                    __html: renderMathAndText(questionPreviewData?.content),
-                  }}
-                />
-              ) : (
-                <div
-                  className={cx("question-rerender-content")}
-                  dangerouslySetInnerHTML={{
-                    __html: questionPreviewData?.content,
-                  }}
-                ></div>
-              )
-            ) : (
-              <div className={cx("preview-answer-example")}>
-                <div
-                  className={cx("answer-example")}
-                  dangerouslySetInnerHTML={{
-                    __html: renderMathAndText(example),
-                  }}
-                ></div>
-                <div className={cx("example-text")}>Example</div>
-                <div className={cx("example-image")}>
-                  <img
-                    src={exampleImg}
-                    className={cx("ex-img")}
-                    alt="example"
+            <div className={cx("preview-content-question")}>
+              {questionPreviewData?.isSingleChoiceQuestion === true ? (
+                sectionName === "Math" ? (
+                  <div
+                    className={cx("question-rerender-content")}
+                    dangerouslySetInnerHTML={{
+                      __html: renderMathAndText(questionPreviewData?.content),
+                    }}
                   />
+                ) : (
+                  <div
+                    className={cx("question-rerender-content")}
+                    dangerouslySetInnerHTML={{
+                      __html: questionPreviewData?.content,
+                    }}
+                  ></div>
+                )
+              ) : (
+                <div className={cx("preview-answer-example")}>
+                  <div
+                    className={cx("answer-example")}
+                    dangerouslySetInnerHTML={{
+                      __html: renderMathAndText(example),
+                    }}
+                  ></div>
+                  <div className={cx("example-text")}>Example</div>
+                  <div className={cx("example-image")}>
+                    <img
+                      src={exampleImg}
+                      className={cx("ex-img")}
+                      alt="example"
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
             <div className={cx("preview-content-answer")}>
               <div className={cx("mark-answer-container")}>
                 <div className={cx("mark-answer")}>
@@ -223,7 +232,7 @@ function QuestionQuizzCreatePreview({
           </div>
           <div className={cx("long-dashes")}></div>
         </div>
-        <div className={cx("question-quizz-create-preview-footer")}>
+        <div className={cx("question-create-preview-footer")}>
           <button
             className={cx("cancel-btn")}
             onClick={() => setIsShowQuestionPreview(false)}
