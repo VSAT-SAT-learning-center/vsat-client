@@ -160,7 +160,7 @@ function QuestionExamCreate() {
                       key={index}
                     >
                       <QuestionExamItem
-                        index={index}
+                        index={index + (currentPage - 1) * itemsPerPage}
                         question={question}
                         setQuestionPreview={setQuestionPreview}
                         setQuestionEdit={setQuestionEdit}

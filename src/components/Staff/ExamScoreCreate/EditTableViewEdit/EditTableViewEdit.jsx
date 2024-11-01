@@ -1,9 +1,14 @@
 import { CloseOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Table } from "antd";
 import { useState } from "react";
-import "./EditableTable.css";
+import "./EditTableViewEdit.css";
 
-const EditableTable = ({ dataSource, setDataSource }) => {
+const EditTableViewEdit = ({
+  dataSource,
+  setDataSource,
+  handleUpdateRow,
+  setUpdatedRows,
+}) => {
   const [editingId, setEditingId] = useState("");
   const [form] = Form.useForm();
 
@@ -45,25 +50,34 @@ const EditableTable = ({ dataSource, setDataSource }) => {
   };
 
   // Save the edited row and update the data sources
+
   const save = async (id) => {
     try {
       const row = await form.validateFields();
-      const newData = [...dataSource];
-      const index = newData.findIndex((item) => id === item.id);
+      const updatedRow = {
+        ...dataSource.find((item) => item.id === id),
+        ...row,
+        lowerscore: parseFloat(row.lowerscore),
+        upperscore: parseFloat(row.upperscore),
+      };
 
-      if (index > -1) {
-        const item = newData[index];
-        const updatedRow = {
-          ...item,
-          ...row,
-          lowerscore: parseFloat(row.lowerscore),
-          upperscore: parseFloat(row.upperscore),
-        };
+      const newData = dataSource.map((item) =>
+        item.id === id ? updatedRow : item
+      );
+      setDataSource(newData); // Directly update the current view
 
-        newData.splice(index, 1, updatedRow);
-        setDataSource(newData);
-        setEditingId("");
-      }
+      handleUpdateRow(updatedRow); // Update in main view component immediately
+      setEditingId("");
+
+      setUpdatedRows((prevRows) => {
+        const existingIndex = prevRows.findIndex((item) => item.id === id);
+        if (existingIndex > -1) {
+          prevRows.splice(existingIndex, 1, updatedRow); // Replace existing edited row
+          return [...prevRows];
+        } else {
+          return [...prevRows, updatedRow];
+        }
+      });
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
     }
@@ -160,4 +174,4 @@ const EditableTable = ({ dataSource, setDataSource }) => {
   );
 };
 
-export default EditableTable;
+export default EditTableViewEdit;

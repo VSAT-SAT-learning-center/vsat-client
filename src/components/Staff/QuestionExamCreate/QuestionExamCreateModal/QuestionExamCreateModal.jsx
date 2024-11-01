@@ -205,13 +205,14 @@ function QuestionExamCreateModal({
       <div className={cx("question-create-modal-wrapper")}>
         <div className={cx("question-create-modal-container")}>
           <div className={cx("question-create-modal-header")}>
-            <div className={cx("question-title")}>Create question</div>
             <div
               className={cx("question-close")}
               onClick={() => setIsShowCreateQuestionModal(false)}
             >
-              <i className={cx("fa-regular fa-xmark")}></i>
+              <i className={cx("fa-regular fa-arrow-left")}></i>
             </div>
+            <div className={cx("question-title")}>Create question</div>
+            <div className={cx("question-empty")}></div>
           </div>
           <div className={cx("question-create-modal-content")}>
             <div className={cx("question-create-config")}>
