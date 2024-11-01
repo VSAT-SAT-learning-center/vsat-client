@@ -81,7 +81,7 @@ function QuestionExam() {
                   {questionList.map((question, index) => (
                     <QuestionExamItem
                       key={index}
-                      index={index}
+                      index={index + (currentPage - 1) * itemsPerPage}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
                       setIsShowQuestionItemPreview={

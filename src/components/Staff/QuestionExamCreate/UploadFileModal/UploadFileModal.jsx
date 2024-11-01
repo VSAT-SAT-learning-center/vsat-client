@@ -82,23 +82,31 @@ function UploadFileModal({
           "/questions/import-file",
           formattedData
         );
-        console.log(response.data);
 
-        if (response.data.data.savedQuestions.length > 0) {
+        const { savedQuestions, errors } = response.data.data;
+
+        if (savedQuestions.length > 0 && errors.length > 0) {
+          toast.error("Some questions failed to create!", {
+            autoClose: 2000,
+          });
+          setIsShowQuestionListError(true);
+          setQuestionListEror(errors);
+          setIsShowUploadFileModal(false);
+          fetchQuestions();
+        } else if (savedQuestions.length > 0) {
           toast.success("Questions created successfully!", {
             autoClose: 2000,
           });
           setIsShowUploadFileModal(false);
           fetchQuestions();
-        } else if (response.data.data.errors.length > 0) {
-          toast.error(`Questions created fail!`, {
-            autoClose: 1000,
+        } else if (errors.length > 0) {
+          toast.error("Questions created failed!", {
+            autoClose: 2000,
           });
-          setIsShowUploadFileModal(false);
           setIsShowQuestionListError(true);
-          setQuestionListEror(response.data.data.errors);
+          setQuestionListEror(errors);
+          setIsShowUploadFileModal(false);
         }
-        console.log("Questions successfully imported:", response.data);
       } catch (error) {
         console.error("Error importing questions:", error);
       }

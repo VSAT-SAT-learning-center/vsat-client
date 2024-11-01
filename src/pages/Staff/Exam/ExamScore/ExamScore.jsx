@@ -8,6 +8,7 @@ import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCre
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ExamScore.module.scss";
+import ExamScoreViewDetail from "~/components/Staff/ExamScoreCreate/ExamScoreViewDetail";
 const cx = classNames.bind(styles);
 const initialReadingWritingData = [];
 const initialMathData = [];
@@ -22,6 +23,8 @@ function ExamScore() {
   const [isShowExamScoreResult, setIsShowExamScoreResult] = useState(false);
   const [isShowCreateExamScoreModal, setIsShowCreateExamScoreModal] =
     useState(false);
+  const [isShowViewDetailScore, setIsShowViewDetailScore] = useState(false);
+  const [viewScoreDetailData, setViewScoreDetailData] = useState(false);
 
   const fetchExamScoreList = useCallback(async () => {
     try {
@@ -75,6 +78,13 @@ function ExamScore() {
           fetchExamScoreList={fetchExamScoreList}
         />
       )}
+
+      {isShowViewDetailScore && (
+        <ExamScoreViewDetail
+          viewScoreDetailData={viewScoreDetailData}
+          setIsShowViewDetailScore={setIsShowViewDetailScore}
+        />
+      )}
       <PageLayout>
         <div className={cx("create-score-wrapper")}>
           <div className={cx("create-score-container")}>
@@ -93,7 +103,12 @@ function ExamScore() {
             <div className={cx("create-score-content")}>
               {examScoreList?.length > 0 &&
                 examScoreList?.map((examScore) => (
-                  <ExamScoreItem key={examScore.id} examScore={examScore} />
+                  <ExamScoreItem
+                    key={examScore.id}
+                    examScore={examScore}
+                    setViewScoreDetailData={setViewScoreDetailData}
+                    setIsShowViewDetailScore={setIsShowViewDetailScore}
+                  />
                 ))}
             </div>
           </div>

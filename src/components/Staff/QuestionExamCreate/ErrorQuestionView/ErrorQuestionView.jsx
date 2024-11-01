@@ -33,7 +33,7 @@ function ErrorQuestionView({ questionListError, setIsShowQuestionListError }) {
               </div>
               <div className={cx("question-error-main")}>
                 <div className={cx("question-content-main")}>
-                  <div className={cx("question-number")}>1</div>
+                  <div className={cx("question-number")}>{index + 1}</div>
                   <div
                     className={cx("question-content")}
                     dangerouslySetInnerHTML={{
