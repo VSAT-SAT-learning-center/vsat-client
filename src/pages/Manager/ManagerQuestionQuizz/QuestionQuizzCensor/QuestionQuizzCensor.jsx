@@ -1,14 +1,15 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
-import CensorQuestionExamItem from "~/components/Manager/CensorQuestionQuizz/CensorQuestionQuizzItem";
-import CensorQuestionExamView from "~/components/Manager/CensorQuestionQuizz/CensorQuestionQuizzItem";
+import CensorQuestionQuizzItem from "~/components/Manager/CensorQuestionQuizz/CensorQuestionQuizzItem";
+import CensorQuestionQuizzView from "~/components/Manager/CensorQuestionQuizz/CensorQuestionQuizzView";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
-import QuestionItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
+import QuizzItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionQuizzCensor.module.scss";
+
 const cx = classNames.bind(styles);
 const itemsPerPage = 5;
 
@@ -16,12 +17,11 @@ function QuestionQuizzCensor() {
   const [questionList, setQuestionList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
-    useState(false);
+  const [isShowQuestionItemPreview, setIsShowQuizzItemPreview] = useState(false);
   const [questionPreview, setQuestionPreview] = useState({});
-  const [isShowCensorQuestionView, setIsShowCensorQuestionView] =
-    useState(false);
+  const [isShowCensorQuestionQuizView, setIsShowCensorQuestionQuizView] = useState(false);
   const [questionCensorView, setQuestionCensorView] = useState({});
+
   const fetchQuestions = useCallback(async () => {
     try {
       const response = await apiClient.get(`/quiz-questions`, {
@@ -45,18 +45,19 @@ function QuestionQuizzCensor() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
   return (
     <>
       {isShowQuestionItemPreview && (
-        <QuestionItemPreview
+        <QuizzItemPreview
           questionPreviewData={questionPreview}
-          setIsShowQuestionItemPreview={setIsShowQuestionItemPreview}
+          setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
         />
       )}
-      {isShowCensorQuestionView && (
-        <CensorQuestionExamView
+      {isShowCensorQuestionQuizView && (
+        <CensorQuestionQuizzView
           questionCensorData={questionCensorView}
-          setIsShowCensorQuestionView={setIsShowCensorQuestionView}
+          setIsShowCensorQuestionQuizView={setIsShowCensorQuestionQuizView}
         />
       )}
       <PageLayout>
@@ -69,16 +70,14 @@ function QuestionQuizzCensor() {
               {questionList?.length > 0 ? (
                 <div className={cx("question-exam-censor-list")}>
                   {questionList.map((question, index) => (
-                    <CensorQuestionExamItem
+                    <CensorQuestionQuizzItem
                       key={index}
-                      index={index}
+                      index={index + (currentPage - 1) * itemsPerPage}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
-                      setIsShowQuestionItemPreview={
-                        setIsShowQuestionItemPreview
-                      }
+                      setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
                       setQuestionCensorView={setQuestionCensorView}
-                      setIsShowCensorQuestionView={setIsShowCensorQuestionView}
+                      setIsShowCensorQuestionQuizView={setIsShowCensorQuestionQuizView}
                     />
                   ))}
                 </div>

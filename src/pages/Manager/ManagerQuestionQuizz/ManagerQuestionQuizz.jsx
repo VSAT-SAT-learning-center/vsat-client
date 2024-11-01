@@ -1,10 +1,10 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
-import CensorQuestionExamItem from "~/components/Manager/CensorQuestionQuizz/CensorQuestionQuizzItem";
+import CensorQuestionQuizzItem from "~/components/Manager/CensorQuestionQuizz/CensorQuestionQuizzItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
-import QuestionItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
+import QuizzItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ManagerQuestionQuizz.module.scss";
@@ -15,12 +15,12 @@ function ManagerQuestionQuizz() {
   const [questionList, setQuestionList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
-    useState(false);
+  const [isShowQuestionItemPreview, setIsShowQuizzItemPreview] = useState(false);
+
   const [questionPreview, setQuestionPreview] = useState({});
   const fetchQuestions = useCallback(async () => {
     try {
-      const response = await apiClient.get(`/quizz-questions`, {
+      const response = await apiClient.get(`/quiz-questions`, {
         params: {
           page: currentPage,
           pageSize: itemsPerPage,
@@ -44,11 +44,12 @@ function ManagerQuestionQuizz() {
   return (
     <>
       {isShowQuestionItemPreview && (
-        <QuestionItemPreview
+        <QuizzItemPreview
           questionPreviewData={questionPreview}
-          setIsShowQuestionItemPreview={setIsShowQuestionItemPreview}
+          setIsShowQuizzItemPreview={setIsShowQuizzItemPreview} // Sử dụng tên mới
         />
       )}
+
       <PageLayout>
         <div className={cx("question-exam-overview-wrapper")}>
           <div className={cx("question-exam-overview-container")}>
@@ -59,14 +60,12 @@ function ManagerQuestionQuizz() {
               {questionList?.length > 0 ? (
                 <div className={cx("question-exam-overview-list")}>
                   {questionList.map((question, index) => (
-                    <CensorQuestionExamItem
+                    <CensorQuestionQuizzItem
                       key={index}
                       index={index}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
-                      setIsShowQuestionItemPreview={
-                        setIsShowQuestionItemPreview
-                      }
+                      setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
                     />
                   ))}
                 </div>
