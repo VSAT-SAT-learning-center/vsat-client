@@ -27,7 +27,7 @@ function CensorQuestionQuizzView({
     };
     try {
       await apiClient.put(
-        `/questions/update-status/${questionCensorData.id}`,
+        `/quiz-questions/update-status/${questionCensorData.id}`,
         status
       );
       navigate("/manager/question-bank/bank");

@@ -2,19 +2,19 @@ import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { formatDate } from "~/utils/formatDate";
 import { renderMathAndText } from "~/utils/renderMathAndText";
-import styles from "./CensorQuestionExamItem.module.scss";
+import styles from "./CensorQuestionQuizzItem.module.scss";
 const cx = classNames.bind(styles);
 
 function CensorQuestionQuizzItem({
   question,
   index,
   setQuestionPreview,
-  setIsShowQuestionItemPreview,
+  setIsShowQuizzItemPreview,
   setQuestionCensorView,
   setIsShowCensorQuestionView,
 }) {
   const handlePreviewQuestion = () => {
-    setIsShowQuestionItemPreview(true);
+    setIsShowQuizzItemPreview(true);
     setQuestionPreview(question);
   };
 
@@ -88,7 +88,7 @@ function CensorQuestionQuizzItem({
 CensorQuestionQuizzItem.propTypes = {
   question: PropTypes.object,
   index: PropTypes.number,
-  setIsShowQuestionItemPreview: PropTypes.func,
+  setIsShowQuizzItemPreview: PropTypes.func,
   setQuestionPreview: PropTypes.func,
   setQuestionCensorView: PropTypes.func,
   setIsShowCensorQuestionView: PropTypes.func,

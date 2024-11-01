@@ -17,7 +17,7 @@ function QuizzFeedback() {
   const [questionList, setQuestionList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
+  const [isShowQuestionItemPreview, setIsShowQuizzItemPreview] =
     useState(false);
   const [questionPreview, setQuestionPreview] = useState({});
   const [isShowFeedbackView, setIsShowFeedbackView] = useState(false);
@@ -55,7 +55,7 @@ function QuizzFeedback() {
       {isShowQuestionItemPreview && (
         <QuestionItemPreview
           questionPreviewData={questionPreview}
-          setIsShowQuestionItemPreview={setIsShowQuestionItemPreview}
+          setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
         />
       )}
 
@@ -88,8 +88,8 @@ function QuizzFeedback() {
                       index={index}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
-                      setIsShowQuestionItemPreview={
-                        setIsShowQuestionItemPreview
+                      setIsShowQuizzItemPreview={
+                        setIsShowQuizzItemPreview
                       }
                       setQuestionEdit={setQuestionEdit}
                       setQuestionFeedback={setQuestionFeedback}
