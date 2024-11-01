@@ -1,9 +1,6 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
-import { useEffect, useMemo, useState } from "react";
-import { toast } from "react-toastify";
 import exampleImg from "~/assets/images/content/example.png";
-import apiClient from "~/services/apiService";
 import { renderMathAndText } from "~/utils/renderMathAndText";
 import styles from "./QuestionQuizzCreatePreview.module.scss";
 const cx = classNames.bind(styles);
@@ -16,103 +13,33 @@ const example = `<p>Student-produced response directions</p>
   <li>If your answer is a mixed number (such as \\[5\\frac{1}{2}\\]), enter it as an improper fraction (\\[\\frac{11}{2}\\]) or decimal (\\[5.5\\]).</li>
   <li>Don't enter symbols such as percent sign, comma, or dollar sign.</li>
 </ul>`;
-
 function QuestionQuizzCreatePreview({
   questionPreviewData,
-  setIsShowQuestionPreview,
-  setIsShowCreateQuestionModal,
-  fetchQuestions,
+  setIsShowQuestionItemPreview,
 }) {
-  const [sectionName, setSectionName] = useState("");
-  const [levelName, setLevelName] = useState("");
-
-  const fetchSectionAndLevel = useMemo(() => {
-    const fetchSectionName = async () => {
-      try {
-        if (questionPreviewData?.sectionId) {
-          const response = await apiClient.get(
-            `/section/${questionPreviewData.sectionId}`
-          );
-          return response.data.data.name;
-        }
-      } catch (error) {
-        console.error("Error fetching section name:", error);
-        return "Unknown Section";
-      }
-    };
-
-    const fetchLevelName = async () => {
-      try {
-        if (questionPreviewData?.levelId) {
-          const response = await apiClient.get(
-            `/level/${questionPreviewData.levelId}`
-          );
-          return response.data.data.name;
-        }
-      } catch (error) {
-        console.error("Error fetching level name:", error);
-        return "Unknown Level";
-      }
-    };
-
-    return { fetchSectionName, fetchLevelName };
-  }, [questionPreviewData?.sectionId, questionPreviewData?.levelId]);
-
-  useEffect(() => {
-    const loadSectionAndLevelData = async () => {
-      const [section, level] = await Promise.all([
-        fetchSectionAndLevel.fetchSectionName(),
-        fetchSectionAndLevel.fetchLevelName(),
-      ]);
-      setSectionName(section);
-      setLevelName(level);
-    };
-
-    if (questionPreviewData?.sectionId || questionPreviewData?.levelId) {
-      loadSectionAndLevelData();
-    }
-  }, [
-    fetchSectionAndLevel,
-    questionPreviewData?.levelId,
-    questionPreviewData?.sectionId,
-  ]);
-  const handleSaveQuestion = async () => {
-    console.log(questionPreviewData);
-    
-    try {
-      await apiClient.post("/quiz-questions", questionPreviewData);
-      toast.success("Question created successfully!", {
-        autoClose: 2000,
-      });
-      setIsShowQuestionPreview(false);
-      setIsShowCreateQuestionModal(false);
-      fetchQuestions();
-    } catch (error) {
-      toast.error(`${error.response.data.details.message}`, {
-        autoClose: 3000,
-      });
-    }
-  };
-
   return (
     <div className={cx("question-create-preview-wrapper")}>
       <div className={cx("question-create-preview-container")}>
         <div className={cx("question-create-preview-header")}>
           <div
             className={cx("preview-back")}
-            onClick={() => setIsShowQuestionPreview(false)}
+            onClick={() => setIsShowQuestionItemPreview(false)}
           >
             <i className={cx("fa-regular fa-arrow-left")}></i>
           </div>
-          <div className={cx("preview-section")}>{sectionName}</div>
-          <div className={cx("preview-level")}>{levelName}</div>
+          <div className={cx("preview-section")}>
+            {questionPreviewData?.section.name}
+          </div>
+          <div className={cx("preview-level")}>
+            {questionPreviewData?.level.name}
+          </div>
         </div>
         <div className={cx("question-create-preview-content")}>
           <div className={cx("long-dashes")}></div>
           <div className={cx("preview-content-container")}>
             <div className={cx("preview-content-question")}>
               {questionPreviewData?.isSingleChoiceQuestion === true ? (
-                sectionName === "Math" ? (
+                questionPreviewData?.section.name === "Math" ? (
                   <div
                     className={cx("question-rerender-content")}
                     dangerouslySetInnerHTML={{
@@ -166,9 +93,9 @@ function QuestionQuizzCreatePreview({
                       <span className={cx("answer-label")}>
                         {String.fromCharCode(65 + index) + ":"}
                       </span>
-                      {sectionName === "Math" ? (
+                      {questionPreviewData?.section.name === "Math" ? (
                         <span
-                          className={cx("answer-renderer-content")}
+                          className={cx("answer-rerender-content")}
                           dangerouslySetInnerHTML={{
                             __html: renderMathAndText(answer.text),
                           }}
@@ -184,7 +111,7 @@ function QuestionQuizzCreatePreview({
                 </div>
               ) : (
                 <div className={cx("answer-text-input-container")}>
-                  {sectionName === "Math" ? (
+                  {questionPreviewData?.section.name === "Math" ? (
                     <div
                       className={cx("text-input-rerender-content")}
                       dangerouslySetInnerHTML={{
@@ -212,7 +139,7 @@ function QuestionQuizzCreatePreview({
               )}
               <div className={cx("explain-answer-container")}>
                 <div className={cx("explain-text")}>Explaination: </div>
-                {sectionName === "Math" ? (
+                {questionPreviewData?.section.name === "Math" ? (
                   <div
                     className={cx("explain-rerender-content")}
                     dangerouslySetInnerHTML={{
@@ -232,17 +159,6 @@ function QuestionQuizzCreatePreview({
           </div>
           <div className={cx("long-dashes")}></div>
         </div>
-        <div className={cx("question-create-preview-footer")}>
-          <button
-            className={cx("cancel-btn")}
-            onClick={() => setIsShowQuestionPreview(false)}
-          >
-            Back
-          </button>
-          <button className={cx("save-btn")} onClick={handleSaveQuestion}>
-            Save
-          </button>
-        </div>
       </div>
     </div>
   );
@@ -250,9 +166,7 @@ function QuestionQuizzCreatePreview({
 
 QuestionQuizzCreatePreview.propTypes = {
   questionPreviewData: PropTypes.object,
-  setIsShowQuestionPreview: PropTypes.func,
-  setIsShowCreateQuestionModal: PropTypes.func,
-  fetchQuestions: PropTypes.func,
+  setIsShowQuestionItemPreview: PropTypes.func,
 };
 
 export default QuestionQuizzCreatePreview;

@@ -9,12 +9,12 @@ function CensorQuestionQuizzItem({
   question,
   index,
   setQuestionPreview,
-  setIsShowQuestionItemPreview,
+  setIsShowQuizzItemPreview,
   setQuestionCensorView,
   setIsShowCensorQuestionView,
 }) {
   const handlePreviewQuestion = () => {
-    setIsShowQuestionItemPreview(true);
+    setIsShowQuizzItemPreview(true);
     setQuestionPreview(question);
   };
 
@@ -88,7 +88,7 @@ function CensorQuestionQuizzItem({
 CensorQuestionQuizzItem.propTypes = {
   question: PropTypes.object,
   index: PropTypes.number,
-  setIsShowQuestionItemPreview: PropTypes.func,
+  setIsShowQuizzItemPreview: PropTypes.func,
   setQuestionPreview: PropTypes.func,
   setQuestionCensorView: PropTypes.func,
   setIsShowCensorQuestionView: PropTypes.func,

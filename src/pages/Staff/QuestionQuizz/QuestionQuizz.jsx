@@ -17,7 +17,8 @@ function QuestionQuizz() {
   const [questionList, setQuestionList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [isShowQuizzItemPreview, setIsShowQuizzItemPreview] = useState(false);
+  const [isShowQuestionItemPreview, setIsShowQuizzItemPreview] =
+    useState(false);
   const [questionPreview, setQuestionPreview] = useState({});
 
   const fetchQuestions = useCallback(async () => {
@@ -47,7 +48,7 @@ function QuestionQuizz() {
 
   return (
     <>
-      {isShowQuizzItemPreview && (
+      {isShowQuestionItemPreview && (
         <QuizzItemPreview
           questionPreviewData={questionPreview}
           setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
