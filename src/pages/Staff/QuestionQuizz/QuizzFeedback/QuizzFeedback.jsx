@@ -3,8 +3,10 @@ import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
-import QuestionQuizzExamItem from "~/components/Staff/QuestionExamCreate/QuestionExamItem";
-import QuestionQuizzItemPreview from "~/components/Staff/QuestionExamCreate/QuestionItemPreview";
+import QuestionExamEditModal from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzEditModal";
+import QuestionExamItem from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzItem";
+import QuestionFeedbackView from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzFeedbackView";
+import QuestionItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuizzFeedback.module.scss";
@@ -18,6 +20,12 @@ function QuizzFeedback() {
   const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
     useState(false);
   const [questionPreview, setQuestionPreview] = useState({});
+  const [isShowFeedbackView, setIsShowFeedbackView] = useState(false);
+  const [questionFeedback, setQuestionFeedback] = useState({});
+  const [isShowUpdateQuestionModal, setIsShowUpdateQuestionModal] =
+    useState(false);
+  const [questionEdit, setQuestionEdit] = useState({});
+
   const fetchQuestions = useCallback(async () => {
     try {
       const response = await apiClient.get(`/quiz-questions`, {
@@ -41,12 +49,28 @@ function QuizzFeedback() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
   return (
     <>
       {isShowQuestionItemPreview && (
-        <QuestionQuizzItemPreview
+        <QuestionItemPreview
           questionPreviewData={questionPreview}
           setIsShowQuestionItemPreview={setIsShowQuestionItemPreview}
+        />
+      )}
+
+      {isShowFeedbackView && (
+        <QuestionFeedbackView
+          questionFeedback={questionFeedback}
+          setIsShowFeedbackView={setIsShowFeedbackView}
+        />
+      )}
+
+      {isShowUpdateQuestionModal && (
+        <QuestionExamEditModal
+          questionEdit={questionEdit}
+          fetchQuestions={fetchQuestions}
+          setIsShowUpdateQuestionModal={setIsShowUpdateQuestionModal}
         />
       )}
       <PageLayout>
@@ -59,13 +83,19 @@ function QuizzFeedback() {
               {questionList?.length > 0 ? (
                 <div className={cx("question-feedback-list")}>
                   {questionList.map((question, index) => (
-                    <QuestionQuizzExamItem
+                    <QuestionExamItem
                       key={index}
                       index={index}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
                       setIsShowQuestionItemPreview={
                         setIsShowQuestionItemPreview
+                      }
+                      setQuestionEdit={setQuestionEdit}
+                      setQuestionFeedback={setQuestionFeedback}
+                      setIsShowFeedbackView={setIsShowFeedbackView}
+                      setIsShowUpdateQuestionModal={
+                        setIsShowUpdateQuestionModal
                       }
                     />
                   ))}

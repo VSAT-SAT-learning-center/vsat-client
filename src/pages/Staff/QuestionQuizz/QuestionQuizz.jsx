@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import QuestionQuizzItem from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzItem";
 import QuizzItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionQuizz.module.scss";
@@ -89,7 +90,7 @@ function QuestionQuizz() {
                     />
                   ))
                 ) : (
-                  <div>No questions available.</div>
+                  <NoQuestionData />
                 )}
               </div>
               <div className={cx("pagination-controls")}>

@@ -1,110 +1,68 @@
 name: CI/CD for VSAT Client
 
 on:
-  push: # Trigger workflow on push to any branch
+  push:
     branches:
-      - "**" # '**' means all branches
-  pull_request: # Trigger workflow on all pull requests to any branch
+      - "**"
+  pull_request:
     branches:
       - "**"
 
 jobs:
-  # Job 1: Linting
-  lint:
+  setup:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3 # Checks out the repository under $GITHUB_WORKSPACE
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3 # Sets up Node.js environment
+        uses: actions/setup-node@v3
         with:
-          node-version: 20.x # Use Node.js 20.x
+          node-version: 20.x
 
       - name: Cache Node.js modules
-        uses: actions/cache@v3 # Uses caching for node_modules
+        uses: actions/cache@v3
         with:
-          path: ~/.npm # Cache path for npm packages
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }} # Unique key based on OS and package-lock.json
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node- # Fallback key if exact key is not found
+            ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm ci # Installs project dependencies using 'ci' for clean install
+        run: npm ci
 
-      - name: Run lint
-        run: npm run lint # Runs lint checks
-
-  # Job 2: Testing
-  test:
-    needs: lint # Runs after lint job is complete
+  lint:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3 # Checks out the repository under $GITHUB_WORKSPACE
+      - name: Run lint
+        run: npm run lint
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3 # Sets up Node.js environment
-        with:
-          node-version: 20.x # Use Node.js 20.x
-
-      - name: Restore Node.js modules cache
-        uses: actions/cache@v3 # Reuse the cache for node_modules
-        with:
-          path: ~/.npm # Cache path for npm packages
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }} # Same key used in the lint job
-
-      - name: Install dependencies
-        run: npm ci # Installs project dependencies using 'ci' for clean install
-
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
       - name: Run tests
         env:
-          CI: true # Set CI environment variable to true for better output in CI environments
-        run: npm run test -- --coverage --passWithNoTests # Add --passWithNoTests flag to allow tests to pass when no test files are found
+          CI: true
+        run: npm run test -- --coverage --passWithNoTests
 
       - name: Upload test coverage report
-        if: always() # Upload even if there is a failure for debugging purposes
-        uses: actions/upload-artifact@v3 # Uploads test coverage report as an artifact
+        if: always()
+        uses: actions/upload-artifact@v3
         with:
           name: coverage-report
-          path: coverage # Adjust the path if needed (e.g., 'coverage/lcov-report' for LCOV)
+          path: coverage
 
-  # Job 3: Build the React app
   build:
-    needs: test # Runs after the test job is complete
+    needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3 # Checks out the repository under $GITHUB_WORKSPACE
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3 # Sets up Node.js environment
-        with:
-          node-version: 20.x # Use Node.js 20.x
-
-      - name: Restore Node.js modules cache
-        uses: actions/cache@v3 # Reuse the cache for node_modules
-        with:
-          path: ~/.npm # Cache path for npm packages
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }} # Same key used in previous jobs
-
-      - name: Install dependencies
-        run: npm ci # Installs project dependencies using 'ci' for clean install
-
       - name: Build the React app
-        run: npm run build # Builds the React Vite app
-
-  # Job 4: Upload build artifacts (Optional)
-  upload_artifacts:
-    needs: build # Only runs after the build job is successful
-    if: success() # Runs only if previous steps succeed
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3 # Ensure we are using the latest state
+        run: npm run build
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3 # Uploads the build output as an artifact
+        uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: dist # Adjust the path if needed
+          path: dist
