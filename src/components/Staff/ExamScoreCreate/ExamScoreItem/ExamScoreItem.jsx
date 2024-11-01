@@ -4,7 +4,15 @@ import styles from "./ExamScoreItem.module.scss";
 
 const cx = classNames.bind(styles);
 
-function ExamScoreItem({ examScore }) {
+function ExamScoreItem({
+  examScore,
+  setViewScoreDetailData,
+  setIsShowViewDetailScore,
+}) {
+  const handleClickViewDetailScore = () => {
+    setViewScoreDetailData(examScore);
+    setIsShowViewDetailScore(true);
+  };
   return (
     <div className={cx("exam-score-item-container")}>
       <div className={cx("exam-score-item-header")}>
@@ -16,7 +24,7 @@ function ExamScoreItem({ examScore }) {
           <div className={cx("item-icon")}>
             <i className="fa-sharp fa-regular fa-file-pen"></i>
           </div>
-          <div className={cx("type-title")}>Exam score type:</div>
+          <div className={cx("type-title")}>Score type:</div>
           <div className={cx("type-text")}>{examScore?.type}</div>
         </div>
         <div className={cx("exam-item-infor-type")}>
@@ -29,7 +37,10 @@ function ExamScoreItem({ examScore }) {
           </div>
         </div>
         <div className={cx("view-detail")}>
-          <button className={cx("view-deail-btn")}>
+          <button
+            className={cx("view-deail-btn")}
+            onClick={handleClickViewDetailScore}
+          >
             <span className={cx("view-detail-text")}>View detail</span>
             <i className={cx("fa-regular fa-arrow-up-right-from-square")}></i>
           </button>

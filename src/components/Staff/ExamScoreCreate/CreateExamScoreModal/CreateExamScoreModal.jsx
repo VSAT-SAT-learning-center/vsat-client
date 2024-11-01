@@ -53,7 +53,7 @@ function CreateExamScoreModal({
             <input
               type="text"
               className={cx("item-input")}
-              placeholder="Exam score type"
+              placeholder="Exam Score Type"
               onChange={handleChangeExamType}
             />
           </div>

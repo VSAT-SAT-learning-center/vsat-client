@@ -78,7 +78,7 @@ function QuestionExamCreatePreview({
   ]);
   const handleSaveQuestion = async () => {
     console.log(questionPreviewData);
-    
+
     try {
       await apiClient.post("/questions", questionPreviewData);
       toast.success("Question created successfully!", {
@@ -89,7 +89,7 @@ function QuestionExamCreatePreview({
       fetchQuestions();
     } catch (error) {
       toast.error(`${error.response.data.details.message}`, {
-        autoClose: 3000,
+        autoClose: 2000,
       });
     }
   };
