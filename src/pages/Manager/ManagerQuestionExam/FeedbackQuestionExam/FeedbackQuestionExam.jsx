@@ -61,7 +61,7 @@ function LearningMaterial() {
                   {questionList.map((question, index) => (
                     <CensorQuestionExamItem
                       key={index}
-                      index={index}
+                      index={index + (currentPage - 1) * itemsPerPage}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
                       setIsShowQuestionItemPreview={
