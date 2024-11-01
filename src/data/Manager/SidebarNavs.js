@@ -99,16 +99,16 @@ export const sidebarNavs = [
           title: "Censor Exam",
           path: "/manager/exams/censor",
         },
-        {
-            id: 3,
-            title: "Censor Exam Score",
-            path: "/manager/exams/score/censor",
-        },
-        {
-          id: 4,
-          title: "Censor Exam Structure",
-          path: "/manager/exams/structure/censor",
-        },
+        // {
+        //     id: 3,
+        //     title: "Censor Exam Score",
+        //     path: "/manager/exams/score/censor",
+        // },
+        // {
+        //   id: 4,
+        //   title: "Censor Exam Structure",
+        //   path: "/manager/exams/structure/censor",
+        // },
         {
           id: 5,
           title: "Feedback Exam",
