@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { formatDate } from "~/utils/formatDate";
 import { renderMathAndText } from "~/utils/renderMathAndText";
 import styles from "./CensorQuestionQuizzItem.module.scss";
+
 const cx = classNames.bind(styles);
 
 function CensorQuestionQuizzItem({
@@ -11,7 +12,7 @@ function CensorQuestionQuizzItem({
   setQuestionPreview,
   setIsShowQuizzItemPreview,
   setQuestionCensorView,
-  setIsShowCensorQuestionView,
+  setIsShowCensorQuestionQuizView,
 }) {
   const handlePreviewQuestion = () => {
     setIsShowQuizzItemPreview(true);
@@ -19,7 +20,7 @@ function CensorQuestionQuizzItem({
   };
 
   const handleCensorQuestion = () => {
-    setIsShowCensorQuestionView(true);
+    setIsShowCensorQuestionQuizView(true);
     setQuestionCensorView(question);
   };
 
@@ -91,7 +92,7 @@ CensorQuestionQuizzItem.propTypes = {
   setIsShowQuizzItemPreview: PropTypes.func,
   setQuestionPreview: PropTypes.func,
   setQuestionCensorView: PropTypes.func,
-  setIsShowCensorQuestionView: PropTypes.func,
+  setIsShowCensorQuestionQuizView: PropTypes.func,
 };
 
 export default CensorQuestionQuizzItem;
