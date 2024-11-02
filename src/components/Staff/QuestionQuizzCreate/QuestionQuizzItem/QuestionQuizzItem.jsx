@@ -11,12 +11,12 @@ function QuestionQuizzItem({
   setQuestionPreview,
   setQuestionEdit,
   setQuestionFeedback,
-  setIsShowQuestionItemPreview,
+  setIsShowQuizzItemPreview,
   setIsShowUpdateQuestionModal,
   setIsShowFeedbackView,
 }) {
   const handlePreviewQuestion = () => {
-    setIsShowQuestionItemPreview(true);
+    setIsShowQuizzItemPreview(true);
     setQuestionPreview(question);
   };
 
@@ -98,7 +98,7 @@ function QuestionQuizzItem({
 QuestionQuizzItem.propTypes = {
   question: PropTypes.object,
   index: PropTypes.number,
-  setIsShowQuestionItemPreview: PropTypes.func,
+  setIsShowQuizzItemPreview: PropTypes.func,
   setIsShowUpdateQuestionModal: PropTypes.func,
   setQuestionPreview: PropTypes.func,
   setQuestionEdit: PropTypes.func,

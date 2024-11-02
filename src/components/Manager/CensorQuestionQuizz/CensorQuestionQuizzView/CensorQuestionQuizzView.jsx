@@ -8,13 +8,13 @@ import apiClient from "~/services/apiService";
 import { convertToJSON } from "~/utils/convertToJSON";
 import { formatDate } from "~/utils/formatDate";
 import { renderMathAndText } from "~/utils/renderMathAndText";
-import CensorQuestionExamFeedback from "../CensorQuestionQuizzFeedback";
-import CensorQuestionExamGPT from "../CensorQuestionQuizzGPT";
-import styles from "./CensorQuestionExamView.module.scss";
+import CensorQuestionQuizzFeedback from "../CensorQuestionQuizzFeedback";
+import CensorQuestionQuizzGPT from "../CensorQuestionQuizzGPT";
+import styles from "./CensorQuestionQuizzView.module.scss";
 const cx = classNames.bind(styles);
 function CensorQuestionQuizzView({
   questionCensorData,
-  setIsShowCensorQuestionView,
+  setIsShowCensorQuestionQuizView,
 }) {
   const navigate = useNavigate();
   const [isShowCensorFeedback, setIsShowCensorFeedback] = useState(false);
@@ -27,7 +27,7 @@ function CensorQuestionQuizzView({
     };
     try {
       await apiClient.put(
-        `/questions/update-status/${questionCensorData.id}`,
+        `/quiz-questions/updateStatus/${questionCensorData.id}`,
         status
       );
       navigate("/manager/question-bank/bank");
@@ -90,15 +90,17 @@ function CensorQuestionQuizzView({
 
   const censorRejectQuestion = async (reason, content) => {
     const rejectData = {
-      questionId: questionCensorData?.id,
+      quizQuestionId: questionCensorData?.id,
       content: content,
       reason: reason,
       accountFromId: "6eee6cac-cb87-447a-8b79-d785d19d75e1",
       accountToId: "548ee83b-8f63-431f-9733-df210a1448c1",
     };
+    console.log(rejectData);
+    
     try {
-      await apiClient.post(`/questions/censor/reject`, rejectData);
-      navigate("/manager/question-bank/feedback");
+      await apiClient.post(`/quiz-questions/censor/reject`, rejectData);
+      navigate("/manager/question-quizz/feedback");
     } catch (error) {
       console.error("Error censor reject question:", error);
     }
@@ -109,14 +111,14 @@ function CensorQuestionQuizzView({
       {loading && <Loader />}
 
       {isShowCensorFeedback && (
-        <CensorQuestionExamFeedback
+        <CensorQuestionQuizzFeedback
           setIsShowCensorFeedback={setIsShowCensorFeedback}
           censorRejectQuestion={censorRejectQuestion}
         />
       )}
 
       {isShowCensorGpt && (
-        <CensorQuestionExamGPT
+        <CensorQuestionQuizzGPT
           dataCensorWithAI={dataCensorWithAI}
           setIsShowCensorGpt={setIsShowCensorGpt}
         />
@@ -126,7 +128,7 @@ function CensorQuestionQuizzView({
           <div className={cx("censor-question-exam-view-header")}>
             <div
               className={cx("censor-back")}
-              onClick={() => setIsShowCensorQuestionView(false)}
+              onClick={() => setIsShowCensorQuestionQuizView(false)}
             >
               <i className={cx("fa-regular fa-arrow-left")}></i>
             </div>
@@ -152,9 +154,11 @@ function CensorQuestionQuizzView({
               </div>
               <div className={cx("question-overview-content")}>
                 <div className={cx("overview-item")}>
-                  <i
-                    className={cx("fa-regular fa-circle-question", "item-icon")}
-                  ></i>
+                  <div className={cx("item-icon")}>
+                    <i
+                      className={cx("fa-regular fa-circle-question", "icon")}
+                    ></i>
+                  </div>
                   <span className={cx("overview-item-title")}>
                     Question Type:
                   </span>
@@ -165,37 +169,42 @@ function CensorQuestionQuizzView({
                   </span>
                 </div>
                 <div className={cx("overview-item")}>
-                  <i
-                    className={cx("fa-regular fa-layer-group", "item-icon")}
-                  ></i>
+                  <div className={cx("item-icon")}>
+                    <i className={cx("fa-regular fa-layer-group", "icon")}></i>
+                  </div>
                   <span className={cx("overview-item-title")}>Level:</span>
                   <span className={cx("overview-item-text")}>
                     {questionCensorData?.level.name}
                   </span>
                 </div>
                 <div className={cx("overview-item")}>
-                  <i className={cx("fa-regular fa-book", "item-icon")}></i>
+                  <div className={cx("item-icon")}>
+                    {" "}
+                    <i className={cx("fa-regular fa-book", "icon")}></i>
+                  </div>
                   <span className={cx("overview-item-title")}>Section:</span>
                   <span className={cx("overview-item-text")}>
                     {questionCensorData?.section.name}
                   </span>
                 </div>
                 <div className={cx("overview-item")}>
-                  <i
-                    className={cx(
-                      "fa-regular fa-clipboard-list-check",
-                      "item-icon"
-                    )}
-                  ></i>
+                  <div className={cx("item-icon")}>
+                    <i
+                      className={cx(
+                        "fa-regular fa-clipboard-list-check",
+                        "icon"
+                      )}
+                    ></i>
+                  </div>
                   <span className={cx("overview-item-title")}>Domain:</span>
                   <span className={cx("overview-item-text")}>
                     {questionCensorData?.skill.domain.content}
                   </span>
                 </div>
                 <div className={cx("overview-item")}>
-                  <i
-                    className={cx("fa-regular fa-file-lines", "item-icon")}
-                  ></i>
+                  <div className={cx("item-icon")}>
+                    <i className={cx("fa-regular fa-file-lines", "icon")}></i>
+                  </div>
                   <span className={cx("overview-item-title")}>Skill:</span>
                   <span className={cx("overview-item-text")}>
                     {questionCensorData?.skill.content}
@@ -334,7 +343,7 @@ function CensorQuestionQuizzView({
 
 CensorQuestionQuizzView.propTypes = {
   questionCensorData: PropTypes.object,
-  setIsShowCensorQuestionView: PropTypes.func,
+  setIsShowCensorQuestionQuizView: PropTypes.func,
 };
 
 export default CensorQuestionQuizzView;

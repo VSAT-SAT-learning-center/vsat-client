@@ -79,6 +79,7 @@ function QuestionQuizzCreate() {
           setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
         />
       )}
+      
       {isShowUploadFileModal && (
         <UploadFileModal setIsShowUploadFileModal={setIsShowUploadFileModal} />
       )}

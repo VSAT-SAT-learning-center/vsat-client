@@ -14,14 +14,14 @@ const example = `<p>Student-produced response directions</p>
   <li>If your answer is a mixed number (such as \\[5\\frac{1}{2}\\]), enter it as an improper fraction (\\[\\frac{11}{2}\\]) or decimal (\\[5.5\\]).</li>
   <li>Don't enter symbols such as percent sign, comma, or dollar sign.</li>
 </ul>`;
-function QuizzItemPreview({ questionPreviewData, setIsShowQuizzItemPreview }) {
+function QuizzItemPreview({ questionPreviewData, setIsShowQuizzItemPreview  }) {
   return (
     <div className={cx("quizz-create-preview-wrapper")}>
       <div className={cx("quizz-create-preview-container")}>
         <div className={cx("quizz-create-preview-header")}>
           <div
             className={cx("preview-back")}
-            onClick={() => setIsShowQuizzItemPreview(false)}
+            onClick={() => setIsShowQuizzItemPreview (false)}
           >
             <i className={cx("fa-regular fa-arrow-left")}></i>
           </div>

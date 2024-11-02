@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { renderMathAndTextV2 } from "~/utils/renderMathAndTextV2";
-import styles from "./CensorQuestionExamGPT.module.scss";
+import styles from "./CensorQuestionQuizzGPT.module.scss";
 const cx = classNames.bind(styles);
 
 function CensorQuestionQuizzGPT({ dataCensorWithAI, setIsShowCensorGpt }) {
@@ -124,7 +124,7 @@ function CensorQuestionQuizzGPT({ dataCensorWithAI, setIsShowCensorGpt }) {
           <div className={cx("censor-feedback-general")}>
             <div className={cx("feedback-content-title")}>
               <div className={cx("number")}>5</div>
-              <div className={cx("feedback-title-text")}>Overal Feedback</div>
+              <div className={cx("feedback-title-text")}>Overall Feedback</div>
             </div>
             <div className={cx("feedback-content-container")}>
               <div className={cx("feedback-item")}>
