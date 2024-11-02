@@ -28,6 +28,7 @@ function ExamScoreCreateView({
       type: examType,
       createExamScoreDetail: mergedData,
     };
+
     try {
       await apiClient.post("/exam-scores", examScoreData);
       fetchExamScoreList();

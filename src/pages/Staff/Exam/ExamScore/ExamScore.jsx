@@ -81,6 +81,7 @@ function ExamScore() {
 
       {isShowViewDetailScore && (
         <ExamScoreViewDetail
+          fetchExamScoreList={fetchExamScoreList}
           viewScoreDetailData={viewScoreDetailData}
           setIsShowViewDetailScore={setIsShowViewDetailScore}
         />

@@ -1,4 +1,6 @@
 import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
+import apiClient from "~/services/apiService";
 import styles from "./CreateExamScoreModal.module.scss";
 const cx = classNames.bind(styles);
 
@@ -10,6 +12,21 @@ function CreateExamScoreModal({
   setIsShowCreateExamScoreModal,
   setIsShowImportExamScore,
 }) {
+  const [examStructureType, setExamStructureType] = useState([]);
+
+  useEffect(() => {
+    const fetchExamType = async () => {
+      try {
+        const response = await apiClient.get("/exam-structure-types");
+        setExamStructureType(response.data.data);
+      } catch (error) {
+        console.error("Failed to fetch exam type", error);
+      }
+    };
+
+    fetchExamType();
+  }, []);
+
   const handleImportScoreDetail = () => {
     setIsShowImportExamScore(true);
   };
@@ -34,28 +51,46 @@ function CreateExamScoreModal({
           </div>
         </div>
         <div className={cx("create-exam-score-modal-content")}>
-          <div className={cx("create-exam-item-main")}>
-            <div className={cx("item-icon")}>
-              <i className="fa-sharp fa-regular fa-file-pen"></i>
+          <div className={cx("create-exam-item-container")}>
+            <div className={cx("score-section")}>
+              Exam Score Title
+              <span className={cx("required")}>(Required)</span>
             </div>
-            <input
-              type="text"
-              className={cx("item-input")}
-              placeholder="Exam Score Title"
-              autoFocus={true}
-              onChange={handleChangeExamTitle}
-            />
+            <div className={cx("create-exam-item-main")}>
+              <div className={cx("item-icon")}>
+                <i className="fa-sharp fa-regular fa-file-pen"></i>
+              </div>
+              <input
+                type="text"
+                className={cx("item-input")}
+                placeholder="Title..."
+                autoFocus={true}
+                onChange={handleChangeExamTitle}
+              />
+            </div>
           </div>
-          <div className={cx("create-exam-item-main")}>
-            <div className={cx("item-icon")}>
-              <i className="fa-sharp fa-regular fa-file-pen"></i>
+          <div className={cx("create-exam-item-container")}>
+            <div className={cx("score-section")}>
+              Exam Score Type
+              <span className={cx("required")}>(Required)</span>
             </div>
-            <input
-              type="text"
-              className={cx("item-input")}
-              placeholder="Exam Score Type"
-              onChange={handleChangeExamType}
-            />
+            <div className={cx("create-exam-item-main")}>
+              <div className={cx("item-icon")}>
+                <i className="fa-sharp fa-regular fa-file-pen"></i>
+              </div>
+              <select
+                id="type-section"
+                className={cx("section-select")}
+                onChange={handleChangeExamType}
+              >
+                <option value="">Select type</option>
+                {examStructureType?.map((type) => (
+                  <option value={type.name} key={type.id}>
+                    {type.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           <button
             className={cx("create-exam-score-detail-btn", {

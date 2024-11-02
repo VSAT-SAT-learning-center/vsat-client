@@ -30,6 +30,7 @@ function ExamStructure() {
                 <span className={cx("publish-text")}>New Structure</span>
               </button>
             </div>
+            <div className={cx("create-structure-content")}></div>
           </div>
         </div>
         <LearningMaterialCreateFooter />

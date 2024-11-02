@@ -1,0 +1,140 @@
+@import "~/styles/variables";
+
+.exam-score-create-view-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 106;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .exam-score-create-view-container {
+    position: relative;
+    width: 80%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .exam-score-create-view-header {
+      width: 100%;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .exam-score-back {
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .exam-score-title {
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      .exam-score-type {
+        font-size: 18px;
+      }
+    }
+
+    .exam-score-create-view-content {
+      width: 100%;
+      flex-grow: 1;
+      overflow-y: hidden;
+
+      .exam-score-options {
+        width: 100%;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 12px;
+        background-color: $bg-primary-color;
+        .option-btn {
+          padding: 3px 16px;
+          font-size: 18px;
+          font-weight: 600;
+          border-bottom: 3px solid transparent;
+          transition: all 0.2s linear;
+        }
+
+        .active-btn {
+          color: $primary-color;
+          border-bottom: 3px solid $primary-color;
+        }
+      }
+    }
+    .exam-score-create-view-footer {
+      width: 100%;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      column-gap: 10px;
+      border-top: 1px solid $border-color;
+
+      .edit-btn {
+        user-select: none;
+        padding: 6px 16px;
+        font-weight: 600;
+        border-radius: 25px;
+        color: $white-color;
+        border: 1px solid $primary-color;
+        background-color: $primary-color;
+        transition: 0.3s linear;
+
+        .preview-icon {
+          margin-right: 10px;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .cancel-btn {
+        user-select: none;
+        padding: 6px 16px;
+        font-weight: 600;
+        border-radius: 25px;
+        color: $primary-color;
+        border: 1px solid $primary-color;
+        background-color: $bg-primary-color;
+        transition: 0.3s linear;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .disabled-btn {
+        cursor: pointer;
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
