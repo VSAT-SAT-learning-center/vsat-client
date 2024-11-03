@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { calculateDomainQuestions } from "~/utils/caculateQuestionsV2";
 import styles from "./ExamStructureCreateView.module.scss";
 import ModuleConfig from "./ModuleConfig";
@@ -17,20 +18,59 @@ function ExamStructureCreateView({ setIsShowExamStructureCreateView }) {
     "Module Config",
     "Overview Config",
   ];
-  const [examStructureData, setExamStructureData] = useState(null);
+  const [examStructureData, setExamStructureData] = useState({
+    structurename: "",
+    description: "",
+    examStructureType: "",
+    examScoreId: "",
+    examSemesterId: "",
+    requiredCorrectInModule1RW: "",
+    requiredCorrectInModule1Math: "",
+    examStructureConfig: [],
+  });
   const [domainDistributionConfigs, setDomainDistributionConfigs] = useState(
     []
   );
   const [totalRWQuestion, setTotalRWQuestion] = useState(0);
   const [totalMathQuestion, setTotalMathQuestion] = useState(0);
+  const [totalRWQuestions, setTotalRWQuestions] = useState(0);
+  const [totalMathQuestions, setTotalMathQuestions] = useState(0);
   const [sectionRWConfigData, setSectionRWConfigData] = useState([]);
   const [sectionMathConfigData, setSectionMathConfigData] = useState([]);
+  const [viewDetailDistributioinData, setViewDetailDistributioinData] =
+    useState([]);
 
   const nextStep = () => {
     const isStructureConfigStep = steps[currentStep] === "Structure Config";
     const isSectionConfigStep = steps[currentStep] === "Section Config";
-
+    // const isModuleConfigStep = steps[currentStep] === "Module Config";
+    const requiredFields = [
+      { key: "structurename", label: "Exam Structure Name" },
+      { key: "description", label: "Exam Structure Description" },
+      { key: "examStructureType", label: "Exam Structure Type" },
+      { key: "examScoreId", label: "Exam Structure Score" },
+      { key: "examSemesterId", label: "Exam Question Distribution" },
+    ];
     if (isStructureConfigStep) {
+      let hasError = false;
+
+      requiredFields.forEach((field) => {
+        if (!examStructureData || !examStructureData[field.key]) {
+          toast.error(`${field.label} is required.`, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          hasError = true;
+        }
+      });
+
+      if (hasError) {
+        return;
+      }
       const readingWritingDomains = domainDistributionConfigs
         .filter((domain) => domain.section.name === "Reading & Writing")
         .map(({ domain, percentage, minQuestion, maxQuestion }) => ({
@@ -62,10 +102,57 @@ function ExamStructureCreateView({ setIsShowExamStructureCreateView }) {
     }
 
     if (isSectionConfigStep) {
-      console.log(sectionRWConfigData);
-      console.log(sectionMathConfigData);
-      // console.log(domainDistributionConfigs);
+      let hasError = false;
+
+      if (totalRWQuestions !== totalRWQuestion) {
+        toast.error(
+          `Reading & Writing total questions should be ${totalRWQuestion}, but you have ${totalRWQuestions}.`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+        hasError = true;
+      }
+
+      if (totalMathQuestions !== totalMathQuestion) {
+        toast.error(
+          `Math total questions should be ${totalMathQuestion}, but you have ${totalMathQuestions}.`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+        hasError = true;
+      }
+
+      if (hasError) {
+        return;
+      }
+      const examStructureConfig = sectionRWConfigData
+        .concat(sectionMathConfigData)
+        .map((item) => ({
+          domain: item.domain,
+          numberOfQuestion: item.questions,
+        }));
+
+      setExamStructureData((prev) => ({
+        ...prev,
+        examStructureConfig: examStructureConfig,
+      }));
     }
+
+    // if (isModuleConfigStep) {
+
+    // }
 
     currentStep < steps.length - 1
       ? setCurrentStep(currentStep + 1)
@@ -83,6 +170,11 @@ function ExamStructureCreateView({ setIsShowExamStructureCreateView }) {
     setIsShowExamStructureCreateView(false);
   };
 
+  const handleTotalQuestionsChange = (rwTotal, mathTotal) => {
+    setTotalRWQuestions(rwTotal);
+    setTotalMathQuestions(mathTotal);
+  };
+
   const renderStepContent = () => {
     switch (steps[currentStep]) {
       case "Structure Config":
@@ -93,6 +185,7 @@ function ExamStructureCreateView({ setIsShowExamStructureCreateView }) {
             setDomainDistributionConfigs={setDomainDistributionConfigs}
             setTotalRWQuestion={setTotalRWQuestion}
             setTotalMathQuestion={setTotalMathQuestion}
+            setViewDetailDistributioinData={setViewDetailDistributioinData}
           />
         );
       case "Section Config":
@@ -102,10 +195,17 @@ function ExamStructureCreateView({ setIsShowExamStructureCreateView }) {
             setSectionRWConfigData={setSectionRWConfigData}
             sectionMathConfigData={sectionMathConfigData}
             setSectionMathConfigData={setSectionMathConfigData}
+            onTotalQuestionsChange={handleTotalQuestionsChange}
+            viewDetailDistributioinData={viewDetailDistributioinData}
           />
         );
       case "Module Config":
-        return <ModuleConfig />;
+        return (
+          <ModuleConfig
+            examStructureData={examStructureData}
+            domainDistributionConfigs={domainDistributionConfigs}
+          />
+        );
       case "Overview Config":
         return <OverviewConfig />;
       default:

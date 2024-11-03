@@ -8,6 +8,9 @@
 
   .module-config-container {
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
     .module-config-header {
       width: 100%;
@@ -19,6 +22,201 @@
       .config-text {
         font-size: 20px;
         font-weight: 600;
+      }
+    }
+
+    .module-config-content {
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+
+      .config-module-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+        padding: 20px 30px 20px 30px;
+        border-right: 1px solid $border-color;
+
+        .config-module-item {
+          width: 100%;
+          border-radius: 8px;
+          border: 1px solid #c5c5c5;
+
+          .config-module-item-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #c5c5c5;
+
+            .config-icon {
+              font-size: 17px;
+              padding: 12px 16px;
+              border-right: 1px solid #c5c5c5;
+            }
+
+            .config-title {
+              flex: 1;
+              font-size: 18px;
+              font-weight: bold;
+              padding: 12px 16px;
+            }
+
+            .config-view {
+              font-size: 17px;
+              padding: 12px 16px;
+              transition: all 0.2s linear;
+
+              &:hover {
+                color: $primary-color;
+              }
+            }
+          }
+
+          .no-border {
+            border-bottom: none;
+          }
+
+          .config-module-item-content {
+            width: 100%;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 12px;
+
+            .module-item-container {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              border-radius: 10px;
+              border: 1px solid #c5c5c5;
+
+              .module-infor {
+                flex: 1;
+                display: flex;
+                align-items: center;
+
+                .module-icon {
+                  padding: 12px 16px;
+                  font-size: 17px;
+                  border-right: 1px solid #c5c5c5;
+                }
+
+                .module-title {
+                  font-size: 17px;
+                  font-weight: 600;
+                  padding: 12px 16px;
+                }
+              }
+
+              .module-config-action {
+                padding: 12px 16px;
+                font-size: 17px;
+                transition: all 0.2s linear;
+
+                &:hover {
+                  color: $primary-color;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .config-module-item-container {
+        flex: 1;
+        padding: 20px 30px 20px 30px;
+
+        .config-module-item-content {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          border-radius: 8px;
+          border: 1px solid #c5c5c5;
+
+          .module-item-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #c5c5c5;
+            .module-icon {
+              padding: 12px 16px;
+              font-size: 17px;
+              border-right: 1px solid #c5c5c5;
+            }
+
+            .module-infor {
+              flex: 1;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 12px 16px;
+
+              .module-name {
+                font-size: 18px;
+                font-weight: bold;
+              }
+
+              .module-section {
+                font-size: 15px;
+                font-style: italic;
+              }
+            }
+          }
+
+          .module-item-main {
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 12px 16px;
+
+            .item-config {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              column-gap: 12px;
+
+              .config-domain {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                border-radius: 10px 0 0 10px;
+                border: 1px solid #c5c5c5;
+                .domain-icon {
+                  padding: 12px 16px;
+                  font-size: 18px;
+                  border-right: 1px solid #c5c5c5;
+                }
+
+                .domain-text {
+                  flex: 1;
+                  padding: 12px;
+                  font-size: 18px;
+                  font-weight: 600;
+                }
+              }
+
+              .config-number {
+                width: fit-content;
+                border-radius: 0 10px 10px 0;
+                border: 1px solid #c5c5c5;
+
+                .number-input {
+                  width: 56px;
+                  border: none;
+                  outline: none;
+                  padding: 12px;
+                  font-size: 18px;
+                  text-align: center;
+                  background-color: transparent;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

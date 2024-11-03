@@ -2,8 +2,6 @@ import { Table } from "antd";
 import "./TableViewDistribution.css";
 
 const TableViewDistribution = ({ dataSource }) => {
-  console.log(dataSource);
-
   const columns = [
     { title: "Section", dataIndex: "section", width: 200 },
     { title: "Domain", dataIndex: "domain", width: 200 },
