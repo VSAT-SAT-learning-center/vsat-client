@@ -13,6 +13,8 @@ function StructureConfig({
   setTotalRWQuestion,
   setTotalMathQuestion,
   setViewDetailDistributioinData,
+  setExamScorePick,
+  setDistributionQuestionPick,
 }) {
   const [examStructureType, setExamStructureType] = useState([]);
   const [examScores, setExamScores] = useState([]);
@@ -97,6 +99,7 @@ function StructureConfig({
     const selectedScore = examScores.find(
       (score) => score.id === selectedScoreId
     );
+    setExamScorePick(selectedScore.title);
     setExamScoreDetailData(selectedScore);
     setExamStructureData((prev) => ({
       ...prev,
@@ -107,14 +110,14 @@ function StructureConfig({
   const handleChangeNumberRW = (e) => {
     setExamStructureData((prev) => ({
       ...prev,
-      requiredCorrectInModule1RW: e.target.value,
+      requiredCorrectInModule1RW: Number(e.target.value),
     }));
   };
 
   const handleChangeNumberMath = (e) => {
     setExamStructureData((prev) => ({
       ...prev,
-      requiredCorrectInModule1Math: e.target.value,
+      requiredCorrectInModule1M: Number(e.target.value),
     }));
   };
 
@@ -123,6 +126,7 @@ function StructureConfig({
     const selectedDistribution = questionDistributions.find(
       (distribution) => distribution.id === distributionId
     );
+    setDistributionQuestionPick(selectedDistribution.title);
     setExamStructureData((prev) => ({
       ...prev,
       examSemesterId: distributionId,
@@ -299,7 +303,11 @@ function StructureConfig({
                   <div className={cx("mechanism-input")}>
                     <input
                       type="number"
-                      value={examStructureData?.requiredCorrectInModule1RW}
+                      value={
+                        examStructureData?.requiredCorrectInModule1RW === 0
+                          ? ""
+                          : examStructureData?.requiredCorrectInModule1RW
+                      }
                       className={cx("title-input")}
                       placeholder="Number..."
                       onChange={handleChangeNumberRW}
@@ -314,7 +322,11 @@ function StructureConfig({
                   <div className={cx("mechanism-input")}>
                     <input
                       type="number"
-                      value={examStructureData?.requiredCorrectInModule1Math}
+                      value={
+                        examStructureData?.requiredCorrectInModule1M === 0
+                          ? ""
+                          : examStructureData?.requiredCorrectInModule1M
+                      }
                       className={cx("title-input")}
                       placeholder="Number..."
                       onChange={handleChangeNumberMath}

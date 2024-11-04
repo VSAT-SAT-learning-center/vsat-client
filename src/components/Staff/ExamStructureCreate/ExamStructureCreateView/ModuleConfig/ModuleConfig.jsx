@@ -4,7 +4,11 @@ import styles from "./ModuleConfig.module.scss";
 import ModuleItem from "./ModuleItem";
 const cx = classNames.bind(styles);
 
-function ModuleConfig({ examStructureData, domainDistributionConfigs }) {
+function ModuleConfig({
+  examStructureData,
+  setExamStructureData,
+  domainDistributionConfigs,
+}) {
   const [activeModule, setActiveModule] = useState("RW");
   const [moduleData, setModuleData] = useState(null);
   const [rwModuleData1, setRwModuleData1] = useState(null);
@@ -43,7 +47,7 @@ function ModuleConfig({ examStructureData, domainDistributionConfigs }) {
     });
   };
 
-  const renderModules = (section) => {
+  const renderModules = () => {
     const modules =
       examStructureData.examStructureType === "Adaptive"
         ? [
@@ -61,7 +65,7 @@ function ModuleConfig({ examStructureData, domainDistributionConfigs }) {
         key={index}
         title={module.title}
         level={module.level}
-        onClick={() => handleModuleClick(module.title, section)}
+        onClick={() => handleModuleClick(module.title)}
       />
     ));
   };
@@ -75,97 +79,372 @@ function ModuleConfig({ examStructureData, domainDistributionConfigs }) {
   };
 
   useEffect(() => {
-    const rwDomainsModule1 = getDomainsForModule(
-      "Reading & Writing",
-      "Module 1"
-    );
-    const rwDomainsModule2 = getDomainsForModule(
-      "Reading & Writing",
-      "Module 2"
-    );
-    const initialRwModuleData1 = {
-      title: "Module 1",
-      level: null,
-      section: "Reading & Writing",
-      domains: rwDomainsModule1,
-    };
-    const initialRwModuleData2 = {
-      title: "Module 2",
-      level: "Easy",
-      section: "Reading & Writing",
-      domains: rwDomainsModule2,
-    };
-    setRwModuleData1(initialRwModuleData1);
-    setRwModuleData2(initialRwModuleData2);
+    // Check if moduleType is already populated
+    if (
+      examStructureData.moduleType &&
+      examStructureData.moduleType.length > 0
+    ) {
+      // Check if the type is Adaptive or Non-adaptive
+      const isAdaptive = examStructureData.examStructureType === "Adaptive";
 
-    const mathDomainsModule1 = getDomainsForModule("Math", "Module 1");
-    const mathDomainsModule2 = getDomainsForModule("Math", "Module 2");
-    const initialMathModuleData1 = {
-      title: "Module 1",
-      level: null,
-      section: "Math",
-      domains: mathDomainsModule1,
-    };
-    const initialMathModuleData2 = {
-      title: "Module 2",
-      level: "Easy",
-      section: "Math",
-      domains: mathDomainsModule2,
-    };
-    setMathModuleData1(initialMathModuleData1);
-    setMathModuleData2(initialMathModuleData2);
-    setModuleData(initialRwModuleData1);
+      // Loop through moduleType to set module data based on section, name, and level
+      examStructureData.moduleType.forEach((module) => {
+        if (
+          module.section === "Reading & Writing" &&
+          module.name === "Module 1"
+        ) {
+          setRwModuleData1(module);
+          setModuleData(module); // Set moduleData to Module 1 of Reading & Writing
+        } else if (
+          module.section === "Reading & Writing" &&
+          module.name === "Module 2"
+        ) {
+          if (isAdaptive && module.level === "Easy") {
+            setRwModuleData2(module); // Easy level for Adaptive
+          } else if (isAdaptive && module.level === "Hard") {
+            setRwModuleData2((prevData) => ({
+              ...prevData,
+              domainDistribution: [...module.domainDistribution], // Hard level for Adaptive
+            }));
+          } else if (!isAdaptive) {
+            setRwModuleData2(module); // Non-adaptive, single Module 2
+          }
+        } else if (module.section === "Math" && module.name === "Module 1") {
+          setMathModuleData1(module);
+        } else if (module.section === "Math" && module.name === "Module 2") {
+          if (isAdaptive && module.level === "Easy") {
+            setMathModuleData2(module); // Easy level for Adaptive
+          } else if (isAdaptive && module.level === "Hard") {
+            setMathModuleData2((prevData) => ({
+              ...prevData,
+              domainDistribution: [...module.domainDistribution], // Hard level for Adaptive
+            }));
+          } else if (!isAdaptive) {
+            setMathModuleData2(module); // Non-adaptive, single Module 2
+          }
+        }
+      });
+    } else {
+      // If moduleType is empty, proceed with the initialization based on examStructureType
+      if (examStructureData.examStructureType === "Adaptive") {
+        // Adaptive configuration (initialize with default values)
+        const rwDomainsModule1 = getDomainsForModule(
+          "Reading & Writing",
+          "Module 1"
+        );
+        const rwDomainsModule2 = getDomainsForModule(
+          "Reading & Writing",
+          "Module 2"
+        );
+        const mathDomainsModule1 = getDomainsForModule("Math", "Module 1");
+        const mathDomainsModule2 = getDomainsForModule("Math", "Module 2");
+
+        const initialModuleType = [
+          {
+            section: "Reading & Writing",
+            name: "Module 1",
+            level: null,
+            numberOfQuestion: rwDomainsModule1.reduce(
+              (sum, domain) => sum + domain.numberOfQuestion,
+              0
+            ),
+            domainDistribution: rwDomainsModule1,
+          },
+          {
+            section: "Reading & Writing",
+            name: "Module 2",
+            level: "Easy",
+            numberOfQuestion: rwDomainsModule2.reduce(
+              (sum, domain) => sum + domain.numberOfQuestion,
+              0
+            ),
+            domainDistribution: rwDomainsModule2,
+          },
+          {
+            section: "Reading & Writing",
+            name: "Module 2",
+            level: "Hard",
+            numberOfQuestion: rwDomainsModule2.reduce(
+              (sum, domain) => sum + domain.numberOfQuestion,
+              0
+            ),
+            domainDistribution: rwDomainsModule2,
+          },
+          {
+            section: "Math",
+            name: "Module 1",
+            level: null,
+            numberOfQuestion: mathDomainsModule1.reduce(
+              (sum, domain) => sum + domain.numberOfQuestion,
+              0
+            ),
+            domainDistribution: mathDomainsModule1,
+          },
+          {
+            section: "Math",
+            name: "Module 2",
+            level: "Easy",
+            numberOfQuestion: mathDomainsModule2.reduce(
+              (sum, domain) => sum + domain.numberOfQuestion,
+              0
+            ),
+            domainDistribution: mathDomainsModule2,
+          },
+          {
+            section: "Math",
+            name: "Module 2",
+            level: "Hard",
+            numberOfQuestion: mathDomainsModule2.reduce(
+              (sum, domain) => sum + domain.numberOfQuestion,
+              0
+            ),
+            domainDistribution: mathDomainsModule2,
+          },
+        ];
+
+        setExamStructureData((prevData) => ({
+          ...prevData,
+          moduleType: initialModuleType,
+        }));
+
+        setRwModuleData1(initialModuleType[0]);
+        setRwModuleData2(initialModuleType[1]);
+        setMathModuleData1(initialModuleType[3]);
+        setMathModuleData2(initialModuleType[4]);
+        setModuleData(initialModuleType[0]);
+      } else if (examStructureData.examStructureType === "Non-Adaptive") {
+        // Non-adaptive configuration (initialize with default values)
+        const rwDomainsModule1 = getDomainsForModule(
+          "Reading & Writing",
+          "Module 1"
+        );
+        const rwDomainsModule2 = getDomainsForModule(
+          "Reading & Writing",
+          "Module 2"
+        );
+        const mathDomainsModule1 = getDomainsForModule("Math", "Module 1");
+        const mathDomainsModule2 = getDomainsForModule("Math", "Module 2");
+
+        const initialModuleType = [
+          {
+            section: "Reading & Writing",
+            name: "Module 1",
+            level: null,
+            numberOfQuestion: rwDomainsModule1.reduce(
+              (sum, domain) => sum + domain.numberOfQuestion,
+              0
+            ),
+            domainDistribution: rwDomainsModule1,
+          },
+          {
+            section: "Reading & Writing",
+            name: "Module 2",
+            level: null,
+            numberOfQuestion: rwDomainsModule2.reduce(
+              (sum, domain) => sum + domain.numberOfQuestion,
+              0
+            ),
+            domainDistribution: rwDomainsModule2,
+          },
+          {
+            section: "Math",
+            name: "Module 1",
+            level: null,
+            numberOfQuestion: mathDomainsModule1.reduce(
+              (sum, domain) => sum + domain.numberOfQuestion,
+              0
+            ),
+            domainDistribution: mathDomainsModule1,
+          },
+          {
+            section: "Math",
+            name: "Module 2",
+            level: null,
+            numberOfQuestion: mathDomainsModule2.reduce(
+              (sum, domain) => sum + domain.numberOfQuestion,
+              0
+            ),
+            domainDistribution: mathDomainsModule2,
+          },
+        ];
+
+        setExamStructureData((prevData) => ({
+          ...prevData,
+          moduleType: initialModuleType,
+        }));
+
+        setRwModuleData1(initialModuleType[0]);
+        setRwModuleData2(initialModuleType[1]);
+        setMathModuleData1(initialModuleType[2]);
+        setMathModuleData2(initialModuleType[3]);
+        setModuleData(initialModuleType[0]);
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [examStructureData]);
+  }, [examStructureData.examStructureType]);
 
   const handleQuestionChange = (index, value) => {
-    if (moduleData?.title === "Module 1") {
-      const updatedDomains = [...moduleData.domains];
+    if (moduleData?.name === "Module 1") {
+      const updatedDomains = [...moduleData.domainDistribution];
       updatedDomains[index].numberOfQuestion = value;
-  
-      const newModuleData1 = { ...moduleData, domains: updatedDomains };
-  
-      // Separate merged configurations for RW and Math
-      const mergedConfigRW = mergedConfig.filter(
-        (config) => config.section === "Reading & Writing"
+
+      const newModuleData1 = {
+        ...moduleData,
+        domainDistribution: updatedDomains,
+      };
+
+      const mergedConfigForSection = mergedConfig.filter(
+        (config) => config.section === moduleData.section
       );
-      const mergedConfigMath = mergedConfig.filter(
-        (config) => config.section === "Math"
-      );
-  
-      // Determine which module data to update
+
+      const calculateModule2Domains = (module1Domains, mergedConfigSection) => {
+        return module1Domains.map((domain, idx) => ({
+          ...domain,
+          numberOfQuestion:
+            mergedConfigSection[idx].numberOfQuestion -
+            module1Domains[idx].numberOfQuestion,
+        }));
+      };
+
       if (activeModule === "RW") {
         setRwModuleData1(newModuleData1);
         setModuleData(newModuleData1);
-  
-        // Update Module 2 for RW based on RW's merged config
-        const updatedModule2Domains = updatedDomains.map((domain, idx) => ({
-          ...domain,
-          numberOfQuestion:
-            mergedConfigRW[idx].numberOfQuestion - updatedDomains[idx].numberOfQuestion,
-        }));
+
+        const updatedModule2Domains = calculateModule2Domains(
+          updatedDomains,
+          mergedConfigForSection
+        );
+
         setRwModuleData2((prevData) => ({
           ...prevData,
-          domains: updatedModule2Domains,
+          domainDistribution: updatedModule2Domains,
+        }));
+
+        // Update modules for Reading & Writing based on Adaptive or Non-adaptive type
+        setExamStructureData((prevData) => ({
+          ...prevData,
+          moduleType: [
+            {
+              section: "Reading & Writing",
+              name: "Module 1",
+              level: null,
+              numberOfQuestion: updatedDomains.reduce(
+                (sum, domain) => sum + domain.numberOfQuestion,
+                0
+              ),
+              domainDistribution: updatedDomains,
+            },
+            ...(examStructureData.examStructureType === "Adaptive"
+              ? [
+                  {
+                    section: "Reading & Writing",
+                    name: "Module 2",
+                    level: "Easy",
+                    numberOfQuestion: updatedModule2Domains.reduce(
+                      (sum, domain) => sum + domain.numberOfQuestion,
+                      0
+                    ),
+                    domainDistribution: updatedModule2Domains,
+                  },
+                  {
+                    section: "Reading & Writing",
+                    name: "Module 2",
+                    level: "Hard",
+                    numberOfQuestion: updatedModule2Domains.reduce(
+                      (sum, domain) => sum + domain.numberOfQuestion,
+                      0
+                    ),
+                    domainDistribution: updatedModule2Domains,
+                  },
+                ]
+              : [
+                  {
+                    section: "Reading & Writing",
+                    name: "Module 2",
+                    level: null,
+                    numberOfQuestion: updatedModule2Domains.reduce(
+                      (sum, domain) => sum + domain.numberOfQuestion,
+                      0
+                    ),
+                    domainDistribution: updatedModule2Domains,
+                  },
+                ]),
+            ...(prevData.moduleType.filter(
+              (module) => module.section !== "Reading & Writing"
+            ) || []),
+          ],
         }));
       } else if (activeModule === "Math") {
         setMathModuleData1(newModuleData1);
         setModuleData(newModuleData1);
-  
-        // Update Module 2 for Math based on Math's merged config
-        const updatedModule2Domains = updatedDomains.map((domain, idx) => ({
-          ...domain,
-          numberOfQuestion:
-            mergedConfigMath[idx].numberOfQuestion - updatedDomains[idx].numberOfQuestion,
-        }));
+
+        const updatedModule2Domains = calculateModule2Domains(
+          updatedDomains,
+          mergedConfigForSection
+        );
+
         setMathModuleData2((prevData) => ({
           ...prevData,
-          domains: updatedModule2Domains,
+          domainDistribution: updatedModule2Domains,
+        }));
+
+        // Update modules for Math based on Adaptive or Non-adaptive type
+        setExamStructureData((prevData) => ({
+          ...prevData,
+          moduleType: [
+            ...(prevData.moduleType.filter(
+              (module) => module.section !== "Math"
+            ) || []),
+            {
+              section: "Math",
+              name: "Module 1",
+              level: null,
+              numberOfQuestion: updatedDomains.reduce(
+                (sum, domain) => sum + domain.numberOfQuestion,
+                0
+              ),
+              domainDistribution: updatedDomains,
+            },
+            ...(examStructureData.examStructureType === "Adaptive"
+              ? [
+                  {
+                    section: "Math",
+                    name: "Module 2",
+                    level: "Easy",
+                    numberOfQuestion: updatedModule2Domains.reduce(
+                      (sum, domain) => sum + domain.numberOfQuestion,
+                      0
+                    ),
+                    domainDistribution: updatedModule2Domains,
+                  },
+                  {
+                    section: "Math",
+                    name: "Module 2",
+                    level: "Hard",
+                    numberOfQuestion: updatedModule2Domains.reduce(
+                      (sum, domain) => sum + domain.numberOfQuestion,
+                      0
+                    ),
+                    domainDistribution: updatedModule2Domains,
+                  },
+                ]
+              : [
+                  {
+                    section: "Math",
+                    name: "Module 2",
+                    level: null,
+                    numberOfQuestion: updatedModule2Domains.reduce(
+                      (sum, domain) => sum + domain.numberOfQuestion,
+                      0
+                    ),
+                    domainDistribution: updatedModule2Domains,
+                  },
+                ]),
+          ],
         }));
       }
     }
   };
-  
 
   return (
     <div className={cx("module-config-wrapper")}>
@@ -194,7 +473,7 @@ function ModuleConfig({ examStructureData, domainDistributionConfigs }) {
               </div>
               {activeModule === "RW" && (
                 <div className={cx("config-module-item-content")}>
-                  {renderModules("Reading & Writing")}
+                  {renderModules()}
                 </div>
               )}
             </div>
@@ -217,7 +496,7 @@ function ModuleConfig({ examStructureData, domainDistributionConfigs }) {
               </div>
               {activeModule === "Math" && (
                 <div className={cx("config-module-item-content")}>
-                  {renderModules("Math")}
+                  {renderModules()}
                 </div>
               )}
             </div>
@@ -230,7 +509,7 @@ function ModuleConfig({ examStructureData, domainDistributionConfigs }) {
                 </div>
                 <div className={cx("module-infor")}>
                   <div className={cx("module-name")}>
-                    {moduleData?.title}{" "}
+                    {moduleData?.name}{" "}
                     {moduleData?.level ? `(${moduleData?.level})` : ""}
                   </div>
                   <div className={cx("module-section")}>
@@ -239,8 +518,8 @@ function ModuleConfig({ examStructureData, domainDistributionConfigs }) {
                 </div>
               </div>
               <div className={cx("module-item-main")}>
-                {moduleData?.domains.length > 0 &&
-                  moduleData?.domains.map((domain, index) => (
+                {moduleData?.domainDistribution.length > 0 &&
+                  moduleData?.domainDistribution.map((domain, index) => (
                     <div className={cx("item-config")} key={index}>
                       <div className={cx("config-domain")}>
                         <div className={cx("domain-icon")}>
@@ -261,7 +540,7 @@ function ModuleConfig({ examStructureData, domainDistributionConfigs }) {
                           value={domain.numberOfQuestion}
                           className={cx("number-input")}
                           onChange={(e) =>
-                            moduleData.title === "Module 1" &&
+                            moduleData.name === "Module 1" &&
                             handleQuestionChange(
                               index,
                               e.target.value === ""
@@ -269,7 +548,7 @@ function ModuleConfig({ examStructureData, domainDistributionConfigs }) {
                                 : Number(e.target.value)
                             )
                           }
-                          disabled={moduleData.title !== "Module 1"}
+                          disabled={moduleData.name !== "Module 1"}
                         />
                       </div>
                     </div>
