@@ -1,15 +1,43 @@
+@import "~/styles/variables";
+
+.learning-item-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
+  height: 430px;
+}
+
 .learning-wrapper {
   width: 100%;
-  height: calc(100vh - 80px);;
-  margin-top: 80px;
+  height: 1300px;
+  padding-top: 80px;
   overflow-y: auto;
-  -ms-overflow-style: none;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .learning-container {
     width: 100%;
-    height: fit-content;
+    height: 10px;
     min-height: 100%;
+    display: flex;
+
+    .sidebar {
+      flex: 0 0 250px;
+      margin-right: 20px;
+    }
+
+    .manager-learning-material-wrapper {
+      flex: 1;
+      margin: 20px;
+
+      .manager-learning-material-header {
+        font-size: 25px;
+        font-weight: bold;
+        margin-bottom: 6px;
+      }
+    }
   }
 }

@@ -1,7 +1,9 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import ErrorQuestionView from "~/components/Staff/QuestionExamCreate/ErrorQuestionView";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import QuestionQuizzCreateModal from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzCreateModal";
 import QuestionQuizzEditModal from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzEditModal";
@@ -11,8 +13,9 @@ import UploadFileModal from "~/components/Staff/QuestionQuizzCreate/UploadFileMo
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionQuizzCreate.module.scss";
+
 const cx = classNames.bind(styles);
-const itemsPerPage = 10;
+const itemsPerPage = 5;
 
 function QuestionQuizzCreate() {
   const [questionList, setQuestionList] = useState([]);
@@ -26,6 +29,8 @@ function QuestionQuizzCreate() {
   const [isShowUpdateQuestionModal, setIsShowUpdateQuestionModal] =
     useState(false);
   const [questionEdit, setQuestionEdit] = useState({});
+  const [isShowQuestionListError, setIsShowQuestionListError] = useState(false);
+  const [questionListError, setQuestionListEror] = useState([]);
 
   const fetchQuestions = useCallback(async () => {
     try {
@@ -56,9 +61,10 @@ function QuestionQuizzCreate() {
       const quizQuestionIds = questionList.map(
         (quizQuestionIds) => quizQuestionIds.id
       );
-      console.log(quizQuestionIds);
-
       await apiClient.patch(`/quiz-questions/publish`, { quizQuestionIds });
+      toast.success("Publish question successfully!", {
+        autoClose: 2000,
+      });
       fetchQuestions();
     } catch (error) {
       console.error("Error publishing questions:", error);
@@ -81,13 +87,24 @@ function QuestionQuizzCreate() {
       )}
       
       {isShowUploadFileModal && (
-        <UploadFileModal setIsShowUploadFileModal={setIsShowUploadFileModal} />
+        <UploadFileModal 
+        fetchQuestions={fetchQuestions}
+        setIsShowUploadFileModal={setIsShowUploadFileModal} 
+        setQuestionListEror={setQuestionListEror}
+        setIsShowQuestionListError={setIsShowQuestionListError}
+        />
       )}
       {isShowUpdateQuestionModal && (
         <QuestionQuizzEditModal
           questionEdit={questionEdit}
           fetchQuestions={fetchQuestions}
           setIsShowUpdateQuestionModal={setIsShowUpdateQuestionModal}
+        />
+      )}
+      {isShowQuestionListError && (
+        <ErrorQuestionView
+          questionListError={questionListError}
+          setIsShowQuestionListError={setIsShowQuestionListError}
         />
       )}
       <PageLayout>
@@ -140,9 +157,12 @@ function QuestionQuizzCreate() {
               {questionList?.length > 0 ? (
                 <div className={cx("question-quizz-create-list")}>
                   {questionList.map((question, index) => (
+                    <div
+                    className={cx("question-exam-create-item-container")}
+                    key={index}
+                  >
                     <QuestionQuizzItem
-                      key={index}
-                      index={index}
+                      index={index + (currentPage - 1) * itemsPerPage}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
                       setQuestionEdit={setQuestionEdit}
@@ -151,12 +171,13 @@ function QuestionQuizzCreate() {
                         setIsShowUpdateQuestionModal
                       }
                     />
+                    </div>
                   ))}
                 </div>
               ) : (
                 <NoQuestionData />
               )}
-
+              {questionList?.length > 0 && (
               <div className={cx("pagination-controls")}>
                 <Pagination
                   align="center"
@@ -168,6 +189,7 @@ function QuestionQuizzCreate() {
                   showLessItems={true}
                 />
               </div>
+              )}
             </div>
           </div>
         </div>
