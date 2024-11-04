@@ -10,10 +10,10 @@ import apiClient from "~/services/apiService";
 import styles from "./QuestionQuizz.module.scss";
 
 const cx = classNames.bind(styles);
-const itemsPerPage = 10;
+const itemsPerPage = 5;
 
 function QuestionQuizz() {
-  const [bankType, setBankType] = useState("Approved");
+  const [bankType, setBankType] = useState("Pending");
   const [questionList, setQuestionList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
@@ -44,7 +44,6 @@ function QuestionQuizz() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
 
   return (
     <>
@@ -79,9 +78,9 @@ function QuestionQuizz() {
               </div>
             </div>
             <div className={cx("question-quizz-content")}>
-              <div className={cx("question-quizz-list")}>
-                {questionList?.length > 0 ? (
-                  questionList.map((question, index) => (
+              {questionList?.length > 0 ? (
+                <div className={cx("question-quizz-list")}>
+                  {questionList.map((question, index) => (
                     <QuestionQuizzItem
                       key={index}
                       index={index}
@@ -89,22 +88,24 @@ function QuestionQuizz() {
                       setQuestionPreview={setQuestionPreview}
                       setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
                     />
-                  ))
-                ) : (
-                  <NoQuestionData />
-                )}
-              </div>
-              <div className={cx("pagination-controls")}>
-                <Pagination
-                  align="center"
-                  current={currentPage}
-                  pageSize={itemsPerPage}
-                  total={totalItems}
-                  onChange={handlePageChange}
-                  showSizeChanger={false}
-                  showLessItems={true}
-                />
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <NoQuestionData />
+              )}
+              {questionList?.length > 0 && (
+                <div className={cx("pagination-controls")}>
+                  <Pagination
+                    align="center"
+                    current={currentPage}
+                    pageSize={itemsPerPage}
+                    total={totalItems}
+                    onChange={handlePageChange}
+                    showSizeChanger={false}
+                    showLessItems={true}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
