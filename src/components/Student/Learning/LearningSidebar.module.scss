@@ -1,0 +1,42 @@
+@import "~/styles/variables";
+
+.learning-wrapper {
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    width: 250px;
+}
+
+.learning-container {
+    .menu-section {
+        margin-bottom: 20px;
+
+        .menu-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .menu-item {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            text-align: left;
+            font-size: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #e9ecef;
+            }
+
+            &.active {
+                border-left: 4px solid $primary-color;
+                font-weight: bold;
+                color: $primary-color;
+            }
+        }
+    }
+}
