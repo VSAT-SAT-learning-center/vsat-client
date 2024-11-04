@@ -30,7 +30,7 @@ function CensorQuestionQuizzView({
         `/quiz-questions/updateStatus/${questionCensorData.id}`,
         status
       );
-      navigate("/manager/question-bank/bank");
+      navigate("/manager/question-quizz/bank");
     } catch (error) {
       console.error("Error censor approve question:", error);
     }

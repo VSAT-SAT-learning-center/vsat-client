@@ -24,6 +24,7 @@ import ManagerQuestionExam from "~/pages/Manager/ManagerQuestionExam";
 import QuestionExamCensor from "~/pages/Manager/ManagerQuestionExam/QuestionExamCensor";
 import ManagerQuestionQuizz from "~/pages/Manager/ManagerQuestionQuizz";
 import QuestionQuizzCensor from "~/pages/Manager/ManagerQuestionQuizz/QuestionQuizzCensor";
+import QuestionDistribution from "../pages/Manager/ManagerExam/QuestionDistribution";
 import ManagerSettings from "~/pages/Manager/ManagerSettings";
 import NotFound from "~/pages/NotFound";
 import AccountSetting from "~/pages/Staff/AccountSetting";
@@ -262,6 +263,7 @@ const routesConfig = [
     component: ExamScore,
     protected: true,
   },
+  { path: "/manager/exams/question/distribution", component: QuestionDistribution, protected: true },
   {
     path: "/manager/exams/structure/censor",
     component: ExamStructureCensor,
