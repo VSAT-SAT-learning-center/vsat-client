@@ -4,7 +4,7 @@ import "./TableViewScore.css";
 const TableViewScore = ({ dataSource }) => {
   const columns = [
     { title: "Section", dataIndex: "section", width: 255 },
-    { title: "Raw Score", dataIndex: "rawscore" },
+    { title: "Raw Score", dataIndex: "rawscore",  width: 200 },
     {
       title: "Lower Score",
       dataIndex: "lowerscore",

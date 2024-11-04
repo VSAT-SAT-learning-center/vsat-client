@@ -171,7 +171,7 @@ const routesConfig = [
   { path: "/staff/exams/overview", component: Exam, protected: true },
   { path: "/staff/exams/create", component: ExamCreate, protected: true },
   { path: "/staff/exams/structure", component: ExamStructure, protected: true },
-  { path: "/staff/exams/score", component: ExamScore, protected: true },
+
   // Staff practice routes
   { path: "/staff/practice/overview", component: Practice, protected: true },
   {
@@ -257,6 +257,11 @@ const routesConfig = [
   // Manger exam routes
   { path: "/manager/exams/overview", component: ManagerExam, protected: true },
   { path: "/manager/exams/censor", component: ExamCensor, protected: true },
+  {
+    path: "/manager/exams/score/distribution",
+    component: ExamScore,
+    protected: true,
+  },
   {
     path: "/manager/exams/structure/censor",
     component: ExamStructureCensor,

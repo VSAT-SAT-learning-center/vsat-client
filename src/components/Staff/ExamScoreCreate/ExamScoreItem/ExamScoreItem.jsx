@@ -6,6 +6,7 @@ const cx = classNames.bind(styles);
 
 function ExamScoreItem({
   examScore,
+  index,
   setViewScoreDetailData,
   setIsShowViewDetailScore,
 }) {
@@ -16,8 +17,16 @@ function ExamScoreItem({
   return (
     <div className={cx("exam-score-item-container")}>
       <div className={cx("exam-score-item-header")}>
-        <div className={cx("number")}>1</div>
-        <div className={cx("exam-title")}>{examScore?.title}</div>
+        <div className={cx("header-infor")}>
+          <div className={cx("number")}>{index}</div>
+          <div className={cx("exam-title")}>{examScore?.title}</div>
+        </div>
+        <button
+          className={cx("view-detail-btn")}
+          onClick={handleClickViewDetailScore}
+        >
+          <i className={cx("fa-regular fa-arrow-up-right-from-square")}></i>
+        </button>
       </div>
       <div className={cx("exam-score-item-content")}>
         <div className={cx("exam-item-infor-type")}>
@@ -25,7 +34,9 @@ function ExamScoreItem({
             <i className="fa-sharp fa-regular fa-file-pen"></i>
           </div>
           <div className={cx("type-title")}>Score type:</div>
-          <div className={cx("type-text")}>{examScore?.type}</div>
+          <div className={cx("type-text")}>
+            {examScore?.examStructureType.name}
+          </div>
         </div>
         <div className={cx("exam-item-infor-type")}>
           <div className={cx("item-icon")}>
@@ -36,7 +47,7 @@ function ExamScoreItem({
             {formatDate(examScore?.createdat)}
           </div>
         </div>
-        <div className={cx("view-detail")}>
+        {/* <div className={cx("view-detail")}>
           <button
             className={cx("view-deail-btn")}
             onClick={handleClickViewDetailScore}
@@ -44,7 +55,7 @@ function ExamScoreItem({
             <span className={cx("view-detail-text")}>View detail</span>
             <i className={cx("fa-regular fa-arrow-up-right-from-square")}></i>
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -11,7 +11,10 @@ import StepProgressBar from "./StepProgressBar";
 import StructureConfig from "./StructureConfig";
 const cx = classNames.bind(styles);
 
-function ExamStructureCreateView({ setIsShowExamStructureCreateView }) {
+function ExamStructureCreateView({
+  setIsShowExamStructureCreateView,
+  fetchExamStructureList,
+}) {
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [
     "Structure Config",
@@ -236,10 +239,7 @@ function ExamStructureCreateView({ setIsShowExamStructureCreateView }) {
 
   const handleFinish = async () => {
     try {
-      await apiClient.post(
-        "/exam-structures",
-        examStructureData
-      );
+      await apiClient.post("/exam-structures", examStructureData);
       toast.success("Exam Structure created successfully!", {
         position: "top-right",
         autoClose: 2000,
@@ -248,6 +248,7 @@ function ExamStructureCreateView({ setIsShowExamStructureCreateView }) {
         pauseOnHover: true,
         draggable: true,
       });
+      fetchExamStructureList();
       setIsShowExamStructureCreateView(false);
     } catch (error) {
       console.error("Error while creating exam structure:", error);
@@ -302,7 +303,13 @@ function ExamStructureCreateView({ setIsShowExamStructureCreateView }) {
           />
         );
       case "Overview Config":
-        return <OverviewConfig examStructureData={examStructureData} examScorePick={examScorePick} distributionQuestionPick={distributionQuestionPick}/>;
+        return (
+          <OverviewConfig
+            examStructureData={examStructureData}
+            examScorePick={examScorePick}
+            distributionQuestionPick={distributionQuestionPick}
+          />
+        );
       default:
         return null;
     }
