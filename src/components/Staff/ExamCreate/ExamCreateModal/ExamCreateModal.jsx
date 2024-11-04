@@ -15,6 +15,7 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
           <div className={cx("exam-title")}>Create Exam</div>
           <div className={cx("exam-empty")}></div>
         </div>
+        <div className={cx("exam-create-modal-content")}></div>
       </div>
     </div>
   );
