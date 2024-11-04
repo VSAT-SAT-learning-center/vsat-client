@@ -3,12 +3,12 @@ import { useCallback, useEffect, useState } from "react";
 import CreateExamScoreModal from "~/components/Staff/ExamScoreCreate/CreateExamScoreModal";
 import ExamScoreCreateView from "~/components/Staff/ExamScoreCreate/ExamScoreCreateView";
 import ExamScoreItem from "~/components/Staff/ExamScoreCreate/ExamScoreItem";
+import ExamScoreViewDetail from "~/components/Staff/ExamScoreCreate/ExamScoreViewDetail";
 import UploadFileScore from "~/components/Staff/ExamScoreCreate/UploadFileScore";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
-import PageLayout from "~/layouts/Staff/PageLayout";
+import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ExamScore.module.scss";
-import ExamScoreViewDetail from "~/components/Staff/ExamScoreCreate/ExamScoreViewDetail";
 const cx = classNames.bind(styles);
 const initialReadingWritingData = [];
 const initialMathData = [];
@@ -34,7 +34,7 @@ function ExamScore() {
           pageSize: 0,
         },
       });
-      setExamScoreList(response.data.data.examScore);
+      setExamScoreList(response.data.data.data);
     } catch (error) {
       console.error("Failed to fetch exam score list:", error);
     }
@@ -103,9 +103,10 @@ function ExamScore() {
             </div>
             <div className={cx("create-score-content")}>
               {examScoreList?.length > 0 &&
-                examScoreList?.map((examScore) => (
+                examScoreList?.map((examScore, index) => (
                   <ExamScoreItem
                     key={examScore.id}
+                    index={index + 1}
                     examScore={examScore}
                     setViewScoreDetailData={setViewScoreDetailData}
                     setIsShowViewDetailScore={setIsShowViewDetailScore}

@@ -12,6 +12,9 @@ function StructureConfig({
   setDomainDistributionConfigs,
   setTotalRWQuestion,
   setTotalMathQuestion,
+  setViewDetailDistributioinData,
+  setExamScorePick,
+  setDistributionQuestionPick,
 }) {
   const [examStructureType, setExamStructureType] = useState([]);
   const [examScores, setExamScores] = useState([]);
@@ -20,24 +23,37 @@ function StructureConfig({
   const [questionDistributions, setQuestionDistributions] = useState([]);
   const [isShowDistributionDetail, setIsShowDistributionDetail] =
     useState(false);
-  const [distributionDetailData, setDistributionDetailData] = useState(false);
+  const [distributionDetailData, setDistributionDetailData] = useState({});
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetch initial data for exam types and question distributions
         const [examTypeResponse, questionDistributionResponse] =
           await Promise.all([
             apiClient.get("/exam-structure-types"),
             apiClient.get("/exam-semester/details"),
           ]);
+
         setExamStructureType(examTypeResponse.data.data);
         setQuestionDistributions(questionDistributionResponse.data.data);
+
+        // Fetch exam scores based on the selected exam structure type
+        if (examStructureData?.examStructureType) {
+          const response = await apiClient.post(
+            "/exam-scores/exam-structure-type",
+            {
+              name: examStructureData.examStructureType,
+            }
+          );
+          setExamScores(response.data.data);
+        }
       } catch (error) {
         console.error("Failed to fetch data", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [examStructureData?.examStructureType]);
 
   const handleChangeStructureName = (e) => {
     setExamStructureData((prev) => ({
@@ -83,6 +99,7 @@ function StructureConfig({
     const selectedScore = examScores.find(
       (score) => score.id === selectedScoreId
     );
+    setExamScorePick(selectedScore.title);
     setExamScoreDetailData(selectedScore);
     setExamStructureData((prev) => ({
       ...prev,
@@ -93,14 +110,14 @@ function StructureConfig({
   const handleChangeNumberRW = (e) => {
     setExamStructureData((prev) => ({
       ...prev,
-      requiredCorrectInModule1RW: e.target.value,
+      requiredCorrectInModule1RW: Number(e.target.value),
     }));
   };
 
   const handleChangeNumberMath = (e) => {
     setExamStructureData((prev) => ({
       ...prev,
-      requiredCorrectInModule1Math: e.target.value,
+      requiredCorrectInModule1M: Number(e.target.value),
     }));
   };
 
@@ -109,7 +126,13 @@ function StructureConfig({
     const selectedDistribution = questionDistributions.find(
       (distribution) => distribution.id === distributionId
     );
+    setDistributionQuestionPick(selectedDistribution.title);
+    setExamStructureData((prev) => ({
+      ...prev,
+      examSemesterId: distributionId,
+    }));
     setDistributionDetailData(selectedDistribution);
+    setViewDetailDistributioinData(selectedDistribution);
     setDomainDistributionConfigs(selectedDistribution.domainDistributionConfig);
   };
   return (
@@ -142,6 +165,7 @@ function StructureConfig({
                 <div className={cx("config-input")}>
                   <input
                     type="text"
+                    value={examStructureData?.structurename}
                     className={cx("title-input")}
                     placeholder="Name..."
                     autoFocus={true}
@@ -157,6 +181,7 @@ function StructureConfig({
                 <div className={cx("config-input")}>
                   <input
                     type="text"
+                    value={examStructureData?.description}
                     className={cx("title-input")}
                     placeholder="Description..."
                     onChange={handleChangeStructureDesc}
@@ -172,6 +197,7 @@ function StructureConfig({
                 </div>
                 <select
                   id="type-section"
+                  value={examStructureData?.examStructureType}
                   className={cx("section-select")}
                   onChange={handleChangeStructureType}
                 >
@@ -186,12 +212,55 @@ function StructureConfig({
               <div className={cx("config-score")}>
                 <div className={cx("score-selection")}>
                   <div className={cx("type-section")}>
+                    Exam Question Distribution
+                    <span className={cx("required")}>(Required)</span>
+                  </div>
+                  <select
+                    id="type-section"
+                    className={cx("section-select")}
+                    value={examStructureData?.examSemesterId}
+                    onChange={handleChangeQuestionDistribution}
+                  >
+                    <option value="">Question Distribution</option>
+                    {questionDistributions?.length > 0 &&
+                      questionDistributions.map((distribution) => (
+                        <option value={distribution.id} key={distribution.id}>
+                          {distribution.title}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <div className={cx("view-score-action")}>
+                  <button
+                    className={cx("view-score-btn", {
+                      "disabled-view-score-btn":
+                        !distributionDetailData.domainDistributionConfig ||
+                        distributionDetailData.domainDistributionConfig
+                          .length === 0,
+                    })}
+                    disabled={
+                      !distributionDetailData.domainDistributionConfig ||
+                      distributionDetailData.domainDistributionConfig.length ===
+                        0
+                    }
+                    onClick={() => setIsShowDistributionDetail(true)}
+                  >
+                    <i
+                      className={cx("fa-regular fa-arrow-up-right-from-square")}
+                    ></i>
+                  </button>
+                </div>
+              </div>
+              <div className={cx("config-score")}>
+                <div className={cx("score-selection")}>
+                  <div className={cx("type-section")}>
                     Exam Structure Score
                     <span className={cx("required")}>(Required)</span>
                   </div>
                   <select
                     id="type-section"
                     className={cx("section-select")}
+                    value={examStructureData?.examScoreId}
                     disabled={examScores.length === 0}
                     onChange={handleChangeStructureScore}
                   >
@@ -208,41 +277,14 @@ function StructureConfig({
                   <button
                     className={cx("view-score-btn", {
                       "disabled-view-score-btn":
-                        Object.keys(examScoreDetailData).length === 0,
+                        !examScoreDetailData.examScoreDetails ||
+                        examScoreDetailData.examScoreDetails.length === 0,
                     })}
-                    disabled={Object.keys(examScoreDetailData).length === 0}
+                    disabled={
+                      !examScoreDetailData.examScoreDetails ||
+                      examScoreDetailData.examScoreDetails.length === 0
+                    }
                     onClick={() => setIsShowScoreDetail(true)}
-                  >
-                    <i
-                      className={cx("fa-regular fa-arrow-up-right-from-square")}
-                    ></i>
-                  </button>
-                </div>
-              </div>
-              <div className={cx("config-score")}>
-                <div className={cx("score-selection")}>
-                  <div className={cx("type-section")}>
-                    Exam Question Distribution
-                    <span className={cx("required")}>(Required)</span>
-                  </div>
-                  <select
-                    id="type-section"
-                    className={cx("section-select")}
-                    onChange={handleChangeQuestionDistribution}
-                  >
-                    <option value="">Question Distribution</option>
-                    {questionDistributions?.length > 0 &&
-                      questionDistributions.map((distribution) => (
-                        <option value={distribution.id} key={distribution.id}>
-                          {distribution.title}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-                <div className={cx("view-score-action")}>
-                  <button
-                    className={cx("view-score-btn")}
-                    onClick={() => setIsShowDistributionDetail(true)}
                   >
                     <i
                       className={cx("fa-regular fa-arrow-up-right-from-square")}
@@ -261,6 +303,11 @@ function StructureConfig({
                   <div className={cx("mechanism-input")}>
                     <input
                       type="number"
+                      value={
+                        examStructureData?.requiredCorrectInModule1RW === 0
+                          ? ""
+                          : examStructureData?.requiredCorrectInModule1RW
+                      }
                       className={cx("title-input")}
                       placeholder="Number..."
                       onChange={handleChangeNumberRW}
@@ -275,6 +322,11 @@ function StructureConfig({
                   <div className={cx("mechanism-input")}>
                     <input
                       type="number"
+                      value={
+                        examStructureData?.requiredCorrectInModule1M === 0
+                          ? ""
+                          : examStructureData?.requiredCorrectInModule1M
+                      }
                       className={cx("title-input")}
                       placeholder="Number..."
                       onChange={handleChangeNumberMath}

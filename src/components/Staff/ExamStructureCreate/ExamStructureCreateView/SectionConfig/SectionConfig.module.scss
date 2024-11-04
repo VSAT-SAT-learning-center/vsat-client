@@ -17,11 +17,36 @@
       padding: 12px 30px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       border-bottom: 1px solid $border-color;
 
       .config-text {
         font-size: 20px;
         font-weight: 600;
+      }
+
+      .view-distribution {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+
+        .view-text {
+          font-size: 17px;
+          font-weight: 600;
+        }
+
+        .view-btn {
+          transition: all 0.2s linear;
+          .icon {
+            font-size: 22px;
+          }
+
+          &:hover {
+            .icon {
+              color: $primary-color;
+            }
+          }
+        }
       }
     }
 
@@ -61,11 +86,11 @@
               display: flex;
               align-items: center;
               border-radius: 10px 0 0 10px;
-              border: 1px solid $border-color;
+              border: 1px solid #c5c5c5;
               .domain-icon {
                 padding: 12px 16px;
                 font-size: 18px;
-                border-right: 1px solid $border-color;
+                border-right: 1px solid #c5c5c5;
               }
 
               .domain-text {
@@ -79,7 +104,7 @@
             .config-number {
               width: fit-content;
               border-radius: 0 10px 10px 0;
-              border: 1px solid $border-color;
+              border: 1px solid #c5c5c5;
 
               .number-input {
                 width: 56px;
@@ -87,6 +112,7 @@
                 outline: none;
                 padding: 12px;
                 font-size: 18px;
+                text-align: center;
                 background-color: transparent;
               }
             }
