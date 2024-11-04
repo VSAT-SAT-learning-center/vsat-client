@@ -5,7 +5,6 @@ import styles from "./ViewTableScore.module.scss";
 const cx = classNames.bind(styles);
 
 function ViewTableScore({ viewScoreDetailData, setIsShowScoreDetail }) {
-  console.log(viewScoreDetailData);
   const [dataSource, setDataSource] = useState([]);
   const [rwData, setRwData] = useState([]);
   const [mathData, setMathData] = useState([]);

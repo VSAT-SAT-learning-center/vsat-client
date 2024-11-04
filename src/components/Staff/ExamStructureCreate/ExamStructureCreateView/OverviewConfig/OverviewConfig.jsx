@@ -8,6 +8,7 @@ function OverviewConfig({
   examScorePick,
   distributionQuestionPick,
 }) {
+  console.log(examStructureData)
   const [groupedModules, setGroupedModules] = useState([]);
 
   useEffect(() => {

@@ -105,11 +105,11 @@ export const sidebarNavs = [
         title: "Exam Structure",
         path: "/staff/exams/structure",
       },
-      {
-        id: 4,
-        title: "Exam Score",
-        path: "/staff/exams/score",
-      },
+      // {
+      //   id: 4,
+      //   title: "Exam Score",
+      //   path: "/staff/exams/score",
+      // },
     ],
   },
   {

@@ -15,16 +15,16 @@ const TableViewDistribution = ({ dataSource }) => {
     { title: "Max Question", dataIndex: "maxQuestion", width: 150 },
   ];
 
-  const transformedDataSource = dataSource.domainDistributionConfig.map(
-    (item) => ({
-      key: item.domain,
-      section: item.section.name,
-      domain: item.domain,
-      percentage: item.percentage,
-      minQuestion: item.minQuestion,
-      maxQuestion: item.maxQuestion,
-    })
-  );
+  const transformedDataSource = (
+    dataSource?.domainDistributionConfig || []
+  ).map((item) => ({
+    key: item.domain,
+    section: item.section?.name || "N/A",
+    domain: item.domain,
+    percentage: item.percentage,
+    minQuestion: item.minQuestion,
+    maxQuestion: item.maxQuestion,
+  }));
 
   return (
     <div className="table-container">
