@@ -10,9 +10,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.3);
-
   .question-create-preview-container {
+    position: relative;
     width: 85%;
     height: 95%;
     display: flex;
@@ -65,7 +64,7 @@
 
       .preview-content-container {
         width: 100%;
-        flex-grow: 1;
+        height: 100%;
         display: flex;
         align-items: center;
         overflow: hidden;
@@ -74,7 +73,7 @@
           flex: 1;
           height: 95%;
           padding: 20px;
-          border-right: 1px solid #c5c5c5;
+          border-right: 1px solid #aaaaaa;
           overflow-y: auto;
           &::-webkit-scrollbar {
             display: none;
@@ -126,6 +125,7 @@
 
           .question-rerender-content {
             font-family: "system-ui";
+            font-size: 17px;
             line-height: 1.8;
 
             h3 {
@@ -162,8 +162,9 @@
         .preview-content-answer {
           flex: 1;
           height: 95%;
+          max-height: 95%;
           padding: 20px;
-          border-left: 1px solid #c5c5c5;
+          border-left: 1px solid #aaaaaa;
           overflow-y: auto;
           &::-webkit-scrollbar {
             display: none;
@@ -177,6 +178,7 @@
             .mark-answer {
               cursor: pointer;
               width: fit-content;
+              font-size: 17px;
               .icon-mark {
                 margin-right: 8px;
               }
@@ -196,8 +198,9 @@
               margin: 8px 0;
               padding: 8px 16px;
               text-align: start;
+              font-size: 17px;
               line-height: 1.8;
-              border-radius: 5px;
+              border-radius: 4px;
               border: 1px solid rgb(33, 46, 88);
               background-color: $bg-primary-color;
               transition: all 0.15s linear;
@@ -286,6 +289,46 @@
               }
             }
           }
+        }
+      }
+    }
+
+    .question-create-preview-footer {
+      width: 100%;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      column-gap: 10px;
+      border-top: 1px solid $border-color;
+
+      .save-btn {
+        user-select: none;
+        padding: 6px 16px;
+        font-weight: 600;
+        border-radius: 25px;
+        color: $white-color;
+        border: 1px solid $primary-color;
+        background-color: $primary-color;
+        transition: 0.3s linear;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .cancel-btn {
+        user-select: none;
+        padding: 6px 16px;
+        font-weight: 600;
+        border-radius: 25px;
+        color: $primary-color;
+        border: 1px solid $primary-color;
+        background-color: $bg-primary-color;
+        transition: 0.3s linear;
+
+        &:hover {
+          opacity: 0.8;
         }
       }
     }

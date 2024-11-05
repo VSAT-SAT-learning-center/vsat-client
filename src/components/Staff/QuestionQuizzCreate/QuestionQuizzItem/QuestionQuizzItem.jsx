@@ -98,7 +98,7 @@ function QuestionQuizzItem({
 QuestionQuizzItem.propTypes = {
   question: PropTypes.object,
   index: PropTypes.number,
-  setIsShowQuizzItemPreview: PropTypes.func,
+  setIsShowQuestionItemPreview: PropTypes.func,
   setIsShowUpdateQuestionModal: PropTypes.func,
   setQuestionPreview: PropTypes.func,
   setQuestionEdit: PropTypes.func,
