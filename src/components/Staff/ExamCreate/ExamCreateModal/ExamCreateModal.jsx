@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import apiClient from "~/services/apiService";
 import ViewTableDistribution from "../../ExamStructureCreate/ExamStructureCreateView/StructureConfig/ViewTableDistribution";
 import ViewTableScore from "../../ExamStructureCreate/ExamStructureCreateView/StructureConfig/ViewTableScore";
+import DomainQuestionCreateModal from "./DomainQuestionCreateModal";
 import styles from "./ExamCreateModal.module.scss";
+import ModuleConfig from "./ModuleConfig";
+import ModuleQuestionCreate from "./ModuleQuestionCreate";
 const cx = classNames.bind(styles);
 function ExamCreateModal({ setIsShowCreateExamModal }) {
   const [isShowGeneralContent, setIsShowGeneralContent] = useState(true);
@@ -21,7 +24,10 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
     isShowExamQuestionDistributionTable,
     setIsShowExamQuestionDistributionTable,
   ] = useState(false);
-
+  const [structureModuleConfigs, setStructureModuleConfigs] = useState([]);
+  const [structureModuleQuestions, setStructureModuleQuestions] = useState([]);
+  const [isShowDomainQuestionCreateModal, setIsShowModalCreateQuestionModal] =
+    useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,41 +65,70 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
     if (!isShowAdvancedSetting) setIsShowGeneralContent(false);
   };
 
-  const handleChangeTimeModule = (e) => {
-    let value = parseInt(e.target.value, 10);
-    if (value > 60) value = 60;
-    if (value < 0) value = 0;
-    e.target.value = value;
-  };
-
   const handleChangeExamStructure = async (e) => {
     const selectedStructureId = e.target.value;
     const selectedStructure = examStructures.find(
       (structure) => structure.id === selectedStructureId
     );
 
-    if (selectedStructure) {
-      const examScoreId = selectedStructure.examScore.id;
-      const examSemesterId = selectedStructure.examSemester.id;
-      setExamStructureSelected(selectedStructure);
+    if (!selectedStructure) return;
 
-      try {
-        const [examScoreResponse, examSemesterResponse] = await Promise.all([
-          apiClient.get(`/exam-scores/${examScoreId}`),
-          apiClient.get(`/exam-semester/${examSemesterId}/details`),
-        ]);
+    const sectionOrder = { "Reading & Writing": 1, Math: 2 };
+    const levelOrder = { Easy: 1, Hard: 2, null: 3 };
 
-        const examScore = examScoreResponse.data.data;
-        const examSemester = examSemesterResponse.data.data;
-        console.log(examScore);
-        console.log(examSemester);
-        setExamScoreSelected(examScore);
-        setExamQuestionDistributionSelected(examSemester);
-      } catch (error) {
-        console.error("Error fetching exam data", error);
+    // Sort modules by section, name, and level
+    const sortedModules = selectedStructure.moduletype.sort((a, b) => {
+      if (sectionOrder[a.section] !== sectionOrder[b.section]) {
+        return sectionOrder[a.section] - sectionOrder[b.section];
       }
+      if (a.name !== b.name) return a.name.localeCompare(b.name);
+      return levelOrder[a.level] - levelOrder[b.level];
+    });
+    console.log(sortedModules);
+    setStructureModuleQuestions(sortedModules);
+
+    // Group modules by section
+    const mergedModules = selectedStructure.moduletype.reduce((acc, module) => {
+      const section = acc.find((item) => item.section === module.section);
+      if (section) {
+        section.modules.push(module);
+      } else {
+        acc.push({ section: module.section, modules: [module] });
+      }
+      return acc;
+    }, []);
+
+    // Sort merged modules by section order, then by module name and level
+    mergedModules.sort(
+      (a, b) => sectionOrder[a.section] - sectionOrder[b.section]
+    );
+    mergedModules.forEach((section) => {
+      section.modules.sort((a, b) => {
+        const moduleNumberA = parseInt(a.name.split(" ")[1], 10);
+        const moduleNumberB = parseInt(b.name.split(" ")[1], 10);
+        if (moduleNumberA !== moduleNumberB)
+          return moduleNumberA - moduleNumberB;
+        return levelOrder[a.level] - levelOrder[b.level];
+      });
+    });
+
+    setStructureModuleConfigs(mergedModules);
+    setExamStructureSelected(selectedStructure);
+
+    try {
+      const { examScore, examSemester } = selectedStructure;
+      const [examScoreResponse, examSemesterResponse] = await Promise.all([
+        apiClient.get(`/exam-scores/${examScore.id}`),
+        apiClient.get(`/exam-semester/${examSemester.id}/details`),
+      ]);
+
+      setExamScoreSelected(examScoreResponse.data.data);
+      setExamQuestionDistributionSelected(examSemesterResponse.data.data);
+    } catch (error) {
+      console.error("Error fetching exam data", error);
     }
   };
+
   return (
     <>
       {isShowExamScoreTable && (
@@ -109,6 +144,13 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
           setIsShowDistributionDetail={setIsShowExamQuestionDistributionTable}
         />
       )}
+
+      {isShowDomainQuestionCreateModal && (
+        <DomainQuestionCreateModal
+          setIsShowModalCreateQuestionModal={setIsShowModalCreateQuestionModal}
+        />
+      )}
+
       <div className={cx("exam-create-modal-wrapper")}>
         <div className={cx("exam-create-modal-container")}>
           <div className={cx("exam-create-modal-header")}>
@@ -123,6 +165,7 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
           </div>
           <div className={cx("exam-create-modal-content")}>
             <div className={cx("exam-create-modal-main")}>
+              {/* General information */}
               <div className={cx("general-information-container")}>
                 <div
                   className={cx("general-information-header")}
@@ -269,6 +312,7 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                   )}
                 </div>
               </div>
+              {/* Module config time */}
               <div className={cx("advanced-setting-container")}>
                 <div
                   className={cx("advanced-setting-header")}
@@ -298,29 +342,25 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                     </div>
                     <div className={cx("module-time-title")}>Molude time</div>
                   </div>
-                  <div className={cx("module-config-time-container")}>
-                    <div className={cx("module-config-time")}>
-                      <div className={cx("module-config")}>
-                        <div className={cx("module-icon")}>
-                          <i className="fa-light fa-file-pen"></i>
-                        </div>
-                        <div className={cx("module-infor")}>Module 1</div>
-                      </div>
-
-                      <div className={cx("time-config")}>
-                        <input
-                          type="number"
-                          min="0"
-                          max="60"
-                          placeholder="mins"
-                          className={cx("time-input")}
-                          onChange={handleChangeTimeModule}
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  {structureModuleConfigs?.map((structureModule, index) => (
+                    <ModuleConfig
+                      key={index}
+                      structureModule={structureModule}
+                    />
+                  ))}
                 </div>
               </div>
+              {/* Module question */}
+              {structureModuleQuestions?.map((moduleQuestion) => (
+                <ModuleQuestionCreate
+                  key={moduleQuestion?.id}
+                  moduleQuestion={moduleQuestion}
+                  setIsShowModalCreateQuestionModal={
+                    setIsShowModalCreateQuestionModal
+                  }
+                />
+              ))}
+              <div className={cx("empty-container")}></div>
             </div>
           </div>
           <div className={cx("exam-create-modal-footer")}>
