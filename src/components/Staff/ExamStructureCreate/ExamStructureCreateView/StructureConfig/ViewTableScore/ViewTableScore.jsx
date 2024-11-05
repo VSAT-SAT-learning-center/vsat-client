@@ -45,18 +45,16 @@ function ViewTableScore({ viewScoreDetailData, setIsShowScoreDetail }) {
     <div className={cx("exam-score-create-view-wrapper")}>
       <div className={cx("exam-score-create-view-container")}>
         <div className={cx("exam-score-create-view-header")}>
-          <div
+          {/* <div
             className={cx("exam-score-back")}
             onClick={() => setIsShowScoreDetail(false)}
           >
             <i className={cx("fa-regular fa-arrow-left")}></i>
-          </div>
+          </div> */}
           <div className={cx("exam-score-title")}>
             {viewScoreDetailData?.title}
           </div>
-          <div className={cx("exam-score-type")}>
-            {/* {viewScoreDetailData?.type} */}
-          </div>
+          <div className={cx("exam-score-type")}></div>
         </div>
         <div className={cx("exam-score-create-view-content")}>
           <div className={cx("exam-score-options")}>

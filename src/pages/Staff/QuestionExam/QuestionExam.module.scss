@@ -16,6 +16,7 @@
 
     .question-exam-header {
       width: 100%;
+      height: 79px;
       padding: 20px;
       display: flex;
       align-items: center;
@@ -66,7 +67,7 @@
 
     .question-exam-content {
       width: 100%;
-      flex-grow: 1;
+      height: calc(100% - 79px);
       padding: 20px;
       display: flex;
       flex-direction: column;
