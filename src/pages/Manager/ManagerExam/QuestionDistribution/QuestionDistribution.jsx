@@ -1,10 +1,10 @@
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
-import CreateExamScoreModal from "~/components/Staff/ExamScoreCreate/CreateExamScoreModal";
-import ExamScoreCreateView from "~/components/Staff/ExamScoreCreate/ExamScoreCreateView";
-import ExamScoreItem from "~/components/Staff/ExamScoreCreate/ExamScoreItem";
-import ExamScoreViewDetail from "~/components/Staff/ExamScoreCreate/ExamScoreViewDetail";
-import UploadFileScore from "~/components/Staff/ExamScoreCreate/UploadFileScore";
+import CreateQuestionDistributionModal from "~/components/Manager/ManageQuestionDistribution/CreateQuestionDistributionModal";
+import QuestionDistributionCreateView from "~/components/Manager/ManageQuestionDistribution/QuestionDistributionCreateView";
+import QuestionDistributionItem from "~/components/Manager/ManageQuestionDistribution/QuestionDistributionItem";
+import QuestionDistributionViewDetail from "~/components/Manager/ManageQuestionDistribution/QuestionDistributionViewDetail";
+import UploadFileQuestionDistribution from "~/components/Manager/ManageQuestionDistribution/UploadFileQuestionDistribution";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
@@ -12,6 +12,7 @@ import styles from "./QuestionDistribution.module.scss";
 const cx = classNames.bind(styles);
 const initialReadingWritingData = [];
 const initialMathData = [];
+
 function QuestionDistribution() {
   const [examScoreList, setExamScoreList] = useState([]);
   const [dataSource, setDataSource] = useState(initialReadingWritingData);
@@ -28,13 +29,13 @@ function QuestionDistribution() {
 
   const fetchExamScoreList = useCallback(async () => {
     try {
-      const response = await apiClient.get("/exam-scores", {
+      const response = await apiClient.get("/exam-semester/details", {
         params: {
           page: 1,
           pageSize: 0,
         },
       });
-      setExamScoreList(response.data.data.data);
+      setExamScoreList(response.data.data);
     } catch (error) {
       console.error("Failed to fetch exam score list:", error);
     }
@@ -47,7 +48,7 @@ function QuestionDistribution() {
   return (
     <>
       {isShowCreateExamScoreModal && (
-        <CreateExamScoreModal
+        <CreateQuestionDistributionModal
           examTitle={examTitle}
           examType={examType}
           setExamTitle={setExamTitle}
@@ -57,7 +58,7 @@ function QuestionDistribution() {
         />
       )}
       {isShowImportExamScore && (
-        <UploadFileScore
+        <UploadFileQuestionDistribution
           setDataSource={setDataSource}
           setMathData={setMathData}
           setRwData={setRwData}
@@ -66,7 +67,7 @@ function QuestionDistribution() {
         />
       )}
       {isShowExamScoreResult && (
-        <ExamScoreCreateView
+        <QuestionDistributionCreateView
           dataSource={dataSource}
           rwData={rwData}
           mathData={mathData}
@@ -80,31 +81,31 @@ function QuestionDistribution() {
       )}
 
       {isShowViewDetailScore && (
-        <ExamScoreViewDetail
+        <QuestionDistributionViewDetail
           fetchExamScoreList={fetchExamScoreList}
           viewScoreDetailData={viewScoreDetailData}
           setIsShowViewDetailScore={setIsShowViewDetailScore}
         />
       )}
       <PageLayout>
-        <div className={cx("create-score-wrapper")}>
-          <div className={cx("create-score-container")}>
-            <div className={cx("create-score-header")}>
-              <div className={cx("create-score-text")}>Exam Score</div>
+        <div className={cx("question-distribution-wrapper")}>
+          <div className={cx("question-distribution-container")}>
+            <div className={cx("question-distribution-header")}>
+              <div className={cx("question-distribution-text")}>Question distribution</div>
               <button
-                className={cx("create-score-import")}
+                className={cx("question-distribution-import")}
                 onClick={() => setIsShowCreateExamScoreModal(true)}
               >
                 <i
                   className={cx("fa-regular fa-plus-circle", "import-icon")}
                 ></i>
-                <span className={cx("import-text")}>New Score</span>
+                <span className={cx("import-text")}>New question distribution</span>
               </button>
             </div>
-            <div className={cx("create-score-content")}>
+            <div className={cx("question-distribution-content")}>
               {examScoreList?.length > 0 &&
                 examScoreList?.map((examScore, index) => (
-                  <ExamScoreItem
+                  <QuestionDistributionItem
                     key={examScore.id}
                     index={index + 1}
                     examScore={examScore}
