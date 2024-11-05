@@ -27,7 +27,7 @@ const TableViewDistribution = ({ dataSource }) => {
   }));
 
   return (
-    <div className="table-container">
+    <div className="table-dis-container">
       <Table
         bordered
         dataSource={transformedDataSource}

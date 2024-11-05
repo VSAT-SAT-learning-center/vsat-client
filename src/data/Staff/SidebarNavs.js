@@ -112,26 +112,26 @@ export const sidebarNavs = [
       // },
     ],
   },
-  {
-    id: 6,
-    icon: "fa-light fa-clipboard-check",
-    iconActive: "fa-regular fa-clipboard-check",
-    title: "Practice Test",
-    path: "/staff/practice",
-    show: true,
-    subNavs: [
-      {
-        id: 1,
-        title: "All Practices",
-        path: "/staff/practice/overview",
-      },
-      {
-        id: 2,
-        title: "Create Practice",
-        path: "/staff/practice/create",
-      },
-    ],
-  },
+  // {
+  //   id: 6,
+  //   icon: "fa-light fa-clipboard-check",
+  //   iconActive: "fa-regular fa-clipboard-check",
+  //   title: "Practice Test",
+  //   path: "/staff/practice",
+  //   show: true,
+  //   subNavs: [
+  //     {
+  //       id: 1,
+  //       title: "All Practices",
+  //       path: "/staff/practice/overview",
+  //     },
+  //     {
+  //       id: 2,
+  //       title: "Create Practice",
+  //       path: "/staff/practice/create",
+  //     },
+  //   ],
+  // },
   {
     id: 7,
     icon: "fa-light fa-users",

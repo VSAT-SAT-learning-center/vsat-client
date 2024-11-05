@@ -107,8 +107,6 @@ function ExamStructureViewDetail({
 
       // Ensure "Reading & Writing" appears first in the array
       grouped.sort((a) => (a.section === "Reading & Writing" ? -1 : 1));
-
-      console.log(grouped);
       setGroupedModules(grouped);
     }
   }, [viewStructureDetailData]);
@@ -238,7 +236,8 @@ function ExamStructureViewDetail({
                             </div>
                             <div className={cx("module-infor")}>
                               <div className={cx("module-title")}>
-                                {module.name} {module?.level ? `(${module?.level})` : ""}
+                                {module.name}{" "}
+                                {module?.level ? `(${module?.level})` : ""}
                               </div>
                               <div className={cx("module-number")}>
                                 {module.numberOfQuestion}

@@ -10,12 +10,12 @@ function ViewTableDistribution({
     <div className={cx("exam-score-create-view-wrapper")}>
       <div className={cx("exam-score-create-view-container")}>
         <div className={cx("exam-score-create-view-header")}>
-          <div
+          {/* <div
             className={cx("exam-score-back")}
             onClick={() => setIsShowDistributionDetail(false)}
           >
             <i className={cx("fa-regular fa-arrow-left")}></i>
-          </div>
+          </div> */}
           <div className={cx("exam-score-title")}>
             {distributionDetailData?.title}
           </div>

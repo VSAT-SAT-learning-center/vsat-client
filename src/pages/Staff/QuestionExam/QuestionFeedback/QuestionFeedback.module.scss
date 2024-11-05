@@ -31,7 +31,7 @@
 
     .question-feedback-content {
       width: 100%;
-      flex-grow: 1;
+      height: calc(100% - 79px);
       padding: 20px;
       display: flex;
       flex-direction: column;

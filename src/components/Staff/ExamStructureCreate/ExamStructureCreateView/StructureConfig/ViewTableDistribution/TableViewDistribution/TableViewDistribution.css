@@ -1,4 +1,4 @@
-.table-container {
+.table-dis-container {
   max-width: 1500px;
   margin: 0 20px;
 }
@@ -23,17 +23,6 @@
 
 .ant-table-body {
   overflow-y: scroll;
-}
-
-.ant-table-body::-webkit-scrollbar {
-  display: none;
-}
-
-.ant-table-body {
-  scrollbar-width: none;
-}
-.ant-table-body {
-  -ms-overflow-style: none;
 }
 
 .ant-table-tbody > tr > td {
