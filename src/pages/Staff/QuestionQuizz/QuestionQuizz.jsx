@@ -2,9 +2,9 @@ import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import QuestionQuizzItem from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzItem";
 import QuizzItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
-import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionQuizz.module.scss";
@@ -83,7 +83,7 @@ function QuestionQuizz() {
                   {questionList.map((question, index) => (
                     <QuestionQuizzItem
                       key={index}
-                      index={index}
+                      index={index + (currentPage - 1) * itemsPerPage}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
                       setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}

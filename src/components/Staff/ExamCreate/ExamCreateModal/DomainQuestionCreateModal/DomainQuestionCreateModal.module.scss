@@ -23,6 +23,20 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     background-color: $bg-primary-color;
 
+    .domain-create-question-modal-header {
+      width: 100%;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid $border-color;
+
+      .domain-name {
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+
     .domain-create-question-modal-search {
       width: 100%;
       padding: 20px;
@@ -59,10 +73,39 @@
         .search-select {
           user-select: none;
           width: 250px;
-          padding-left: 16px;
+          padding: 0 16px;
           font-size: 17px;
           border-left: 1px solid $border-color;
           .select-skill {
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .selected-text {
+              word-wrap: break-word;
+              white-space: normal;
+              overflow: hidden;
+              display: -webkit-box;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+            }
+
+            .icon-select {
+              font-size: 15px;
+            }
+          }
+        }
+
+        .search-select-level {
+          user-select: none;
+          width: 250px;
+          padding-left: 16px;
+          font-size: 17px;
+          border-left: 1px solid $border-color;
+          .select-level {
             cursor: pointer;
             width: 100%;
             display: flex;
@@ -91,7 +134,22 @@
           &::-webkit-scrollbar {
             display: none;
           }
-
+          .no-data-search-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            row-gap: 10px;
+            .empty-search-img {
+              width: 60px;
+              height: 60px;
+              object-fit: cover;
+            }
+            .empty-search-text {
+              font-size: 17px;
+              font-weight: 600;
+            }
+          }
           .question-search-container {
             cursor: pointer;
             width: 100%;
@@ -130,8 +188,8 @@
         .select-skill-dropdown-container {
           position: absolute;
           top: 54px;
-          right: 0;
-          width: 260px;
+          right: 265px;
+          width: 250px;
           height: fit-content;
           padding: 8px;
           border-radius: 0 0 8px 8px;
@@ -170,6 +228,50 @@
             }
           }
         }
+
+        .select-level-dropdown-container {
+          position: absolute;
+          top: 54px;
+          right: 0;
+          width: 250px;
+          height: fit-content;
+          padding: 8px;
+          border-radius: 0 0 8px 8px;
+          border: 1px solid $border-color;
+          background-color: $bg-primary-color;
+
+          .level-select-container {
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 5px;
+
+            &:hover {
+              background-color: #f4f4f4;
+            }
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+
+            .level-icon {
+              padding-right: 12px;
+            }
+
+            .level-text {
+              word-wrap: break-word;
+              white-space: normal;
+              overflow: hidden;
+              display: -webkit-box;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+            }
+          }
+        }
       }
     }
 
@@ -183,6 +285,44 @@
       }
       .domain-create-question-modal {
         width: 100%;
+      }
+    }
+
+    .domain-create-question-modal-footer {
+      width: 100%;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      column-gap: 10px;
+      border-top: 1px solid $border-color;
+
+      .preview-btn {
+        user-select: none;
+        padding: 6px 16px;
+        font-weight: 600;
+        border-radius: 10px;
+        color: $white-color;
+        border: 1px solid $primary-color;
+        background-color: $primary-color;
+        transition: 0.3s linear;
+
+        .preview-icon {
+          margin-right: 10px;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .disabled-btn {
+        cursor: pointer;
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 0.5;
+        }
       }
     }
   }

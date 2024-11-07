@@ -40,7 +40,7 @@ function QuestionQuizzEditModal({
           apiClient.get("/level"),
           apiClient.get("/section"),
           apiClient.get(`/domains/section/${questionData?.sectionId}`),
-          apiClient.get(`/skills/domain/${questionEdit?.skill.domain.id}`),
+          apiClient.get(`/skills/domainById/${questionEdit?.skill.domain.id}`),
         ]);
         setLevels(levelsResponse.data.data);
         setSections(sectionsResponse.data.data);
@@ -95,7 +95,7 @@ function QuestionQuizzEditModal({
     if (selectedDomainId) {
       try {
         const response = await apiClient.get(
-          `/skills/domain/${selectedDomainId}`
+          `/skills/domainById/${selectedDomainId}`
         );
         setSkills(response.data);
       } catch (error) {
