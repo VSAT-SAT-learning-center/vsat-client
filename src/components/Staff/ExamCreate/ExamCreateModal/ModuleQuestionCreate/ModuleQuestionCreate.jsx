@@ -3,11 +3,26 @@ import styles from "./ModuleQuestionCreate.module.scss";
 const cx = classNames.bind(styles);
 
 function ModuleQuestionCreate({
+  examData,
   moduleQuestion,
   setIsShowModalCreateQuestionModal,
+  setDomainData,
 }) {
-  const handleClickCreateDomainQuestion = () => {
+  const handleClickCreateDomainQuestion = (domainData) => {
+    const data = {
+      moduleId: moduleQuestion.id,
+      domain: domainData,
+    };
+    setDomainData(data);
     setIsShowModalCreateQuestionModal(true);
+  };
+  const getQuestionCount = (domainId) => {
+    const module = examData.examQuestions.find(
+      (examModule) => examModule.moduleId === moduleQuestion.id
+    );
+    if (!module) return 0;
+    const domain = module.domains.find((d) => d.domain === domainId);
+    return domain ? domain.questions.length : 0;
   };
   return (
     <div className={cx("module-question-container")}>
@@ -33,12 +48,12 @@ function ModuleQuestionCreate({
               <div className={cx("domain-title")}>{domain?.domain}</div>
               <div className={cx("domain-action")}>
                 <div className={cx("count-noq")}>
-                  0/{domain?.numberofquestion}
+                  {getQuestionCount(domain?.domain)}/{domain?.numberofquestion}
                 </div>
                 <div className={cx("create-action")}>
                   <button
                     className={cx("create-btn")}
-                    onClick={handleClickCreateDomainQuestion}
+                    onClick={() => handleClickCreateDomainQuestion(domain)}
                   >
                     <i
                       className={cx("fa-regular fa-plus-circle", "create-icon")}

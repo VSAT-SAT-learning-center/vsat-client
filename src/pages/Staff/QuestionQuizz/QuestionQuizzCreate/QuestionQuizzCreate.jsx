@@ -85,13 +85,13 @@ function QuestionQuizzCreate() {
           setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
         />
       )}
-      
+
       {isShowUploadFileModal && (
-        <UploadFileModal 
-        fetchQuestions={fetchQuestions}
-        setIsShowUploadFileModal={setIsShowUploadFileModal} 
-        setQuestionListEror={setQuestionListEror}
-        setIsShowQuestionListError={setIsShowQuestionListError}
+        <UploadFileModal
+          fetchQuestions={fetchQuestions}
+          setIsShowUploadFileModal={setIsShowUploadFileModal}
+          setQuestionListEror={setQuestionListEror}
+          setIsShowQuestionListError={setIsShowQuestionListError}
         />
       )}
       {isShowUpdateQuestionModal && (
@@ -158,19 +158,19 @@ function QuestionQuizzCreate() {
                 <div className={cx("question-quizz-create-list")}>
                   {questionList.map((question, index) => (
                     <div
-                    className={cx("question-exam-create-item-container")}
-                    key={index}
-                  >
-                    <QuestionQuizzItem
-                      index={index + (currentPage - 1) * itemsPerPage}
-                      question={question}
-                      setQuestionPreview={setQuestionPreview}
-                      setQuestionEdit={setQuestionEdit}
-                      setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
-                      setIsShowUpdateQuestionModal={
-                        setIsShowUpdateQuestionModal
-                      }
-                    />
+                      className={cx("question-exam-create-item-container")}
+                      key={index}
+                    >
+                      <QuestionQuizzItem
+                        index={index + (currentPage - 1) * itemsPerPage}
+                        question={question}
+                        setQuestionPreview={setQuestionPreview}
+                        setQuestionEdit={setQuestionEdit}
+                        setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
+                        setIsShowUpdateQuestionModal={
+                          setIsShowUpdateQuestionModal
+                        }
+                      />
                     </div>
                   ))}
                 </div>
@@ -178,17 +178,17 @@ function QuestionQuizzCreate() {
                 <NoQuestionData />
               )}
               {questionList?.length > 0 && (
-              <div className={cx("pagination-controls")}>
-                <Pagination
-                  align="center"
-                  current={currentPage}
-                  pageSize={itemsPerPage}
-                  total={totalItems}
-                  onChange={handlePageChange}
-                  showSizeChanger={false}
-                  showLessItems={true}
-                />
-              </div>
+                <div className={cx("pagination-controls")}>
+                  <Pagination
+                    align="center"
+                    current={currentPage}
+                    pageSize={itemsPerPage}
+                    total={totalItems}
+                    onChange={handlePageChange}
+                    showSizeChanger={false}
+                    showLessItems={true}
+                  />
+                </div>
               )}
             </div>
           </div>
