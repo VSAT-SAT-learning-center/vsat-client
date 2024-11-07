@@ -66,7 +66,7 @@ function ModuleQuestionCreate({
           </div>
         ))}
       </div>
-      <div className={cx("module-question-footer")}>
+      {/* <div className={cx("module-question-footer")}>
         <button className={cx("action-btn", "upload-btn")}>
           <i
             className={cx("fa-light fa-arrow-up-from-bracket", "action-icon")}
@@ -77,7 +77,7 @@ function ModuleQuestionCreate({
           <i className={cx("fa-light fa-eye", "action-icon")}></i>
           <span className={cx("action-text")}>Preview</span>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

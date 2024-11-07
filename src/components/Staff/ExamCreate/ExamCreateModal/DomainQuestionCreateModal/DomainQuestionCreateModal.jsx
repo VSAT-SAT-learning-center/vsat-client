@@ -15,6 +15,8 @@ function DomainQuestionCreateModal({
   setExamData,
   setIsShowModalCreateQuestionModal,
 }) {
+  console.log(examData);
+
   const [isShowSkillSelect, setIsShowSkillSelect] = useState(false);
   const [isShowLevelSelect, setIsShowLevelSelect] = useState(false);
   const [skillSelect, setSkillSelect] = useState("Select skill");

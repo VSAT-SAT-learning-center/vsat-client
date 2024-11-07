@@ -177,80 +177,54 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: "array" });
 
-        // Transform `structureModuleQuestions` to match `examData` format
-        const transformedModules = structureModuleQuestions.map((module) => {
-          return {
-            moduleId: module.id,
-            domains: module.domaindistribution.map((domain) => ({
-              domain: domain.domain,
-              questions: [],
-              numberOfQuestion: domain.numberofquestion,
-            })),
-          };
-        });
+        const transformedModules = structureModuleQuestions.map((module) => ({
+          moduleId: module.id,
+          domains: module.domaindistribution.map((domain) => ({
+            domain: domain.domain,
+            questions: [],
+            numberOfQuestion: domain.numberofquestion,
+          })),
+        }));
 
-        const questionContents = [];
+        let questionContents = [];
 
-        // Process each sheet in the uploaded Excel file
         workbook.SheetNames.forEach((sheetName) => {
           const worksheet = workbook.Sheets[sheetName];
           const jsonSheetData = XLSX.utils.sheet_to_json(worksheet, {
             header: 1,
           });
 
-          // Map the Excel rows to questions and assign to the corresponding domains
           jsonSheetData.slice(1).forEach((row) => {
-            const [
-              domainName,
-              content,
-              explain,
-              level,
-              section,
-              skill,
-              isSingleChoice,
-              correctAnswer,
-              ...answers
-            ] = row;
+            const [domainName, content] = row;
 
-            questionContents.push(content);
+            if (content && content.trim() !== "") {
+              questionContents.push(content);
+            }
 
-            // Find the module and domain based on the domain name
             transformedModules.forEach((module) => {
               const domain = module.domains.find(
                 (d) => d.domain === domainName
               );
 
-              // Only add questions up to the specified `numberOfQuestion`
-              if (domain && domain.questions.length < domain.numberOfQuestion) {
+              if (
+                domain &&
+                domain.questions.length < domain.numberOfQuestion &&
+                content &&
+                content.trim() !== ""
+              ) {
                 domain.questions.push({
-                  content: content || "",
-                  explain: explain || "",
-                  level: level || "",
-                  section: section || "",
-                  skill: skill || "",
-                  isSingleChoice: Boolean(isSingleChoice),
-                  correctAnswer: correctAnswer || "",
-                  answers: answers.filter((ans) => ans),
+                  content: content,
                 });
               }
             });
           });
         });
+
+        questionContents = Array.from(
+          new Set(questionContents.filter(Boolean))
+        );
+
         fetchQuestionsFromDatabase(questionContents, transformedModules);
-        // const final = transformedModules.map((module) => ({
-        //   moduleId: module.moduleId,
-        //   domains: module.domains.map((domain) => ({
-        //     domain: domain.domain,
-        //     questions: domain.questions,
-        //   })),
-        // }));
-
-        // console.log(final);
-
-        // setExamData((prevExamData) => ({
-        //   ...prevExamData,
-        //   examQuestions: final,
-        // }));
       };
       reader.readAsArrayBuffer(file);
     }
@@ -261,46 +235,30 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
     transformedModules
   ) => {
     try {
-      console.log(Array.from(new Set(questionContents)));
-
-      // const response = await apiClient.post('/questions/fetch-by-content', {
-      //   contents: Array.from(new Set(questionContents)), // Ensure unique contents
-      // });
-
-      // const questionsFromDB = response.data;
-
-      // const final = transformedModules.map((module) => ({
-      //   moduleId: module.moduleId,
-      //   domains: module.domains.map((domain) => ({
-      //     domain: domain.domain,
-      //     questions: domain.questions.map((question) => {
-      //       // Find a matching question from the DB by content
-      //       const dbQuestion = questionsFromDB.find(
-      //         (q) => q.content === question.content
-      //       );
-      //       return dbQuestion
-      //         ? { ...question, questionID: dbQuestion.questionID, ...dbQuestion } // Add questionID and merge details
-      //         : question; // Keep question as-is if not found in DB
-      //     }),
-      //   })),
-      // }));
+      const response = await apiClient.post("/questions/fetchByContent", {
+        contents: questionContents,
+      });
+      const questionsFromDB = response.data;
+      console.log(questionsFromDB);
 
       const final = transformedModules.map((module) => ({
         moduleId: module.moduleId,
         domains: module.domains.map((domain) => ({
           domain: domain.domain,
-          questions: domain.questions,
+          questions: domain.questions
+            .map((question) => {
+              const dbQuestion = questionsFromDB.find(
+                (q) => q.plainContent === question.content
+              );
+              return dbQuestion ? { ...dbQuestion } : null;
+            })
+            .filter(Boolean),
         })),
       }));
 
       console.log(final);
 
-      setExamData((prevExamData) => ({
-        ...prevExamData,
-        examQuestions: final,
-      }));
-
-      // Update examData with final data
+      // Update examData with fully populated questions
       setExamData((prevExamData) => ({
         ...prevExamData,
         examQuestions: final,
