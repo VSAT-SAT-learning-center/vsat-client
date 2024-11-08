@@ -2,13 +2,33 @@ import classNames from "classnames/bind";
 import styles from "./ModuleConfig.module.scss";
 const cx = classNames.bind(styles);
 
-function ModuleConfig({ structureModule }) {
-  const handleChangeTimeModule = (e) => {
+function ModuleConfig({ structureModule, setExamData }) {
+  const handleChangeTimeModule = (e, moduleData) => {
     let value = parseInt(e.target.value, 10);
-    if (value > 60) value = 60;
+    if (structureModule.section === "Math" && value > 35) {
+      value = 35;
+    } else if (structureModule.section === "Reading & Writing" && value > 32) {
+      value = 32;
+    }
+
     if (value < 0) value = 0;
     e.target.value = value;
+
+    setExamData((prevExamData) => {
+      const updatedModuleConfig = prevExamData.moduleConfigs.map((module) => {
+        if (module.moduleId === moduleData.id) {
+          return { ...module, time: value };
+        }
+        return module;
+      });
+
+      return {
+        ...prevExamData,
+        moduleConfigs: updatedModuleConfig,
+      };
+    });
   };
+
   return (
     <div className={cx("module-section-config-container")}>
       <div className={cx("module-section-config-header")}>
@@ -17,7 +37,7 @@ function ModuleConfig({ structureModule }) {
         </div>
         <div className={cx("section-infor")}>
           <div className={cx("section-name")}>{structureModule.section}</div>
-          <div className={cx("section-total-time")}>90</div>
+          {/* <div className={cx("section-total-time")}>90</div> */}
         </div>
       </div>
       <div className={cx("module-section-config-content")}>
@@ -39,7 +59,7 @@ function ModuleConfig({ structureModule }) {
                   max="60"
                   placeholder="mins"
                   className={cx("time-input")}
-                  onChange={handleChangeTimeModule}
+                  onChange={(e) => handleChangeTimeModule(e, module)}
                 />
               </div>
             </div>

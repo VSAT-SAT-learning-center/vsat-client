@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import * as XLSX from "xlsx";
 import apiClient from "~/services/apiService";
 import { generateExcelTemplate } from "~/utils/generateExcelTemplate";
@@ -36,6 +37,12 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
     description: "",
     examStructureId: "",
     examTypeId: "",
+    moduleConfigs: [
+      {
+        moduleId: "",
+        time: 0,
+      },
+    ],
     examQuestions: [
       {
         moduleId: "",
@@ -131,9 +138,13 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
         return levelOrder[a.level] - levelOrder[b.level];
       });
     });
-
     setStructureModuleConfigs(mergedModules);
     setExamStructureSelected(selectedStructure);
+
+    const newModuleConfigs = sortedModules.map((module) => ({
+      moduleId: module.id,
+      time: 0, // Default time value, you can adjust as needed
+    }));
 
     const newExamQuestions = sortedModules.map((module) => ({
       moduleId: module.id,
@@ -145,6 +156,7 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
 
     setExamData((prevExamData) => ({
       ...prevExamData,
+      moduleConfigs: newModuleConfigs,
       examQuestions: newExamQuestions,
     }));
 
@@ -177,8 +189,12 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: "array" });
 
+        // Transform modules with a focus on detailed mapping
         const transformedModules = structureModuleQuestions.map((module) => ({
           moduleId: module.id,
+          moduleName: module.name, // Module name
+          moduleLevel: module.level, // Module level
+          section: module.section, // Section
           domains: module.domaindistribution.map((domain) => ({
             domain: domain.domain,
             questions: [],
@@ -188,24 +204,54 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
 
         let questionContents = [];
 
+        // Process each sheet in the workbook
         workbook.SheetNames.forEach((sheetName) => {
           const worksheet = workbook.Sheets[sheetName];
           const jsonSheetData = XLSX.utils.sheet_to_json(worksheet, {
             header: 1,
           });
 
-          jsonSheetData.slice(1).forEach((row) => {
-            const [domainName, content] = row;
+          // Extract details from the sheet name
+          const moduleMatch = sheetName.match(/Module (\d+)/);
+          const levelMatch = sheetName.match(/Easy|Hard/);
+          const sectionMatch = sheetName.match(/\(.*?\)/);
 
-            if (content && content.trim() !== "") {
-              questionContents.push(content);
-            }
+          const moduleName = moduleMatch ? `Module ${moduleMatch[1]}` : null;
+          const moduleLevel = levelMatch ? levelMatch[0] : null;
+          let section = sectionMatch
+            ? sectionMatch[0].replace(/[()]/g, "").trim()
+            : null;
 
-            transformedModules.forEach((module) => {
+          // Map shorthand section names to full names
+          if (section === "RW") {
+            section = "Reading & Writing";
+          } else if (section === "Math") {
+            section = "Math";
+          }
+
+          // Find the module using the extracted details
+          const module = transformedModules.find(
+            (m) =>
+              m.moduleName === moduleName &&
+              (m.moduleLevel === moduleLevel || !moduleLevel) &&
+              m.section === section
+          );
+
+          if (module) {
+            jsonSheetData.slice(1).forEach((row) => {
+              const [domainName, content] = row;
+
+              // Only add non-empty content to questionContents
+              if (content && content.trim() !== "") {
+                questionContents.push(content);
+              }
+
+              // Find the matching domain within the current module
               const domain = module.domains.find(
                 (d) => d.domain === domainName
               );
 
+              // Only add questions up to the specified number for each domain
               if (
                 domain &&
                 domain.questions.length < domain.numberOfQuestion &&
@@ -217,13 +263,14 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                 });
               }
             });
-          });
+          }
         });
 
         questionContents = Array.from(
           new Set(questionContents.filter(Boolean))
         );
 
+        // Fetch questions from the database
         fetchQuestionsFromDatabase(questionContents, transformedModules);
       };
       reader.readAsArrayBuffer(file);
@@ -239,7 +286,6 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
         contents: questionContents,
       });
       const questionsFromDB = response.data;
-      console.log(questionsFromDB);
 
       const final = transformedModules.map((module) => ({
         moduleId: module.moduleId,
@@ -255,16 +301,19 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
             .filter(Boolean),
         })),
       }));
-
-      console.log(final);
-
-      // Update examData with fully populated questions
       setExamData((prevExamData) => ({
         ...prevExamData,
         examQuestions: final,
       }));
+
+      toast.success("File uploaded successfully!", {
+        autoClose: 1000,
+      });
     } catch (error) {
       console.error("Error fetching questions from database:", error);
+      toast.error("Failed to upload file. Please try again.", {
+        autoClose: 1000,
+      });
     }
   };
 
@@ -547,11 +596,13 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                   {structureModuleConfigs?.map((structureModule, index) => (
                     <ModuleConfig
                       key={index}
+                      setExamData={setExamData}
                       structureModule={structureModule}
                     />
                   ))}
                 </div>
               </div>
+              {/* Download template */}
               <div className={cx("download-template-container")}>
                 <div className={cx("download-template-header")}>
                   <div className={cx("download-template-title")}>
@@ -564,7 +615,10 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                       })}
                       disabled={structureModuleQuestions?.length <= 0}
                       onClick={() =>
-                        generateExcelTemplate(structureModuleQuestions)
+                        generateExcelTemplate(
+                          structureModuleQuestions,
+                          examStructureSelected
+                        )
                       }
                     >
                       <i
