@@ -1,7 +1,13 @@
 import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 
-export const generateExcelTemplate = (modulesConfig) => {
+export const generateExcelTemplate = (modulesConfig, examStructureSelected) => {
+  console.log(examStructureSelected);
+
+  const structureNameWithoutSpaces =
+    examStructureSelected.structurename.replace(/\s+/g, "");
+  let fileName = `${structureNameWithoutSpaces + "Template"}.xlsx`;
+
   const workbook = XLSX.utils.book_new();
 
   modulesConfig.forEach((module) => {
@@ -30,5 +36,5 @@ export const generateExcelTemplate = (modulesConfig) => {
 
   const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
   const data = new Blob([excelBuffer], { type: "application/octet-stream" });
-  saveAs(data, "ExamTemplate.xlsx");
+  saveAs(data, fileName);
 };
