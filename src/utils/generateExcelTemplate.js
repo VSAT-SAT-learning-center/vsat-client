@@ -2,8 +2,6 @@ import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 
 export const generateExcelTemplate = (modulesConfig, examStructureSelected) => {
-  console.log(examStructureSelected);
-
   const structureNameWithoutSpaces =
     examStructureSelected.structurename.replace(/\s+/g, "");
   let fileName = `${structureNameWithoutSpaces + "Template"}.xlsx`;

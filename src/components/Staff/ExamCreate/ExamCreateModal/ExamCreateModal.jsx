@@ -2,18 +2,18 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import * as XLSX from "xlsx";
+import Loader from "~/components/General/Loader";
 import apiClient from "~/services/apiService";
 import { generateExcelTemplate } from "~/utils/generateExcelTemplate";
 import ViewTableDistribution from "../../ExamStructureCreate/ExamStructureCreateView/StructureConfig/ViewTableDistribution";
 import ViewTableScore from "../../ExamStructureCreate/ExamStructureCreateView/StructureConfig/ViewTableScore";
 import DomainQuestionCreateModal from "./DomainQuestionCreateModal";
 import styles from "./ExamCreateModal.module.scss";
-import ModuleConfig from "./ModuleConfig";
 import ModuleQuestionCreate from "./ModuleQuestionCreate";
 const cx = classNames.bind(styles);
 function ExamCreateModal({ setIsShowCreateExamModal }) {
+  const [loading, setLoading] = useState(false);
   const [isShowGeneralContent, setIsShowGeneralContent] = useState(true);
-  const [isShowAdvancedSetting, setIsShowAdvancedSetting] = useState(false);
   const [examStructures, setExamStructures] = useState([]);
   const [examTypes, setExamTypes] = useState([]);
   const [examStructureSelected, setExamStructureSelected] = useState(null);
@@ -27,7 +27,6 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
     isShowExamQuestionDistributionTable,
     setIsShowExamQuestionDistributionTable,
   ] = useState(false);
-  const [structureModuleConfigs, setStructureModuleConfigs] = useState([]);
   const [structureModuleQuestions, setStructureModuleQuestions] = useState([]);
   const [isShowDomainQuestionCreateModal, setIsShowModalCreateQuestionModal] =
     useState(false);
@@ -37,12 +36,6 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
     description: "",
     examStructureId: "",
     examTypeId: "",
-    moduleConfigs: [
-      {
-        moduleId: "",
-        time: 0,
-      },
-    ],
     examQuestions: [
       {
         moduleId: "",
@@ -84,12 +77,6 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
   }, []);
   const toggleGeneralContent = () => {
     setIsShowGeneralContent(!isShowGeneralContent);
-    if (!isShowGeneralContent) setIsShowAdvancedSetting(false);
-  };
-
-  const toggleAdvancedSetting = () => {
-    setIsShowAdvancedSetting(!isShowAdvancedSetting);
-    if (!isShowAdvancedSetting) setIsShowGeneralContent(false);
   };
 
   const handleChangeExamStructure = async (e) => {
@@ -113,38 +100,7 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
     });
 
     setStructureModuleQuestions(sortedModules);
-
-    // Group modules by section
-    const mergedModules = selectedStructure.moduletype.reduce((acc, module) => {
-      const section = acc.find((item) => item.section === module.section);
-      if (section) {
-        section.modules.push(module);
-      } else {
-        acc.push({ section: module.section, modules: [module] });
-      }
-      return acc;
-    }, []);
-
-    // Sort merged modules by section order, then by module name and level
-    mergedModules.sort(
-      (a, b) => sectionOrder[a.section] - sectionOrder[b.section]
-    );
-    mergedModules.forEach((section) => {
-      section.modules.sort((a, b) => {
-        const moduleNumberA = parseInt(a.name.split(" ")[1], 10);
-        const moduleNumberB = parseInt(b.name.split(" ")[1], 10);
-        if (moduleNumberA !== moduleNumberB)
-          return moduleNumberA - moduleNumberB;
-        return levelOrder[a.level] - levelOrder[b.level];
-      });
-    });
-    setStructureModuleConfigs(mergedModules);
     setExamStructureSelected(selectedStructure);
-
-    const newModuleConfigs = sortedModules.map((module) => ({
-      moduleId: module.id,
-      time: 0, // Default time value, you can adjust as needed
-    }));
 
     const newExamQuestions = sortedModules.map((module) => ({
       moduleId: module.id,
@@ -156,7 +112,6 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
 
     setExamData((prevExamData) => ({
       ...prevExamData,
-      moduleConfigs: newModuleConfigs,
       examQuestions: newExamQuestions,
     }));
 
@@ -184,6 +139,7 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
+      setLoading(true);
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = new Uint8Array(e.target.result);
@@ -241,9 +197,14 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
             jsonSheetData.slice(1).forEach((row) => {
               const [domainName, content] = row;
 
-              // Only add non-empty content to questionContents
-              if (content && content.trim() !== "") {
-                questionContents.push(content);
+              // Clean up content by removing extra spaces between words and trimming leading/trailing spaces
+              const cleanedContent = content
+                ? content.replace(/\s+/g, " ").trim()
+                : "";
+
+              // Only add non-empty cleaned content to questionContents
+              if (cleanedContent) {
+                questionContents.push(cleanedContent);
               }
 
               // Find the matching domain within the current module
@@ -255,11 +216,10 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
               if (
                 domain &&
                 domain.questions.length < domain.numberOfQuestion &&
-                content &&
-                content.trim() !== ""
+                cleanedContent
               ) {
                 domain.questions.push({
-                  content: content,
+                  content: cleanedContent,
                 });
               }
             });
@@ -271,7 +231,10 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
         );
 
         // Fetch questions from the database
-        fetchQuestionsFromDatabase(questionContents, transformedModules);
+        fetchQuestionsFromDatabase(
+          questionContents,
+          transformedModules
+        ).finally(() => setLoading(false));
       };
       reader.readAsArrayBuffer(file);
     }
@@ -282,6 +245,7 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
     transformedModules
   ) => {
     try {
+      setLoading(true);
       const response = await apiClient.post("/questions/fetchByContent", {
         contents: questionContents,
       });
@@ -301,6 +265,7 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
             .filter(Boolean),
         })),
       }));
+
       setExamData((prevExamData) => ({
         ...prevExamData,
         examQuestions: final,
@@ -314,15 +279,48 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
       toast.error("Failed to upload file. Please try again.", {
         autoClose: 1000,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleCreateExam = () => {
-    console.log(examData);
+  const handleCreateExam = async () => {
+    try {
+      setLoading(true);
+      const simplifiedExamQuestions = examData.examQuestions.map((module) => ({
+        moduleId: module.moduleId,
+        domains: module.domains.map((domain) => ({
+          domain: domain.domain,
+          questions: domain.questions.map((q) => ({
+            id: q.id,
+          })),
+        })),
+      }));
+
+      const payload = {
+        ...examData,
+        examQuestions: simplifiedExamQuestions,
+      };
+      console.log(payload);
+
+      await apiClient.post("/exams", payload);
+      setIsShowCreateExamModal(false);
+      toast.success("Exam created successfully!", {
+        autoClose: 1000,
+      });
+    } catch (error) {
+      console.error("Error while creating exam:", error);
+      toast.error("Failed to create exam. Please try again.", {
+        autoClose: 1000,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
+      {loading && <Loader />}
       {isShowExamScoreTable && (
         <ViewTableScore
           viewScoreDetailData={examScoreSelected}
@@ -561,45 +559,6 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                       </div>
                     </div>
                   )}
-                </div>
-              </div>
-              {/* Module config time */}
-              <div className={cx("advanced-setting-container")}>
-                <div
-                  className={cx("advanced-setting-header")}
-                  onClick={toggleAdvancedSetting}
-                >
-                  <div className={cx("advanced-setting-title")}>
-                    Advanced settings
-                  </div>
-                  <div
-                    className={cx(
-                      "show-icon",
-                      isShowAdvancedSetting ? "rotate" : ""
-                    )}
-                  >
-                    <i className={cx("fa-solid fa-chevron-up")}></i>
-                  </div>
-                </div>
-                <div
-                  className={cx(
-                    "advanced-setting-content",
-                    isShowAdvancedSetting ? "show" : ""
-                  )}
-                >
-                  <div className={cx("module-tile-container")}>
-                    <div className={cx("module-time-icon")}>
-                      <i className={cx("fa-light fa-clock")}></i>
-                    </div>
-                    <div className={cx("module-time-title")}>Molude time</div>
-                  </div>
-                  {structureModuleConfigs?.map((structureModule, index) => (
-                    <ModuleConfig
-                      key={index}
-                      setExamData={setExamData}
-                      structureModule={structureModule}
-                    />
-                  ))}
                 </div>
               </div>
               {/* Download template */}

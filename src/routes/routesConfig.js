@@ -61,6 +61,7 @@ import TeacherSettings from "~/pages/Teacher/TeacherSettings";
 import QuestionDistribution from "../pages/Manager/ManagerExam/QuestionDistribution";
 import FeedbackQuestionExam from "../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam";
 import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz";
+import ExamFeedback from "~/pages/Staff/Exam/ExamFeedback";
 
 const routesConfig = [
   // Landing page routes
@@ -172,6 +173,7 @@ const routesConfig = [
   { path: "/staff/exams/overview", component: Exam, protected: true },
   { path: "/staff/exams/create", component: ExamCreate, protected: true },
   { path: "/staff/exams/structure", component: ExamStructure, protected: true },
+  { path: "/staff/exams/feedback", component: ExamFeedback, protected: true },
 
   // Staff practice routes
   { path: "/staff/practice/overview", component: Practice, protected: true },

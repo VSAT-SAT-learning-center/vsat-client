@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import Loader from "~/components/General/Loader";
 import apiClient from "~/services/apiService";
 import { calculateDomainQuestions } from "~/utils/caculateQuestionsV2";
 import styles from "./ExamStructureCreateView.module.scss";
@@ -9,17 +10,20 @@ import OverviewConfig from "./OverviewConfig";
 import SectionConfig from "./SectionConfig";
 import StepProgressBar from "./StepProgressBar";
 import StructureConfig from "./StructureConfig";
+import TimeConfig from "./TimeConfig";
 const cx = classNames.bind(styles);
 
 function ExamStructureCreateView({
   setIsShowExamStructureCreateView,
   fetchExamStructureList,
 }) {
+  const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [
     "Structure Config",
     "Section Config",
     "Module Config",
+    "Time Config",
     "Overview Config",
   ];
   const [examStructureData, setExamStructureData] = useState({
@@ -238,6 +242,8 @@ function ExamStructureCreateView({
   };
 
   const handleFinish = async () => {
+    console.log(examStructureData);
+    setLoading(true);
     try {
       await apiClient.post("/exam-structures", examStructureData);
       toast.success("Exam Structure created successfully!", {
@@ -260,6 +266,8 @@ function ExamStructureCreateView({
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -302,6 +310,13 @@ function ExamStructureCreateView({
             domainDistributionConfigs={domainDistributionConfigs}
           />
         );
+      case "Time Config":
+        return (
+          <TimeConfig
+            examStructureData={examStructureData}
+            setExamStructureData={setExamStructureData}
+          />
+        );
       case "Overview Config":
         return (
           <OverviewConfig
@@ -315,40 +330,45 @@ function ExamStructureCreateView({
     }
   };
   return (
-    <div className={cx("exam-structure-create-view-wrapper")}>
-      <div className={cx("exam-structure-create-view-container")}>
-        <div className={cx("exam-structure-create-view-header")}>
-          <div
-            className={cx("structure-close")}
-            onClick={() => setIsShowExamStructureCreateView(false)}
-          >
-            <i className={cx("fa-regular fa-arrow-left")}></i>
-          </div>
-          <div className={cx("structure-title")}>Create Exam Structure</div>
-          <div className={cx("structure-empty")}></div>
-        </div>
-        <div className={cx("exam-structure-create-view-content")}>
-          <div className={cx("progress-bar-container")}>
-            <StepProgressBar steps={steps} currentStep={currentStep} />
-          </div>
-          <div className={cx("exam-structure-content-container")}>
-            {renderStepContent()}
-          </div>
-          <div className={cx("exam-structure-content-action")}>
-            <button
-              className={cx("back-btn", { "disabled-btn": currentStep === 0 })}
-              onClick={prevStep}
-              disabled={currentStep === 0}
+    <>
+      {loading && <Loader />}
+      <div className={cx("exam-structure-create-view-wrapper")}>
+        <div className={cx("exam-structure-create-view-container")}>
+          <div className={cx("exam-structure-create-view-header")}>
+            <div
+              className={cx("structure-close")}
+              onClick={() => setIsShowExamStructureCreateView(false)}
             >
-              Back
-            </button>
-            <button className={cx("continue-btn")} onClick={nextStep}>
-              {currentStep === steps.length - 1 ? "Finish" : "Continue"}
-            </button>
+              <i className={cx("fa-regular fa-arrow-left")}></i>
+            </div>
+            <div className={cx("structure-title")}>Create Exam Structure</div>
+            <div className={cx("structure-empty")}></div>
+          </div>
+          <div className={cx("exam-structure-create-view-content")}>
+            <div className={cx("progress-bar-container")}>
+              <StepProgressBar steps={steps} currentStep={currentStep} />
+            </div>
+            <div className={cx("exam-structure-content-container")}>
+              {renderStepContent()}
+            </div>
+            <div className={cx("exam-structure-content-action")}>
+              <button
+                className={cx("back-btn", {
+                  "disabled-btn": currentStep === 0,
+                })}
+                onClick={prevStep}
+                disabled={currentStep === 0}
+              >
+                Back
+              </button>
+              <button className={cx("continue-btn")} onClick={nextStep}>
+                {currentStep === steps.length - 1 ? "Finish" : "Continue"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

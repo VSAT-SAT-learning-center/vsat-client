@@ -126,7 +126,7 @@ function StructureConfig({
     const selectedDistribution = questionDistributions.find(
       (distribution) => distribution.id === distributionId
     );
-    setDistributionQuestionPick(selectedDistribution.title);
+    setDistributionQuestionPick(selectedDistribution?.title);
     setExamStructureData((prev) => ({
       ...prev,
       examSemesterId: distributionId,

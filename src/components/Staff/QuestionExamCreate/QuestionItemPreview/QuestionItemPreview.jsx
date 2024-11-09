@@ -28,10 +28,10 @@ function QuestionItemPreview({
             <i className={cx("fa-regular fa-arrow-left")}></i>
           </div>
           <div className={cx("preview-section")}>
-            {questionPreviewData?.section.name}
+            {questionPreviewData?.section.name || questionPreviewData?.section}
           </div>
           <div className={cx("preview-level")}>
-            {questionPreviewData?.level.name}
+            {questionPreviewData?.level.name || questionPreviewData?.level}
           </div>
         </div>
         <div className={cx("question-create-preview-content")}>
@@ -39,21 +39,12 @@ function QuestionItemPreview({
           <div className={cx("preview-content-container")}>
             <div className={cx("preview-content-question")}>
               {questionPreviewData?.isSingleChoiceQuestion === true ? (
-                questionPreviewData?.section.name === "Math" ? (
-                  <div
-                    className={cx("question-rerender-content")}
-                    dangerouslySetInnerHTML={{
-                      __html: renderMathAndText(questionPreviewData?.content),
-                    }}
-                  />
-                ) : (
-                  <div
-                    className={cx("question-rerender-content")}
-                    dangerouslySetInnerHTML={{
-                      __html: questionPreviewData?.content,
-                    }}
-                  ></div>
-                )
+                <div
+                  className={cx("question-rerender-content")}
+                  dangerouslySetInnerHTML={{
+                    __html: renderMathAndText(questionPreviewData?.content),
+                  }}
+                />
               ) : (
                 <div className={cx("preview-answer-example")}>
                   <div
@@ -93,40 +84,23 @@ function QuestionItemPreview({
                       <span className={cx("answer-label")}>
                         {String.fromCharCode(65 + index) + ":"}
                       </span>
-                      {questionPreviewData?.section.name === "Math" ? (
-                        <span
-                          className={cx("answer-rerender-content")}
-                          dangerouslySetInnerHTML={{
-                            __html: renderMathAndText(answer.text),
-                          }}
-                        ></span>
-                      ) : (
-                        <span
-                          className={cx("answer-rerender-content")}
-                          dangerouslySetInnerHTML={{ __html: answer.text }}
-                        ></span>
-                      )}
+                      <span
+                        className={cx("answer-rerender-content")}
+                        dangerouslySetInnerHTML={{
+                          __html: renderMathAndText(answer.text),
+                        }}
+                      ></span>
                     </div>
                   ))}
                 </div>
               ) : (
                 <div className={cx("answer-text-input-container")}>
-                  {questionPreviewData?.section.name === "Math" ? (
-                    <div
-                      className={cx("text-input-rerender-content")}
-                      dangerouslySetInnerHTML={{
-                        __html: renderMathAndText(questionPreviewData?.content),
-                      }}
-                    ></div>
-                  ) : (
-                    <div
-                      className={cx("text-input-rerender-content")}
-                      dangerouslySetInnerHTML={{
-                        __html: questionPreviewData?.content,
-                      }}
-                    ></div>
-                  )}
-
+                  <div
+                    className={cx("text-input-rerender-content")}
+                    dangerouslySetInnerHTML={{
+                      __html: renderMathAndText(questionPreviewData?.content),
+                    }}
+                  ></div>
                   <div className={cx("text-input-content")}>
                     <input
                       type="text"
@@ -139,21 +113,12 @@ function QuestionItemPreview({
               )}
               <div className={cx("explain-answer-container")}>
                 <div className={cx("explain-text")}>Explaination: </div>
-                {questionPreviewData?.section.name === "Math" ? (
-                  <div
-                    className={cx("explain-rerender-content")}
-                    dangerouslySetInnerHTML={{
-                      __html: renderMathAndText(questionPreviewData?.explain),
-                    }}
-                  />
-                ) : (
-                  <div
-                    className={cx("explain-rerender-content")}
-                    dangerouslySetInnerHTML={{
-                      __html: questionPreviewData?.explain,
-                    }}
-                  ></div>
-                )}
+                <div
+                  className={cx("explain-rerender-content")}
+                  dangerouslySetInnerHTML={{
+                    __html: renderMathAndText(questionPreviewData?.explain),
+                  }}
+                />
               </div>
             </div>
           </div>

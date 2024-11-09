@@ -539,6 +539,7 @@ function ModuleConfig({
                           type="number"
                           value={domain.numberOfQuestion}
                           className={cx("number-input")}
+                          autoFocus={index === 0} 
                           onChange={(e) =>
                             moduleData.name === "Module 1" &&
                             handleQuestionChange(

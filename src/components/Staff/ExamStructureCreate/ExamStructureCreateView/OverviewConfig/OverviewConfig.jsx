@@ -8,7 +8,6 @@ function OverviewConfig({
   examScorePick,
   distributionQuestionPick,
 }) {
-  console.log(examStructureData)
   const [groupedModules, setGroupedModules] = useState([]);
 
   useEffect(() => {
@@ -29,6 +28,7 @@ function OverviewConfig({
             section.modules.push({
               name: item.name,
               level: item.level,
+              time: item.time,
               numberOfQuestion: item.numberOfQuestion,
               domainDistribution: item.domainDistribution,
             });
@@ -39,6 +39,7 @@ function OverviewConfig({
             section.modules.push({
               name: item.name,
               level: item.name === "Module 2" ? null : item.level,
+              time: item.time,
               numberOfQuestion: item.numberOfQuestion,
               domainDistribution: item.domainDistribution,
             });
@@ -134,6 +135,49 @@ function OverviewConfig({
               </div>
             </div>
           )}
+          <div className={cx("module-time-config-wrapper")}>
+            <div className={cx("module-time-title")}>Module Time</div>
+            <div className={cx("module-section-config-wrapper")}>
+              {groupedModules?.map((section, index) => (
+                <div
+                  className={cx("module-section-config-container")}
+                  key={index}
+                >
+                  <div className={cx("module-section-config-header")}>
+                    <div className={cx("section-icon")}>
+                      <i className={cx("fa-regular fa-book", "icon")}></i>
+                    </div>
+                    <div className={cx("section-infor")}>
+                      <div className={cx("section-name")}>{section?.name}</div>
+                    </div>
+                  </div>
+                  <div className={cx("module-section-config-content")}>
+                    {section?.modules.map((mod, indx) => (
+                      <div
+                        className={cx("module-config-time-container")}
+                        key={indx}
+                      >
+                        <div className={cx("module-config-time")}>
+                          <div className={cx("module-config")}>
+                            <div className={cx("module-icon")}>
+                              <i className="fa-light fa-file-pen"></i>
+                            </div>
+                            <div className={cx("module-infor")}>
+                              {mod?.name} {mod?.level ? `(${mod?.level})` : ""}
+                            </div>
+                          </div>
+                          <div className={cx("time-config")}>
+                            <div className={cx("time-input")}>{mod?.time}</div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={cx("section-view-module-title")}>Module Question</div>
           <div className={cx("section-view-module-wrapper")}>
             {groupedModules?.length > 0 &&
               groupedModules.map((section, index) => (

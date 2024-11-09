@@ -1,30 +1,41 @@
 import classNames from "classnames/bind";
-import styles from "./ModuleConfig.module.scss";
+import styles from "./ModuleTimeConfig.module.scss";
 const cx = classNames.bind(styles);
 
-function ModuleConfig({ structureModule, setExamData }) {
+function ModuleTimeConfig({ module, setExamStructureData }) {
   const handleChangeTimeModule = (e, moduleData) => {
     let value = parseInt(e.target.value, 10);
-    if (structureModule.section === "Math" && value > 35) {
+
+    // Limit the value based on section type
+    if (module.section === "Math" && value > 35) {
       value = 35;
-    } else if (structureModule.section === "Reading & Writing" && value > 32) {
+    } else if (module.section === "Reading & Writing" && value > 32) {
       value = 32;
     }
 
+    // Ensure non-negative value
     if (value < 0) value = 0;
+
+    // Update the input display
     e.target.value = value;
 
-    setExamData((prevExamData) => {
-      const updatedModuleConfig = prevExamData.moduleConfigs.map((module) => {
-        if (module.moduleId === moduleData.id) {
-          return { ...module, time: value };
+    // Update the exam structure data with the new time
+    setExamStructureData((prevData) => {
+      const updatedModuleType = prevData.moduleType.map((mod) => {
+        if (
+          mod.section === module.section &&
+          mod.name === moduleData.name &&
+          mod.level === moduleData.level
+        ) {
+          // Update the `time` property for the matched module
+          return { ...mod, time: value };
         }
-        return module;
+        return mod;
       });
 
       return {
-        ...prevExamData,
-        moduleConfigs: updatedModuleConfig,
+        ...prevData,
+        moduleType: updatedModuleType,
       };
     });
   };
@@ -36,20 +47,19 @@ function ModuleConfig({ structureModule, setExamData }) {
           <i className={cx("fa-regular fa-book", "icon")}></i>
         </div>
         <div className={cx("section-infor")}>
-          <div className={cx("section-name")}>{structureModule.section}</div>
-          {/* <div className={cx("section-total-time")}>90</div> */}
+          <div className={cx("section-name")}>{module?.section}</div>
         </div>
       </div>
       <div className={cx("module-section-config-content")}>
-        {structureModule.modules.map((module) => (
-          <div className={cx("module-config-time-container")} key={module.id}>
+        {module?.modules?.map((item, index) => (
+          <div className={cx("module-config-time-container")} key={index}>
             <div className={cx("module-config-time")}>
               <div className={cx("module-config")}>
                 <div className={cx("module-icon")}>
                   <i className="fa-light fa-file-pen"></i>
                 </div>
                 <div className={cx("module-infor")}>
-                  {module.name} {module.level ? `(${module.level})` : ""}
+                  {item?.name} {item?.level ? `(${item?.level})` : ""}
                 </div>
               </div>
               <div className={cx("time-config")}>
@@ -59,7 +69,8 @@ function ModuleConfig({ structureModule, setExamData }) {
                   max="60"
                   placeholder="mins"
                   className={cx("time-input")}
-                  onChange={(e) => handleChangeTimeModule(e, module)}
+                  value={item.time || ""}
+                  onChange={(e) => handleChangeTimeModule(e, item)}
                 />
               </div>
             </div>
@@ -70,4 +81,4 @@ function ModuleConfig({ structureModule, setExamData }) {
   );
 }
 
-export default ModuleConfig;
+export default ModuleTimeConfig;
