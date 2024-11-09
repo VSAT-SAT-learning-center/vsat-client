@@ -12,10 +12,10 @@ function RecentCourses() {
     async function fetchCourseData() {
       try {
         const response = await axios.get(
-          "http://localhost:5000/units/approve?page=1&pageSize=10"
+          // "http://localhost:5000/units/approve?page=1&pageSize=10"
         );
-        const courseData = response.data.data.data; // Lấy toàn bộ mảng dữ liệu
-        setCourses(courseData); // Lưu vào state
+        const courseData = response.data.data.data; 
+        setCourses(courseData);
       } catch (error) {
         console.error("Error fetching course data:", error);
       }

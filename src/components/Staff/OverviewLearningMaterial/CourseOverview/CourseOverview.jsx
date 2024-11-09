@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import classNames from "classnames/bind";
 import styles from "./CourseOverview.module.scss";
 
@@ -16,10 +15,10 @@ function CourseOverview() {
       try {
         // Fire all requests simultaneously
         const [coursesResponse, approveResponse, pendingResponse, rejectResponse] = await Promise.all([
-          axios.get("http://localhost:5000/units?page=1&pageSize=10"),
-          axios.get("http://localhost:5000/units/approve?page=1&pageSize=1"),
-          axios.get("http://localhost:5000/units/pending?page=1&pageSize=1"),
-          axios.get("http://localhost:5000/units/reject?page=1&pageSize=1"),
+          // axios.get("http://localhost:5000/units?page=1&pageSize=10"),
+          // axios.get("http://localhost:5000/units/approve?page=1&pageSize=1"),
+          // axios.get("http://localhost:5000/units/pending?page=1&pageSize=1"),
+          // axios.get("http://localhost:5000/units/reject?page=1&pageSize=1"),
         ]);
 
         // Extract and set state for each result
