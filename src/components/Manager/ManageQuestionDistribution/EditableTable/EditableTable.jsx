@@ -56,12 +56,14 @@ const EditableTable = ({ dataSource, setDataSource }) => {
         const updatedRow = {
           ...item,
           ...row,
-          lowerscore: parseFloat(row.lowerscore),
-          upperscore: parseFloat(row.upperscore),
+          percentage: parseFloat(row.percentage),
+          minQuestion: parseInt(row.minQuestion, 10),
+          maxQuestion: parseInt(row.maxQuestion, 10),
         };
-
-        newData.splice(index, 1, updatedRow);
-        setDataSource(newData);
+        console.log("Updated Row:", updatedRow);
+        
+        newData.splice(index, 1, updatedRow);  // Cập nhật hàng đã chỉnh sửa
+        setDataSource(newData);                // Cập nhật lại dữ liệu
         setEditingId("");
       }
     } catch (errInfo) {
@@ -76,9 +78,24 @@ const EditableTable = ({ dataSource, setDataSource }) => {
   const columns = [
     { title: "Section", dataIndex: "section", width: 200 },
     { title: "Domain", dataIndex: "domain", width: 300 },
-    { title: "Percentage", dataIndex: "percentage", width: 150, editable: true },
-    { title: "Min Question", dataIndex: "minQuestion", width: 150, editable: true },
-    { title: "Max Question", dataIndex: "maxQuestion", width: 150, editable: true },
+    {
+      title: "Percentage",
+      dataIndex: "percentage",
+      editable: true,
+      width: 150,
+    },
+    {
+      title: "Min Question",
+      dataIndex: "minQuestion",
+      editable: true,
+      width: 150,
+    },
+    {
+      title: "Max Question",
+      dataIndex: "maxQuestion",
+      editable: true,
+      width: 150,
+    },
     {
       title: "Action",
       dataIndex: "action",
@@ -122,7 +139,7 @@ const EditableTable = ({ dataSource, setDataSource }) => {
       onCell: (record) => ({
         record,
         inputType:
-          col.dataIndex === "lowerscore" || col.dataIndex === "upperscore"
+          col.dataIndex === "percentage" || col.dataIndex === "minQuestion" || col.dataIndex === "maxQuestion"
             ? "number"
             : "text",
         dataIndex: col.dataIndex,
@@ -133,7 +150,7 @@ const EditableTable = ({ dataSource, setDataSource }) => {
   });
 
   return (
-    <div className="table-container">
+    <div className="table-container-distribution">
       <Form form={form} component={false}>
         <Table
           components={{
@@ -143,8 +160,7 @@ const EditableTable = ({ dataSource, setDataSource }) => {
           dataSource={dataSource.map((item) => ({ ...item, key: item.id }))}
           columns={mergedColumns}
           rowClassName="editable-row"
-          scroll={{ y: 400 }}
-          pagination={{ pageSize: 10 }}
+          scroll={{ y: 500 }}
         />
       </Form>
     </div>

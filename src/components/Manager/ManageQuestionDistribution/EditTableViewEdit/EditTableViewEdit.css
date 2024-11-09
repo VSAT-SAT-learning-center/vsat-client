@@ -7,7 +7,6 @@
   border-radius: 15px;
   overflow: hidden;
   width: 100%;
-  height: 634px;
 }
 
 .ant-table-thead > tr > th {
@@ -23,7 +22,18 @@
 }
 
 .ant-table-body {
-  max-height: 800px !important;
+  overflow-y: scroll;
+}
+
+.ant-table-body::-webkit-scrollbar {
+  display: none;
+}
+
+.ant-table-body {
+  scrollbar-width: none;
+}
+.ant-table-body {
+  -ms-overflow-style: none;
 }
 
 .ant-table-tbody > tr > td {
@@ -76,5 +86,3 @@
   border-color: #2446b6;
 }
 
-.editable-input {
-}

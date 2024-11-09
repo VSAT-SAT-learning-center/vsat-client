@@ -24,7 +24,8 @@ const EditTableViewEdit = ({
     children,
     ...restProps
   }) => {
-    const inputNode = inputType === "number" ? <Input type="number" /> : <Input />;
+    const inputNode =
+      inputType === "number" ? <Input type="number" /> : <Input />;
     return (
       <td {...restProps} className={editing ? "editable-input" : ""}>
         {editing ? (
@@ -44,6 +45,8 @@ const EditTableViewEdit = ({
 
   // Enable edit mode for a row
   const edit = (record) => {
+    console.log(record);
+
     form.setFieldsValue({ ...record });
     setEditingId(record.id);
   };
@@ -55,20 +58,23 @@ const EditTableViewEdit = ({
       const updatedRow = {
         ...dataSource.find((item) => item.id === id),
         ...row,
+        percentage: parseFloat(row.percentage),
+        minQuestion: parseFloat(row.minQuestion),
+        maxQuestion: parseFloat(row.maxQuestion),
       };
 
       const newData = dataSource.map((item) =>
         item.id === id ? updatedRow : item
       );
-      setDataSource(newData); // Directly update the current view
-
-      handleUpdateRow(updatedRow); // Update in main view component immediately
+      setDataSource(newData);
+      console.log(updatedRow);
+      handleUpdateRow(updatedRow);
       setEditingId("");
 
       setUpdatedRows((prevRows) => {
         const existingIndex = prevRows.findIndex((item) => item.id === id);
         if (existingIndex > -1) {
-          prevRows.splice(existingIndex, 1, updatedRow); // Replace existing edited row
+          prevRows.splice(existingIndex, 1, updatedRow);
           return [...prevRows];
         } else {
           return [...prevRows, updatedRow];
@@ -84,32 +90,30 @@ const EditTableViewEdit = ({
 
   // Table columns configuration
   const columns = [
-    { title: "Section", dataIndex: "section", key: "section", align: "center" },
-    { title: "Domain", dataIndex: "domain", key: "domain", align: "center" },
+    { title: "Section", dataIndex: "section", width: 200 },
+    { title: "Domain", dataIndex: "domain", width: 300 },
     {
       title: "Percentage",
       dataIndex: "percentage",
-      key: "percentage",
-      align: "center",
-      render: (text) => `${text}%`,
+      width: 150,
+      editable: true,
     },
     {
       title: "Min Question",
       dataIndex: "minQuestion",
-      key: "minQuestion",
-      align: "center",
+      width: 150,
+      editable: true,
     },
     {
       title: "Max Question",
       dataIndex: "maxQuestion",
-      key: "maxQuestion",
-      align: "center",
+      width: 150,
+      editable: true,
     },
     {
       title: "Action",
       dataIndex: "action",
-      key: "action",
-      align: "center",
+      width: 175,
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
@@ -160,18 +164,19 @@ const EditTableViewEdit = ({
   });
 
   return (
-    <div className="table-container">
+    <div className="table-container-distribution">
       <Form form={form} component={false}>
         <Table
           components={{
-            body: { cell: EditableCell },
+            body: {
+              cell: EditableCell,
+            },
           }}
           bordered
           dataSource={dataSource.map((item) => ({ ...item, key: item.id }))}
           columns={mergedColumns}
           rowClassName="editable-row"
-          scroll={{ y: 400 }}
-          pagination={{ pageSize: 10 }}
+          scroll={{ y: 500 }}
         />
       </Form>
     </div>

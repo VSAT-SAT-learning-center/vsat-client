@@ -1,15 +1,16 @@
 import classNames from "classnames/bind";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { v4 as uuidv4 } from "uuid";
 import * as XLSX from "xlsx";
 import csvImg from "~/assets/images/content/csv.png";
 import csvIcon from "~/assets/images/content/csvIcon.png";
 import wordImg from "~/assets/images/content/word.png";
 import wordIcon from "~/assets/images/content/wordIcon.png";
 import styles from "./UploadFileQuestionDistribution.module.scss";
+import { v4 as uuidv4 } from "uuid";
 
 const cx = classNames.bind(styles);
+
 function UploadFileQuestionDistribution({
   setDataSource,
   setMathData,
@@ -54,7 +55,7 @@ function UploadFileQuestionDistribution({
     ) {
       readExcelFile(file);
     } else {
-      toast.error("Please upload a Excel file!", {
+      toast.error("Please upload an Excel file!", {
         autoClose: 1500,
       });
     }
@@ -76,34 +77,43 @@ function UploadFileQuestionDistribution({
       const worksheet = workbook.Sheets[sheetName];
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-      // Separate rows into Reading & Writing and Math based on the "section" field
-      const readingWritingData = [];
-      const mathData = [];
-
-      jsonData.slice(1).forEach((row) => {
-        const section = row[0];
-        const item = {
+      if (jsonData.length <= 1) {
+        toast.error("File không có dữ liệu hợp lệ!", { autoClose: 1500 });
+        return;
+      }
+      const filteredData = jsonData
+        .slice(1)
+        .filter((row) => {
+          return (
+            row[0] &&
+            row[1] &&
+            row[2] !== undefined &&
+            row[3] !== undefined &&
+            row[4] !== undefined
+          );
+        })
+        .map((row) => ({
           id: uuidv4(),
-          section: section,
-          rawscore: row[1] || 0,
-          lowerscore: row[2] || 0,
-          upperscore: row[3] || 0,
-        };
+          section: row[0],
+          domain: row[1],
+          percentage: row[2],
+          minQuestion: row[3],
+          maxQuestion: row[4],
+        }));
 
-        if (section === "Reading & Writing") {
-          readingWritingData.push(item);
-        } else if (section === "Math") {
-          mathData.push(item);
-        }
-      });
-      setDataSource(readingWritingData);
+      const readingWritingData = filteredData.filter(
+        (item) => item.section === "Reading & Writing"
+      );
+      const mathData = filteredData.filter((item) => item.section === "Math");
+
+      setDataSource(filteredData);
       setRwData(readingWritingData);
       setMathData(mathData);
       setIsShowImportExamScore(false);
       setIsShowExamScoreResult(true);
+      console.log(jsonData);
     };
     reader.readAsArrayBuffer(file);
-    return false;
   };
 
   const handleDownloadTemplate = (type) => {
