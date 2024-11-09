@@ -12,13 +12,13 @@ const cx = classNames.bind(styles);
 function ExamCreate() {
   const [isShowCreateExamModal, setIsShowCreateExamModal] = useState(false);
   const [isShowCreateExamView, setIsShowCreateExamView] = useState(false);
-  const [examList, setExamList] = useState([]);
   const [examDetailData, setExamDetailData] = useState(null);
+  const [examList, setExamList] = useState([]);
   const [isWaiting, setIsWaiting] = useState(false);
   const fetchExamList = useCallback(async () => {
     try {
       setIsWaiting(true);
-      const response = await apiClient.get("/exams");
+      const response = await apiClient.get("/exams/Pending");
       setExamList(response.data.data);
     } catch (error) {
       console.error("Failed to fetch exam structure list:", error);

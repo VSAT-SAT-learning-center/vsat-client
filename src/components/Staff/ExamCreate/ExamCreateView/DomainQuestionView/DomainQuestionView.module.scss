@@ -40,6 +40,8 @@
     .domain-create-question-modal-search {
       width: 100%;
       padding: 20px;
+      z-index: 1;
+      border-bottom: 1px solid $border-color;
 
       .search-question-container {
         position: relative;

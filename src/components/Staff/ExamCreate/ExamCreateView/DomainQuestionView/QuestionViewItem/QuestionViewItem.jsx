@@ -8,10 +8,20 @@ function QuestionViewItem({
   index,
   setQuestionPreviewData,
   setIsShowQuestionItemPreview,
+  setDomainQuestions
 }) {
   const handleClickPreviewQuestion = () => {
     setQuestionPreviewData(question);
     setIsShowQuestionItemPreview(true);
+  };
+
+  const handleClickDeleteQuestion = () => {
+    setDomainQuestions((prevDomainQuestions) => ({
+      ...prevDomainQuestions,
+      questions: prevDomainQuestions.questions.filter(
+        (q) => q.id !== question.id
+      ),
+    }));
   };
   return (
     <div className={cx("question-exam-create-item")}>
@@ -40,7 +50,10 @@ function QuestionViewItem({
         >
           <i className={cx("fa-regular fa-eye")}></i>
         </button>
-        <button className={cx("preview-btn")}>
+        <button
+          className={cx("preview-btn")}
+          onClick={handleClickDeleteQuestion}
+        >
           <i className={cx("fa-sharp fa-regular fa-trash")}></i>
         </button>
       </div>

@@ -1,14 +1,14 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import classNames from "classnames/bind";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import LessonTypeModal from "~/components/Staff/LearningMaterialCreate/LessonTypeModal";
 import MultiStepProgressBar from "~/components/Staff/LearningMaterialCreate/MultiStepProgressBar";
 import TopicItem from "~/components/Staff/LearningMaterialCreate/TopicItem";
-import TopicItemPreview from "~/components/Staff/LearningMaterialCreate/TopicItemPreview";
+// import TopicItemPreview from "~/components/Staff/LearningMaterialCreate/TopicItemPreview";
 import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
@@ -21,9 +21,29 @@ function LearningMaterialCreateTopic() {
   const { unitId } = useParams();
   const inputLessonRef = useRef(null);
   const [topics, setTopics] = useState([]);
-  const [createTopicPreviews, setCreateTopicPreviews] = useState([]);
+  // const [createTopicPreviews, setCreateTopicPreviews] = useState([]);
   const [lessonType, setLessonType] = useState("Empty");
   const [isShowLessonTypeModal, setIsShowLessonTypeModal] = useState(false);
+
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const response = await apiClient.get(`/units/domain/${unitId}`);
+        const originalArray = response.data.domain.skills;
+        const transformedArray = originalArray.map((item) => ({
+          id: item.id,
+          unitId: unitId,
+          title: item.content,
+          lessons: [],
+        }));
+        setTopics(transformedArray);
+      } catch (error) {
+        console.error("Error while fetching topic:", error);
+      }
+    };
+
+    fetchTopics();
+  }, [unitId]);
 
   const onDragEnd = (result) => {
     const { source, destination, type } = result;
@@ -66,18 +86,18 @@ function LearningMaterialCreateTopic() {
     }
   };
 
-  const handleClickCreateNewTopic = () => {
-    setCreateTopicPreviews((prevPreviews) => [
-      ...prevPreviews,
-      { id: uuidv4() },
-    ]);
-  };
+  // const handleClickCreateNewTopic = () => {
+  //   setCreateTopicPreviews((prevPreviews) => [
+  //     ...prevPreviews,
+  //     { id: uuidv4() },
+  //   ]);
+  // };
 
-  const handleRemovePreview = (id) => {
-    setCreateTopicPreviews((prevPreviews) =>
-      prevPreviews.filter((preview) => preview.id !== id)
-    );
-  };
+  // const handleRemovePreview = (id) => {
+  //   setCreateTopicPreviews((prevPreviews) =>
+  //     prevPreviews.filter((preview) => preview.id !== id)
+  //   );
+  // };
 
   const handleNext = async () => {
     try {
@@ -87,7 +107,6 @@ function LearningMaterialCreateTopic() {
       console.error("Error creating unit:", error);
     }
   };
-
 
   const isContinueEnabled = topics.length > 0;
 
@@ -149,7 +168,7 @@ function LearningMaterialCreateTopic() {
                 </Droppable>
               </DragDropContext>
 
-              {createTopicPreviews.map((preview) => (
+              {/* {createTopicPreviews.map((preview) => (
                 <div key={preview.id} className={cx("create-topic-preview")}>
                   <TopicItemPreview
                     inputLessonRef={inputLessonRef}
@@ -170,7 +189,7 @@ function LearningMaterialCreateTopic() {
                   <i className={cx("fa-regular fa-circle-plus", "icon")}></i>
                 </div>
                 <div className={cx("create-text")}>New topic</div>
-              </div>
+              </div> */}
             </div>
             <div className={cx("create-topics-bottom")}>
               <button

@@ -1,15 +1,25 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import QuestionItemPreview from "~/components/Staff/QuestionExamCreate/QuestionItemPreview";
+import CensorFeedback from "../CensorFeedback";
+import PopupCensorConfirm from "../PopupCensorConfirm";
 import styles from "./ModuleCensorView.module.scss";
 import QuestionCensorItem from "./QuestionCensorItem";
 const cx = classNames.bind(styles);
 
-function ModuleCensorView({ moduleCensorData, setIsShowModuleViewCensor }) {
+function ModuleCensorView({
+  moduleCensorData,
+  setCensorModuleFeedback,
+  setIsShowModuleViewCensor,
+}) {
+  // console.log(moduleCensorData);
+
   const [groupedByLevel, setGroupedByLevel] = useState([]);
   const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
     useState(false);
   const [questionPreviewData, setQuestionPreviewData] = useState(null);
+  const [isShowConfirmCensor, setIsShowConfirmCensor] = useState(false);
+  const [isShowCensorFeedback, setIsShowCensorFeedback] = useState(false);
 
   useEffect(() => {
     function combineAndFilterQuestions(data) {
@@ -40,8 +50,6 @@ function ModuleCensorView({ moduleCensorData, setIsShowModuleViewCensor }) {
     }
 
     const filteredData = combineAndFilterQuestions(moduleCensorData.domains);
-    console.log(filteredData);
-
     setGroupedByLevel(filteredData);
   }, [moduleCensorData.domains]);
 
@@ -51,6 +59,26 @@ function ModuleCensorView({ moduleCensorData, setIsShowModuleViewCensor }) {
         <QuestionItemPreview
           questionPreviewData={questionPreviewData}
           setIsShowQuestionItemPreview={setIsShowQuestionItemPreview}
+        />
+      )}
+
+      {isShowConfirmCensor && (
+        <PopupCensorConfirm
+          moduleCensorData={moduleCensorData}
+          setCensorModuleFeedback={setCensorModuleFeedback}
+          setIsShowConfirmCensor={setIsShowConfirmCensor}
+          setIsShowCensorFeedback={setIsShowCensorFeedback}
+          setIsShowModuleViewCensor={setIsShowModuleViewCensor}
+        />
+      )}
+
+      {isShowCensorFeedback && (
+        <CensorFeedback
+          moduleCensorData={moduleCensorData}
+          setCensorModuleFeedback={setCensorModuleFeedback}
+          setIsShowConfirmCensor={setIsShowConfirmCensor}
+          setIsShowCensorFeedback={setIsShowCensorFeedback}
+          setIsShowModuleViewCensor={setIsShowModuleViewCensor}
         />
       )}
       <div className={cx("module-censor-view-wrapper")}>
@@ -110,7 +138,10 @@ function ModuleCensorView({ moduleCensorData, setIsShowModuleViewCensor }) {
             >
               Cancel
             </button>
-            <button className={cx("preview-btn")}>
+            <button
+              className={cx("preview-btn")}
+              onClick={() => setIsShowConfirmCensor(true)}
+            >
               <span>Censor</span>
             </button>
           </div>
