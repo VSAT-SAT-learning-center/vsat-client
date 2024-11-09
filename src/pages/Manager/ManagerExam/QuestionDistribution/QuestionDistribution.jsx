@@ -26,6 +26,7 @@ function QuestionDistribution() {
     useState(false);
   const [isShowViewDetailScore, setIsShowViewDetailScore] = useState(false);
   const [viewScoreDetailData, setViewScoreDetailData] = useState(false);
+  const [examTime, setExamTime] = useState(null);
 
   const fetchExamScoreList = useCallback(async () => {
     try {
@@ -53,6 +54,7 @@ function QuestionDistribution() {
           examType={examType}
           setExamTitle={setExamTitle}
           setExamType={setExamType}
+          setExamTime={setExamTime}
           setIsShowCreateExamScoreModal={setIsShowCreateExamScoreModal}
           setIsShowImportExamScore={setIsShowImportExamScore}
         />
@@ -73,6 +75,7 @@ function QuestionDistribution() {
           mathData={mathData}
           examTitle={examTitle}
           examType={examType}
+          examTime={examTime}
           setDataSource={setDataSource}
           setIsShowExamScoreResult={setIsShowExamScoreResult}
           setIsShowCreateExamScoreModal={setIsShowCreateExamScoreModal}
@@ -91,7 +94,9 @@ function QuestionDistribution() {
         <div className={cx("question-distribution-wrapper")}>
           <div className={cx("question-distribution-container")}>
             <div className={cx("question-distribution-header")}>
-              <div className={cx("question-distribution-text")}>Question distribution</div>
+              <div className={cx("question-distribution-text")}>
+                Question distribution
+              </div>
               <button
                 className={cx("question-distribution-import")}
                 onClick={() => setIsShowCreateExamScoreModal(true)}
@@ -99,7 +104,9 @@ function QuestionDistribution() {
                 <i
                   className={cx("fa-regular fa-plus-circle", "import-icon")}
                 ></i>
-                <span className={cx("import-text")}>New question distribution</span>
+                <span className={cx("import-text")}>
+                  New question distribution
+                </span>
               </button>
             </div>
             <div className={cx("question-distribution-content")}>

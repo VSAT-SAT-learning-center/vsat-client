@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import apiClient from "~/services/apiService";
 import EditTableViewEdit from "../EditTableViewEdit";
 import styles from "./QuestionDistributionViewDetail.module.scss";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -11,40 +12,63 @@ function QuestionDistributionViewDetail({
   viewScoreDetailData,
   setIsShowViewDetailScore,
 }) {
-  const [dataSource, setDataSource] = useState([]);
+  const [combinedData, setCombinedData] = useState([]); // Combined data for both sections
   const [updatedRows, setUpdatedRows] = useState([]);
 
   useEffect(() => {
-    // Check if `domainDistributionConfig` is available
-    if (!viewScoreDetailData?.domainDistributionConfig) return;
-
-    // Map all items into the dataSource directly
-    const allScores = viewScoreDetailData.domainDistributionConfig.map((config) => ({
-      id: config.id,
-      section: config.section.name,
-      domain: config.domain,
-      percentage: config.percentage,
-      minQuestion: config.minQuestion,
-      maxQuestion: config.maxQuestion,
-    }));
-
-    setDataSource(allScores);
+    if (viewScoreDetailData?.domainDistributionConfig) {
+      const allScores = viewScoreDetailData.domainDistributionConfig.map((score) => ({
+        id: score.id,
+        section: score.section.name,
+        domain: score.domain,
+        percentage: score.percentage,
+        minQuestion: score.minQuestion,
+        maxQuestion: score.maxQuestion,
+      }));
+      setCombinedData(allScores);
+    } else {
+      toast.error("There is no data distribution to display!", {
+        autoClose: 1500,
+      });
+    }
   }, [viewScoreDetailData]);
 
   const handleUpdateRow = (updatedRow) => {
-    const updatedData = dataSource.map((row) =>
-      row.id === updatedRow.id ? updatedRow : row
+    const cleanedRow = {
+      id: updatedRow.id,
+      domain: updatedRow.domain,
+      percentage: updatedRow.percentage,
+      minQuestion: typeof updatedRow.minQuestion === "string" ? parseInt(updatedRow.minQuestion, 10) : updatedRow.minQuestion,
+      maxQuestion: typeof updatedRow.maxQuestion === "string" ? parseInt(updatedRow.maxQuestion, 10) : updatedRow.maxQuestion,
+    };
+
+    const updatedData = combinedData.map((row) =>
+      row.id === updatedRow.id ? { ...row, ...cleanedRow } : row
     );
-    setDataSource(updatedData);
+    setCombinedData(updatedData);
+
+    setUpdatedRows((prevRows) => {
+      const index = prevRows.findIndex((row) => row.id === updatedRow.id);
+      if (index > -1) {
+        prevRows[index] = cleanedRow;
+        return [...prevRows];
+      } else {
+        return [...prevRows, cleanedRow];
+      }
+    });
   };
 
   const handleEditExamScoreDetail = async () => {
+    console.log(updatedRows);
     try {
-      await apiClient.patch("/exam-score-details", updatedRows);
+      await apiClient.patch("/domain-distribution-config", updatedRows);
       setIsShowViewDetailScore(false);
       fetchExamScoreList();
+      toast.success("Update successfully!", {
+        autoClose: 2000,
+      });
     } catch (error) {
-      console.error("Error when updating exam score details:", error);
+      console.error("Error when updating question distribution detail: " + error);
     }
   };
 
@@ -58,14 +82,13 @@ function QuestionDistributionViewDetail({
           >
             <i className={cx("fa-regular fa-arrow-left")}></i>
           </div>
-          <div className={cx("question-distribution-title")}>
-            {viewScoreDetailData?.title}
-          </div>
+          <div className={cx("question-distribution-create-view-title")}>{viewScoreDetailData?.title}</div>
+          <div className={cx("exam-score-type")}></div>
         </div>
         <div className={cx("question-distribution-create-view-content")}>
           <EditTableViewEdit
-            dataSource={dataSource}
-            setDataSource={(updatedData) => setDataSource(updatedData)}
+            dataSource={combinedData}
+            setDataSource={(updatedData) => setCombinedData(updatedData)}
             handleUpdateRow={handleUpdateRow}
             setUpdatedRows={setUpdatedRows}
           />

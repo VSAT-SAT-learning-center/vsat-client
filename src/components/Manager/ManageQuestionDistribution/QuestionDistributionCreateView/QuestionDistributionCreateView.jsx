@@ -1,45 +1,47 @@
 import classNames from "classnames/bind";
-import { useState } from "react";
 import apiClient from "~/services/apiService";
 import EditableTable from "../EditableTable";
 import styles from "./QuestionDistributionCreateView.module.scss";
+import { toast } from "react-toastify";
 const cx = classNames.bind(styles);
 
 function QuestionDistributionCreateView({
   dataSource,
-  rwData,
-  mathData,
   examTitle,
   examType,
+  examTime,
   setDataSource,
   setIsShowExamScoreResult,
   setIsShowCreateExamScoreModal,
   fetchExamScoreList,
 }) {
-  const [section, setSection] = useState("Reading & Writing");
-  const loadDataBySection = (selectedSection) => {
-    setSection(selectedSection);
-    setDataSource(selectedSection === "Reading & Writing" ? rwData : mathData);
-  };
 
   const handleSaveExamScore = async () => {
-    const mergedData = [...rwData, ...mathData];
+    const mergedData = dataSource.map((item) => ({
+      title: examTitle,
+      domain: item.domain,
+      minQuestion: item.minQuestion,
+      maxQuestion: item.maxQuestion,
+      percent: item.percentage,
+    }));
+  
     const examScoreData = {
       title: examTitle,
-      type: examType,
-      createExamScoreDetail: mergedData,
+      time: examTime,
+      domainDistributionConfig: mergedData,
     };
-
     try {
-      await apiClient.post("/exam-scores", examScoreData);
+      await apiClient.post("/exam-semester/import-file", examScoreData);
       fetchExamScoreList();
       setIsShowCreateExamScoreModal(false);
       setIsShowExamScoreResult(false);
+      toast.success("Create successfully");
     } catch (error) {
       console.error("Error creating exam score:", error);
     }
   };
   
+
   return (
     <div className={cx("question-distribution-create-view-wrapper")}>
       <div className={cx("question-distribution-create-view-container")}>
@@ -54,22 +56,6 @@ function QuestionDistributionCreateView({
           <div className={cx("question-distribution-type")}>{examType}</div>
         </div>
         <div className={cx("question-distribution-create-view-content")}>
-          <div className={cx("question-distribution-options")}>
-            <button
-              className={cx("option-btn", {
-                "active-btn": section === "Reading & Writing",
-              })}
-              onClick={() => loadDataBySection("Reading & Writing")}
-            >
-              Reading & Writing
-            </button>
-            <button
-              className={cx("option-btn", { "active-btn": section === "Math" })}
-              onClick={() => loadDataBySection("Math")}
-            >
-              Math
-            </button>
-          </div>
           <EditableTable
             dataSource={dataSource}
             setDataSource={setDataSource}

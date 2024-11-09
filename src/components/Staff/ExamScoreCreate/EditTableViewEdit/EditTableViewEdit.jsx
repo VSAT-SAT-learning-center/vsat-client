@@ -3,12 +3,7 @@ import { Button, Form, Input, Table } from "antd";
 import { useState } from "react";
 import "./EditTableViewEdit.css";
 
-const EditTableViewEdit = ({
-  dataSource,
-  setDataSource,
-  handleUpdateRow,
-  setUpdatedRows,
-}) => {
+const EditableTable = ({ dataSource, setDataSource }) => {
   const [editingId, setEditingId] = useState("");
   const [form] = Form.useForm();
 
@@ -50,34 +45,25 @@ const EditTableViewEdit = ({
   };
 
   // Save the edited row and update the data sources
-
   const save = async (id) => {
     try {
       const row = await form.validateFields();
-      const updatedRow = {
-        ...dataSource.find((item) => item.id === id),
-        ...row,
-        lowerscore: parseFloat(row.lowerscore),
-        upperscore: parseFloat(row.upperscore),
-      };
+      const newData = [...dataSource];
+      const index = newData.findIndex((item) => id === item.id);
 
-      const newData = dataSource.map((item) =>
-        item.id === id ? updatedRow : item
-      );
-      setDataSource(newData); // Directly update the current view
+      if (index > -1) {
+        const item = newData[index];
+        const updatedRow = {
+          ...item,
+          ...row,
+          lowerscore: parseFloat(row.lowerscore),
+          upperscore: parseFloat(row.upperscore),
+        };
 
-      handleUpdateRow(updatedRow); // Update in main view component immediately
-      setEditingId("");
-
-      setUpdatedRows((prevRows) => {
-        const existingIndex = prevRows.findIndex((item) => item.id === id);
-        if (existingIndex > -1) {
-          prevRows.splice(existingIndex, 1, updatedRow); // Replace existing edited row
-          return [...prevRows];
-        } else {
-          return [...prevRows, updatedRow];
-        }
-      });
+        newData.splice(index, 1, updatedRow);
+        setDataSource(newData);
+        setEditingId("");
+      }
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
     }
@@ -174,4 +160,4 @@ const EditTableViewEdit = ({
   );
 };
 
-export default EditTableViewEdit;
+export default EditableTable;
