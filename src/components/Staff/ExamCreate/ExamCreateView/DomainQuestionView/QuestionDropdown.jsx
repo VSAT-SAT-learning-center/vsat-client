@@ -4,11 +4,11 @@ import { renderMathAndText } from "~/utils/renderMathAndText";
 import styles from "./DomainQuestionView.module.scss";
 const cx = classNames.bind(styles);
 function QuestionDropdown({
-  setSearchValue,
+  // setSearchValue,
   searchQuestionResult,
-  domainQuestions,
-  setDomainQuestions,
-  setIsQuestionDropdownVisible,
+  // domainQuestions,
+  // setDomainQuestions,
+  // setIsQuestionDropdownVisible,
   // numberOfQuestion,
 }) {
   const handleClickQuestion = (questionData) => {
