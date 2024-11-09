@@ -84,19 +84,16 @@ function ExamStructureViewDetail({
     if (viewStructureDetailData?.moduletype) {
       const grouped = viewStructureDetailData.moduletype.reduce(
         (acc, module) => {
-          // Check if there is an existing entry for the section
           const sectionIndex = acc.findIndex(
             (item) => item.section === module.section
           );
 
           if (sectionIndex === -1) {
-            // If the section doesn't exist, create a new entry
             acc.push({
               section: module.section,
               modules: [module],
             });
           } else {
-            // If the section exists, add the module to the existing section
             acc[sectionIndex].modules.push(module);
           }
 
@@ -104,9 +101,21 @@ function ExamStructureViewDetail({
         },
         []
       );
-
-      // Ensure "Reading & Writing" appears first in the array
       grouped.sort((a) => (a.section === "Reading & Writing" ? -1 : 1));
+
+      grouped.forEach((section) => {
+        section.modules.sort((a, b) => {
+          if (a.name !== b.name) {
+            return a.name === "Module 1" ? -1 : 1;
+          }
+          if (a.level && b.level) {
+            if (a.level === "Easy" && b.level === "Hard") return -1;
+            if (a.level === "Hard" && b.level === "Easy") return 1;
+          }
+          return 0;
+        });
+      });
+      console.log(grouped);
       setGroupedModules(grouped);
     }
   }, [viewStructureDetailData]);

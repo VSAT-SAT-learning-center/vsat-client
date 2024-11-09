@@ -1,3 +1,4 @@
+import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import ExamStructureCreateView from "~/components/Staff/ExamStructureCreate/ExamStructureCreateView";
@@ -15,8 +16,10 @@ function ExamStructure() {
   const [isShowExamStructureViewDetail, setIsShowExamStructureViewDetail] =
     useState(false);
   const [viewStructureDetailData, setViewStructureDeatailData] = useState(null);
+  const [isWaiting, setIsWaiting] = useState(false);
   const fetchExamStructureList = useCallback(async () => {
     try {
+      setIsWaiting(true);
       const response = await apiClient.get("/exam-structures", {
         params: {
           page: 1,
@@ -26,6 +29,8 @@ function ExamStructure() {
       setExamStructureList(response.data.data.result);
     } catch (error) {
       console.error("Failed to fetch exam structure list:", error);
+    } finally {
+      setIsWaiting(false);
     }
   }, []);
 
@@ -63,17 +68,31 @@ function ExamStructure() {
               </button>
             </div>
             <div className={cx("create-structure-content")}>
-              {examStructureList.map((structureItem, index) => (
-                <ExamStructureItem
-                  key={index}
-                  index={index + 1}
-                  structureItem={structureItem}
-                  setIsShowExamStructureViewDetail={
-                    setIsShowExamStructureViewDetail
-                  }
-                  setViewStructureDeatailData={setViewStructureDeatailData}
-                />
-              ))}
+              {isWaiting ? (
+                <>
+                  {[...Array(3)].map((_, i) => (
+                    <Skeleton
+                      key={i}
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={260}
+                    />
+                  ))}
+                </>
+              ) : (
+                examStructureList.map((structureItem, index) => (
+                  <ExamStructureItem
+                    key={index}
+                    index={index + 1}
+                    structureItem={structureItem}
+                    setIsShowExamStructureViewDetail={
+                      setIsShowExamStructureViewDetail
+                    }
+                    setViewStructureDeatailData={setViewStructureDeatailData}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>

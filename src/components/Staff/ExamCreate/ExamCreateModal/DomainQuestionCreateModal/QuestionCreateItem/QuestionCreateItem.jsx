@@ -3,6 +3,8 @@ import { renderMathAndText } from "~/utils/renderMathAndText";
 import styles from "./QuestionCreateItem.module.scss";
 const cx = classNames.bind(styles);
 function QuestionCreateItem({ index, question, setDomainQuestions }) {
+  console.log(question);
+
   const handleClickDeleteQuestion = () => {
     setDomainQuestions((prevDomainQuestions) => ({
       ...prevDomainQuestions,
@@ -20,6 +22,7 @@ function QuestionCreateItem({ index, question, setDomainQuestions }) {
         </div>
         <div className={cx("question-left")}>
           <div className={cx("question-skill")}>{question.skill.content}</div>
+          <div className={cx("question-level")}>{question.level.name}</div>
           <button
             className={cx("question-delete")}
             onClick={handleClickDeleteQuestion}

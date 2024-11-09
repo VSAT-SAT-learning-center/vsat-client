@@ -126,21 +126,21 @@ export const sidebarNavs = [
       },
     ],
   },
-  {
-    id: 6,
-    icon: "fa-light fa-clipboard-check",
-    iconActive: "fa-regular fa-clipboard-check",
-    title: "Practice Test",
-    path: "/manager/practice",
-    show: true,
-    subNavs: [
-      {
-        id: 1,
-        title: "All Practices",
-        path: "/manager/practice/overview",
-      },
-    ],
-  },
+  // {
+  //   id: 6,
+  //   icon: "fa-light fa-clipboard-check",
+  //   iconActive: "fa-regular fa-clipboard-check",
+  //   title: "Practice Test",
+  //   path: "/manager/practice",
+  //   show: true,
+  //   subNavs: [
+  //     {
+  //       id: 1,
+  //       title: "All Practices",
+  //       path: "/manager/practice/overview",
+  //     },
+  //   ],
+  // },
   {
     id: 7,
     icon: "fa-light fa-comments",
