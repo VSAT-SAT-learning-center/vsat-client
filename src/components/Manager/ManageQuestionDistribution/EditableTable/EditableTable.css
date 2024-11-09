@@ -1,4 +1,4 @@
-.table-container {
+.table-container-distribution {
   max-width: 100%;
   margin: 0 auto;
   padding: 20px;
@@ -27,11 +27,11 @@
   border-right: none;
 }
 
-.ant-table-tbody > tr > td {
+.table-container-distribution .ant-table-tbody > tr > td {
   font-size: 16px;
   text-align: center;
   vertical-align: middle;
-  padding: 12px;
+  padding:  11.5px !important;
 }
 
 .ant-table-tbody > tr > td {
@@ -84,4 +84,8 @@
 
 .editable-input .ant-input:focus {
   border-color: #2446b6;
+}
+
+.table-container-distribution .ant-table-wrapper .ant-table-pagination.ant-pagination{
+  display: none;
 }

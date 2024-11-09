@@ -44,7 +44,7 @@ function QuestionDistributionItem({
           </div>
           <div className={cx("type-title")}>Created at: </div>
           <div className={cx("type-text")}>
-            {formatDate(examScore?.time)}
+            {formatDate(examScore?.createdat)}
           </div>
         </div>
       </div>
