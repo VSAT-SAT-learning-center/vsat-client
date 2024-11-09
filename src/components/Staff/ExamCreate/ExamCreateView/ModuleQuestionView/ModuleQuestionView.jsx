@@ -4,12 +4,12 @@ const cx = classNames.bind(styles);
 
 function ModuleQuestionView({
   examQuestion,
-  setQuestionsViewData,
   setIsShowDomainQuestionView,
+  setDomainData
 }) {
-  const handleClickViewDomainQuestion = (questions) => {
+  const handleClickViewDomainQuestion = (domainData) => {
     setIsShowDomainQuestionView(true);
-    setQuestionsViewData(questions);
+    setDomainData(domainData)
   };
   return (
     <div className={cx("module-question-container")}>
@@ -39,7 +39,7 @@ function ModuleQuestionView({
                   <button
                     className={cx("create-btn")}
                     onClick={() =>
-                      handleClickViewDomainQuestion(domain?.questions)
+                      handleClickViewDomainQuestion(domain)
                     }
                   >
                     <i

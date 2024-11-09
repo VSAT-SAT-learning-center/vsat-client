@@ -325,14 +325,14 @@ function CensorQuestionQuizzView({
               onClick={handleRejectedQuestion}
             >
               <i className={cx("fa-sharp fa-regular fa-ban", "btn-icon")}></i>
-              <span className={cx("btn-text")}>Rejected</span>
+              <span className={cx("btn-text")}>Reject</span>
             </button>
             <button
               className={cx("approved-btn")}
               onClick={handleApproveQuestion}
             >
               <i className={cx("fa-sharp fa-regular fa-check", "btn-icon")}></i>
-              <span className={cx("btn-text")}>Approved</span>
+              <span className={cx("btn-text")}>Approve</span>
             </button>
           </div>
         </div>

@@ -17,6 +17,7 @@ function LearningMaterialCreateDetails() {
 
   const [levels, setLevels] = useState([]);
   const [sections, setSections] = useState([]);
+  const [domains, setDomains] = useState([]);
   const [countTitleInput, setCountTitleInput] = useState(0);
 
   const [unit, setUnit] = useState({
@@ -24,6 +25,7 @@ function LearningMaterialCreateDetails() {
     description: "",
     sectionId: "",
     levelId: "",
+    domainId: "",
   });
 
   const isFormValid = () => {
@@ -31,7 +33,8 @@ function LearningMaterialCreateDetails() {
       unit.title.trim() !== "" &&
       unit.description.trim() !== "" &&
       unit.sectionId.trim() !== "" &&
-      unit.levelId.trim() !== ""
+      unit.levelId.trim() !== "" &&
+      unit.domainId.trim() !== ""
     );
   };
 
@@ -64,10 +67,30 @@ function LearningMaterialCreateDetails() {
     }));
   };
 
-  const handleSectionChange = (e) => {
+  const handleSectionChange = async (e) => {
+    const selectedSectionId = e.target.value;
     setUnit((prevUnit) => ({
       ...prevUnit,
-      sectionId: e.target.value,
+      sectionId: selectedSectionId,
+    }));
+    if (selectedSectionId) {
+      try {
+        const response = await apiClient.get(
+          `/domains/section/${selectedSectionId}`
+        );
+        setDomains(response.data);
+      } catch (error) {
+        console.error("Error fetching domains:", error);
+      }
+    } else {
+      setDomains([]);
+    }
+  };
+
+  const handleDomainChange = (e) => {
+    setUnit((prevUnit) => ({
+      ...prevUnit,
+      domainId: e.target.value,
     }));
   };
 
@@ -91,6 +114,7 @@ function LearningMaterialCreateDetails() {
       description: "",
       sectionId: "",
       levelId: "",
+      domainId: "",
     });
     setCountTitleInput(0);
   };
@@ -105,6 +129,7 @@ function LearningMaterialCreateDetails() {
           description: "",
           sectionId: "",
           levelId: "",
+          domainId: "",
         });
         setCountTitleInput(0);
         navigate(`${steps[currentStep + 1].path}/${newUnit.id}`);
@@ -155,28 +180,29 @@ function LearningMaterialCreateDetails() {
               </div>
             </div>
             <div className={cx("create-details-information")}>
-              <div className={cx("unit-title-details")}>
-                <div className={cx("unit-title")}>
-                  Unit Title <span className={cx("required")}>(Required)</span>
+              <div className={cx("unit-title-config")}>
+                <div className={cx("unit-title-details")}>
+                  <div className={cx("unit-title")}>
+                    Title <span className={cx("required")}>(Required)</span>
+                  </div>
+                  <div className={cx("unit-title-input")}>
+                    <input
+                      type="text"
+                      value={unit.title}
+                      className={cx("title-input")}
+                      placeholder="Name of unit"
+                      autoFocus={true}
+                      maxLength={100}
+                      onChange={handleChangeTitleInput}
+                    />
+                    <div className={cx("count-input")}>
+                      {countTitleInput}/100
+                    </div>
+                  </div>
                 </div>
-                <div className={cx("unit-title-input")}>
-                  <input
-                    type="text"
-                    value={unit.title}
-                    className={cx("title-input")}
-                    placeholder="Name of unit"
-                    autoFocus={true}
-                    maxLength={100}
-                    onChange={handleChangeTitleInput}
-                  />
-                  <div className={cx("count-input")}>{countTitleInput}/100</div>
-                </div>
-              </div>
-              <div className={cx("unit-config-details")}>
                 <div className={cx("unit-section-details")}>
                   <div className={cx("unit-section")}>
-                    Unit Section{" "}
-                    <span className={cx("required")}>(Required)</span>
+                    Section <span className={cx("required")}>(Required)</span>
                   </div>
                   <select
                     id="unit-section"
@@ -184,10 +210,31 @@ function LearningMaterialCreateDetails() {
                     className={cx("section-select")}
                     onChange={handleSectionChange}
                   >
-                    <option value="">Unit section</option>
+                    <option value="">Select section</option>
                     {sections.map((section) => (
                       <option value={section.id} key={section.id}>
                         {section.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className={cx("unit-config-details")}>
+                <div className={cx("unit-section-details")}>
+                  <div className={cx("unit-section")}>
+                    Domain <span className={cx("required")}>(Required)</span>
+                  </div>
+                  <select
+                    id="unit-section"
+                    value={unit.domainId}
+                    className={cx("section-select")}
+                    onChange={handleDomainChange}
+                    disabled={domains?.length === 0}
+                  >
+                    <option value="">Select domain</option>
+                    {domains.map((domain) => (
+                      <option value={domain.id} key={domain.id}>
+                        {domain.name}
                       </option>
                     ))}
                   </select>
@@ -203,7 +250,7 @@ function LearningMaterialCreateDetails() {
                     className={cx("level-select")}
                     onChange={handleLevelChange}
                   >
-                    <option value="">Unit level</option>
+                    <option value="">Select level</option>
                     {levels.map((level) => (
                       <option value={level.id} key={level.id}>
                         {level.name}

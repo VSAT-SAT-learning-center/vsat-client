@@ -16,7 +16,7 @@ function ExamCensor() {
   const fetchExamList = useCallback(async () => {
     try {
       setIsWaiting(true);
-      const response = await apiClient.get("/exams");
+      const response = await apiClient.get("/exams/Pending");
       setExamList(response.data.data);
     } catch (error) {
       console.error("Failed to fetch exam structure list:", error);

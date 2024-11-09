@@ -3,7 +3,12 @@ import ModuleQuestionView from "./ModuleQuestionView";
 import styles from "./SectionQuestionView.module.scss";
 const cx = classNames.bind(styles);
 
-function SectionQuestionView({ section, setModuleCensorData, setIsShowModuleViewCensor }) {
+function SectionQuestionView({
+  section,
+  setModuleCensorData,
+  setIsShowModuleViewCensor,
+  censorModuleFeedback,
+}) {
   return (
     <div className={cx("section-question-container")}>
       <div className={cx("section-question-header")}>
@@ -21,9 +26,9 @@ function SectionQuestionView({ section, setModuleCensorData, setIsShowModuleView
             module={module}
             setModuleCensorData={setModuleCensorData}
             setIsShowModuleViewCensor={setIsShowModuleViewCensor}
+            censorModuleFeedback={censorModuleFeedback}
           />
         ))}
-
       </div>
     </div>
   );

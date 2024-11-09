@@ -101,6 +101,16 @@
         }
       }
     }
+
+    .approved-style {
+      background-color: $bg-success-color;
+      border: 1px solid $success-color; 
+    }
+
+    .rejected-style {
+      background-color: $bg-third-color-trans; 
+      border: 1px solid $third-color;
+    }
   }
 
   .module-question-footer {

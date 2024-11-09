@@ -1,4 +1,4 @@
-import DomainQuestionCreateModal from "~/components/Staff/ExamCreate/ExamCreateModal/DomainQuestionCreateModal";
+import PopupCensorConfirm from "~/components/Manager/CensorExam/ExamCensorView/PopupCensorConfirm";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -27,6 +27,7 @@ import AccountSetting from "~/pages/Staff/AccountSetting";
 import Dashboard from "~/pages/Staff/Dashboard";
 import Exam from "~/pages/Staff/Exam";
 import ExamCreate from "~/pages/Staff/Exam/ExamCreate";
+import ExamFeedback from "~/pages/Staff/Exam/ExamFeedback";
 import ExamScore from "~/pages/Staff/Exam/ExamScore";
 import ExamStructure from "~/pages/Staff/Exam/ExamStructure";
 import Feedback from "~/pages/Staff/Feedback";
@@ -58,12 +59,11 @@ import TeacherSettings from "~/pages/Teacher/TeacherSettings";
 import QuestionDistribution from "../pages/Manager/ManagerExam/QuestionDistribution";
 import FeedbackQuestionExam from "../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam";
 import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz";
-import ExamFeedback from "~/pages/Staff/Exam/ExamFeedback";
 
 const routesConfig = [
   // Landing page routes
   { path: "/", component: Home },
-  { path: "/test", component: DomainQuestionCreateModal },
+  { path: "/test", component: PopupCensorConfirm },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },

@@ -6,11 +6,9 @@ import ModuleQuestionView from "./ModuleQuestionView";
 const cx = classNames.bind(styles);
 
 function ExamCreateView({ exam, setIsShowCreateExamView }) {
-  console.log(exam?.examQuestions);
-
   const [isShowDomainQuestionView, setIsShowDomainQuestionView] =
     useState(false);
-  const [questionsViewData, setQuestionsViewData] = useState([]);
+  const [domainData, setDomainData] = useState(null);
 
   const sectionOrder = ["Reading & Writing", "Math"];
   const moduleOrder = ["Module 1", "Module 2 (Easy)", "Module 2 (Hard)"];
@@ -31,7 +29,9 @@ function ExamCreateView({ exam, setIsShowCreateExamView }) {
     <>
       {isShowDomainQuestionView && (
         <DomainQuestionView
-          questionsViewData={questionsViewData}
+          exam={exam}
+          domainData={domainData}
+          setDomainData={setDomainData}
           setIsShowDomainQuestionView={setIsShowDomainQuestionView}
         />
       )}
@@ -44,7 +44,9 @@ function ExamCreateView({ exam, setIsShowCreateExamView }) {
             >
               <i className={cx("fa-regular fa-arrow-left")}></i>
             </div>
-            <div className={cx("create-title")}>View Exam</div>
+            <div className={cx("create-title")}>
+              {exam?.status === "Rejected" ? "Update Exam" : "View Exam"}
+            </div>
             <div className={cx("create-empty")}></div>
           </div>
           <div className={cx("exam-create-veiew-detail-content")}>
@@ -84,8 +86,8 @@ function ExamCreateView({ exam, setIsShowCreateExamView }) {
                 <ModuleQuestionView
                   key={examQuestion.id}
                   examQuestion={examQuestion}
-                  setQuestionsViewData={setQuestionsViewData}
                   setIsShowDomainQuestionView={setIsShowDomainQuestionView}
+                  setDomainData={setDomainData}
                 />
               ))}
             </div>
@@ -97,9 +99,11 @@ function ExamCreateView({ exam, setIsShowCreateExamView }) {
             >
               Cancel
             </button>
-            {/* <button className={cx("preview-btn")}>
-              <span>Save</span>
-            </button> */}
+            {exam?.status === "Rejected" && (
+              <button className={cx("preview-btn")}>
+                <span>Save</span>
+              </button>
+            )}
           </div>
         </div>
       </div>

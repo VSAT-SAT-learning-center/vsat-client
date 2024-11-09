@@ -9,6 +9,7 @@ function QuestionCensorItem({
   setQuestionPreviewData,
   setIsShowQuestionItemPreview,
 }) {
+
   const handlePreviewQuestion = () => {
     setQuestionPreviewData(question);
     setIsShowQuestionItemPreview(true);

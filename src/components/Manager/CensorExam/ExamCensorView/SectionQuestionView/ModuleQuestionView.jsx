@@ -5,13 +5,24 @@ function ModuleQuestionView({
   module,
   setModuleCensorData,
   setIsShowModuleViewCensor,
+  censorModuleFeedback,
 }) {
   const handleCensorModule = () => {
     setModuleCensorData(module);
     setIsShowModuleViewCensor(true);
   };
+  const moduleFeedback = censorModuleFeedback.moduleTypesFeedback.find(
+    (feedback) => feedback.moduleTypeId === module.id
+  );
+  const isRejected = moduleFeedback?.isRejected;
+  const isApproved = moduleFeedback && !moduleFeedback.isRejected;
   return (
-    <div className={cx("module-question-container")}>
+    <div
+      className={cx("module-question-container", {
+        "approved-style": isApproved,
+        "rejected-style": isRejected,
+      })}
+    >
       <div className={cx("module-icon")}>
         <i className={cx("fa-regular fa-file-pen")}></i>
       </div>

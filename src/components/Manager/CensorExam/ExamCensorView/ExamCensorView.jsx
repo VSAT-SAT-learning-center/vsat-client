@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
+import apiClient from "~/services/apiService";
 import styles from "./ExamCensorView.module.scss";
 import ModuleCensorView from "./ModuleCensorView";
 import SectionQuestionView from "./SectionQuestionView";
@@ -8,6 +9,10 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
   const [isShowModuleViewCensor, setIsShowModuleViewCensor] = useState(false);
   const [groupedSections, setGroupedSections] = useState([]);
   const [moduleCensorData, setModuleCensorData] = useState([]);
+  const [censorModuleFeedback, setCensorModuleFeedback] = useState({
+    examId: examCensorData?.id,
+    moduleTypesFeedback: [],
+  });
 
   useEffect(() => {
     function groupAndSortExamQuestions(examQuestions) {
@@ -52,11 +57,72 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
     setGroupedSections(sortedData);
   }, [examCensorData.examQuestions]);
 
+  const areAllModulesApproved = () => {
+    return (
+      censorModuleFeedback.moduleTypesFeedback.length ===
+        examCensorData.examQuestions.length &&
+      censorModuleFeedback.moduleTypesFeedback.every(
+        (feedback) =>
+          feedback.isRejected === false || feedback.isRejected === undefined
+      )
+    );
+  };
+
+  const isAnyModuleRejected = () => {
+    return censorModuleFeedback.moduleTypesFeedback.some(
+      (feedback) => feedback.isRejected === true
+    );
+  };
+
+  const isAllModulesCensored = () => {
+    return examCensorData.examQuestions.every((module) =>
+      censorModuleFeedback.moduleTypesFeedback.some(
+        (feedback) => feedback.moduleTypeId === module.id
+      )
+    );
+  };
+
+  const handleApprove = async () => {
+    const feedbackData = {
+      examFeedback: censorModuleFeedback,
+      accountFromId: "3054a435-312f-4265-8b10-44d32e36cc50",
+      accountToId: "2bf338f2-290b-4479-86e0-feb1bd0f518a",
+    };
+    try {
+      const response = await apiClient.post(
+        `/exams/censor/approve`,
+        feedbackData
+      );
+      setIsShowExamCensorView(false);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error approving exam:", error);
+    }
+  };
+
+  const handleReject = async () => {
+    const feedbackData = {
+      examFeedback: censorModuleFeedback,
+      accountFromId: "3054a435-312f-4265-8b10-44d32e36cc50",
+      accountToId: "2bf338f2-290b-4479-86e0-feb1bd0f518a",
+    };
+    try {
+      const response = await apiClient.post(
+        `/exams/censor/reject`,
+        feedbackData
+      );
+      setIsShowExamCensorView(false);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error reject exam:", error);
+    }
+  };
   return (
     <>
       {isShowModuleViewCensor && (
         <ModuleCensorView
           moduleCensorData={moduleCensorData}
+          setCensorModuleFeedback={setCensorModuleFeedback}
           setIsShowModuleViewCensor={setIsShowModuleViewCensor}
         />
       )}
@@ -135,6 +201,7 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
                   section={section}
                   setModuleCensorData={setModuleCensorData}
                   setIsShowModuleViewCensor={setIsShowModuleViewCensor}
+                  censorModuleFeedback={censorModuleFeedback}
                 />
               ))}
             </div>
@@ -146,8 +213,28 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
             >
               Cancel
             </button>
-            <button className={cx("preview-btn")}>
-              <span>Continue</span>
+            <button
+              className={cx("preview-btn", {
+                "approve-btn": areAllModulesApproved(),
+                "reject-btn": isAnyModuleRejected(),
+                "disabled-btn": !isAllModulesCensored(),
+              })}
+              disabled={!isAllModulesCensored()}
+              onClick={
+                areAllModulesApproved()
+                  ? handleApprove
+                  : isAnyModuleRejected()
+                  ? handleReject
+                  : undefined
+              }
+            >
+              <span>
+                {areAllModulesApproved()
+                  ? "Approve"
+                  : isAnyModuleRejected()
+                  ? "Reject"
+                  : "Approve"}
+              </span>
             </button>
           </div>
         </div>
