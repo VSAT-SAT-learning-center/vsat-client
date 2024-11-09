@@ -83,6 +83,7 @@
           box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
             rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
           background-color: $bg-primary-color;
+          margin-bottom: 20px;
 
           .general-information-header {
             cursor: pointer;
@@ -114,7 +115,6 @@
             height: 0;
             padding: 0 20px;
             opacity: 0;
-            margin-bottom: 20px;
             // transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
 
             &.show {
@@ -296,6 +296,12 @@
                     font-size: 18px;
                     font-weight: 600;
                     margin-bottom: 5px;
+
+                    .required {
+                      font-size: 14px;
+                      font-weight: 300;
+                      font-style: italic;
+                    }
                   }
 
                   .config-content {
@@ -339,6 +345,7 @@
           box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
             rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
           background-color: $bg-primary-color;
+          margin-bottom: 20px;
 
           .advanced-setting-header {
             cursor: pointer;
@@ -370,7 +377,6 @@
             height: 0;
             padding: 0 20px;
             opacity: 0;
-            margin-bottom: 20px;
             // transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
 
             &.show {
@@ -395,60 +401,200 @@
                 font-weight: 600;
               }
             }
+          }
+        }
 
-            .module-config-time-container {
+        .download-template-container {
+          width: 100%;
+          height: fit-content;
+          border-radius: 5px;
+          box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+            rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+          background-color: $bg-primary-color;
+          margin-bottom: 20px;
+
+          .download-template-header {
+            cursor: pointer;
+            user-select: none;
+            width: 100%;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .download-template-title {
+              font-size: 20px;
+              font-weight: 600;
+            }
+
+            .download-action {
+              display: flex;
+              align-items: center;
+              column-gap: 12px;
+            }
+
+            .download-btn {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 8px 16px;
+              column-gap: 12px;
+              border-radius: 10px;
+              font-size: 17px;
+              font-weight: 600;
+              color: $white-color;
+              border: 1px solid $primary-color;
+              background-color: $primary-color;
+              transition: all 0.3s linear;
+
+              &:hover {
+                opacity: 0.8;
+              }
+            }
+
+            .action-btn {
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 8px 16px;
+              column-gap: 12px;
+              border-radius: 10px;
+              font-size: 17px;
+              font-weight: 600;
+              border: 1px solid $primary-color;
+              color: $primary-color;
+              background-color: $bg-primary-color;
+              transition: all 0.3s linear;
+
+              &:hover {
+                opacity: 0.6;
+              }
+            }
+            .disabled-btn {
+              cursor: not-allowed;
+              opacity: 0.6;
+
+              &:hover {
+                opacity: 0.6;
+              }
+            }
+          }
+        }
+
+        .module-question-container {
+          width: 100%;
+          height: fit-content;
+          border-radius: 5px;
+          box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+            rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+          background-color: $bg-primary-color;
+
+          .module-question-header {
+            user-select: none;
+            width: 100%;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .module-question-title {
+              display: flex;
+              column-gap: 15px;
+              font-size: 20px;
+              font-weight: 600;
+            }
+
+            .module-section {
+              font-size: 17px;
+              font-style: italic;
+            }
+          }
+
+          .module-question-content {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 20px;
+
+            .domain-question-container {
               width: 100%;
+              display: flex;
+              align-items: center;
+              border-radius: 5px;
+              border: 1px solid #c5c5c5;
+              margin-bottom: 15px;
 
-              .module-config-time {
-                width: 100%;
-                height: 55px;
+              &:last-child {
+                margin-bottom: 0;
+              }
+
+              .domain-icon {
+                font-size: 17px;
+                padding: 12px 16px;
+              }
+
+              .domain-infor {
+                flex: 1;
                 display: flex;
                 align-items: center;
-                column-gap: 25px;
-                margin-bottom: 20px;
+                padding: 12px 16px;
+                border-left: 1px solid #c5c5c5;
 
-                .time-config {
-                  height: 100%;
-                  padding: 14px 16px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  border-radius: 5px;
-                  border: 1px solid $border-color;
-
-                  .time-input {
-                    font-size: 18px;
-                    text-align: center;
-                    border: none;
-                    outline: none;
-                    background-color: transparent;
-                  }
+                .domain-title {
+                  flex: 1;
+                  font-size: 17px;
+                  font-weight: 600;
                 }
 
-                .module-config {
-                  flex: 1;
-                  height: 100%;
+                .domain-action {
                   display: flex;
                   align-items: center;
-                  border-radius: 5px;
-                  border: 1px solid $border-color;
 
-                  .module-icon {
-                    padding: 12px 16px;
-                    font-size: 20px;
-                    border-right: 1px solid $border-color;
-                  }
-
-                  .module-infor {
-                    flex: 1;
-                    padding: 12px 16px;
+                  .count-noq {
                     font-size: 18px;
                     font-weight: 600;
+                    padding-right: 16px;
+                  }
+
+                  .create-action {
+                    padding-left: 16px;
+                    border-left: 1px solid #c5c5c5;
+
+                    .create-btn {
+                      padding: 4px 12px;
+                      font-size: 16px;
+                      border-radius: 5px;
+                      display: flex;
+                      align-items: center;
+                      column-gap: 10px;
+                      border: 1px solid $primary-color;
+                      color: $primary-color;
+                      background-color: $bg-primary-color-trans;
+                      transition: all 0.2s linear;
+
+                      .create-icon {
+                        font-size: 17px;
+                      }
+
+                      .create-text {
+                        font-size: 17px;
+                        font-weight: 600;
+                      }
+
+                      &:hover {
+                        opacity: 0.6;
+                      }
+                    }
                   }
                 }
               }
             }
           }
+        }
+
+        .empty-container {
+          width: 100%;
+          height: 50px;
         }
       }
     }

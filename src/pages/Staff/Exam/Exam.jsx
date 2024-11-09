@@ -11,6 +11,7 @@ function Exam() {
           <div className={cx("exam-header")}>
             <div className={cx("exam-text")}>Exam Overview</div>
           </div>
+          <div className={cx("exam-content")}></div>
         </div>
       </div>
       <LearningMaterialCreateFooter />

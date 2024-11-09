@@ -1,9 +1,15 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import * as XLSX from "xlsx";
 import apiClient from "~/services/apiService";
+import { generateExcelTemplate } from "~/utils/generateExcelTemplate";
 import ViewTableDistribution from "../../ExamStructureCreate/ExamStructureCreateView/StructureConfig/ViewTableDistribution";
 import ViewTableScore from "../../ExamStructureCreate/ExamStructureCreateView/StructureConfig/ViewTableScore";
+import DomainQuestionCreateModal from "./DomainQuestionCreateModal";
 import styles from "./ExamCreateModal.module.scss";
+import ModuleConfig from "./ModuleConfig";
+import ModuleQuestionCreate from "./ModuleQuestionCreate";
 const cx = classNames.bind(styles);
 function ExamCreateModal({ setIsShowCreateExamModal }) {
   const [isShowGeneralContent, setIsShowGeneralContent] = useState(true);
@@ -21,7 +27,34 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
     isShowExamQuestionDistributionTable,
     setIsShowExamQuestionDistributionTable,
   ] = useState(false);
-
+  const [structureModuleConfigs, setStructureModuleConfigs] = useState([]);
+  const [structureModuleQuestions, setStructureModuleQuestions] = useState([]);
+  const [isShowDomainQuestionCreateModal, setIsShowModalCreateQuestionModal] =
+    useState(false);
+  const [domainData, setDomainData] = useState(null);
+  const [examData, setExamData] = useState({
+    title: "",
+    description: "",
+    examStructureId: "",
+    examTypeId: "",
+    moduleConfigs: [
+      {
+        moduleId: "",
+        time: 0,
+      },
+    ],
+    examQuestions: [
+      {
+        moduleId: "",
+        domains: [
+          {
+            domain: "",
+            questions: [],
+          },
+        ],
+      },
+    ],
+  });
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,41 +92,235 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
     if (!isShowAdvancedSetting) setIsShowGeneralContent(false);
   };
 
-  const handleChangeTimeModule = (e) => {
-    let value = parseInt(e.target.value, 10);
-    if (value > 60) value = 60;
-    if (value < 0) value = 0;
-    e.target.value = value;
-  };
-
   const handleChangeExamStructure = async (e) => {
     const selectedStructureId = e.target.value;
     const selectedStructure = examStructures.find(
       (structure) => structure.id === selectedStructureId
     );
 
-    if (selectedStructure) {
-      const examScoreId = selectedStructure.examScore.id;
-      const examSemesterId = selectedStructure.examSemester.id;
-      setExamStructureSelected(selectedStructure);
+    if (!selectedStructure) return;
 
-      try {
-        const [examScoreResponse, examSemesterResponse] = await Promise.all([
-          apiClient.get(`/exam-scores/${examScoreId}`),
-          apiClient.get(`/exam-semester/${examSemesterId}/details`),
-        ]);
+    const sectionOrder = { "Reading & Writing": 1, Math: 2 };
+    const levelOrder = { Easy: 1, Hard: 2, null: 3 };
 
-        const examScore = examScoreResponse.data.data;
-        const examSemester = examSemesterResponse.data.data;
-        console.log(examScore);
-        console.log(examSemester);
-        setExamScoreSelected(examScore);
-        setExamQuestionDistributionSelected(examSemester);
-      } catch (error) {
-        console.error("Error fetching exam data", error);
+    // Sort modules by section, name, and level
+    const sortedModules = selectedStructure.moduletype.sort((a, b) => {
+      if (sectionOrder[a.section] !== sectionOrder[b.section]) {
+        return sectionOrder[a.section] - sectionOrder[b.section];
       }
+      if (a.name !== b.name) return a.name.localeCompare(b.name);
+      return levelOrder[a.level] - levelOrder[b.level];
+    });
+
+    setStructureModuleQuestions(sortedModules);
+
+    // Group modules by section
+    const mergedModules = selectedStructure.moduletype.reduce((acc, module) => {
+      const section = acc.find((item) => item.section === module.section);
+      if (section) {
+        section.modules.push(module);
+      } else {
+        acc.push({ section: module.section, modules: [module] });
+      }
+      return acc;
+    }, []);
+
+    // Sort merged modules by section order, then by module name and level
+    mergedModules.sort(
+      (a, b) => sectionOrder[a.section] - sectionOrder[b.section]
+    );
+    mergedModules.forEach((section) => {
+      section.modules.sort((a, b) => {
+        const moduleNumberA = parseInt(a.name.split(" ")[1], 10);
+        const moduleNumberB = parseInt(b.name.split(" ")[1], 10);
+        if (moduleNumberA !== moduleNumberB)
+          return moduleNumberA - moduleNumberB;
+        return levelOrder[a.level] - levelOrder[b.level];
+      });
+    });
+    setStructureModuleConfigs(mergedModules);
+    setExamStructureSelected(selectedStructure);
+
+    const newModuleConfigs = sortedModules.map((module) => ({
+      moduleId: module.id,
+      time: 0, // Default time value, you can adjust as needed
+    }));
+
+    const newExamQuestions = sortedModules.map((module) => ({
+      moduleId: module.id,
+      domains: module.domaindistribution.map((domain) => ({
+        domain: domain.domain,
+        questions: [],
+      })),
+    }));
+
+    setExamData((prevExamData) => ({
+      ...prevExamData,
+      moduleConfigs: newModuleConfigs,
+      examQuestions: newExamQuestions,
+    }));
+
+    try {
+      const { examScore, examSemester } = selectedStructure;
+      const [examScoreResponse, examSemesterResponse] = await Promise.all([
+        apiClient.get(`/exam-scores/${examScore.id}`),
+        apiClient.get(`/exam-semester/${examSemester.id}/details`),
+      ]);
+
+      setExamScoreSelected(examScoreResponse.data.data);
+      setExamQuestionDistributionSelected(examSemesterResponse.data.data);
+    } catch (error) {
+      console.error("Error fetching exam data", error);
     }
   };
+
+  const handleInputChange = (field) => (e) => {
+    setExamData((prev) => ({
+      ...prev,
+      [field]: e.target.value,
+    }));
+  };
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+
+        // Transform modules with a focus on detailed mapping
+        const transformedModules = structureModuleQuestions.map((module) => ({
+          moduleId: module.id,
+          moduleName: module.name, // Module name
+          moduleLevel: module.level, // Module level
+          section: module.section, // Section
+          domains: module.domaindistribution.map((domain) => ({
+            domain: domain.domain,
+            questions: [],
+            numberOfQuestion: domain.numberofquestion,
+          })),
+        }));
+
+        let questionContents = [];
+
+        // Process each sheet in the workbook
+        workbook.SheetNames.forEach((sheetName) => {
+          const worksheet = workbook.Sheets[sheetName];
+          const jsonSheetData = XLSX.utils.sheet_to_json(worksheet, {
+            header: 1,
+          });
+
+          // Extract details from the sheet name
+          const moduleMatch = sheetName.match(/Module (\d+)/);
+          const levelMatch = sheetName.match(/Easy|Hard/);
+          const sectionMatch = sheetName.match(/\(.*?\)/);
+
+          const moduleName = moduleMatch ? `Module ${moduleMatch[1]}` : null;
+          const moduleLevel = levelMatch ? levelMatch[0] : null;
+          let section = sectionMatch
+            ? sectionMatch[0].replace(/[()]/g, "").trim()
+            : null;
+
+          // Map shorthand section names to full names
+          if (section === "RW") {
+            section = "Reading & Writing";
+          } else if (section === "Math") {
+            section = "Math";
+          }
+
+          // Find the module using the extracted details
+          const module = transformedModules.find(
+            (m) =>
+              m.moduleName === moduleName &&
+              (m.moduleLevel === moduleLevel || !moduleLevel) &&
+              m.section === section
+          );
+
+          if (module) {
+            jsonSheetData.slice(1).forEach((row) => {
+              const [domainName, content] = row;
+
+              // Only add non-empty content to questionContents
+              if (content && content.trim() !== "") {
+                questionContents.push(content);
+              }
+
+              // Find the matching domain within the current module
+              const domain = module.domains.find(
+                (d) => d.domain === domainName
+              );
+
+              // Only add questions up to the specified number for each domain
+              if (
+                domain &&
+                domain.questions.length < domain.numberOfQuestion &&
+                content &&
+                content.trim() !== ""
+              ) {
+                domain.questions.push({
+                  content: content,
+                });
+              }
+            });
+          }
+        });
+
+        questionContents = Array.from(
+          new Set(questionContents.filter(Boolean))
+        );
+
+        // Fetch questions from the database
+        fetchQuestionsFromDatabase(questionContents, transformedModules);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  };
+
+  const fetchQuestionsFromDatabase = async (
+    questionContents,
+    transformedModules
+  ) => {
+    try {
+      const response = await apiClient.post("/questions/fetchByContent", {
+        contents: questionContents,
+      });
+      const questionsFromDB = response.data;
+
+      const final = transformedModules.map((module) => ({
+        moduleId: module.moduleId,
+        domains: module.domains.map((domain) => ({
+          domain: domain.domain,
+          questions: domain.questions
+            .map((question) => {
+              const dbQuestion = questionsFromDB.find(
+                (q) => q.plainContent === question.content
+              );
+              return dbQuestion ? { ...dbQuestion } : null;
+            })
+            .filter(Boolean),
+        })),
+      }));
+      setExamData((prevExamData) => ({
+        ...prevExamData,
+        examQuestions: final,
+      }));
+
+      toast.success("File uploaded successfully!", {
+        autoClose: 1000,
+      });
+    } catch (error) {
+      console.error("Error fetching questions from database:", error);
+      toast.error("Failed to upload file. Please try again.", {
+        autoClose: 1000,
+      });
+    }
+  };
+
+  const handleCreateExam = () => {
+    console.log(examData);
+  };
+
   return (
     <>
       {isShowExamScoreTable && (
@@ -109,6 +336,16 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
           setIsShowDistributionDetail={setIsShowExamQuestionDistributionTable}
         />
       )}
+
+      {isShowDomainQuestionCreateModal && (
+        <DomainQuestionCreateModal
+          domainData={domainData}
+          examData={examData}
+          setExamData={setExamData}
+          setIsShowModalCreateQuestionModal={setIsShowModalCreateQuestionModal}
+        />
+      )}
+
       <div className={cx("exam-create-modal-wrapper")}>
         <div className={cx("exam-create-modal-container")}>
           <div className={cx("exam-create-modal-header")}>
@@ -123,6 +360,7 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
           </div>
           <div className={cx("exam-create-modal-content")}>
             <div className={cx("exam-create-modal-main")}>
+              {/* General information */}
               <div className={cx("general-information-container")}>
                 <div
                   className={cx("general-information-header")}
@@ -153,9 +391,11 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                     <div className={cx("exam-title-input")}>
                       <input
                         type="text"
+                        value={examData.title}
                         className={cx("title-input")}
                         placeholder="Exam Title"
                         autoFocus
+                        onChange={handleInputChange("title")}
                       />
                     </div>
                   </div>
@@ -166,7 +406,9 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                     <div className={cx("exam-desc-input")}>
                       <textarea
                         className={cx("desc-input")}
+                        value={examData.description}
                         placeholder="Brief description"
+                        onChange={handleInputChange("description")}
                       ></textarea>
                     </div>
                   </div>
@@ -181,8 +423,12 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                         </div>
                         <select
                           id="type-structure"
+                          value={examData.examStructureId}
                           className={cx("structure-select")}
-                          onChange={handleChangeExamStructure}
+                          onChange={(e) => {
+                            handleInputChange("examStructureId")(e);
+                            handleChangeExamStructure(e);
+                          }}
                         >
                           <option value="">Select structure</option>
                           {examStructures.map((structure) => (
@@ -198,7 +444,9 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                         <div className={cx("type-exam-type")}>Exam Type</div>
                         <select
                           id="type-exam-type"
+                          value={examData.examTypeId}
                           className={cx("type-select")}
+                          onChange={handleInputChange("examTypeId")}
                         >
                           <option value="">Select type</option>
                           {examTypes.map((type) => (
@@ -267,8 +515,55 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                       </div>
                     </div>
                   )}
+                  {examStructureSelected?.examStructureType.name ===
+                    "Adaptive" && (
+                    <div className={cx("show-exam-config-container")}>
+                      <div className={cx("exam-config-container")}>
+                        <div className={cx("exam-config-icon")}>
+                          <i className={cx("fa-light fa-eye")}></i>
+                        </div>
+                        <div className={cx("exam-config-select")}>
+                          <div className={cx("type-config")}>
+                            Correct question in Module 1{" "}
+                            <span className={cx("required")}>
+                              (Reading & Writing)
+                            </span>
+                          </div>
+                          <div className={cx("config-content")}>
+                            <div className={cx("name-config")}>
+                              <div className={cx("name")}>
+                                {
+                                  examStructureSelected?.requiredCorrectInModule1RW
+                                }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={cx("exam-config-container")}>
+                        <div className={cx("exam-config-select")}>
+                          <div className={cx("type-config")}>
+                            Correct question in Module 1{" "}
+                            <span className={cx("required")}>
+                              (Reading & Writing)
+                            </span>
+                          </div>
+                          <div className={cx("config-content")}>
+                            <div className={cx("name-config")}>
+                              <div className={cx("name")}>
+                                {
+                                  examStructureSelected?.requiredCorrectInModule1M
+                                }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
+              {/* Module config time */}
               <div className={cx("advanced-setting-container")}>
                 <div
                   className={cx("advanced-setting-header")}
@@ -298,29 +593,80 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                     </div>
                     <div className={cx("module-time-title")}>Molude time</div>
                   </div>
-                  <div className={cx("module-config-time-container")}>
-                    <div className={cx("module-config-time")}>
-                      <div className={cx("module-config")}>
-                        <div className={cx("module-icon")}>
-                          <i className="fa-light fa-file-pen"></i>
-                        </div>
-                        <div className={cx("module-infor")}>Module 1</div>
-                      </div>
-
-                      <div className={cx("time-config")}>
-                        <input
-                          type="number"
-                          min="0"
-                          max="60"
-                          placeholder="mins"
-                          className={cx("time-input")}
-                          onChange={handleChangeTimeModule}
-                        />
-                      </div>
-                    </div>
+                  {structureModuleConfigs?.map((structureModule, index) => (
+                    <ModuleConfig
+                      key={index}
+                      setExamData={setExamData}
+                      structureModule={structureModule}
+                    />
+                  ))}
+                </div>
+              </div>
+              {/* Download template */}
+              <div className={cx("download-template-container")}>
+                <div className={cx("download-template-header")}>
+                  <div className={cx("download-template-title")}>
+                    Download template
+                  </div>
+                  <div className={cx("download-action")}>
+                    <button
+                      className={cx("download-btn", {
+                        "disabled-btn": structureModuleQuestions?.length <= 0,
+                      })}
+                      disabled={structureModuleQuestions?.length <= 0}
+                      onClick={() =>
+                        generateExcelTemplate(
+                          structureModuleQuestions,
+                          examStructureSelected
+                        )
+                      }
+                    >
+                      <i
+                        className={cx("fa-light fa-arrow-down-to-bracket")}
+                      ></i>
+                      <span>Download</span>
+                    </button>
+                    <label
+                      className={cx("action-btn", {
+                        "disabled-btn": structureModuleQuestions?.length <= 0,
+                      })}
+                      style={{
+                        pointerEvents:
+                          structureModuleQuestions?.length <= 0
+                            ? "none"
+                            : "auto",
+                      }}
+                    >
+                      <input
+                        type="file"
+                        accept=".xlsx, .xls"
+                        onChange={handleFileUpload}
+                        style={{ display: "none" }}
+                      />
+                      <i
+                        className={cx(
+                          "fa-light fa-arrow-up-from-bracket",
+                          "action-icon"
+                        )}
+                      ></i>
+                      <span className={cx("action-text")}>Upload file</span>
+                    </label>
                   </div>
                 </div>
               </div>
+              {/* Module question */}
+              {structureModuleQuestions?.map((moduleQuestion) => (
+                <ModuleQuestionCreate
+                  key={moduleQuestion?.id}
+                  examData={examData}
+                  moduleQuestion={moduleQuestion}
+                  setIsShowModalCreateQuestionModal={
+                    setIsShowModalCreateQuestionModal
+                  }
+                  setDomainData={setDomainData}
+                />
+              ))}
+              <div className={cx("empty-container")}></div>
             </div>
           </div>
           <div className={cx("exam-create-modal-footer")}>
@@ -330,7 +676,7 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
             >
               Cancel
             </button>
-            <button className={cx("preview-btn")}>
+            <button className={cx("preview-btn")} onClick={handleCreateExam}>
               <span>Save</span>
             </button>
           </div>

@@ -84,7 +84,7 @@ function QuestionExamCreateModal({
     if (selectedDomainId) {
       try {
         const response = await apiClient.get(
-          `/skills/domain/${selectedDomainId}`
+          `/skills/domainById/${selectedDomainId}`
         );
         setSkills(response.data);
       } catch (error) {

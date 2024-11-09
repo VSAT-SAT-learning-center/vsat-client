@@ -4,8 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import QuestionExamEditModal from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzEditModal";
-import QuestionExamItem from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzItem";
 import QuestionFeedbackView from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzFeedbackView";
+import QuestionExamItem from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzItem";
 import QuestionItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
@@ -85,12 +85,10 @@ function QuizzFeedback() {
                   {questionList.map((question, index) => (
                     <QuestionExamItem
                       key={index}
-                      index={index}
+                      index={index + (currentPage - 1) * itemsPerPage}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
-                      setIsShowQuizzItemPreview={
-                        setIsShowQuizzItemPreview
-                      }
+                      setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
                       setQuestionEdit={setQuestionEdit}
                       setQuestionFeedback={setQuestionFeedback}
                       setIsShowFeedbackView={setIsShowFeedbackView}
