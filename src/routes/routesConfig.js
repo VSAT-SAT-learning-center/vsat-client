@@ -12,14 +12,11 @@ import ManagerAccountSetting from "~/pages/Manager/ManagerAccountSetting";
 import ManagerDashboard from "~/pages/Manager/ManagerDashboard";
 import ManagerExam from "~/pages/Manager/ManagerExam";
 import ExamCensor from "~/pages/Manager/ManagerExam/ExamCensor";
-import ExamScoreCensor from "~/pages/Manager/ManagerExam/ExamScoreCensor";
-import ExamStructureCensor from "~/pages/Manager/ManagerExam/ExamStructureCensor";
 import FeedbackExam from "~/pages/Manager/ManagerExam/FeedbackExam";
 import ManagerFeedback from "~/pages/Manager/ManagerFeedback";
 import ManagerLearningMaterial from "~/pages/Manager/ManagerLearningMaterial";
 import FeedbackLearningMaterial from "~/pages/Manager/ManagerLearningMaterial/FeedbackLearningMaterial";
 import LearningMaterialCensor from "~/pages/Manager/ManagerLearningMaterial/LearningMaterialCensor";
-import ManagerPractice from "~/pages/Manager/ManagerPractice";
 import ManagerQuestionExam from "~/pages/Manager/ManagerQuestionExam";
 import QuestionExamCensor from "~/pages/Manager/ManagerQuestionExam/QuestionExamCensor";
 import ManagerQuestionQuizz from "~/pages/Manager/ManagerQuestionQuizz";
@@ -270,23 +267,7 @@ const routesConfig = [
     component: QuestionDistribution,
     protected: true,
   },
-  {
-    path: "/manager/exams/structure/censor",
-    component: ExamStructureCensor,
-    protected: true,
-  },
-  {
-    path: "/manager/exams/score/censor",
-    component: ExamScoreCensor,
-    protected: true,
-  },
   { path: "/manager/exams/feedback", component: FeedbackExam, protected: true },
-  // Manger practice routes
-  {
-    path: "/manager/practice/overview",
-    component: ManagerPractice,
-    protected: true,
-  },
   // Manger manage feedback routes
   { path: "/manager/feedback", component: ManagerFeedback, protected: true },
   // Manger account setting routes
