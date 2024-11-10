@@ -1,3 +1,4 @@
+import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import CreateQuestionDistributionModal from "~/components/Manager/ManageQuestionDistribution/CreateQuestionDistributionModal";
@@ -27,9 +28,11 @@ function QuestionDistribution() {
   const [isShowViewDetailScore, setIsShowViewDetailScore] = useState(false);
   const [viewScoreDetailData, setViewScoreDetailData] = useState(false);
   const [examTime, setExamTime] = useState(null);
+  const [isWaiting, setIsWaiting] = useState(false);
 
   const fetchExamScoreList = useCallback(async () => {
     try {
+      setIsWaiting(true);
       const response = await apiClient.get("/exam-semester/details", {
         params: {
           page: 1,
@@ -39,6 +42,8 @@ function QuestionDistribution() {
       setExamScoreList(response.data.data);
     } catch (error) {
       console.error("Failed to fetch exam score list:", error);
+    } finally {
+      setIsWaiting(false);
     }
   }, []);
 
@@ -110,7 +115,20 @@ function QuestionDistribution() {
               </button>
             </div>
             <div className={cx("question-distribution-content")}>
-              {examScoreList?.length > 0 &&
+              {isWaiting ? (
+                <>
+                  {[...Array(3)].map((_, i) => (
+                    <Skeleton
+                      key={i}
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={146}
+                    />
+                  ))}
+                </>
+              ) : (
+                examScoreList?.length > 0 &&
                 examScoreList?.map((examScore, index) => (
                   <QuestionDistributionItem
                     key={examScore.id}
@@ -119,7 +137,8 @@ function QuestionDistribution() {
                     setViewScoreDetailData={setViewScoreDetailData}
                     setIsShowViewDetailScore={setIsShowViewDetailScore}
                   />
-                ))}
+                ))
+              )}
             </div>
           </div>
         </div>
