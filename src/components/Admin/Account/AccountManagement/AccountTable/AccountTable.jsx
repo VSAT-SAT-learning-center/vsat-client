@@ -79,8 +79,8 @@ function AccountTable() {
     <div className={cx("table-wrapper")}>
       <div className={cx("table-container")}>
         <div className={cx("header-container")}>
-          <div className={cx("header-title")}>User Management</div>
           <div className={cx("header-actions")}>
+            <div className={cx("header-actions-search")}>
             <input
               className={cx("search-input")}
               placeholder="Search by name"
@@ -90,6 +90,7 @@ function AccountTable() {
             <button className={cx("filter-btn")} onClick={handleSearch}>
               Search
             </button>
+            </div>
             <button className={cx("add-user-btn")} onClick={openModal}>
               <PlusCircleOutlined style={{ marginRight: "5px" }} /> Add User
             </button>
