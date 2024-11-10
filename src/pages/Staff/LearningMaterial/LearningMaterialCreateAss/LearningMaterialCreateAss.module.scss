@@ -1,0 +1,14 @@
+@import "~/styles/variables";
+
+.learning-material-ass-container {
+  width: 100%;
+  padding: 16px 24px;
+
+  .ass-container {
+    width: 100%;
+    min-height: 535px;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+  }
+}

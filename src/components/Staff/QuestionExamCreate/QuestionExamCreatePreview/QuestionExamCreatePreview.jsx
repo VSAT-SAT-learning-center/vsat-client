@@ -77,8 +77,6 @@ function QuestionExamCreatePreview({
     questionPreviewData?.sectionId,
   ]);
   const handleSaveQuestion = async () => {
-    console.log(questionPreviewData);
-
     try {
       await apiClient.post("/questions", questionPreviewData);
       toast.success("Question created successfully!", {

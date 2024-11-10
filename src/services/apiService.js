@@ -1,5 +1,6 @@
 import axios from 'axios';
 import apiConfig from '~/configs/apiConfig';
+
 const apiClient = axios.create({
   baseURL: apiConfig.apiUrl,
   headers: {
@@ -7,25 +8,27 @@ const apiClient = axios.create({
   },
 });
 
+// Request interceptor to add the access token to every request
 apiClient.interceptors.request.use((config) => {
-  // You can add any custom request configuration here
-  // const token = localStorage.getItem('token');
-  // if (token) {
-  //   config.headers['Authorization'] = `Bearer ${token}`;
-  // }
+  const token = localStorage.getItem('accessToken');
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
   return config;
 }, (error) => {
   return Promise.reject(error);
 });
 
-// Add a response interceptor to handle responses and errors globally
+// Response interceptor to handle token expiration and authorization errors
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Handle common error responses like unauthorized (401) or forbidden (403)
     if (error.response) {
       if (error.response.status === 401) {
+        // Unauthorized: clear access token and optionally redirect to login
         console.error('Unauthorized: Please log in again.');
+        localStorage.removeItem('accessToken');
+        // Optionally trigger logout logic or redirect to login
       } else if (error.response.status === 403) {
         console.error('Access forbidden: You do not have permission');
       } else {

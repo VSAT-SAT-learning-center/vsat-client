@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.3);
   .login-container {
     width: 450px;
     height: 620px;
@@ -69,8 +69,7 @@
 
       .text {
         font-size: 32px;
-        font-weight: 600;
-        color: var(--text-color-black-2nd);
+        font-weight: bold;
       }
     }
 
@@ -96,7 +95,6 @@
               font-size: 16px;
               font-weight: 600;
               padding-left: 10px;
-              color: var(--text-color-black);
             }
 
             .email-input {
@@ -106,16 +104,14 @@
               padding: 8px 16px;
               border-radius: 15px;
               border: 2px solid #cdcdcd;
-              background-color: var(--bg-white);
 
               .input {
                 width: 100%;
                 height: 100%;
-                font-size: 16px;
+                font-size: 17px;
                 border: none;
                 outline: none;
                 background-color: transparent;
-                color: var(--text-color-black);
               }
             }
           }
@@ -127,7 +123,6 @@
               font-size: 16px;
               font-weight: 600;
               padding-left: 10px;
-              color: var(--text-color-black);
             }
 
             .password-input {
@@ -137,16 +132,14 @@
               padding: 8px 16px;
               border-radius: 15px;
               border: 2px solid #cdcdcd;
-              background-color: var(--bg-white);
 
               .input {
                 width: 100%;
                 height: 100%;
-                font-size: 16px;
+                font-size: 17px;
                 border: none;
                 outline: none;
                 background-color: transparent;
-                color: var(--text-color-black);
               }
             }
           }
@@ -158,7 +151,6 @@
               text-decoration: none;
               font-size: 15px;
               font-weight: 600;
-              color: var(--text-color-black);
 
               &:hover {
                 text-decoration: underline;
@@ -167,14 +159,13 @@
           }
 
           .error-message {
-            margin-top: 8px;
+            margin: 15px 0;
             font-size: 14px;
-            color: red;
+            color: $third-color;
           }
 
           .login-btn {
             width: 100%;
-            margin-top: 25px;
 
             .btn {
               cursor: pointer;
@@ -224,12 +215,10 @@
             text-align: center;
             font-size: 14px;
             line-height: 20px;
-            color: var(--text-color-gray-1st);
 
             .mark {
               cursor: pointer;
               font-weight: 600;
-              color: var(--text-color-black);
 
               &:hover {
                 text-decoration: underline;
