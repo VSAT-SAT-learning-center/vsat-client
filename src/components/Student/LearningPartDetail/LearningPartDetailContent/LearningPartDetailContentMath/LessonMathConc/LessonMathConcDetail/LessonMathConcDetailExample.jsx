@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import styles from "./LessonMathConcDetail.module.scss";
 import MathRenderer from "../../MathRenderer";
+import styles from "./LessonMathConcDetail.module.scss";
 const cx = classNames.bind(styles);
 
 function LessonMathConcDetailExample({ example }) {
@@ -13,7 +13,7 @@ function LessonMathConcDetailExample({ example }) {
   };
   return (
     <div className={cx("conc-detail-example")}>
-      <MathRenderer loadedContent={example.question} />
+      <MathRenderer loadedContent={example?.content} />
       <div className={cx("show-example")}>
         <div className={cx("show-example-title")} onClick={handleShowExample}>
           <div className={cx("title")}>
@@ -28,14 +28,14 @@ function LessonMathConcDetailExample({ example }) {
             )}
           ></i>
         </div>
-        {isShowExample && <MathRenderer loadedContent={example.explanation} />}
+        {isShowExample && <MathRenderer loadedContent={example?.explain} />}
       </div>
     </div>
   );
 }
 
 LessonMathConcDetailExample.propTypes = {
-  example: PropTypes.string,
+  example: PropTypes.object,
 };
 
 export default LessonMathConcDetailExample;

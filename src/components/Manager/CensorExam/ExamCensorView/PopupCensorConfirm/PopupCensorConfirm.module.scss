@@ -1,0 +1,108 @@
+@import "~/styles/variables";
+
+.popup-censor-confirm-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 107;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .popup-censor-confirm-container {
+    position: relative;
+    width: 600px;
+    height: fit-content;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .popup-censor-confirm-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .close-btn {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: all 0.2s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+    }
+
+    .popup-censor-confirm-infor {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      row-gap: 10px;
+      margin-bottom: 25px;
+
+      .title {
+        font-size: 26px;
+        font-weight: bold;
+      }
+
+      .desc {
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+        color: #5a5a5a;
+      }
+    }
+
+    .popup-censor-confirm-action {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      column-gap: 15px;
+      margin-bottom: 25px;
+
+      .action-btn {
+        width: 200px;
+        padding: 12px 0;
+        border-radius: 6px;
+        font-size: 20px;
+        font-weight: 600;
+        transition: all 0.2s linear;
+
+        &:hover {
+          opacity: 0.7;
+        }
+
+        .btn-icon {
+          padding-right: 10px;
+        }
+
+        &.reject {
+          border: 1px solid $primary-color;
+          color: $primary-color;
+          background-color: $bg-primary-color-trans;
+        }
+
+        &.approve {
+          color: $white-color;
+          background-color: $primary-color;
+        }
+      }
+    }
+  }
+}

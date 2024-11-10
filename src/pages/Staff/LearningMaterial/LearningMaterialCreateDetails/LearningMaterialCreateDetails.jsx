@@ -1,12 +1,12 @@
 import classNames from "classnames/bind";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import MultiStepProgressBar from "~/components/Staff/LearningMaterialCreate/MultiStepProgressBar";
 import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
+import apiClient from "~/services/apiService";
 import styles from "./LearningMaterialCreateDetails.module.scss";
 
 const cx = classNames.bind(styles);
@@ -15,22 +15,45 @@ function LearningMaterialCreateDetails() {
   const navigate = useNavigate();
   const currentStep = 0;
 
+  const [levels, setLevels] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [domains, setDomains] = useState([]);
+  const [countTitleInput, setCountTitleInput] = useState(0);
+
   const [unit, setUnit] = useState({
-    unitId: uuidv4(),
     title: "",
     description: "",
-    section: "",
-    level: "",
+    sectionId: "",
+    levelId: "",
+    domainId: "",
   });
-  const [countTitleInput, setCountTitleInput] = useState(0);
+
   const isFormValid = () => {
     return (
       unit.title.trim() !== "" &&
       unit.description.trim() !== "" &&
-      unit.section.trim() !== "" &&
-      unit.level.trim() !== ""
+      unit.sectionId.trim() !== "" &&
+      unit.levelId.trim() !== "" &&
+      unit.domainId.trim() !== ""
     );
   };
+
+  useEffect(() => {
+    const fetchLevelsAndSections = async () => {
+      try {
+        const [levelsResponse, sectionsResponse] = await Promise.all([
+          apiClient.get("/level"),
+          apiClient.get("/section"),
+        ]);
+        setLevels(levelsResponse.data.data);
+        setSections(sectionsResponse.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchLevelsAndSections();
+  }, []);
 
   const handleClickUploadImage = () => {
     fileInputImageRef.current.click();
@@ -44,17 +67,37 @@ function LearningMaterialCreateDetails() {
     }));
   };
 
-  const handleSectionChange = (e) => {
+  const handleSectionChange = async (e) => {
+    const selectedSectionId = e.target.value;
     setUnit((prevUnit) => ({
       ...prevUnit,
-      section: e.target.value,
+      sectionId: selectedSectionId,
+    }));
+    if (selectedSectionId) {
+      try {
+        const response = await apiClient.get(
+          `/domains/section/${selectedSectionId}`
+        );
+        setDomains(response.data);
+      } catch (error) {
+        console.error("Error fetching domains:", error);
+      }
+    } else {
+      setDomains([]);
+    }
+  };
+
+  const handleDomainChange = (e) => {
+    setUnit((prevUnit) => ({
+      ...prevUnit,
+      domainId: e.target.value,
     }));
   };
 
   const handleLevelChange = (e) => {
     setUnit((prevUnit) => ({
       ...prevUnit,
-      level: e.target.value,
+      levelId: e.target.value,
     }));
   };
 
@@ -65,10 +108,34 @@ function LearningMaterialCreateDetails() {
     }));
   };
 
-  const handleNext = () => {
+  const handleCancel = () => {
+    setUnit({
+      title: "",
+      description: "",
+      sectionId: "",
+      levelId: "",
+      domainId: "",
+    });
+    setCountTitleInput(0);
+  };
+
+  const handleNext = async () => {
     if (isFormValid()) {
-      console.log(unit);
-      navigate(steps[currentStep + 1].path, { state: { unit } });
+      try {
+        const response = await apiClient.post("/units", unit);
+        const newUnit = response.data.data;
+        setUnit({
+          title: "",
+          description: "",
+          sectionId: "",
+          levelId: "",
+          domainId: "",
+        });
+        setCountTitleInput(0);
+        navigate(`${steps[currentStep + 1].path}/${newUnit.id}`);
+      } catch (error) {
+        console.error("Error creating unit:", error);
+      }
     }
   };
 
@@ -113,38 +180,63 @@ function LearningMaterialCreateDetails() {
               </div>
             </div>
             <div className={cx("create-details-information")}>
-              <div className={cx("unit-title-details")}>
-                <div className={cx("unit-title")}>
-                  Unit Title <span className={cx("required")}>(Required)</span>
+              <div className={cx("unit-title-config")}>
+                <div className={cx("unit-title-details")}>
+                  <div className={cx("unit-title")}>
+                    Title <span className={cx("required")}>(Required)</span>
+                  </div>
+                  <div className={cx("unit-title-input")}>
+                    <input
+                      type="text"
+                      value={unit.title}
+                      className={cx("title-input")}
+                      placeholder="Name of unit"
+                      autoFocus={true}
+                      maxLength={100}
+                      onChange={handleChangeTitleInput}
+                    />
+                    <div className={cx("count-input")}>
+                      {countTitleInput}/100
+                    </div>
+                  </div>
                 </div>
-                <div className={cx("unit-title-input")}>
-                  <input
-                    type="text"
-                    value={unit.title}
-                    className={cx("title-input")}
-                    placeholder="Name of unit"
-                    autoFocus={true}
-                    maxLength={100}
-                    onChange={handleChangeTitleInput}
-                  />
-                  <div className={cx("count-input")}>{countTitleInput}/100</div>
+                <div className={cx("unit-section-details")}>
+                  <div className={cx("unit-section")}>
+                    Section <span className={cx("required")}>(Required)</span>
+                  </div>
+                  <select
+                    id="unit-section"
+                    value={unit.sectionId}
+                    className={cx("section-select")}
+                    onChange={handleSectionChange}
+                  >
+                    <option value="">Select section</option>
+                    {sections.map((section) => (
+                      <option value={section.id} key={section.id}>
+                        {section.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <div className={cx("unit-config-details")}>
                 <div className={cx("unit-section-details")}>
                   <div className={cx("unit-section")}>
-                    Unit Section{" "}
-                    <span className={cx("required")}>(Required)</span>
+                    Domain <span className={cx("required")}>(Required)</span>
                   </div>
                   <select
                     id="unit-section"
-                    value={unit.section}
+                    value={unit.domainId}
                     className={cx("section-select")}
-                    onChange={handleSectionChange}
+                    onChange={handleDomainChange}
+                    disabled={domains?.length === 0}
                   >
-                    <option value="option1">Unit section</option>
-                    <option value="reading_writing">Reading & Writing</option>
-                    <option value="math">Math</option>
+                    <option value="">Select domain</option>
+                    {domains.map((domain) => (
+                      <option value={domain.id} key={domain.id}>
+                        {domain.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className={cx("unit-level-details")}>
@@ -154,14 +246,16 @@ function LearningMaterialCreateDetails() {
                   </div>
                   <select
                     id="unit-level"
-                    value={unit.level}
+                    value={unit.levelId}
                     className={cx("level-select")}
                     onChange={handleLevelChange}
                   >
-                    <option value="option1">Unit level</option>
-                    <option value="foundation">Foundation</option>
-                    <option value="medium">Medium</option>
-                    <option value="advance">Advance</option>
+                    <option value="">Select level</option>
+                    {levels.map((level) => (
+                      <option value={level.id} key={level.id}>
+                        {level.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -181,7 +275,9 @@ function LearningMaterialCreateDetails() {
             </div>
           </div>
           <div className={cx("create-details-bottom")}>
-            <button className={cx("cancel-btn")}>Cancel</button>
+            <button className={cx("cancel-btn")} onClick={handleCancel}>
+              Cancel
+            </button>
             <button
               className={cx("continue-btn", {
                 "disabled-btn": !isFormValid(),

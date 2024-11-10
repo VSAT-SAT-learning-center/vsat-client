@@ -1,11 +1,26 @@
-import PropTypes from 'prop-types';
-import { Navigate } from 'react-router-dom';
+import PropTypes from "prop-types";
+import { useContext } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import Loader from "~/components/General/Loader";
+import { AuthContext } from "~/contexts/AuthContext";
 
-// Simulate authentication (replace with real authentication logic)
-const isAuthenticated = true;
+function ProtectedRoute({ children, roles }) {
+  const { user, isLoggedIn, loading } = useContext(AuthContext);
+  const location = useLocation();
 
-function ProtectedRoute({ children }) {
-  return isAuthenticated ? children : <Navigate to="/" replace />;
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!isLoggedIn) {
+    return <Navigate to="/" replace state={{ from: location }} />;
+  }
+
+  if (roles?.length > 0 && !roles?.includes(user?.role)) {
+    return <Navigate to="/unauthorized" replace />;
+  }
+
+  return children;
 }
 
 ProtectedRoute.propTypes = {

@@ -1,0 +1,240 @@
+@import "~/styles/variables";
+
+.exam-create-view-detail-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 105;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .exam-create-view-detail-container {
+    position: relative;
+    width: 80%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .exam-create-view-detail-header {
+      width: 100%;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .create-title {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .create-close {
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .create-empty {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    .exam-create-veiew-detail-content {
+      width: 100%;
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .exam-information-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        column-gap: 25px;
+        margin-bottom: 20px;
+
+        .exam-title-container {
+          flex: 1;
+
+          .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+
+          .title-input-container {
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: 1px solid $border-color;
+
+            .title-input {
+              width: 100%;
+              border: none;
+              outline: none;
+              background-color: transparent;
+            }
+          }
+        }
+
+        .exam-structure-container {
+          flex: 1;
+
+          .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+
+          .structure-name {
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: 1px solid $border-color;
+          }
+        }
+
+        .exam-type-container {
+          flex: 1;
+
+          .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+
+          .type-name {
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: 1px solid $border-color;
+          }
+        }
+      }
+
+      .exam-desc-container {
+        width: 100%;
+        margin-bottom: 20px;
+
+        .exam-desc-title {
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+
+        .exam-desc {
+          padding: 8px 16px;
+          border-radius: 5px;
+          border: 1px solid $border-color;
+        }
+
+        .exam-desc-input {
+          width: 100%;
+          height: fit-content;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 150px;
+          max-height: 150px;
+          font-size: 18px;
+          padding: 8px 16px;
+          border-radius: 5px;
+          border: 1px solid $border-color;
+
+          .desc-input {
+            width: 100%;
+            height: fit-content;
+            min-height: calc(150px - 20px);
+            max-height: calc(150px - 20px);
+            resize: none;
+            border: none;
+            outline: none;
+            overflow: auto;
+          }
+        }
+      }
+
+      .exam-question-container {
+        width: 100%;
+
+        .exam-question-title {
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 15px;
+        }
+      }
+    }
+
+    .exam-create-veiew-detail-footer {
+      width: 100%;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      column-gap: 10px;
+      border-top: 1px solid $border-color;
+
+      .preview-btn {
+        user-select: none;
+        padding: 6px 16px;
+        font-weight: 600;
+        border-radius: 25px;
+        color: $white-color;
+        border: 1px solid $primary-color;
+        background-color: $primary-color;
+        transition: 0.3s linear;
+
+        .preview-icon {
+          margin-right: 10px;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .cancel-btn {
+        user-select: none;
+        padding: 6px 16px;
+        font-weight: 600;
+        border-radius: 25px;
+        color: $primary-color;
+        border: 1px solid $primary-color;
+        background-color: $bg-primary-color;
+        transition: 0.3s linear;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .disabled-btn {
+        cursor: pointer;
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}

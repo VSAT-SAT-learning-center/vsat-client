@@ -6,59 +6,90 @@
 
   .publish-container {
     width: 100%;
-    height: fit-content;
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-    background-color: $bg-primary-color;
+    display: flex;
+    column-gap: 15px;
 
-
-    .publish-bottom {
-      width: 100%;
+    .publish-sidebar-wrapper {
+      width: 360px;
+      height: auto;
       padding: 20px;
+      border-radius: 15px;
+      box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+      background-color: $bg-primary-color;
+
+      .publish-sidebar-container {
+        width: 100%;
+      }
+    }
+
+    .publish-content-wrapper {
+      flex: 1;
+      height: auto;
+      border-radius: 15px;
       display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      column-gap: 10px;
+      flex-direction: column;
+      box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+      background-color: $bg-primary-color;
 
-      .back-btn {
-        cursor: pointer;
-        user-select: none;
-        padding: 8px 20px;
-        font-weight: 600;
-        border-radius: 25px;
-        color: $primary-color;
-        border: 1px solid $primary-color;
-        background-color: $bg-primary-color;
-        transition: 0.3s linear;
+      .publish-content-container {
+        width: 100%;
+        flex-grow: 1;
+        padding: 20px;
 
-        &:hover {
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      .publish-bottom {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        column-gap: 10px;
+        border-top: 1px solid $border-color;
+
+        .back-btn {
+          cursor: pointer;
+          user-select: none;
+          padding: 8px 20px;
+          font-weight: 600;
+          border-radius: 25px;
+          color: $primary-color;
+          border: 1px solid $primary-color;
+          background-color: $bg-primary-color;
+          transition: 0.3s linear;
+
+          &:hover {
+            color: $white-color;
+            background-color: $primary-color;
+          }
+        }
+
+        .publish-btn {
+          cursor: pointer;
+          user-select: none;
+          padding: 8px 20px;
+          font-weight: 600;
+          border-radius: 25px;
           color: $white-color;
+          border: 1px solid $primary-color;
           background-color: $primary-color;
+          transition: 0.3s linear;
+
+          &:hover {
+            opacity: 0.8;
+          }
         }
-      }
 
-      .publish-btn {
-        cursor: pointer;
-        user-select: none;
-        padding: 8px 20px;
-        font-weight: 600;
-        border-radius: 25px;
-        color: $white-color;
-        border: 1px solid $primary-color;
-        background-color: $primary-color;
-        transition: 0.3s linear;
-
-        &:hover {
-          opacity: 0.8;
-        }
-      }
-
-      .disabled-btn {
-        cursor: not-allowed;
-        opacity: 0.6;
-
-        &:hover {
+        .disabled-btn {
+          cursor: not-allowed;
           opacity: 0.6;
+
+          &:hover {
+            opacity: 0.6;
+          }
         }
       }
     }

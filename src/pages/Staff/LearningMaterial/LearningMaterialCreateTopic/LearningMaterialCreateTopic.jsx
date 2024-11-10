@@ -1,29 +1,49 @@
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import classNames from "classnames/bind";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+// import { v4 as uuidv4 } from "uuid";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import LessonTypeModal from "~/components/Staff/LearningMaterialCreate/LessonTypeModal";
 import MultiStepProgressBar from "~/components/Staff/LearningMaterialCreate/MultiStepProgressBar";
 import TopicItem from "~/components/Staff/LearningMaterialCreate/TopicItem";
-import TopicItemPreview from "~/components/Staff/LearningMaterialCreate/TopicItemPreview";
+// import TopicItemPreview from "~/components/Staff/LearningMaterialCreate/TopicItemPreview";
 import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
+import apiClient from "~/services/apiService";
 import styles from "./LearningMaterialCreateTopic.module.scss";
 const cx = classNames.bind(styles);
 
 function LearningMaterialCreateTopic() {
   const navigate = useNavigate();
   const currentStep = 1;
-  const location = useLocation();
-  const { unit } = location.state || {};
+  const { unitId } = useParams();
+  const inputLessonRef = useRef(null);
   const [topics, setTopics] = useState([]);
-  const [createTopicPreviews, setCreateTopicPreviews] = useState([]);
+  // const [createTopicPreviews, setCreateTopicPreviews] = useState([]);
   const [lessonType, setLessonType] = useState("Empty");
-  const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
   const [isShowLessonTypeModal, setIsShowLessonTypeModal] = useState(false);
+
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const response = await apiClient.get(`/units/domain/${unitId}`);
+        const originalArray = response.data.domain.skills;
+        const transformedArray = originalArray.map((item) => ({
+          id: item.id,
+          unitId: unitId,
+          title: item.content,
+          lessons: [],
+        }));
+        setTopics(transformedArray);
+      } catch (error) {
+        console.error("Error while fetching topic:", error);
+      }
+    };
+
+    fetchTopics();
+  }, [unitId]);
 
   const onDragEnd = (result) => {
     const { source, destination, type } = result;
@@ -66,25 +86,26 @@ function LearningMaterialCreateTopic() {
     }
   };
 
-  const handleClickCreateNewTopic = () => {
-    setCreateTopicPreviews((prevPreviews) => [
-      ...prevPreviews,
-      { id: uuidv4() },
-    ]);
-  };
+  // const handleClickCreateNewTopic = () => {
+  //   setCreateTopicPreviews((prevPreviews) => [
+  //     ...prevPreviews,
+  //     { id: uuidv4() },
+  //   ]);
+  // };
 
-  const handleRemovePreview = (id) => {
-    setCreateTopicPreviews((prevPreviews) =>
-      prevPreviews.filter((preview) => preview.id !== id)
-    );
-  };
+  // const handleRemovePreview = (id) => {
+  //   setCreateTopicPreviews((prevPreviews) =>
+  //     prevPreviews.filter((preview) => preview.id !== id)
+  //   );
+  // };
 
-  const handlePrevious = () => {
-    navigate(steps[currentStep - 1].path);
-  };
-  const handleNext = () => {
-    console.log(topics);
-    navigate(steps[currentStep + 1].path, { state: { unit, topics } });
+  const handleNext = async () => {
+    try {
+      await apiClient.post("/unit-areas/create", topics);
+      navigate(`${steps[currentStep + 1].path}/${unitId}`);
+    } catch (error) {
+      console.error("Error creating unit:", error);
+    }
   };
 
   const isContinueEnabled = topics.length > 0;
@@ -94,8 +115,8 @@ function LearningMaterialCreateTopic() {
       {isShowLessonTypeModal && (
         <LessonTypeModal
           setIsShowLessonTypeModal={setIsShowLessonTypeModal}
-          setIsShowCreateLesson={setIsShowCreateLesson}
           setLessonType={setLessonType}
+          inputLessonRef={inputLessonRef}
         />
       )}
       <PageLayout>
@@ -127,6 +148,7 @@ function LearningMaterialCreateTopic() {
                               {...provided.draggableProps}
                             >
                               <TopicItem
+                                inputLessonRef={inputLessonRef}
                                 key={topic.id}
                                 topic={topic}
                                 setTopics={setTopics}
@@ -134,8 +156,6 @@ function LearningMaterialCreateTopic() {
                                 setIsShowLessonTypeModal={
                                   setIsShowLessonTypeModal
                                 }
-                                isShowCreateLesson={isShowCreateLesson}
-                                setIsShowCreateLesson={setIsShowCreateLesson}
                                 lessonType={lessonType}
                               />
                             </div>
@@ -148,16 +168,15 @@ function LearningMaterialCreateTopic() {
                 </Droppable>
               </DragDropContext>
 
-              {createTopicPreviews.map((preview) => (
+              {/* {createTopicPreviews.map((preview) => (
                 <div key={preview.id} className={cx("create-topic-preview")}>
                   <TopicItemPreview
+                    inputLessonRef={inputLessonRef}
                     id={preview.id}
-                    unitId={unit.unitId}
+                    unitId={unitId}
                     setTopics={setTopics}
                     onCancel={handleRemovePreview}
                     setIsShowLessonTypeModal={setIsShowLessonTypeModal}
-                    isShowCreateLesson={isShowCreateLesson}
-                    setIsShowCreateLesson={setIsShowCreateLesson}
                     lessonType={lessonType}
                   />
                 </div>
@@ -170,12 +189,9 @@ function LearningMaterialCreateTopic() {
                   <i className={cx("fa-regular fa-circle-plus", "icon")}></i>
                 </div>
                 <div className={cx("create-text")}>New topic</div>
-              </div>
+              </div> */}
             </div>
             <div className={cx("create-topics-bottom")}>
-              <button className={cx("back-btn")} onClick={handlePrevious}>
-                Back
-              </button>
               <button
                 className={cx("continue-btn", {
                   "disabled-btn": !isContinueEnabled,

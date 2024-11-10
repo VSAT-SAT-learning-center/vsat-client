@@ -1,9 +1,16 @@
 import classNames from "classnames/bind";
+import { useState } from "react";
+import LoginModal from "../../../../../components/Auth/Login/Login.jsx";
 import styles from "./ReasonInformation.module.scss";
 const cx = classNames.bind(styles);
 function ReasonInformation() {
+  const [isShowLoginModal, setIsShowLoginModal] = useState(false);
   return (
-    <div className={cx("reason-choose-information-wrapper")}>
+    <div>
+      {isShowLoginModal && (
+        <LoginModal setShowLogin={setIsShowLoginModal} />
+      )}
+      <div className={cx("reason-choose-information-wrapper")}>
       <div className={cx("reason-choose-information-container")}>
         <div className={cx("information-explore")}>Explore VSAT</div>
         <div className={cx("information-title")}>
@@ -44,9 +51,10 @@ function ReasonInformation() {
           </div>
         </div>
         <div className={cx("more-details")}>
-          <button className={cx("more-btn")}>More Details</button>
+          <button className={cx("more-btn")} onClick={() => setIsShowLoginModal(true)}>More Details</button>
         </div>
       </div>
+    </div>
     </div>
   );
 }

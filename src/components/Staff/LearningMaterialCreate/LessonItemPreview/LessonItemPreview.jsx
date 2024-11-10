@@ -7,6 +7,7 @@ import styles from "./LessonItemPreview.module.scss";
 const cx = classNames.bind(styles);
 
 function LessonItemPreview({
+  inputLessonRef,
   type,
   topic,
   setTopics,
@@ -15,7 +16,6 @@ function LessonItemPreview({
   lessonType,
 }) {
   const [lessonTitle, setLessonTitle] = useState("New lesson");
-
   const handleChangeLessonTitle = (e) => {
     setLessonTitle(e.target.value);
   };
@@ -34,7 +34,6 @@ function LessonItemPreview({
     } else if (type === "create") {
       setLessons((prevLessons) => [...prevLessons, newLesson]);
     }
-
     setIsShowCreateLesson(false);
   };
   return (
@@ -50,9 +49,9 @@ function LessonItemPreview({
         <div className={cx("lesson-information-content")}>
           <div className={cx("lesson-input")}>
             <input
+              ref={inputLessonRef}
               type="text"
               placeholder="New lesson"
-              autoFocus={true}
               className={cx("title-input")}
               onChange={handleChangeLessonTitle}
             />
@@ -81,6 +80,7 @@ function LessonItemPreview({
 }
 
 LessonItemPreview.propTypes = {
+  inputLessonRef: PropTypes.object,
   type: PropTypes.string,
   topic: PropTypes.object,
   setTopics: PropTypes.func,

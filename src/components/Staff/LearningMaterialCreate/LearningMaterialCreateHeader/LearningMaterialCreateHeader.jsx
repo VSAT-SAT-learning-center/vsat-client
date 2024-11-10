@@ -14,14 +14,14 @@ function LearningMaterialCreateHeader({ title }) {
         <i className={cx("fa-regular fa-chevron-right", "breadcrumb-icon")}></i>
         <span className={cx("active-breadcrumb")}>{title}</span>
       </div>
-      <div className={cx("learning-material-create-options")}>
+      {/* <div className={cx("learning-material-create-options")}>
         <button className={cx("save-draf-btn")}>
           <span className={cx("btn-text")}>Save As Draft</span>
         </button>
         <button className={cx("publish-btn", "disabled")}>
           <span className={cx("btn-text")}>Publish Unit</span>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -1,0 +1,231 @@
+@import "~/styles/variables";
+
+.import-create-account-container {
+    background: white;
+    border-radius: 8px;
+    width: 97%;
+    min-height: 1000px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    border: 1px solid #ccc;
+    overflow: visible;
+
+    .import-modal-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+        background-color: #2446b6;
+        border-radius: 8px 8px 0 0;
+        padding: 15px;
+        position: relative;
+
+        .import-modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+        }
+    }
+
+    .import-form-container {
+        padding: 15px;
+
+        .import-form-group {
+            margin-bottom: 15px;
+
+            label {
+                display: block;
+                font-size: 14px;
+                margin-bottom: 5px;
+                font-weight: 600;
+            }
+
+            input,
+            select {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                margin-top: 4px;
+            }
+        }
+
+        .import-submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: white;
+            color: #2446b6;
+            border: 1px solid #2446b6;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 16px;
+
+            &:hover {
+                background-color: #2446b6;
+                color: white;
+            }
+        }
+
+        .import-template-download {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+
+            .import-download-btn {
+                padding: 10px 15px;
+                text-decoration: none;
+                background-color: white;
+                color: #2446b6;
+                border: 1px solid #2446b6;
+                border-radius: 25px;
+                font-weight: bold;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #2446b6;
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+.import-csv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        td {
+            word-wrap: break-word;
+        }
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+}
+
+.import-csv-preview {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.index-column {
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+.error-accounts-container {
+    max-height: 200px;
+    overflow-y: auto;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.error-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #ff4d4f;
+}
+
+
+.import-csv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        td {
+            word-wrap: break-word;
+        }
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+}
+
+.error-accounts-container {
+    text-align: center;
+    max-height: 360px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.error-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #ff4d4f;
+}
+
+.import-csv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        td {
+            word-wrap: break-word;
+        }
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+}

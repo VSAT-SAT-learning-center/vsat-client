@@ -37,10 +37,10 @@ function Home() {
           </div>
         </div>
         <div className={cx("home-subscribe-wrapper")}>
-          <Subscribe/>
+          <Subscribe />
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

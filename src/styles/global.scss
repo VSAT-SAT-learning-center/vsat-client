@@ -2,6 +2,10 @@
 @import "variables";
 @import "mixins";
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: $font-family-base;
   font-size: $font-size-base;
@@ -11,7 +15,84 @@ body {
   overflow: hidden;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .ql-editor {
   font-family: $font-family-base;
-  font-size: 18px !important;
+  font-size: 17px !important;
+}
+
+.long-dashes {
+  opacity: 1;
+  border-top: none;
+  height: 2px !important;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #555 0,
+    #555 17px,
+    #fff 0,
+    #fff 20px,
+    #d3d3d3 0,
+    #d3d3d3 37px,
+    #fff 0,
+    #fff 40px,
+    #3492eb 0,
+    #3492eb 58px,
+    #fff 0,
+    #fff 60px,
+    #ff0 0,
+    #ff0 78px,
+    #fff 0,
+    #fff 80px,
+    #555 0,
+    #555 98px,
+    #fff 0,
+    #fff 100px,
+    #555 0,
+    #555 118px,
+    #fff 0,
+    #fff 120px,
+    #555 0,
+    #555 138px,
+    #fff 0,
+    #fff 140px,
+    #555 0,
+    #555 158px,
+    #fff 0,
+    #fff 160px,
+    #555 0,
+    #555 178px,
+    #fff 0,
+    #fff 180px,
+    #555 0,
+    #555 198px,
+    #fff 0,
+    #fff 200px,
+    #555 0,
+    #555 218px,
+    #fff 0,
+    #fff 220px,
+    #555 0,
+    #555 238px,
+    #fff 0,
+    #fff 240px,
+    #d3d3d3 0,
+    #d3d3d3 258px,
+    #fff 0,
+    #fff 260px,
+    #3492eb 0,
+    #3492eb 278px,
+    #fff 0,
+    #fff 280px,
+    #ff0 0,
+    #ff0 298px
+  );
 }

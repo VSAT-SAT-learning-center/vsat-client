@@ -1,0 +1,295 @@
+@import "~/styles/variables";
+
+.question-create-preview-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 115;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .question-create-preview-container {
+    width: 85%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .question-create-preview-header {
+      width: 100%;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+      .preview-back {
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .preview-section {
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      .preview-level {
+        font-size: 16px;
+      }
+    }
+
+    .question-create-preview-content {
+      width: 100%;
+      flex-grow: 1;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .preview-content-container {
+        width: 100%;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+
+        .preview-content-question {
+          flex: 1;
+          height: 95%;
+          padding: 20px;
+          font-size: 17px;
+          border-right: 1px solid #c5c5c5;
+          overflow-y: auto;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          .preview-answer-example {
+            font-family: "system-ui";
+            line-height: 1.8;
+            .answer-example {
+              font-size: 17px;
+
+              p {
+                font-size: 20px;
+                margin-bottom: 16px;
+                margin-top: 0;
+              }
+
+              li {
+                margin-bottom: 5px;
+              }
+
+              ul {
+                list-style-type: disc;
+                padding-left: 42px;
+              }
+            }
+            .example-text {
+              width: 100%;
+              font-size: 20px;
+              margin-bottom: 16px;
+              margin-top: 16px;
+              text-align: center;
+            }
+
+            .example-image {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .ex-img {
+                width: 90%;
+                height: 100%;
+                object-fit: cover;
+                border-bottom: 2px solid #a7a7a7;
+              }
+            }
+          }
+
+          .question-rerender-content {
+            font-family: "system-ui";
+            line-height: 1.8;
+
+            h3 {
+              font-size: 26px;
+              font-weight: 700;
+              margin-bottom: 16px;
+            }
+
+            p {
+              margin-bottom: 24px;
+              margin-top: 0;
+            }
+
+            blockquote {
+              padding: 0 32px;
+              margin-bottom: 24px;
+
+              strong {
+                font-weight: 700;
+              }
+            }
+
+            li {
+              margin-bottom: 16px;
+            }
+
+            ul {
+              list-style-type: disc;
+              padding-left: 42px;
+            }
+          }
+        }
+
+        .preview-content-answer {
+          flex: 1;
+          height: 95%;
+          padding: 20px;
+          border-left: 1px solid #c5c5c5;
+          overflow-y: auto;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          .mark-answer-container {
+            width: 100%;
+            padding: 6px 14px;
+            background-color: #eeeeee;
+
+            .mark-answer {
+              cursor: pointer;
+              width: fit-content;
+              .icon-mark {
+                margin-right: 8px;
+              }
+            }
+          }
+
+          .answer-list-container {
+            width: 100%;
+            height: fit-content;
+            margin: 20px 0;
+
+            .answer-item {
+              cursor: pointer;
+              width: 100%;
+              height: fit-content;
+              display: flex;
+              margin: 8px 0;
+              padding: 8px 16px;
+              font-size: 17px;
+              text-align: start;
+              line-height: 1.8;
+              border-radius: 5px;
+              border: 1px solid rgb(33, 46, 88);
+              background-color: $bg-primary-color;
+              transition: all 0.15s linear;
+
+              .answer-label {
+                margin-right: 8px;
+              }
+
+              &:hover {
+                background-color: $primary-color;
+                color: $white-color;
+              }
+            }
+          }
+
+          .answer-text-input-container {
+            width: 100%;
+            height: fit-content;
+            margin: 20px 0;
+
+            .text-input-rerender-content {
+              font-family: "system-ui";
+              font-size: 17px;
+              line-height: 1.8;
+              margin-bottom: 20px;
+            }
+
+            .text-input-content {
+              width: 223px;
+              padding: 15px;
+              font-size: 18px;
+              border-radius: 4px;
+              border: 1px solid #767676;
+              background-color: $bg-primary-color;
+
+              .input-text {
+                width: 100%;
+                border: none;
+                outline: none;
+                background-color: transparent;
+              }
+            }
+          }
+
+          .explain-answer-container {
+            width: 100%;
+
+            .explain-text {
+              font-size: 18px;
+              font-weight: 600;
+              margin: 10px 0;
+            }
+
+            .explain-rerender-content {
+              font-family: "system-ui";
+              font-size: 17px;
+              line-height: 1.8;
+
+              h3 {
+                font-size: 26px;
+                font-weight: 700;
+                margin-bottom: 16px;
+              }
+
+              p {
+                margin-bottom: 24px;
+                margin-top: 0;
+              }
+
+              blockquote {
+                padding: 0 32px;
+                margin-bottom: 24px;
+
+                strong {
+                  font-weight: 700;
+                }
+              }
+
+              li {
+                margin-bottom: 16px;
+              }
+
+              ul {
+                list-style-type: disc;
+                padding-left: 42px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

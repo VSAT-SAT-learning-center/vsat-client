@@ -9,18 +9,16 @@ const cx = classNames.bind(styles);
 function LessonMathConcDetail({ lesson }) {
   return (
     <div className={cx("lesson-content-conc-detail")}>
-      <MathRenderer loadedContent={lesson.content} />
-      {lesson.example &&
-        lesson.example.question !== "" &&
-        lesson.example.explanation !== "" && (
-          <LessonMathConcDetailExample example={lesson.example} />
-        )}
+      <MathRenderer loadedContent={lesson.text} />
+      {lesson?.examples && lesson?.examples.map((example) => (
+        <LessonMathConcDetailExample example={example} key={example.exampleId} />
+      ))}
     </div>
   );
 }
 
 LessonMathConcDetail.propTypes = {
-  lesson: PropTypes.string,
+  lesson: PropTypes.object,
 };
 
 export default LessonMathConcDetail;

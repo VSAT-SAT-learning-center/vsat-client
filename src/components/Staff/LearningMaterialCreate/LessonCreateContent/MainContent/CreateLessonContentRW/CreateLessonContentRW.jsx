@@ -5,7 +5,7 @@ import styles from "./CreateLessonContentRW.module.scss";
 const cx = classNames.bind(styles);
 
 function CreateLessonContentRW({
-  setLessonContentView,
+  setLessonContentRWView,
   setLessonContentType,
   contentTitleInput,
   currentIndex,
@@ -13,8 +13,7 @@ function CreateLessonContentRW({
 }) {
   const handleChooseLessonContentItem = (lessonContent, index) => {
     if (index === currentIndex && contentTitleInput !== "") {
-      // Only proceed if contentTitleInput is not empty
-      setLessonContentView(true);
+      setLessonContentRWView(true);
       setLessonContentType(lessonContent.text);
     }
   };
@@ -23,10 +22,9 @@ function CreateLessonContentRW({
       {lessonRWContents.map((lessonContent, index) => (
         <div
           className={cx("create-lesson-content-rw-item", {
-            "active-item": index === currentIndex,
             "disabled-item":
-              (index !== currentIndex && !completedItems.includes(index)) ||
-              (index === currentIndex && contentTitleInput === ""),
+              (index !== currentIndex && !completedItems.includes(index)),
+              // || (index === currentIndex && contentTitleInput === ""),
             "done-item": completedItems.includes(index),
           })}
           key={lessonContent.id}
@@ -43,7 +41,7 @@ function CreateLessonContentRW({
 }
 
 CreateLessonContentRW.propTypes = {
-  setLessonContentView: PropTypes.func,
+  setLessonContentRWView: PropTypes.func,
   setLessonContentType: PropTypes.func,
   contentTitleInput: PropTypes.string,
   currentIndex: PropTypes.number,

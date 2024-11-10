@@ -1,0 +1,164 @@
+@import "~/styles/variables";
+
+$border-color: #ddd !default;
+$bg-primary-color: #ffffff !default;
+$text-primary-color: #333 !default;
+$text-secondary-color: #666 !default;
+$icon-color: #333 !default;
+$bg-secondary-color: #f9f9f9 !default;
+$primary-color: #3498db !default;
+$warning-color: #ff6347 !default;
+$white-color: #ffffff !default;
+
+.create-question-distribution-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 105;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .create-question-distribution-modal-container {
+    position: relative;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: $bg-primary-color;
+
+    .create-question-distribution-modal-header {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .create-question-distribution-modal-close {
+        cursor: pointer;
+        width: 33px;
+        height: 33px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .create-question-distribution-modal-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: $text-primary-color;
+      }
+    }
+
+    .create-question-distribution-modal-content {
+      padding: 16px;
+
+      .create-exam-item-container {
+        margin-bottom: 16px;
+
+        .score-section {
+          font-size: 18px;
+          font-weight: 700;
+          margin-bottom: 8px;
+          color: $text-secondary-color;
+
+          .required {
+            padding-left: 5px;
+            font-size: 14px;
+            font-weight: 400;
+            font-style: italic;
+            color: $warning-color;
+          }
+        }
+
+        .create-exam-item-main {
+          width: 100%;
+          margin-bottom: 16px;
+          display: flex;
+          align-items: center;
+          font-size: 17px;
+          border-radius: 5px;
+          border: 1px solid $text-primary-color;
+
+          .item-icon {
+            padding: 6px 12px;
+            border-right: 1px solid $text-primary-color;
+            color: $icon-color;
+          }
+
+          .item-input {
+            flex: 1;
+            padding: 6px 12px;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            color: $text-primary-color;
+          }
+
+          .date-picker-container {
+            display: flex;
+            gap: 8px; // Spacing between date inputs
+            width: 100%;
+          }
+
+          .date-input {
+            flex: 1;
+            padding: 6px 12px;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+            color: $text-primary-color;
+            transition: border-color 0.3s ease;
+            cursor: pointer;
+
+            &:focus,
+            &:hover {
+              border-color: $primary-color;
+            }
+          }
+        }
+      }
+
+      .create-question-distribution-detail-btn {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 12px;
+        border-radius: 5px;
+        font-size: 17px;
+        font-weight: 600;
+        color: $white-color;
+        background-color: $primary-color;
+        border: 1px solid $primary-color;
+        transition: background-color 0.3s ease, opacity 0.3s ease;
+
+        &:hover {
+          opacity: 0.7;
+        }
+
+        &.disabled-btn {
+          cursor: not-allowed;
+          opacity: 0.6;
+
+          &:hover {
+            background-color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+}

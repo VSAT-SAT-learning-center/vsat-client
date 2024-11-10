@@ -22,14 +22,14 @@ export const sidebarNavs = [
       },
       {
         id: 2,
-        title: "Create Unit",
+        title: "Create Material",
         path: "/staff/learning-material/create",
       },
       {
         id: 3,
-        title: "Assignments",
-        path: "/staff/learning-material/assignments",
-      }
+        title: "Feedback Material",
+        path: "/staff/learning-material/feedbacks",
+      },
     ],
   },
   {
@@ -50,6 +50,11 @@ export const sidebarNavs = [
         title: "Create Question",
         path: "/staff/question-bank/create",
       },
+      {
+        id: 3,
+        title: "Feedback Question",
+        path: "/staff/question-bank/feedback",
+      },
     ],
   },
   {
@@ -62,13 +67,18 @@ export const sidebarNavs = [
     subNavs: [
       {
         id: 1,
-        title: "Quizz Bank",
+        title: "Quiz Bank",
         path: "/staff/question-quizz/bank",
       },
       {
         id: 2,
-        title: "Create Quizz Question",
+        title: "Create Quiz Question",
         path: "/staff/question-quizz/create",
+      },
+      {
+        id: 3,
+        title: "Feedback Quiz Question",
+        path: "/staff/question-quizz/feedback",
       },
     ],
   },
@@ -92,36 +102,36 @@ export const sidebarNavs = [
       },
       {
         id: 3,
-        title: "Exam Structure",
-        path: "/staff/exams/structure",
+        title: "Feedback Exam",
+        path: "/staff/exams/feedback",
       },
       {
         id: 4,
-        title: "Exam Score",
-        path: "/staff/exams/score",
-      }
-    ],
-  },
-  {
-    id: 6,
-    icon: "fa-light fa-clipboard-check",
-    iconActive: "fa-regular fa-clipboard-check",
-    title: "Practice Test",
-    path: "/staff/practice",
-    show: true,
-    subNavs: [
-      {
-        id: 1,
-        title: "All Practices",
-        path: "/staff/practice/overview",
+        title: "Exam Structure",
+        path: "/staff/exams/structure",
       },
-      {
-        id: 2,
-        title: "Create Practice",
-        path: "/staff/practice/create",
-      }
     ],
   },
+  // {
+  //   id: 6,
+  //   icon: "fa-light fa-clipboard-check",
+  //   iconActive: "fa-regular fa-clipboard-check",
+  //   title: "Practice Test",
+  //   path: "/staff/practice",
+  //   show: true,
+  //   subNavs: [
+  //     {
+  //       id: 1,
+  //       title: "All Practices",
+  //       path: "/staff/practice/overview",
+  //     },
+  //     {
+  //       id: 2,
+  //       title: "Create Practice",
+  //       path: "/staff/practice/create",
+  //     },
+  //   ],
+  // },
   {
     id: 7,
     icon: "fa-light fa-users",
@@ -139,7 +149,7 @@ export const sidebarNavs = [
         id: 2,
         title: "Study Profile",
         path: "/staff/students/study-profile",
-      }
+      },
     ],
   },
   {
@@ -159,7 +169,7 @@ export const sidebarNavs = [
         id: 2,
         title: "Assign Students",
         path: "/staff/teachers/assign-students",
-      }
+      },
     ],
   },
   {
@@ -185,5 +195,5 @@ export const sidebarNavs = [
     title: "Settings",
     path: "/staff/setting",
     show: false,
-  }
+  },
 ];
