@@ -19,11 +19,9 @@ function TopicItemPreview({
   const [lessons, setLessons] = useState([]);
   const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
 
-
   const handleClickCreateNewLesson = () => {
     setIsShowLessonTypeModal(true);
-    setIsShowCreateLesson(true)
-
+    setIsShowCreateLesson(true);
   };
 
   const handleChangeTopicTitle = (e) => {

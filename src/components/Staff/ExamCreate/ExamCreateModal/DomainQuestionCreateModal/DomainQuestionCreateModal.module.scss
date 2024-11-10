@@ -40,6 +40,8 @@
     .domain-create-question-modal-search {
       width: 100%;
       padding: 20px;
+      z-index: 1;
+      border-bottom: 1px solid $border-color;
 
       .search-question-container {
         position: relative;
@@ -130,7 +132,7 @@
           border: 1px solid $border-color;
           background-color: $bg-primary-color;
           overflow-y: auto;
-          z-index: 1;
+          z-index: 2;
 
           &::-webkit-scrollbar {
             display: none;

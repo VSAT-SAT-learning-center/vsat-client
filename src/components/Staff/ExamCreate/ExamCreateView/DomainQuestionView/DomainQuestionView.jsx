@@ -1,14 +1,19 @@
 import classNames from "classnames/bind";
-import { useState } from "react";
-// import LevelDropdown from "../../ExamCreateModal/DomainQuestionCreateModal/LevelDropdown";
-// import SkillDropdown from "../../ExamCreateModal/DomainQuestionCreateModal/SkillDropdown";
+import { useEffect, useState } from "react";
 import QuestionItemPreview from "~/components/Staff/QuestionExamCreate/QuestionItemPreview";
+import useDebounce from "~/hooks/useDebounce";
+import apiClient from "~/services/apiService";
 import styles from "./DomainQuestionView.module.scss";
+import LevelDropdown from "./LevelDropdown";
+import QuestionDropdown from "./QuestionDropdown";
 import QuestionViewItem from "./QuestionViewItem";
+import SkillDropdown from "./SkillDropdown";
 const cx = classNames.bind(styles);
 
 function DomainQuestionView({
-  questionsViewData,
+  exam,
+  domainData,
+  setDomainData,
   setIsShowDomainQuestionView,
 }) {
   const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
@@ -18,11 +23,66 @@ function DomainQuestionView({
   const [isShowLevelSelect, setIsShowLevelSelect] = useState(false);
   const [skillSelect, setSkillSelect] = useState("Select skill");
   const [levelSelect, setLevelSelect] = useState("Select level");
-  // const [skillIdSearch, setSkillIdSearch] = useState("");
-  // const [levelSearch, setLevelSearch] = useState("");
-  // const [skills, setSkills] = useState([]);
-  // const [levels, setLevels] = useState([]);
+  const [skillIdSearch, setSkillIdSearch] = useState("");
+  const [levelSearch, setLevelSearch] = useState("");
+  const [skills, setSkills] = useState([]);
+  const [levels, setLevels] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [searchQuestionResult, setSearchQuestionResult] = useState([]);
+  const [isQuestionDropdownVisible, setIsQuestionDropdownVisible] =
+    useState(false);
+
+  const debouncedValue = useDebounce(searchValue, 300);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [skillsResponse, levelsResponse] = await Promise.all([
+          apiClient.get(`/skills/domain/${domainData.domain}`),
+          apiClient.get("/level"),
+        ]);
+
+        setSkills(skillsResponse.data);
+        setLevels(levelsResponse.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [domainData.domain]);
+
+  useEffect(() => {
+    if (!debouncedValue.trim()) {
+      setSearchQuestionResult([]);
+      setIsQuestionDropdownVisible(false);
+      return;
+    }
+
+    const fetchSearchQuestions = async () => {
+      try {
+        const response = await apiClient(
+          `/questions/searchQuestions/${debouncedValue}`,
+          {
+            params: {
+              page: 1,
+              pageSize: 0,
+              skillId: skillIdSearch,
+              domain: domainData.domain,
+              level: levelSearch,
+            },
+          }
+        );
+        setSearchQuestionResult(response.data.data.data);
+        setIsQuestionDropdownVisible(true);
+        setIsShowSkillSelect(false);
+        setIsShowLevelSelect(false);
+      } catch (error) {
+        console.error("Error search question!", error);
+      }
+    };
+    fetchSearchQuestions();
+  }, [debouncedValue, domainData.domain, levelSearch, skillIdSearch]);
 
   const handleChangeSearchInput = (e) => {
     const searchValue = e.target.value;
@@ -31,21 +91,21 @@ function DomainQuestionView({
     }
   };
 
-  // const handleClickSelectDropdownSkill = (skill) => {
-  //   setSkillIdSearch(skill?.id);
-  //   setIsShowSkillSelect(false);
-  //   setSkillSelect(skill?.content);
-  // };
+  const handleClickSelectDropdownSkill = (skill) => {
+    setSkillIdSearch(skill?.id);
+    setIsShowSkillSelect(false);
+    setSkillSelect(skill?.content);
+  };
 
-  // const handleClickSelectDropdownLevel = (level) => {
-  //   setLevelSearch(level?.name);
-  //   setIsShowLevelSelect(false);
-  //   setLevelSelect(level?.name);
-  // };
+  const handleClickSelectDropdownLevel = (level) => {
+    setLevelSearch(level?.name);
+    setIsShowLevelSelect(false);
+    setLevelSelect(level?.name);
+  };
 
   const handleDeleteSkillSelect = () => {
     setSkillSelect("Select skill");
-    // setSkillIdSearch("");
+    setSkillIdSearch("");
     setIsShowSkillSelect(false);
   };
 
@@ -53,6 +113,11 @@ function DomainQuestionView({
     setLevelSelect("Select level");
     setIsShowLevelSelect(false);
   };
+
+  const filteredSearchQuestionResult = searchQuestionResult.filter(
+    (question) =>
+      !domainData.questions.some((selected) => selected.id === question.id)
+  );
   return (
     <>
       {isShowQuestionItemPreview && (
@@ -64,7 +129,7 @@ function DomainQuestionView({
       <div className={cx("domain-create-question-modal-wrapper")}>
         <div className={cx("domain-create-question-modal-container")}>
           <div className={cx("domain-create-question-modal-header")}>
-            <div className={cx("domain-name")}>Inforamations and Ideas</div>
+            <div className={cx("domain-name")}>{domainData?.domain}</div>
           </div>
           <div className={cx("domain-create-question-modal-search")}>
             <div className={cx("search-question-container")}>
@@ -135,17 +200,17 @@ function DomainQuestionView({
                   )}
                 </div>
               </div>
-              {/* {isQuestionDropdownVisible && (
+              {isQuestionDropdownVisible && (
                 <QuestionDropdown
                   setSearchValue={setSearchValue}
                   searchQuestionResult={filteredSearchQuestionResult}
-                  domainQuestions={domainQuestions}
-                  setDomainQuestions={setDomainQuestions}
+                  domainQuestions={domainData}
+                  setDomainQuestions={setDomainData}
                   setIsQuestionDropdownVisible={setIsQuestionDropdownVisible}
                   numberOfQuestion={domainData.domain.numberofquestion}
                 />
-              )} */}
-              {/* {isShowSkillSelect && (
+              )}
+              {isShowSkillSelect && (
                 <SkillDropdown
                   onClick={handleClickSelectDropdownSkill}
                   skills={skills}
@@ -156,18 +221,19 @@ function DomainQuestionView({
                   onClick={handleClickSelectDropdownLevel}
                   levels={levels}
                 />
-              )} */}
+              )}
             </div>
           </div>
           <div className={cx("domain-create-question-modal-content")}>
             <div className={cx("domain-create-question-modal")}>
-              {questionsViewData?.map((question, index) => (
+              {domainData?.questions?.map((question, index) => (
                 <QuestionViewItem
                   key={question.id}
                   index={index + 1}
                   question={question}
                   setQuestionPreviewData={setQuestionPreviewData}
                   setIsShowQuestionItemPreview={setIsShowQuestionItemPreview}
+                  setDomainQuestions={setDomainData}
                 />
               ))}
             </div>
@@ -179,12 +245,14 @@ function DomainQuestionView({
             >
               Cancel
             </button>
-            {/* <button className={cx("preview-btn")}>
-              <i
-                className={cx("fa-regular fa-floppy-disk", "preview-icon")}
-              ></i>
-              <span>Save</span>
-            </button> */}
+            {exam?.status === "Rejected" && (
+              <button className={cx("preview-btn")}>
+                <i
+                  className={cx("fa-regular fa-floppy-disk", "preview-icon")}
+                ></i>
+                <span>Save</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
