@@ -1,11 +1,14 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import apiClient from "~/services/apiService";
 import styles from "./ExamCensorView.module.scss";
 import ModuleCensorView from "./ModuleCensorView";
 import SectionQuestionView from "./SectionQuestionView";
 const cx = classNames.bind(styles);
 function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
+  const navigate = useNavigate()
   const [isShowModuleViewCensor, setIsShowModuleViewCensor] = useState(false);
   const [groupedSections, setGroupedSections] = useState([]);
   const [moduleCensorData, setModuleCensorData] = useState([]);
@@ -60,7 +63,7 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
   const areAllModulesApproved = () => {
     return (
       censorModuleFeedback.moduleTypesFeedback.length ===
-        examCensorData.examQuestions.length &&
+      examCensorData.examQuestions.length &&
       censorModuleFeedback.moduleTypesFeedback.every(
         (feedback) =>
           feedback.isRejected === false || feedback.isRejected === undefined
@@ -93,10 +96,17 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
         `/exams/censor/approve`,
         feedbackData
       );
+      navigate("/manager/exams/overview")
       setIsShowExamCensorView(false);
+      toast.success("Censor approve exam successfully!", {
+        autoClose: 1000
+      })
       console.log(response.data);
     } catch (error) {
       console.error("Error approving exam:", error);
+      toast.error("Censor approve exam failed!", {
+        autoClose: 1000
+      })
     }
   };
 
@@ -111,10 +121,17 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
         `/exams/censor/reject`,
         feedbackData
       );
+      navigate("/manager/exams/feedback")
       setIsShowExamCensorView(false);
+      toast.success("Censor reject exam successfully!", {
+        autoClose: 1000
+      })
       console.log(response.data);
     } catch (error) {
       console.error("Error reject exam:", error);
+      toast.error("Censor reject exam failed!", {
+        autoClose: 1000
+      })
     }
   };
   return (
@@ -224,16 +241,16 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
                 areAllModulesApproved()
                   ? handleApprove
                   : isAnyModuleRejected()
-                  ? handleReject
-                  : undefined
+                    ? handleReject
+                    : undefined
               }
             >
               <span>
                 {areAllModulesApproved()
                   ? "Approve"
                   : isAnyModuleRejected()
-                  ? "Reject"
-                  : "Approve"}
+                    ? "Reject"
+                    : "Approve"}
               </span>
             </button>
           </div>

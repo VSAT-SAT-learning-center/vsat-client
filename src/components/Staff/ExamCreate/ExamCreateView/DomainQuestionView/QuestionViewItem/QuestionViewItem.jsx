@@ -10,6 +10,7 @@ function QuestionViewItem({
   setIsShowQuestionItemPreview,
   setDomainQuestions
 }) {
+
   const handleClickPreviewQuestion = () => {
     setQuestionPreviewData(question);
     setIsShowQuestionItemPreview(true);
@@ -31,8 +32,8 @@ function QuestionViewItem({
           <div className={cx("author-name")}>Question</div>
         </div>
         <div className={cx("question-left")}>
-          <div className={cx("question-skill")}>{question?.kill}</div>
-          <div className={cx("question-level")}>{question?.level}</div>
+          <div className={cx("question-skill")}>{question?.skill.content}</div>
+          <div className={cx("question-level")}>{question?.level.name}</div>
         </div>
       </div>
       <div className={cx("question-item-main")}>

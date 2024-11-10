@@ -207,7 +207,7 @@ function DomainQuestionView({
                   domainQuestions={domainData}
                   setDomainQuestions={setDomainData}
                   setIsQuestionDropdownVisible={setIsQuestionDropdownVisible}
-                  numberOfQuestion={domainData.domain.numberofquestion}
+                  numberOfQuestion={domainData.numberofquestion}
                 />
               )}
               {isShowSkillSelect && (

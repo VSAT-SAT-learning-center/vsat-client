@@ -12,7 +12,7 @@ function ModuleCensorView({
   setCensorModuleFeedback,
   setIsShowModuleViewCensor,
 }) {
-  // console.log(moduleCensorData);
+  console.log(moduleCensorData);
 
   const [groupedByLevel, setGroupedByLevel] = useState([]);
   const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
@@ -28,7 +28,7 @@ function ModuleCensorView({
       }, []);
 
       const levelsMap = allQuestions.reduce((acc, question) => {
-        const level = question.level;
+        const level = question.level.name;
         if (!acc[level]) {
           acc[level] = {
             level,
@@ -50,6 +50,8 @@ function ModuleCensorView({
     }
 
     const filteredData = combineAndFilterQuestions(moduleCensorData.domains);
+    console.log(filteredData);
+
     setGroupedByLevel(filteredData);
   }, [moduleCensorData.domains]);
 

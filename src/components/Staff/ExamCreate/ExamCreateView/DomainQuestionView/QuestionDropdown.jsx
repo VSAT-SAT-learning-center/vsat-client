@@ -2,28 +2,27 @@ import classNames from "classnames/bind";
 import emptyImg from "~/assets/images/content/empty.png";
 import { renderMathAndText } from "~/utils/renderMathAndText";
 import styles from "./DomainQuestionView.module.scss";
+import { toast } from "react-toastify";
 const cx = classNames.bind(styles);
 function QuestionDropdown({
-  // setSearchValue,
+  setSearchValue,
   searchQuestionResult,
-  // domainQuestions,
-  // setDomainQuestions,
-  // setIsQuestionDropdownVisible,
-  // numberOfQuestion,
+  domainQuestions,
+  setDomainQuestions,
+  setIsQuestionDropdownVisible,
+  numberOfQuestion,
 }) {
   const handleClickQuestion = (questionData) => {
-    console.log(questionData);
-
-    // if (domainQuestions.questions.length >= numberOfQuestion) {
-    //   toast.warning(`You can only select up to ${numberOfQuestion} questions.`);
-    //   return;
-    // }
-    // setSearchValue("");
-    // setDomainQuestions((prevDomainQuestions) => ({
-    //   ...prevDomainQuestions,
-    //   questions: [...prevDomainQuestions.questions, questionData],
-    // }));
-    // setIsQuestionDropdownVisible(false);
+    if (domainQuestions.questions.length >= numberOfQuestion) {
+      toast.warning(`You can only select up to ${numberOfQuestion} questions.`);
+      return;
+    }
+    setSearchValue("");
+    setDomainQuestions((prevDomainQuestions) => ({
+      ...prevDomainQuestions,
+      questions: [...prevDomainQuestions.questions, questionData],
+    }));
+    setIsQuestionDropdownVisible(false);
   };
   return (
     <div className={cx("select-question-dropdown-container")}>

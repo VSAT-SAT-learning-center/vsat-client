@@ -28,10 +28,10 @@ function QuestionItemPreview({
             <i className={cx("fa-regular fa-arrow-left")}></i>
           </div>
           <div className={cx("preview-section")}>
-            {questionPreviewData?.section.name || questionPreviewData?.section}
+            {questionPreviewData?.section.name}
           </div>
           <div className={cx("preview-level")}>
-            {questionPreviewData?.level.name || questionPreviewData?.level}
+            {questionPreviewData?.level.name}
           </div>
         </div>
         <div className={cx("question-create-preview-content")}>
