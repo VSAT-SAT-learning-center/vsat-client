@@ -12,15 +12,15 @@ function LearningSidebar() {
   };
 
   return (
-    <div className={cx("learning-wrapper")}>
-      <div className={cx("learning-container")}>
+    <div className={cx("learning-sidebar-wrapper")}>
+      <div className={cx("learning-sidebar-container")}>
         <div className={cx("menu-section")}>
           <div className={cx("menu-title")}>MY STUFF</div>
           <button
             className={cx("menu-item", { active: activeItem === "Courses" })}
             onClick={() => handleItemClick("Courses")}
           >
-            Courses
+            Study profile
           </button>
         </div>
         <div className={cx("menu-section")}>
@@ -29,19 +29,19 @@ function LearningSidebar() {
             className={cx("menu-item", { active: activeItem === "Progress" })}
             onClick={() => handleItemClick("Progress")}
           >
-            Progress
+            Skill statistics
           </button>
           <button
             className={cx("menu-item", { active: activeItem === "Profile" })}
             onClick={() => handleItemClick("Profile")}
           >
-            Profile
+            Exam history
           </button>
           <button
             className={cx("menu-item", { active: activeItem === "Teachers" })}
             onClick={() => handleItemClick("Teachers")}
           >
-            Teachers
+            Teacher feedbacks
           </button>
         </div>
       </div>

@@ -1,17 +1,17 @@
 @import "~/styles/variables";
 
-.learning-wrapper {
-    padding: 20px;
+.learning-sidebar-wrapper {
+    padding: 100px 20px 20px 20px;
     border-right: 1px solid #ddd;
-    width: 250px;
+    width: 17%;
 }
 
-.learning-container {
+.learning-sidebar-container {
     .menu-section {
         margin-bottom: 20px;
 
         .menu-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: #555;
             margin-bottom: 10px;
