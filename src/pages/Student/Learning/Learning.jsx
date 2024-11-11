@@ -1,10 +1,10 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
-import HeaderAuthen from "~/layouts/Landing/HeaderAuthen";
 import { useEffect, useState } from "react";
-import LearningItem from "~/components/Student/Learning/LearningItem/LearningItem.jsx";
-import LearningSidebar from "~/components/Student/Learning";
+import LearningItem from "~/components/Student/Learning/LearningItem/LearningItem";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
+import LearningLayout from "~/layouts/Student/LearningLayout/LearningPageLayout";
+import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import styles from "./Learning.module.scss";
 import apiClient from "~/services/apiService";
 const cx = classNames.bind(styles);
@@ -39,19 +39,18 @@ function Learning() {
   };
 
   return (
+    <LearningLayout>
     <div className={cx("learning-wrapper")}>
-      <HeaderAuthen />
       <div className={cx("learning-container")}>
-        <LearningSidebar />
-        <div className={cx("manager-learning-material-wrapper")}>
-          <div className={cx("manager-learning-material-header")}>
+        <div className={cx("learning-wrapper")}>
+          <div className={cx("learning-header")}>
             Study profile
           </div>
-          <div className={cx("manager-learning-material-container")}>
+          <div className={cx("learning-container")}>
             {learningMaterials?.length > 0 ? (
               <div
                 className={cx(
-                  "manager-learning-material-content",
+                  "learning-content",
                   "learning-item-container"
                 )}
               >
@@ -79,6 +78,8 @@ function Learning() {
         </div>
       </div>
     </div>
+    <LearningMaterialCreateFooter />
+    </LearningLayout>
   );
 }
 

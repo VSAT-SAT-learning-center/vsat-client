@@ -1,3 +1,4 @@
+import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import CreateExamScoreModal from "~/components/Staff/ExamScoreCreate/CreateExamScoreModal";
@@ -25,9 +26,11 @@ function ExamScore() {
     useState(false);
   const [isShowViewDetailScore, setIsShowViewDetailScore] = useState(false);
   const [viewScoreDetailData, setViewScoreDetailData] = useState(false);
+  const [isWaiting, setIsWaiting] = useState(false);
 
   const fetchExamScoreList = useCallback(async () => {
     try {
+      setIsWaiting(true);
       const response = await apiClient.get("/exam-scores", {
         params: {
           page: 1,
@@ -37,6 +40,8 @@ function ExamScore() {
       setExamScoreList(response.data.data.data);
     } catch (error) {
       console.error("Failed to fetch exam score list:", error);
+    } finally {
+      setIsWaiting(false);
     }
   }, []);
 
@@ -102,7 +107,19 @@ function ExamScore() {
               </button>
             </div>
             <div className={cx("create-score-content")}>
-              {examScoreList?.length > 0 &&
+              {isWaiting ? (
+                <>
+                  {[...Array(3)].map((_, i) => (
+                    <Skeleton
+                      key={i}
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={146}
+                    />
+                  ))}
+                </>
+              ) : (
                 examScoreList?.map((examScore, index) => (
                   <ExamScoreItem
                     key={examScore.id}
@@ -111,7 +128,8 @@ function ExamScore() {
                     setViewScoreDetailData={setViewScoreDetailData}
                     setIsShowViewDetailScore={setIsShowViewDetailScore}
                   />
-                ))}
+                ))
+              )}
             </div>
           </div>
         </div>
