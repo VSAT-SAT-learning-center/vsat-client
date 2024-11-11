@@ -29,11 +29,11 @@ function LearningMaterialCreateTopic() {
     const fetchTopics = async () => {
       try {
         const response = await apiClient.get(`/units/domain/${unitId}`);
-        const originalArray = response.data.domain.skills;
+        const originalArray = response.data.skills;
         const transformedArray = originalArray.map((item) => ({
           id: item.id,
           unitId: unitId,
-          title: item.content,
+          title: item.title,
           lessons: [],
         }));
         setTopics(transformedArray);

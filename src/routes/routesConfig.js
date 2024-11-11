@@ -148,6 +148,12 @@ const routesConfig = [
     roles: ["Staff"],
   },
   {
+    path: "/staff/learning-material/create/practices/:unitId",
+    component: LearningMaterialCreateAss,
+    protected: true,
+    roles: ["Staff"],
+  },
+  {
     path: "/staff/learning-material/create/publish",
     component: LearningMaterialPublish,
     protected: true,

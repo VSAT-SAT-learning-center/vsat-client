@@ -5,12 +5,15 @@ const cx = classNames.bind(styles);
 
 function QuestionViewItem({
   question,
+  status,
   index,
   setQuestionPreviewData,
   setIsShowQuestionItemPreview,
-  setDomainQuestions
+  setDomainQuestions,
+  setUpdateDeleteExamQuestion,
+  setUpdateQuestion,
+  originalQuestionIds,
 }) {
-
   const handleClickPreviewQuestion = () => {
     setQuestionPreviewData(question);
     setIsShowQuestionItemPreview(true);
@@ -23,6 +26,16 @@ function QuestionViewItem({
         (q) => q.id !== question.id
       ),
     }));
+
+    if (originalQuestionIds.includes(question.id)) {
+      // If the question is from the DB, add it to `updateDeleteExamQuestion`
+      setUpdateDeleteExamQuestion((prev) => [...prev, { id: question.id }]);
+    } else {
+      // If the question is newly added, remove it from `updateQuestion`
+      setUpdateQuestion((prev) =>
+        prev.filter((q) => q.questionId !== question.id)
+      );
+    }
   };
   return (
     <div className={cx("question-exam-create-item")}>
@@ -51,12 +64,14 @@ function QuestionViewItem({
         >
           <i className={cx("fa-regular fa-eye")}></i>
         </button>
-        <button
-          className={cx("preview-btn")}
-          onClick={handleClickDeleteQuestion}
-        >
-          <i className={cx("fa-sharp fa-regular fa-trash")}></i>
-        </button>
+        {status === "Rejected" && (
+          <button
+            className={cx("preview-btn")}
+            onClick={handleClickDeleteQuestion}
+          >
+            <i className={cx("fa-sharp fa-regular fa-trash")}></i>
+          </button>
+        )}
       </div>
     </div>
   );

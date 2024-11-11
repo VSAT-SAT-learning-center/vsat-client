@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
+import { toast } from "react-toastify";
 import emptyImg from "~/assets/images/content/empty.png";
 import { renderMathAndText } from "~/utils/renderMathAndText";
 import styles from "./DomainQuestionView.module.scss";
-import { toast } from "react-toastify";
 const cx = classNames.bind(styles);
 function QuestionDropdown({
   setSearchValue,
@@ -11,6 +11,9 @@ function QuestionDropdown({
   setDomainQuestions,
   setIsQuestionDropdownVisible,
   numberOfQuestion,
+  setUpdateQuestion,
+  examId,
+  moduleTypeId,
 }) {
   const handleClickQuestion = (questionData) => {
     if (domainQuestions.questions.length >= numberOfQuestion) {
@@ -23,6 +26,15 @@ function QuestionDropdown({
       questions: [...prevDomainQuestions.questions, questionData],
     }));
     setIsQuestionDropdownVisible(false);
+    
+    setUpdateQuestion((prev) => [
+      ...prev,
+      {
+        moduleTypeId,
+        examId,
+        questionId: questionData.id,
+      },
+    ]);
   };
   return (
     <div className={cx("select-question-dropdown-container")}>

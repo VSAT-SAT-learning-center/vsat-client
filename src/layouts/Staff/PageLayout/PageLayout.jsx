@@ -7,11 +7,11 @@ const cx = classNames.bind(styles);
 
 function PageLayout({ children }) {
   return (
-    <div className={cx(`page-wrapper`)}>
+    <div className={cx("page-wrapper")}>
       <Sidebar />
-      <div className={cx(`page-container`)}>
+      <div className={cx("page-container")}>
         <Topbar />
-        <div className={cx(`page-main`)}>{children}</div>
+        <div className={cx("page-main")}>{children}</div>
       </div>
     </div>
   );
