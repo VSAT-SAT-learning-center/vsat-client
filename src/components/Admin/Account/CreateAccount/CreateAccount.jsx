@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 import apiClient from "~/services/apiService";
 import styles from "./CreateAccount.module.scss";
 
@@ -54,7 +54,7 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {
       const formattedDateOfBirth = formatDate(formData.dateofbirth);
 
       try {
-        const response = await apiClient.post("http://localhost:5000/account", {
+        const response = await apiClient.post("/account", {
           ...formData,
           dateofbirth: formattedDateOfBirth,
         });

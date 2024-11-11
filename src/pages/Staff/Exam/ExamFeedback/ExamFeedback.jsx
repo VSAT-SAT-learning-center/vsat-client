@@ -33,6 +33,7 @@ function ExamFeedback() {
       {isShowCreateExamView && (
         <ExamCreateView
           exam={examDetailData}
+          fetchExamList={fetchExamList}
           setIsShowCreateExamView={setIsShowCreateExamView}
         />
       )}

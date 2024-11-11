@@ -58,7 +58,12 @@ function LearningMaterialCreateLesson() {
     const fetchLesson = async () => {
       try {
         const lessonResponse = await apiClient.get(`/lessons/${lessonId}`);
-        const { id: lessonNewId, title, type, lessonContents } = lessonResponse.data.data;
+        const {
+          id: lessonNewId,
+          title,
+          type,
+          lessonContents,
+        } = lessonResponse.data.data;
         setLesson({
           lessonId: lessonNewId,
           title,
@@ -66,7 +71,10 @@ function LearningMaterialCreateLesson() {
           lessonContents,
         });
         if (lessonContents?.length > 0) {
-          const itemsArray = Array.from({ length: lessonContents.length }, (_, i) => i);
+          const itemsArray = Array.from(
+            { length: lessonContents.length },
+            (_, i) => i
+          );
           setCompletedItems(itemsArray);
           setIsLessonContentSaved(true);
         } else {
@@ -89,23 +97,36 @@ function LearningMaterialCreateLesson() {
         console.log("Lesson contents created:", response.data.data);
         setIsLessonContentSaved(true);
       } else {
-        navigate(`${steps[currentStep + 1].path}/${unitId}/${lessonIds[0]}`);
+        // navigate(`${steps[currentStep + 1].path}/${unitId}/${lessonIds[0]}`);
+        navigate(`${steps[currentStep + 1].path}/${unitId}`, {
+          state: { lessonId: lessonIds[0] },
+        });
       }
 
       // Move to the next lesson
-      if (currentLessonIndex >= 0 && currentLessonIndex < lessonIds.length - 1) {
+      if (
+        currentLessonIndex >= 0 &&
+        currentLessonIndex < lessonIds.length - 1
+      ) {
         const nextLessonId = lessonIds[currentLessonIndex + 1];
         setCurrentLessonIndex(currentLessonIndex + 1);
-        navigate(`/staff/learning-material/create/lessons/${unitId}/${nextLessonId}`);
+        navigate(
+          `/staff/learning-material/create/lessons/${unitId}/${nextLessonId}`
+        );
       } else {
-        navigate(`${steps[currentStep + 1].path}/${unitId}/${lessonIds[0]}`);
+        // navigate(`${steps[currentStep + 1].path}/${unitId}/${lessonIds[0]}`);
+        navigate(`${steps[currentStep + 1].path}/${unitId}`, {
+          state: { lessonId: lessonIds[0] },
+        });
       }
     } catch (error) {
       console.error("Error saving lesson:", error);
     }
   };
 
-  const isContinueEnabled = completedItems.length === lessonRWContents.length || completedItems.length === lessonMathContents.length;
+  const isContinueEnabled =
+    completedItems.length === lessonRWContents.length ||
+    completedItems.length === lessonMathContents.length;
 
   return (
     <PageLayout>

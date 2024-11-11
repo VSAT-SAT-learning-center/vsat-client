@@ -12,6 +12,9 @@ const cx = classNames.bind(styles);
 
 function DomainQuestionView({
   exam,
+  fetchExamList,
+  originalData,
+  moduleData,
   domainData,
   setDomainData,
   setIsShowDomainQuestionView,
@@ -31,6 +34,9 @@ function DomainQuestionView({
   const [searchQuestionResult, setSearchQuestionResult] = useState([]);
   const [isQuestionDropdownVisible, setIsQuestionDropdownVisible] =
     useState(false);
+  const [originalQuestionIds, setOriginalQuestionIds] = useState([]);
+  const [updateDeleteExamQuestion, setUpdateDeleteExamQuestion] = useState([]);
+  const [updateQuestion, setUpdateQuestion] = useState([]);
 
   const debouncedValue = useDebounce(searchValue, 300);
 
@@ -44,13 +50,15 @@ function DomainQuestionView({
 
         setSkills(skillsResponse.data);
         setLevels(levelsResponse.data.data);
+        const originalIds = originalData?.questions.map((q) => q.id);
+        setOriginalQuestionIds(originalIds);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [domainData.domain]);
+  }, [domainData.domain, originalData?.questions]);
 
   useEffect(() => {
     if (!debouncedValue.trim()) {
@@ -118,6 +126,25 @@ function DomainQuestionView({
     (question) =>
       !domainData.questions.some((selected) => selected.id === question.id)
   );
+
+  const handleClickUpdateQuestionModule = async () => {
+    if (updateDeleteExamQuestion.length === 0 && updateQuestion.length === 0) {
+      setIsShowDomainQuestionView(false);
+      return;
+    }
+    try {
+      const payload = {
+        updateDeleteExamQuestion: updateDeleteExamQuestion,
+        updateQuestion: updateQuestion,
+      };
+      const response = await apiClient.patch("exam-questions", payload);
+      console.log(response.data);
+      fetchExamList();
+      setIsShowDomainQuestionView(false);
+    } catch (error) {
+      console.error("Error while update exam:", error);
+    }
+  };
   return (
     <>
       {isShowQuestionItemPreview && (
@@ -208,6 +235,9 @@ function DomainQuestionView({
                   setDomainQuestions={setDomainData}
                   setIsQuestionDropdownVisible={setIsQuestionDropdownVisible}
                   numberOfQuestion={domainData.numberofquestion}
+                  setUpdateQuestion={setUpdateQuestion}
+                  examId={exam?.id}
+                  moduleTypeId={moduleData?.id}
                 />
               )}
               {isShowSkillSelect && (
@@ -230,10 +260,14 @@ function DomainQuestionView({
                 <QuestionViewItem
                   key={question.id}
                   index={index + 1}
+                  status={exam?.status}
                   question={question}
                   setQuestionPreviewData={setQuestionPreviewData}
                   setIsShowQuestionItemPreview={setIsShowQuestionItemPreview}
                   setDomainQuestions={setDomainData}
+                  setUpdateDeleteExamQuestion={setUpdateDeleteExamQuestion}
+                  setUpdateQuestion={setUpdateQuestion}
+                  originalQuestionIds={originalQuestionIds}
                 />
               ))}
             </div>
@@ -246,7 +280,16 @@ function DomainQuestionView({
               Cancel
             </button>
             {exam?.status === "Rejected" && (
-              <button className={cx("preview-btn")}>
+              <button
+                className={cx("preview-btn", {
+                  "disabled-btn":
+                    domainData?.questions.length < domainData.numberofquestion,
+                })}
+                onClick={handleClickUpdateQuestionModule}
+                disabled={
+                  domainData?.questions.length < domainData.numberofquestion
+                }
+              >
                 <i
                   className={cx("fa-regular fa-floppy-disk", "preview-icon")}
                 ></i>
