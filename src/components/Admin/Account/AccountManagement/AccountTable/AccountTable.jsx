@@ -1,10 +1,10 @@
 import { PlusCircleOutlined } from "@ant-design/icons";
-import axios from "axios";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import CreateAccount from "../../../../../components/Admin/Account/CreateAccount";
+import apiClient from "~/services/apiService";
 import styles from "./AccountTable.module.scss";
 
 const cx = classNames.bind(styles);
@@ -29,8 +29,7 @@ function AccountTable() {
   };
 
   const fetchData = (page, name = "") => {
-    axios
-      .get("http://localhost:5000/account/search", {
+    apiClient.get("http://localhost:5000/account/search", {
         params: {
           page,
           pageSize,
@@ -52,7 +51,7 @@ function AccountTable() {
   const updateStatus = async (id, currentStatus) => {
     const newStatus = currentStatus === "Active" ? "Banned" : "Active";
     try {
-      await axios.put(`http://localhost:5000/account/update-status/${id}`, {
+      await apiClient.put(`http://localhost:5000/account/update-status/${id}`, {
         status: newStatus,
       });
       fetchData(currentPage, searchName);
