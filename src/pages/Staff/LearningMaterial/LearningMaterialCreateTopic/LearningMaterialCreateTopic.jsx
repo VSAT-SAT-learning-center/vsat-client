@@ -28,6 +28,9 @@ function LearningMaterialCreateTopic() {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
+        if (!unitId) {
+          return;
+        }
         const response = await apiClient.get(`/units/domain/${unitId}`);
         const originalArray = response.data.skills;
         const transformedArray = originalArray.map((item) => ({

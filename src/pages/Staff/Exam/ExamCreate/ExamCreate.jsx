@@ -13,8 +13,8 @@ function ExamCreate() {
   const [isShowCreateExamModal, setIsShowCreateExamModal] = useState(false);
   const [isShowCreateExamView, setIsShowCreateExamView] = useState(false);
   const [examDetailData, setExamDetailData] = useState(null);
-  const [examList, setExamList] = useState([]);
   const [isWaiting, setIsWaiting] = useState(false);
+  const [examList, setExamList] = useState([]);
   const fetchExamList = useCallback(async () => {
     try {
       setIsWaiting(true);
