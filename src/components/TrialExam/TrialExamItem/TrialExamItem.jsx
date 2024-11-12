@@ -4,10 +4,10 @@ import ExamImg from "~/assets/images/content/exam.png";
 import { formatDate } from "~/utils/formatDate";
 import styles from "./TrialExamItem.module.scss";
 const cx = classNames.bind(styles);
-function TrialExamItem() {
+function TrialExamItem({ exam }) {
   const navigate = useNavigate();
-  const handleTakeExam = () => {
-    navigate("/trial-exam/1");
+  const handleTakeExam = (examId) => {
+    navigate(`/trial-exam/${examId}`);
   };
   return (
     <div className={cx("exam-item-container")}>
@@ -26,21 +26,23 @@ function TrialExamItem() {
             <i className={cx("fa-sharp fa-regular fa-file-lines")}></i>
           </div>
           <div className={cx("exam-main-title")}>Exam title:</div>
-          <div className={cx("exam-main-text")}>Exam 1</div>
+          <div className={cx("exam-main-text")}>{exam?.titie}</div>
         </div>
         <div className={cx("exam-main-item")}>
           <div className={cx("exam-main-icon")}>
             <i className={cx("fa-regular fa-clock")}></i>
           </div>
           <div className={cx("exam-main-title")}>Duration:</div>
-          <div className={cx("exam-main-text")}>Exam 1</div>
+          <div className={cx("exam-main-text")}>{exam?.totalTime} mins</div>
         </div>
         <div className={cx("exam-main-item")}>
           <div className={cx("exam-main-icon")}>
             <i className={cx("fa-sharp fa-regular fa-list")}></i>
           </div>
           <div className={cx("exam-main-title")}>Question:</div>
-          <div className={cx("exam-main-text")}>Exam 1</div>
+          <div className={cx("exam-main-text")}>
+            {exam?.totalNumberOfQuestions} questions
+          </div>
         </div>
         <div className={cx("exam-main-item")}>
           <div className={cx("exam-main-icon")}>
@@ -53,10 +55,13 @@ function TrialExamItem() {
       <div className={cx("exam-item-footer")}>
         <div className={cx("exam-create")}>
           <div className={cx("exam-create-title")}>
-            Created At: {formatDate(Date.now())}
+            Created At: {formatDate(exam?.createdat)}
           </div>
         </div>
-        <button className={cx("exam-action")} onClick={handleTakeExam}>
+        <button
+          className={cx("exam-action")}
+          onClick={() => handleTakeExam(exam.id)}
+        >
           <i className={cx("fa-regular fa-pen-to-square", "action-icon")}></i>
           <span className={cx("action-text")}>Take Exam</span>
         </button>

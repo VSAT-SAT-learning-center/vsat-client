@@ -27,7 +27,6 @@ function LearningMaterialCreateAss() {
       try {
         const response = await apiClient.get(`/units/domain/${unitId}`);
         const quizConfisArray = response.data.skills;
-        console.log(response.data.skills);
         setQuizConfigs(quizConfisArray);
         setQuizConfigsData((prevData) => ({
           ...prevData,

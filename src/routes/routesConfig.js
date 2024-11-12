@@ -1,3 +1,4 @@
+import QuestionDropdownModal from "~/components/TrialExam/TrialExamDetail/ExamView/QuestionDropdownModal";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -57,15 +58,15 @@ import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
 import TrialExam from "~/pages/TrialExam";
+import TrialExamDetail from "~/pages/TrialExam/TrialExamDetail";
 import Unauthorized from "~/pages/Unauthorized";
 import QuestionDistribution from "../pages/Manager/ManagerExam/QuestionDistribution";
 import FeedbackQuestionExam from "../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam";
 import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz";
-import TrialExamDetail from "~/pages/TrialExam/TrialExamDetail";
 
 const routesConfig = [
   // Testing
-  { path: "/test", component: LearningMaterialCreateAss },
+  { path: "/test", component: QuestionDropdownModal },
   // Landing page routes
   { path: "/", component: Home },
   { path: "/about", component: About },
