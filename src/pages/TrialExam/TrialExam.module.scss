@@ -1,0 +1,14 @@
+.trial-exam-wrapper {
+  width: 100%;
+  height: 100vh;
+
+  .trial-exam-container {
+    width: 100%;
+    height: calc(100vh - 80px);
+    margin-top: 80px;
+    padding: 25px 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+}

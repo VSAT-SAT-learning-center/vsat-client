@@ -56,10 +56,12 @@ import LearningPartDetail from "~/pages/Student/LearningPartDetail";
 import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
+import TrialExam from "~/pages/TrialExam";
 import Unauthorized from "~/pages/Unauthorized";
 import QuestionDistribution from "../pages/Manager/ManagerExam/QuestionDistribution";
 import FeedbackQuestionExam from "../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam";
 import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/FeedbackQuestionQuizz";
+import TrialExamDetail from "~/pages/TrialExam/TrialExamDetail";
 
 const routesConfig = [
   // Testing
@@ -70,6 +72,10 @@ const routesConfig = [
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
   { path: "/unauthorized", component: Unauthorized, protected: true },
+
+  // Trial Exam routes
+  { path: "/trial-exam", component: TrialExam },
+  { path: "/trial-exam/:examId", component: TrialExamDetail },
   // Student routes
   {
     path: "/learning",
