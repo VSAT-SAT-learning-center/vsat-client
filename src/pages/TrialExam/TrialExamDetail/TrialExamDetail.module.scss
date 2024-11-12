@@ -1,0 +1,75 @@
+@import "~/styles/variables";
+
+.trial-exam-detail-wrapper {
+  width: 100%;
+  height: 100vh;
+
+  .trial-exam-detail-container {
+    width: 100%;
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .trial-exam-detail-content {
+      width: 55%;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      .exam-title {
+        font-size: 26px;
+        font-weight: 600;
+        margin-bottom: 40px;
+      }
+
+      .exam-infor {
+        font-size: 18px;
+        margin-bottom: 16px;
+        font-style: inherit;
+
+        .highlight {
+          font-weight: 600;
+        }
+      }
+
+      .exam-action-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .begin-btn {
+        padding: 12px 22px;
+        margin: 16px 0;
+        font-size: 20px;
+        border-radius: 5px;
+        color: $white-color;
+        background-color: $primary-color;
+        transition: all 0.2s linear;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .or {
+        margin: 16px 0;
+      }
+
+      .back-action {
+        margin: 16px 0;
+        font-size: 19px;
+        color: #8b8b8b;
+        transition: all 0.4s linear;
+
+        &:hover {
+          color: $primary-color;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

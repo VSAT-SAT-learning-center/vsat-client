@@ -18,7 +18,7 @@ function TopicItem({
   const [isShowCreateLesson, setIsShowCreateLesson] = useState(false);
 
   const handleClickCreateNewLesson = () => {
-    setIsShowCreateLesson(true)
+    setIsShowCreateLesson(true);
     setIsShowLessonTypeModal(true);
   };
 
