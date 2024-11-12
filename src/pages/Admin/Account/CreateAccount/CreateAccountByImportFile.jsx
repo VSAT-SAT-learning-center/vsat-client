@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PageLayout from "~/layouts/Admin/PageLayout";
+import apiClient from "~/services/apiService";
 import styles from "./CreateAccountByImportFile.module.scss";
 
 const cx = classNames.bind(styles);
@@ -41,7 +42,7 @@ function CreateAccountByImportFile() {
         },
       });
     } else {
-      toast.error("Please select CSV file.");
+      toast.error("Please select a CSV file.");
     }
   };
 
@@ -60,8 +61,6 @@ function CreateAccountByImportFile() {
         phonenumber: row["Phone number"],
       }));
 
-      const jsonString = JSON.stringify(jsonData, null, 2);
-
       let fakeProgress = 0;
       const progressInterval = setInterval(() => {
         if (fakeProgress < 90) {
@@ -69,27 +68,21 @@ function CreateAccountByImportFile() {
         }
       }, 300);
 
-      await fetch("http://localhost:5000/account/createAccountFromFile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonString,
-      })
-        .then((response) => response.json())
+      apiClient
+        .post("/account/createAccountFromFile", jsonData)
         .then((result) => {
           clearInterval(progressInterval);
-          if (result.success) {
-            setSavedAccounts(result.data.savedAccounts);
-            setErrorAccounts(result.data.errors);
+          if (result.data.success) {
+            setSavedAccounts(result.data.data.savedAccounts);
+            setErrorAccounts(result.data.data.errors);
 
-            if (result.data.errors.length === 0) {
-              toast.success("Create account successfully.");
+            if (result.data.data.errors.length === 0) {
+              toast.success("Accounts created successfully.");
             } else {
               toast.error("Some accounts were not created successfully.");
             }
           } else {
-            toast.error(result.message.replace("Bad request: ", ""));
+            toast.error(result.data.message.replace("Bad request: ", ""));
           }
         })
         .catch((error) => {
@@ -150,8 +143,6 @@ function CreateAccountByImportFile() {
                 >
                   Confirm and create list account
                 </button>
-                <div className={cx("import-progress-bar")}>
-                </div>
               </div>
             </div>
           )}
