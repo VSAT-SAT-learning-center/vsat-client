@@ -4,7 +4,7 @@ import ExamImg from "~/assets/images/content/exam.png";
 import { formatDate } from "~/utils/formatDate";
 import styles from "./TrialExamItem.module.scss";
 const cx = classNames.bind(styles);
-function TrialExamItem({ exam }) {
+function TrialExamItem({ exam, index }) {
   const navigate = useNavigate();
   const handleTakeExam = (examId) => {
     navigate(`/trial-exam/${examId}`);
@@ -16,8 +16,8 @@ function TrialExamItem({ exam }) {
           <img src={ExamImg} alt="exam-img" className={cx("exam-img")} />
         </div>
         <div className={cx("exam-text-infor")}>
-          <div className={cx("exam-name-type")}>Trial Exam</div>
-          <div className={cx("exam-number")}>1</div>
+          <div className={cx("exam-name-type")}>{exam?.examType.name}</div>
+          <div className={cx("exam-number")}>{index}</div>
         </div>
       </div>
       <div className={cx("exam-item-content")}>
@@ -26,7 +26,7 @@ function TrialExamItem({ exam }) {
             <i className={cx("fa-sharp fa-regular fa-file-lines")}></i>
           </div>
           <div className={cx("exam-main-title")}>Exam title:</div>
-          <div className={cx("exam-main-text")}>{exam?.titie}</div>
+          <div className={cx("exam-main-text")}>{exam?.title}</div>
         </div>
         <div className={cx("exam-main-item")}>
           <div className={cx("exam-main-icon")}>
@@ -49,7 +49,7 @@ function TrialExamItem({ exam }) {
             <i className={cx("fa-regular fa-user-pen")}></i>
           </div>
           <div className={cx("exam-main-title")}>Created By:</div>
-          <div className={cx("exam-main-text")}>{formatDate(Date.now())}</div>
+          <div className={cx("exam-main-text")}>{exam?.account.username}</div>
         </div>
       </div>
       <div className={cx("exam-item-footer")}>

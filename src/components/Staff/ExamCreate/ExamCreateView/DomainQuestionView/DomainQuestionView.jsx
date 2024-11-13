@@ -158,102 +158,104 @@ function DomainQuestionView({
           <div className={cx("domain-create-question-modal-header")}>
             <div className={cx("domain-name")}>{domainData?.domain}</div>
           </div>
-          <div className={cx("domain-create-question-modal-search")}>
-            <div className={cx("search-question-container")}>
-              <div className={cx("search-content")}>
-                <div className={cx("search-icon")}>
-                  <i
-                    className={cx("fa-regular fa-magnifying-glass", "icon")}
-                  ></i>
+          {exam?.status === "Rejected" && (
+            <div className={cx("domain-create-question-modal-search")}>
+              <div className={cx("search-question-container")}>
+                <div className={cx("search-content")}>
+                  <div className={cx("search-icon")}>
+                    <i
+                      className={cx("fa-regular fa-magnifying-glass", "icon")}
+                    ></i>
+                  </div>
+                  <input
+                    type="text"
+                    value={searchValue}
+                    placeholder="Search question..."
+                    className={cx("search-input")}
+                    autoFocus
+                    onChange={handleChangeSearchInput}
+                  />
                 </div>
-                <input
-                  type="text"
-                  value={searchValue}
-                  placeholder="Search question..."
-                  className={cx("search-input")}
-                  autoFocus
-                  onChange={handleChangeSearchInput}
-                />
-              </div>
-              <div className={cx("search-select")}>
-                <div
-                  className={cx("select-skill")}
-                  onClick={() => setIsShowSkillSelect(!isShowSkillSelect)}
-                >
-                  <div className={cx("selected-text")}>{skillSelect}</div>
-                  {skillSelect === "Select skill" ? (
-                    <i
-                      className={cx(
-                        isShowSkillSelect
-                          ? "fa-regular fa-chevron-down"
-                          : "fa-regular fa-chevron-up",
-                        "icon-select"
-                      )}
-                    ></i>
-                  ) : (
-                    <i
-                      className={cx("fa-sharp fa-solid fa-xmark")}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteSkillSelect();
-                      }}
-                    ></i>
-                  )}
+                <div className={cx("search-select")}>
+                  <div
+                    className={cx("select-skill")}
+                    onClick={() => setIsShowSkillSelect(!isShowSkillSelect)}
+                  >
+                    <div className={cx("selected-text")}>{skillSelect}</div>
+                    {skillSelect === "Select skill" ? (
+                      <i
+                        className={cx(
+                          isShowSkillSelect
+                            ? "fa-regular fa-chevron-down"
+                            : "fa-regular fa-chevron-up",
+                          "icon-select"
+                        )}
+                      ></i>
+                    ) : (
+                      <i
+                        className={cx("fa-sharp fa-solid fa-xmark")}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteSkillSelect();
+                        }}
+                      ></i>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className={cx("search-select-level")}>
-                <div
-                  className={cx("select-level")}
-                  onClick={() => setIsShowLevelSelect(!isShowLevelSelect)}
-                >
-                  <div className={cx("selected-text")}>{levelSelect}</div>
-                  {levelSelect === "Select level" ? (
-                    <i
-                      className={cx(
-                        isShowLevelSelect
-                          ? "fa-regular fa-chevron-down"
-                          : "fa-regular fa-chevron-up",
-                        "icon-select"
-                      )}
-                    ></i>
-                  ) : (
-                    <i
-                      className={cx("fa-sharp fa-solid fa-xmark")}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteLevelSelect();
-                      }}
-                    ></i>
-                  )}
+                <div className={cx("search-select-level")}>
+                  <div
+                    className={cx("select-level")}
+                    onClick={() => setIsShowLevelSelect(!isShowLevelSelect)}
+                  >
+                    <div className={cx("selected-text")}>{levelSelect}</div>
+                    {levelSelect === "Select level" ? (
+                      <i
+                        className={cx(
+                          isShowLevelSelect
+                            ? "fa-regular fa-chevron-down"
+                            : "fa-regular fa-chevron-up",
+                          "icon-select"
+                        )}
+                      ></i>
+                    ) : (
+                      <i
+                        className={cx("fa-sharp fa-solid fa-xmark")}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteLevelSelect();
+                        }}
+                      ></i>
+                    )}
+                  </div>
                 </div>
+                {isQuestionDropdownVisible && (
+                  <QuestionDropdown
+                    setSearchValue={setSearchValue}
+                    searchQuestionResult={filteredSearchQuestionResult}
+                    domainQuestions={domainData}
+                    setDomainQuestions={setDomainData}
+                    setIsQuestionDropdownVisible={setIsQuestionDropdownVisible}
+                    numberOfQuestion={domainData.numberofquestion}
+                    setUpdateQuestion={setUpdateQuestion}
+                    examId={exam?.id}
+                    moduleTypeId={moduleData?.id}
+                  />
+                )}
+                {isShowSkillSelect && (
+                  <SkillDropdown
+                    onClick={handleClickSelectDropdownSkill}
+                    skills={skills}
+                  />
+                )}
+                {isShowLevelSelect && (
+                  <LevelDropdown
+                    onClick={handleClickSelectDropdownLevel}
+                    levels={levels}
+                  />
+                )}
               </div>
-              {isQuestionDropdownVisible && (
-                <QuestionDropdown
-                  setSearchValue={setSearchValue}
-                  searchQuestionResult={filteredSearchQuestionResult}
-                  domainQuestions={domainData}
-                  setDomainQuestions={setDomainData}
-                  setIsQuestionDropdownVisible={setIsQuestionDropdownVisible}
-                  numberOfQuestion={domainData.numberofquestion}
-                  setUpdateQuestion={setUpdateQuestion}
-                  examId={exam?.id}
-                  moduleTypeId={moduleData?.id}
-                />
-              )}
-              {isShowSkillSelect && (
-                <SkillDropdown
-                  onClick={handleClickSelectDropdownSkill}
-                  skills={skills}
-                />
-              )}
-              {isShowLevelSelect && (
-                <LevelDropdown
-                  onClick={handleClickSelectDropdownLevel}
-                  levels={levels}
-                />
-              )}
             </div>
-          </div>
+          )}
           <div className={cx("domain-create-question-modal-content")}>
             <div className={cx("domain-create-question-modal")}>
               {domainData?.questions?.map((question, index) => (

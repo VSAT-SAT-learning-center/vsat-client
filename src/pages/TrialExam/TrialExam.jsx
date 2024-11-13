@@ -10,8 +10,9 @@ function TrialExam() {
   const [examList, setExamList] = useState([]);
   const fetchExamList = useCallback(async () => {
     try {
+      const examName = "Trial Exam"
       // setIsWaiting(true);
-      const response = await apiClient.get("/exams");
+      const response = await apiClient.get(`/exams/getExamByExamType/${examName}`);
       setExamList(response.data.data);
     } catch (error) {
       console.error("Failed to fetch exam structure list:", error);
@@ -27,8 +28,8 @@ function TrialExam() {
     <div className={cx("trial-exam-wrapper")}>
       <HeaderAuthen />
       <div className={cx("trial-exam-container")}>
-        {examList?.map((exam) => (
-          <TrialExamItem key={exam.id} exam={exam} />
+        {examList?.map((exam, index) => (
+          <TrialExamItem key={exam.id} index={index + 1} exam={exam} />
         ))}
       </div>
     </div>
