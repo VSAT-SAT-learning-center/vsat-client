@@ -6,9 +6,11 @@ import DirectionModal from "./DirectionModal";
 import styles from "./ExamView.module.scss";
 import QuestionDropdownModal from "./QuestionDropdownModal";
 import QuestionExam from "./QuestionExam";
+import apiClient from "~/services/apiService";
 const cx = classNames.bind(styles);
 
 function ExamView({ exam }) {
+
   const [isShowTime, setIsShowTime] = useState(true);
   const [isShowDirection, setIsShowDirection] = useState(true);
   const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
@@ -23,6 +25,8 @@ function ExamView({ exam }) {
   const [isTimeoutTriggered, setIsTimeoutTriggered] = useState(false);
   const [reviewQuestions, setReviewQuestions] = useState({});
   const [isFinishClicked, setIsFinishClicked] = useState(false);
+  const [isHardRW, setIsHardRW] = useState(false)
+  const [isHardMath, setIsHardMath] = useState(false)
 
   const currentModule = exam.examQuestions[currentModuleIndex];
   const currentQuestion = currentModule.questions[currentQuestionIndex];
@@ -175,7 +179,6 @@ function ExamView({ exam }) {
             .toLowerCase(); // Convert to lowercase for case-insensitive comparison
 
           const normalizedUserAnswer = userAnswer.trim().toLowerCase(); // Normalize user input
-
           // Compare the normalized answers
           if (normalizedUserAnswer === normalizedCorrectAnswer) {
             correctAnswers++;
@@ -189,13 +192,13 @@ function ExamView({ exam }) {
 
   const handleModuleCompletion = () => {
     const score = calculateModuleScore();
-    console.log(score);
+    console.log("Calculated Score:", score);
 
     let nextModule;
 
     // Check if this is the first module and we need an adaptive module for Module 2
-    if (exam?.examStructureType === "Adaptive" && currentModuleIndex === 0) {
-      if (currentModule.section === "Reading & Writing") {
+    if (exam?.examStructureType === "Adaptive") {
+      if (currentModule.section === "Reading & Writing" && currentModuleIndex === 0) {
         // Determine if we need "Hard" or "Easy" questions for Module 2
         if (score >= exam.requiredCorrectInModule1RW) {
           // Select the hard level module for Reading & Writing
@@ -205,6 +208,7 @@ function ExamView({ exam }) {
               module.level === "Hard" &&
               module.section === "Reading & Writing"
           );
+          setIsHardRW(true);
           console.log("Proceeding to harder Reading & Writing questions.");
         } else {
           // Select the easy level module for Reading & Writing
@@ -214,9 +218,10 @@ function ExamView({ exam }) {
               module.level === "Easy" &&
               module.section === "Reading & Writing"
           );
+          setIsHardRW(false);
           console.log("Proceeding to easier Reading & Writing questions.");
         }
-      } else if (currentModule.section === "Math") {
+      } else if (currentModule.section === "Math" && currentModuleIndex === 3) {
         if (score >= exam.requiredCorrectInModule1M) {
           // Select the hard level module for Math
           nextModule = exam.examQuestions.find(
@@ -225,6 +230,7 @@ function ExamView({ exam }) {
               module.level === "Hard" &&
               module.section === "Math"
           );
+          setIsHardMath(true)
           console.log("Proceeding to harder Math questions.");
         } else {
           // Select the easy level module for Math
@@ -234,6 +240,7 @@ function ExamView({ exam }) {
               module.level === "Easy" &&
               module.section === "Math"
           );
+          setIsHardMath(false)
           console.log("Proceeding to easier Math questions.");
         }
       }
@@ -256,9 +263,19 @@ function ExamView({ exam }) {
       if (nextSectionModule) {
         setCurrentModuleIndex(exam.examQuestions.indexOf(nextSectionModule));
       } else {
+        const unansweredQuestionsExist = currentModule.questions.some(
+          (q) => userAnswers[q.id] === undefined
+        );
+        if (unansweredQuestionsExist) {
+          // If there are unanswered questions, open the QuestionDropdownModal
+          setShowQuestionDropdown(true);
+        } else {
+          // If all questions are answered, show the submit confirmation popup
+          setShowSubmitConfirmation(true);
+          setIsTimeoutTriggered(false);
+        }
         console.log("Exam completed. No more sections.");
         return;
-        // Handle exam completion here (e.g., show a summary or results)
       }
     } else {
       // Set the next module in the state if found, otherwise go to the next sequential module
@@ -285,26 +302,14 @@ function ExamView({ exam }) {
         (q) => userAnswers[q.id] === undefined
       );
 
-      // If this is the last question of "Math Module 2"
-      if (currentModule.section === "Math" && currentModule.name === "Module 2") {
-        if (unansweredQuestionsExist) {
-          // If there are unanswered questions, open the QuestionDropdownModal
-          setShowQuestionDropdown(true);
-        } else {
-          // If all questions are answered, show the submit confirmation popup
-          setShowSubmitConfirmation(true);
-          setIsTimeoutTriggered(false);
-        }
+      // For other modules, check unanswered questions and handle module completion
+      if (unansweredQuestionsExist) {
+        // Open the QuestionDropdownModal to review unanswered questions
+        setShowQuestionDropdown(true);
       } else {
-        // For other modules, check unanswered questions and handle module completion
-        if (unansweredQuestionsExist) {
-          // Open the QuestionDropdownModal to review unanswered questions
-          setShowQuestionDropdown(true);
-        } else {
-          // Complete the module and move to the next if all questions are answered
-          handleModuleCompletion();
-          setIsFinishClicked(false);
-        }
+        // Complete the module and move to the next if all questions are answered
+        handleModuleCompletion();
+        setIsFinishClicked(false);
       }
     }
   };
@@ -315,10 +320,112 @@ function ExamView({ exam }) {
     }
   };
 
-  const handleSubmit = () => {
-    console.log("Exam submitted:", userAnswers);
-    // Implement further exam submission logic here, such as API calls
-    setShowSubmitConfirmation(false); // Close the popup after submission
+  const handleSubmit = async () => {
+    const uniqueQuestions = new Set();
+
+    // Calculate correct answers for Reading & Writing section
+    const correctAnswerRW = exam.examQuestions
+      .filter((module) => module.section === "Reading & Writing")
+      .flatMap((module) => module.questions)
+      .filter((question) => {
+        // Only include the question if it hasn't been seen before
+        if (uniqueQuestions.has(question.id)) {
+          return false; // Skip duplicate
+        }
+        uniqueQuestions.add(question.id);
+        return true; // Include unique question
+      })
+      .reduce((score, question) => {
+        const userAnswer = userAnswers[question.id];
+        const correctAnswer = question.answers.find((answer) => answer.isCorrectAnswer);
+        return score + (userAnswer && userAnswer === correctAnswer?.id ? 1 : 0);
+      }, 0);
+
+    // Reset the unique questions set to handle Math section independently
+    uniqueQuestions.clear();
+
+    // Calculate correct answers for Math section
+    const correctAnswerMath = exam.examQuestions
+      .filter((module) => module.section === "Math")
+      .flatMap((module) => module.questions)
+      .filter((question) => {
+        // Only include the question if it hasn't been seen before
+        if (uniqueQuestions.has(question.id)) {
+          return false; // Skip duplicate
+        }
+        uniqueQuestions.add(question.id);
+        return true; // Include unique question
+      })
+      .reduce((score, question) => {
+        const userAnswer = userAnswers[question.id];
+        const correctAnswer = question.answers.find((answer) => answer.isCorrectAnswer);
+
+        if (question.isSingleChoiceQuestion) {
+          return score + (correctAnswer && userAnswer === correctAnswer.id ? 1 : 0);
+        } else if (correctAnswer) {
+          const normalizedCorrectAnswer = correctAnswer.plaintext
+            .replace(/\\\[(.*?)\\\]/g, "$1")
+            .trim()
+            .toLowerCase();
+
+          const normalizedUserAnswer = userAnswer?.trim().toLowerCase();
+
+          return score + (normalizedUserAnswer === normalizedCorrectAnswer ? 1 : 0);
+        }
+        return score;
+      }, 0);
+
+    const createExamAttemptDetail = Object.entries(userAnswers).map(([questionId, studentAnswer]) => {
+      const question = exam.examQuestions
+        .flatMap((module) => module.questions)
+        .find((q) => q.id === questionId);
+
+      let studentAnswerText = `<p>\\[${studentAnswer}\\]</p>`;
+
+      if (question) {
+        const selectedAnswer = question.answers.find((answer) => {
+          if (answer.id === studentAnswer) return true;
+          const normalizedAnswerText = answer.plaintext
+            .replace(/\\\[(.*?)\\\]/g, "$1")
+            .trim()
+            .toLowerCase();
+
+          const normalizedStudentAnswer = studentAnswer.trim().toLowerCase();
+          return normalizedAnswerText === normalizedStudentAnswer;
+        });
+
+        if (selectedAnswer) {
+          studentAnswerText = selectedAnswer.text;
+        }
+      }
+
+      return {
+        questionid: questionId,
+        studentanswer: studentAnswerText,
+      };
+    });
+
+    // Construct payload
+    const payload = {
+      examId: exam.id,
+      correctAnswerRW,
+      correctAnswerMath,
+      isHardRW: exam.examStructureType === "Adaptive" ? isHardRW : false,
+      isHardMath: exam.examStructureType === "Adaptive" ? isHardMath : false,
+      createExamAttemptDetail,
+    };
+
+    console.log(payload);
+
+
+    // Send API request
+    try {
+      const response = await apiClient.post("/exam-attempts", payload)
+      console.log(response.data);
+      setShowSubmitConfirmation(false);
+    } catch (error) {
+      console.error('Error submitting exam:', error);
+    }
   };
 
   const handleMarkForReview = (questionId) => {
@@ -343,9 +450,6 @@ function ExamView({ exam }) {
   const isQuestionMarkedForReview = (questionId) => {
     return (reviewQuestions[currentModuleIndex] || []).includes(questionId);
   };
-
-  // const isCurrentQuestionAnswered =
-  //   userAnswers[currentQuestion.id] !== undefined;
 
   return (
     <>
