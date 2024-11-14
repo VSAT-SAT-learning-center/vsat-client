@@ -2,8 +2,8 @@
 
 .learning-item {
   cursor: pointer;
-  width: 411px;
-  height: 194px;
+  width: 412px;
+  height: 211px;
   padding: 12px 16px;
   display: flex;
   flex-direction: column;
@@ -53,9 +53,9 @@
   }
 
   .item-description {
-    min-height: 42px;
+    min-height: 35px;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 16px;
     font-style: italic;
     word-wrap: break-word;
     white-space: normal;

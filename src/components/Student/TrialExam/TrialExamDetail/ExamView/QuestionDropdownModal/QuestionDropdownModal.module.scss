@@ -1,0 +1,166 @@
+@import "~/styles/variables";
+
+.question-dropdown-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 105;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .question-dropdown-modal-container {
+    position: relative;
+    width: 500px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+    animation: slideDown 0.35s ease-out;
+
+    .question-dropdown-modal-header {
+      width: 100%;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .title-container {
+        font-size: 23px;
+        font-weight: 600;
+      }
+
+      .close-btn {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        border-radius: 50%;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+    }
+
+    .question-dropdown-modal-content {
+      width: 100%;
+      padding: 16px;
+
+      .question-answer-options {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .option {
+          font-size: 17px;
+          padding: 0 8px;
+
+          .icon {
+            margin-right: 6px;
+          }
+
+          .review-icon {
+            color: $third-color;
+          }
+        }
+      }
+
+      .question-list {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        column-gap: 8px;
+        row-gap: 18px;
+        margin: 30px 0;
+        margin-bottom: 24px;
+
+        .question-item {
+          position: relative;
+          width: 35px;
+          height: 35px;
+          border-radius: 3px;
+          font-size: 17px;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #212529;
+          border: 1px solid #212529;
+          background-color: $bg-primary-color;
+          transition: all 0.3s linear;
+
+          &:hover {
+            color: $white-color;
+            background-color: #212529;
+            .current{
+              color: #212529;
+            }
+
+            .review {
+              color: $third-color;
+            }
+          }
+
+          &.answered {
+            color: $white-color;
+            background-color: #212529;
+          }
+
+          &.review {
+            color: $white-color;
+            background-color: #212529;
+          }
+
+          &.unanswered {
+            color: $white-color;
+            border: 1px solid $third-color;
+            background-color: $third-color;
+          }
+
+          .current {
+            position: absolute;
+            font-size: 16px;
+            top: -16px;
+            color: #212529;
+          }
+
+          .review {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 14px;
+            color: $third-color;
+          }
+        }
+      }
+
+      .alert-message {
+        text-align: center;
+        font-size: 17px;
+        color: $third-color
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-15vh);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
