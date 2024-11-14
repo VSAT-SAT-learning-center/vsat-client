@@ -1,48 +1,29 @@
 import classNames from "classnames/bind";
-import { useState } from "react";
+import SidebarNavItem from "~/components/General/SidebarNavItem";
+import { sidebarNavs } from "~/data/Student/SidebarNavs"; // Note the curly braces here
 import styles from "./LearningSidebar.module.scss";
 
 const cx = classNames.bind(styles);
 
 function LearningSidebar() {
-  const [activeItem, setActiveItem] = useState("Courses");
-
-  const handleItemClick = (item) => {
-    setActiveItem(item);
-  };
-
   return (
     <div className={cx("learning-sidebar-wrapper")}>
       <div className={cx("learning-sidebar-container")}>
         <div className={cx("menu-section")}>
           <div className={cx("menu-title")}>MY STUFF</div>
-          <button
-            className={cx("menu-item", { active: activeItem === "Courses" })}
-            onClick={() => handleItemClick("Courses")}
-          >
-            Study profile
-          </button>
+          {sidebarNavs
+            .filter((navItem) => navItem.section === "MY STUFF")
+            .map((navItem) => (
+              <SidebarNavItem key={navItem.id} navItem={navItem} />
+          ))}
         </div>
         <div className={cx("menu-section")}>
           <div className={cx("menu-title")}>MY ACCOUNT</div>
-          <button
-            className={cx("menu-item", { active: activeItem === "Progress" })}
-            onClick={() => handleItemClick("Progress")}
-          >
-            Skill statistics
-          </button>
-          <button
-            className={cx("menu-item", { active: activeItem === "Profile" })}
-            onClick={() => handleItemClick("Profile")}
-          >
-            Exam history
-          </button>
-          <button
-            className={cx("menu-item", { active: activeItem === "Teachers" })}
-            onClick={() => handleItemClick("Teachers")}
-          >
-            Teacher feedbacks
-          </button>
+          {sidebarNavs
+            .filter((navItem) => navItem.section === "MY ACCOUNT")
+            .map((navItem) => (
+              <SidebarNavItem key={navItem.id} navItem={navItem} />
+          ))}
         </div>
       </div>
     </div>
