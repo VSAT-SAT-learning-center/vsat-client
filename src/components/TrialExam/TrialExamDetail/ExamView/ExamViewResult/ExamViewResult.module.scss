@@ -18,6 +18,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
       .header-content {
         width: 900px;
         height: 120px;
@@ -37,13 +38,61 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
+      .content-main-loading {
+        width: 1200px;
+        height: 650px;
+        padding: 12px 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, .1);
+        background-color: $bg-primary-color;
+
+        .loader {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          display: inline-block;
+          border-top: 4px solid $primary-color;
+          border-right: 4px solid transparent;
+          box-sizing: border-box;
+          animation: rotation 1s linear infinite;
+        }
+
+        .loader::after {
+          content: "";
+          box-sizing: border-box;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          border-left: 4px solid $primary-color;
+          border-bottom: 4px solid transparent;
+          animation: rotation 0.5s linear infinite reverse;
+        }
+
+        @keyframes rotation {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      }
+
       .content-main {
         width: 1200px;
         height: fit-content;
         padding: 12px 48px;
         background-color: $bg-primary-color;
         border-radius: 5px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, .1); 
+        box-shadow: 0 0 15px rgba(0, 0, 0, .1);
 
         .content-top {
           width: 100%;
@@ -70,7 +119,7 @@
               justify-content: center;
               flex-direction: column;
               row-gap: 5px;
-              
+
               .score-number {
                 font-size: 32px;
                 font-weight: 600;
@@ -117,7 +166,6 @@
           }
         }
       }
-        
     }
   }
 }

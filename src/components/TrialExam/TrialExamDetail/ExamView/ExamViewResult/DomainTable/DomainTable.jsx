@@ -3,13 +3,9 @@ import styles from "./DomainTable.module.scss";
 
 const cx = classNames.bind(styles);
 
-function DomainTable() {
-  const data = [
-    { category: "Craft and Structure", correct: 0, incorrect: 0, total: 14 },
-    { category: "Information and Ideas", correct: 0, incorrect: 0, total: 14 },
-    { category: "Standard English Convention", correct: 0, incorrect: 0, total: 14 },
-    { category: "Expression of Ideas", correct: 0, incorrect: 0, total: 12 },
-  ];
+function DomainTable({ data }) {
+  // console.log(data);
+
 
   return (
     <div className={cx("domain-table")}>
@@ -23,11 +19,11 @@ function DomainTable() {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => (
+          {data?.map((row, index) => (
             <tr key={index}>
-              <td style={{ textAlign: "left" }}>{row.category}</td>
-              <td>{row.correct}</td>
-              <td>{row.incorrect}</td>
+              <td style={{ textAlign: "left" }}>{row.domainContent}</td>
+              <td>{row.correctCount}</td>
+              <td>{row.incorrectCount}</td>
               <td>{row.total}</td>
             </tr>
           ))}

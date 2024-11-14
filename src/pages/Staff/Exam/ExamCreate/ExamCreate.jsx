@@ -33,7 +33,7 @@ function ExamCreate() {
   return (
     <>
       {isShowCreateExamModal && (
-        <ExamCreateModal setIsShowCreateExamModal={setIsShowCreateExamModal} />
+        <ExamCreateModal setIsShowCreateExamModal={setIsShowCreateExamModal} fetchExamList={fetchExamList} />
       )}
 
       {isShowCreateExamView && (

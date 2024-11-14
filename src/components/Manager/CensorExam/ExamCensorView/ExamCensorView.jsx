@@ -159,15 +159,15 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
             <div className={cx("exam-information-container")}>
               <div className={cx("exam-title-container")}>
                 <div className={cx("title")}>Exam title</div>
-                <div className={cx("exam-name")}>Exam 1</div>
+                <div className={cx("exam-name")}>{examCensorData?.title}</div>
               </div>
               <div className={cx("exam-structure-container")}>
                 <div className={cx("title")}>Exam structure</div>
-                <div className={cx("structure-name")}>Exam structure 1</div>
+                <div className={cx("structure-name")}>{examCensorData?.description}</div>
               </div>
               <div className={cx("exam-type-container")}>
                 <div className={cx("title")}>Exam type</div>
-                <div className={cx("type-name")}>Practical exam</div>
+                <div className={cx("type-name")}>{examCensorData?.examType?.name}</div>
               </div>
             </div>
             <div className={cx("exam-config-wrapper")}>

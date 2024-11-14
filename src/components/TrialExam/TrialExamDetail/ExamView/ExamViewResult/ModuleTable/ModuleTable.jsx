@@ -2,11 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./ModuleTable.module.scss";
 const cx = classNames.bind(styles);
 
-function ModuleTable() {
-  const data = [
-    { module: "Module 1", correct: 0, incorrect: 0, total: 27 },
-    { module: "Module 2", correct: 0, incorrect: 0, total: 27 },
-  ];
+function ModuleTable({ data }) {
   return (
     <div className={cx("rw-table")}>
       <table>
@@ -19,12 +15,12 @@ function ModuleTable() {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => (
+          {data?.map((row, index) => (
             <tr key={index}>
-              <td>{row.module}</td>
-              <td>{row.correct}</td>
-              <td>{row.incorrect}</td>
-              <td>{row.total}</td>
+              <td>{row.moduleTypeName}</td>
+              <td>{row.correctCount}</td>
+              <td>{row.incorrectCount}</td>
+              <td>{row.totalCount}</td>
             </tr>
           ))}
         </tbody>

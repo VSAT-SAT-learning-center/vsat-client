@@ -11,7 +11,7 @@ import DomainQuestionCreateModal from "./DomainQuestionCreateModal";
 import styles from "./ExamCreateModal.module.scss";
 import ModuleQuestionCreate from "./ModuleQuestionCreate";
 const cx = classNames.bind(styles);
-function ExamCreateModal({ setIsShowCreateExamModal }) {
+function ExamCreateModal({ setIsShowCreateExamModal, fetchExamList }) {
   const [loading, setLoading] = useState(false);
   const [isShowGeneralContent, setIsShowGeneralContent] = useState(true);
   const [examStructures, setExamStructures] = useState([]);
@@ -301,10 +301,9 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
         ...examData,
         examQuestions: simplifiedExamQuestions,
       };
-      console.log(payload);
-
       await apiClient.post("/exams", payload);
       setIsShowCreateExamModal(false);
+      fetchExamList()
       toast.success("Exam created successfully!", {
         autoClose: 1000,
       });
@@ -515,50 +514,50 @@ function ExamCreateModal({ setIsShowCreateExamModal }) {
                   )}
                   {examStructureSelected?.examStructureType.name ===
                     "Adaptive" && (
-                    <div className={cx("show-exam-config-container")}>
-                      <div className={cx("exam-config-container")}>
-                        <div className={cx("exam-config-icon")}>
-                          <i className={cx("fa-light fa-eye")}></i>
-                        </div>
-                        <div className={cx("exam-config-select")}>
-                          <div className={cx("type-config")}>
-                            Correct question in Module 1{" "}
-                            <span className={cx("required")}>
-                              (Reading & Writing)
-                            </span>
+                      <div className={cx("show-exam-config-container")}>
+                        <div className={cx("exam-config-container")}>
+                          <div className={cx("exam-config-icon")}>
+                            <i className={cx("fa-light fa-eye")}></i>
                           </div>
-                          <div className={cx("config-content")}>
-                            <div className={cx("name-config")}>
-                              <div className={cx("name")}>
-                                {
-                                  examStructureSelected?.requiredCorrectInModule1RW
-                                }
+                          <div className={cx("exam-config-select")}>
+                            <div className={cx("type-config")}>
+                              Correct question in Module 1{" "}
+                              <span className={cx("required")}>
+                                (Reading & Writing)
+                              </span>
+                            </div>
+                            <div className={cx("config-content")}>
+                              <div className={cx("name-config")}>
+                                <div className={cx("name")}>
+                                  {
+                                    examStructureSelected?.requiredCorrectInModule1RW
+                                  }
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className={cx("exam-config-container")}>
+                          <div className={cx("exam-config-select")}>
+                            <div className={cx("type-config")}>
+                              Correct question in Module 1{" "}
+                              <span className={cx("required")}>
+                                (Reading & Writing)
+                              </span>
+                            </div>
+                            <div className={cx("config-content")}>
+                              <div className={cx("name-config")}>
+                                <div className={cx("name")}>
+                                  {
+                                    examStructureSelected?.requiredCorrectInModule1M
+                                  }
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className={cx("exam-config-container")}>
-                        <div className={cx("exam-config-select")}>
-                          <div className={cx("type-config")}>
-                            Correct question in Module 1{" "}
-                            <span className={cx("required")}>
-                              (Reading & Writing)
-                            </span>
-                          </div>
-                          <div className={cx("config-content")}>
-                            <div className={cx("name-config")}>
-                              <div className={cx("name")}>
-                                {
-                                  examStructureSelected?.requiredCorrectInModule1M
-                                }
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                    )}
                 </div>
               </div>
               {/* Download template */}
