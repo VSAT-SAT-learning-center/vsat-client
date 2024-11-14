@@ -88,8 +88,8 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
   const handleApprove = async () => {
     const feedbackData = {
       examFeedback: censorModuleFeedback,
-      accountFromId: "3054a435-312f-4265-8b10-44d32e36cc50",
-      accountToId: "2bf338f2-290b-4479-86e0-feb1bd0f518a",
+      accountFromId: "d66ca666-3188-4662-bb69-840faa80fc40",
+      accountToId: "e3958023-2cf4-4394-93be-b86ff80e59fb",
     };
     try {
       const response = await apiClient.post(
@@ -113,8 +113,8 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
   const handleReject = async () => {
     const feedbackData = {
       examFeedback: censorModuleFeedback,
-      accountFromId: "3054a435-312f-4265-8b10-44d32e36cc50",
-      accountToId: "2bf338f2-290b-4479-86e0-feb1bd0f518a",
+      accountFromId: "d66ca666-3188-4662-bb69-840faa80fc40",
+      accountToId: "e3958023-2cf4-4394-93be-b86ff80e59fb",
     };
     try {
       const response = await apiClient.post(

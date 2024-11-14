@@ -1,0 +1,123 @@
+@import "~/styles/variables";
+
+.exam-view-result-wrapper {
+  width: 100%;
+  height: 100vh;
+  background-color: $bg-primary-color;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .exam-view-result-container {
+    width: 100%;
+
+    .exam-view-result-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .header-content {
+        width: 900px;
+        height: 120px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-weight: bold;
+        color: #212529;
+      }
+    }
+
+    .exam-view-result-content {
+      width: 100%;
+      margin: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .content-main {
+        width: 1200px;
+        height: fit-content;
+        padding: 12px 48px;
+        background-color: $bg-primary-color;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, .1); 
+
+        .content-top {
+          width: 100%;
+          padding: 16px 0;
+
+          .exam-name {
+            width: 100%;
+            margin: 24px 0;
+            font-size: 28px;
+            font-weight: 600;
+          }
+
+          .exam-score {
+            width: 100%;
+            height: 96px;
+            display: flex;
+            align-items: center;
+
+            .score-item {
+              flex: 1;
+              padding: 0 12px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-direction: column;
+              row-gap: 5px;
+              
+              .score-number {
+                font-size: 32px;
+                font-weight: 600;
+                color: #2f2964;
+              }
+
+              .score-text {
+                font-size: 22px;
+                color: #212529;
+              }
+            }
+          }
+        }
+
+        .content-statistic {
+          width: 100%;
+
+          .summary-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2f2964;
+          }
+
+          .rw-container {
+            width: 100%;
+            margin-top: 24px;
+
+            .rw-text {
+              font-size: 20px;
+              font-weight: 600;
+              color: #2f2964;
+            }
+          }
+
+          .math-container {
+            width: 100%;
+            margin-top: 24px;
+
+            .math-text {
+              font-size: 20px;
+              font-weight: 600;
+              color: #2f2964;
+            }
+          }
+        }
+      }
+        
+    }
+  }
+}

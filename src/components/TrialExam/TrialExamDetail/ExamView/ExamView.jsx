@@ -1,12 +1,14 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
+import Loader from "~/components/General/Loader";
+import apiClient from "~/services/apiService";
 import { formatTime } from "~/utils/timeFormat";
 import ConfirmExamModal from "./ConfirmExamModal";
 import DirectionModal from "./DirectionModal";
 import styles from "./ExamView.module.scss";
+import ExamViewResult from "./ExamViewResult";
 import QuestionDropdownModal from "./QuestionDropdownModal";
 import QuestionExam from "./QuestionExam";
-import apiClient from "~/services/apiService";
 const cx = classNames.bind(styles);
 
 function ExamView({ exam }) {
@@ -30,6 +32,9 @@ function ExamView({ exam }) {
 
   const currentModule = exam.examQuestions[currentModuleIndex];
   const currentQuestion = currentModule.questions[currentQuestionIndex];
+  const [isWatingSubmit, setIsWatingSubmit] = useState(false)
+  const [showExamResult, setShowExamResult] = useState(false)
+  const [examResult, setExamResult] = useState(null)
 
   useEffect(() => {
     setTimeLeft(currentModule.time * 60);
@@ -414,18 +419,18 @@ function ExamView({ exam }) {
       isHardMath: exam.examStructureType === "Adaptive" ? isHardMath : false,
       createExamAttemptDetail,
     };
-
-    console.log(payload);
-
-
     // Send API request
     try {
+      setIsWatingSubmit(true)
       const response = await apiClient.post("/exam-attempts", payload)
-      console.log(response.data);
-      setShowSubmitConfirmation(false);
+      setExamResult(response.data.data)
+      setShowExamResult(true)
     } catch (error) {
       console.error('Error submitting exam:', error);
+    } finally {
+      setIsWatingSubmit(false)
     }
+    setShowSubmitConfirmation(false);
   };
 
   const handleMarkForReview = (questionId) => {
@@ -453,6 +458,8 @@ function ExamView({ exam }) {
 
   return (
     <>
+      {isWatingSubmit && <Loader />}
+      {showExamResult && <ExamViewResult examResult={examResult} />}
       {isShowDirection && (
         <DirectionModal setIsShowDirection={setIsShowDirection} />
       )}

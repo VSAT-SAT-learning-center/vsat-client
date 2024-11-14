@@ -93,8 +93,8 @@ function CensorQuestionExamView({
       questionId: questionCensorData?.id,
       content: content,
       reason: reason,
-      accountFromId: "6eee6cac-cb87-447a-8b79-d785d19d75e1",
-      accountToId: "548ee83b-8f63-431f-9733-df210a1448c1",
+      accountFromId: "d66ca666-3188-4662-bb69-840faa80fc40",
+      accountToId: "e3958023-2cf4-4394-93be-b86ff80e59fb",
     };
     try {
       await apiClient.post(`/questions/censor/reject`, rejectData);
