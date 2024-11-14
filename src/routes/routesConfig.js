@@ -1,4 +1,4 @@
-import QuestionDropdownModal from "~/components/TrialExam/TrialExamDetail/ExamView/QuestionDropdownModal";
+import ExamViewResult from "~/components/TrialExam/TrialExamDetail/ExamView/ExamViewResult";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -67,7 +67,7 @@ import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/Feedbac
 
 const routesConfig = [
   // Testing
-  { path: "/test", component: QuestionDropdownModal },
+  { path: "/test", component: ExamViewResult },
   // Landing page routes
   { path: "/", component: Home },
   { path: "/about", component: About },

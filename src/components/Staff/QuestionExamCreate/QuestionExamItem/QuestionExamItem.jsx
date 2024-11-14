@@ -42,10 +42,10 @@ function QuestionExamItem({
             question?.status === "Approved"
               ? "approved-status"
               : question?.status === "Pending"
-              ? "pending-status"
-              : question?.status === "Draft"
-              ? "draft-status"
-              : "rejected-status"
+                ? "pending-status"
+                : question?.status === "Draft"
+                  ? "draft-status"
+                  : "rejected-status"
           )}
         >
           {question?.status}
