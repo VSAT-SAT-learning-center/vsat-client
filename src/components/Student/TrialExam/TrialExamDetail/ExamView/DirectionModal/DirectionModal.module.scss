@@ -1,0 +1,71 @@
+@import "~/styles/variables";
+
+.direction-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 105;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 30px;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  .direction-modal-container {
+    width: 500px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+    animation: slideDown 0.35s ease-out;
+
+    .direction-modal-content {
+      width: 100%;
+      flex-grow: 1;
+      padding: 20px;
+
+      .content-infor {
+        margin-bottom: 16px;
+        font-size: 17px;
+        color: #212529;
+      }
+    }
+
+    .direction-modal-footer {
+      width: 100%;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      border-top: 1px solid $border-color;
+
+      .close-btn {
+        padding: 6px 12px;
+        border-radius: 120px;
+        font-size: 17px;
+        background-color: #ffc107;
+        transition: all 0.3s linear;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20vh);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

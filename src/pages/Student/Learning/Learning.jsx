@@ -1,4 +1,3 @@
-import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import LearningItem from "~/components/Student/Learning/LearningItem/LearningItem";
@@ -8,77 +7,44 @@ import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCre
 import styles from "./Learning.module.scss";
 import apiClient from "~/services/apiService";
 const cx = classNames.bind(styles);
-const itemsPerPage = 6;
 
 function Learning() {
   const [learningMaterials, setLearningMaterials] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     const fetchLearningMaterials = async () => {
       try {
-        const response = await apiClient.get(`/units/approve`, {
-          params: {
-            page: currentPage,
-            pageSize: itemsPerPage,
-          },
-        });
-        setLearningMaterials(response.data.data.data);
-        setTotalItems(response.data.data.totalItems);
+        const response = await apiClient.get(`/study-profiles`);
+        setLearningMaterials(response.data.data);
       } catch (error) {
         console.error("Error fetching learning materials:", error);
       }
     };
 
     fetchLearningMaterials();
-  }, [currentPage]);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  }, []); 
 
   return (
     <LearningLayout>
-    <div className={cx("learning-wrapper")}>
-      <div className={cx("learning-container")}>
-        <div className={cx("learning-wrapper")}>
+      <div className={cx("learning-wrapper")}>
+        <div className={cx("learning-container")}>
           <div className={cx("learning-header")}>
-            Study profile
+            <div className={cx("learning-text")}>Study Profile</div>
           </div>
-          <div className={cx("learning-container")}>
-            {learningMaterials?.length > 0 ? (
-              <div
-                className={cx(
-                  "learning-content",
-                  "learning-item-container"
-                )}
-              >
-                {learningMaterials?.map((item) => (
+          <div className={cx("learning-content")}>
+            {learningMaterials.length > 0 ? (
+              <div className={cx("learning-content-item", "learning-item-container")}>
+                {learningMaterials.map((item) => (
                   <LearningItem key={item.id} item={item} />
                 ))}
               </div>
             ) : (
               <NoQuestionData />
             )}
-            {learningMaterials?.length > 0 && (
-              <div className={cx("pagination-controls")}>
-                <Pagination
-                  align="center"
-                  current={currentPage}
-                  pageSize={itemsPerPage}
-                  total={totalItems}
-                  onChange={handlePageChange}
-                  showSizeChanger={false}
-                  showLessItems={true}
-                />
-              </div>
-            )}
           </div>
         </div>
       </div>
-    </div>
-    <LearningMaterialCreateFooter />
+      <LearningMaterialCreateFooter />
     </LearningLayout>
   );
 }

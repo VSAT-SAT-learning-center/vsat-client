@@ -6,7 +6,6 @@ import apiClient from "~/services/apiService";
 import styles from "./TrialExam.module.scss";
 const cx = classNames.bind(styles);
 function TrialExam() {
-  // const [isWaiting, setIsWaiting] = useState(false);
   const [examList, setExamList] = useState([]);
   const fetchExamList = useCallback(async () => {
     try {
