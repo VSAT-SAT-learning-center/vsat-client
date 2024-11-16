@@ -2,7 +2,7 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import LessonTypeModal from "~/components/Staff/LearningMaterialCreate/LessonTypeModal";
@@ -28,12 +28,15 @@ function LearningMaterialCreateTopic() {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
+        if (!unitId) {
+          return;
+        }
         const response = await apiClient.get(`/units/domain/${unitId}`);
-        const originalArray = response.data.domain.skills;
+        const originalArray = response.data.skills;
         const transformedArray = originalArray.map((item) => ({
-          id: item.id,
+          id: uuidv4(),
           unitId: unitId,
-          title: item.content,
+          title: item.title,
           lessons: [],
         }));
         setTopics(transformedArray);

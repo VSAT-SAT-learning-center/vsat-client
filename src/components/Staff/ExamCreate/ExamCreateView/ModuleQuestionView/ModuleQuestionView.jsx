@@ -4,12 +4,21 @@ const cx = classNames.bind(styles);
 
 function ModuleQuestionView({
   examQuestion,
+  exam,
   setIsShowDomainQuestionView,
-  setDomainData
+  setOriginalData,
+  setDomainData,
+  setModuleData,
 }) {
+  const sortedDomains = examQuestion?.domains?.sort((a, b) =>
+    a.domain.localeCompare(b.domain)
+  );
+
   const handleClickViewDomainQuestion = (domainData) => {
     setIsShowDomainQuestionView(true);
-    setDomainData(domainData)
+    setOriginalData(domainData);
+    setDomainData(domainData);
+    setModuleData(examQuestion);
   };
   return (
     <div className={cx("module-question-container")}>
@@ -26,7 +35,7 @@ function ModuleQuestionView({
         <div className={cx("module-section")}>{examQuestion?.section}</div>
       </div>
       <div className={cx("module-question-content")}>
-        {examQuestion?.domains.map((domain, index) => (
+        {sortedDomains?.map((domain, index) => (
           <div className={cx("domain-question-container")} key={index}>
             <div className={cx("domain-icon")}>
               <i className={cx("fa-regular fa-pen-to-square")}></i>
@@ -38,9 +47,7 @@ function ModuleQuestionView({
                 <div className={cx("create-action")}>
                   <button
                     className={cx("create-btn")}
-                    onClick={() =>
-                      handleClickViewDomainQuestion(domain)
-                    }
+                    onClick={() => handleClickViewDomainQuestion(domain)}
                   >
                     <i
                       className={cx(
@@ -48,7 +55,9 @@ function ModuleQuestionView({
                         "create-icon"
                       )}
                     ></i>
-                    <span className={cx("create-text")}>View</span>
+                    <span className={cx("create-text")}>
+                      {exam?.status === "Rejected" ? "Edit" : "View"}
+                    </span>
                   </button>
                 </div>
               </div>

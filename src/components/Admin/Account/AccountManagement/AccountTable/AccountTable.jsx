@@ -1,9 +1,9 @@
 import { PlusCircleOutlined } from "@ant-design/icons";
-import axios from "axios";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
+import apiClient from "~/services/apiService";
 import CreateAccount from "../../../../../components/Admin/Account/CreateAccount";
 import styles from "./AccountTable.module.scss";
 
@@ -29,8 +29,8 @@ function AccountTable() {
   };
 
   const fetchData = (page, name = "") => {
-    axios
-      .get("http://localhost:5000/account/search", {
+    apiClient
+      .get("/account/search", {
         params: {
           page,
           pageSize,
@@ -52,7 +52,7 @@ function AccountTable() {
   const updateStatus = async (id, currentStatus) => {
     const newStatus = currentStatus === "Active" ? "Banned" : "Active";
     try {
-      await axios.put(`http://localhost:5000/account/update-status/${id}`, {
+      await apiClient.put(`/account/update-status/${id}`, {
         status: newStatus,
       });
       fetchData(currentPage, searchName);
@@ -73,6 +73,7 @@ function AccountTable() {
 
   useEffect(() => {
     fetchData(currentPage, searchName);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   return (
@@ -81,15 +82,15 @@ function AccountTable() {
         <div className={cx("header-container")}>
           <div className={cx("header-actions")}>
             <div className={cx("header-actions-search")}>
-            <input
-              className={cx("search-input")}
-              placeholder="Search by name"
-              value={searchName}
-              onChange={(e) => setSearchName(e.target.value)}
-            />
-            <button className={cx("filter-btn")} onClick={handleSearch}>
-              Search
-            </button>
+              <input
+                className={cx("search-input")}
+                placeholder="Search by name"
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
+              />
+              <button className={cx("filter-btn")} onClick={handleSearch}>
+                Search
+              </button>
             </div>
             <button className={cx("add-user-btn")} onClick={openModal}>
               <PlusCircleOutlined style={{ marginRight: "5px" }} /> Add User

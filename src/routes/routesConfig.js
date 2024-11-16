@@ -1,3 +1,4 @@
+import ExamViewResult from "~/components/TrialExam/TrialExamDetail/ExamView/ExamViewResult";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -53,9 +54,12 @@ import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
 import Learning from "~/pages/Student/Learning";
 import LearningPart from "~/pages/Student/LearningPart";
 import LearningPartDetail from "~/pages/Student/LearningPartDetail";
+import ExamSchedule from "~/pages/Student/ExamSchedule";
 import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
+import TrialExam from "~/pages/TrialExam";
+import TrialExamDetail from "~/pages/TrialExam/TrialExamDetail";
 import Unauthorized from "~/pages/Unauthorized";
 import QuestionDistribution from "../pages/Manager/ManagerExam/QuestionDistribution";
 import FeedbackQuestionExam from "../pages/Manager/ManagerQuestionExam/FeedbackQuestionExam";
@@ -63,17 +67,27 @@ import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/Feedbac
 
 const routesConfig = [
   // Testing
-  { path: "/test", component: LearningMaterialCreateAss },
+  { path: "/test", component: ExamViewResult },
   // Landing page routes
   { path: "/", component: Home },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
   { path: "/unauthorized", component: Unauthorized, protected: true },
+
+  // Trial Exam routes
+  { path: "/trial-exam", component: TrialExam },
+  { path: "/trial-exam/:examId", component: TrialExamDetail },
   // Student routes
   {
     path: "/learning",
     component: Learning,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/exam-schedule",
+    component: ExamSchedule,
     protected: true,
     roles: ["Student"],
   },
@@ -143,6 +157,12 @@ const routesConfig = [
   },
   {
     path: "/staff/learning-material/create/practices",
+    component: LearningMaterialCreateAss,
+    protected: true,
+    roles: ["Staff"],
+  },
+  {
+    path: "/staff/learning-material/create/practices/:unitId",
     component: LearningMaterialCreateAss,
     protected: true,
     roles: ["Staff"],

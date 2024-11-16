@@ -14,9 +14,11 @@ import styles from "./LearningMaterialPublish.module.scss";
 const cx = classNames.bind(styles);
 
 function LearningMaterialPublish() {
-  const navigate = useNavigate()
-  const currentStep = 3;
+  const navigate = useNavigate();
+  const currentStep = 4;
   const { unitId, lessonId } = useParams();
+  console.log(lessonId);
+
   const [loadTopics, setLoadTopics] = useState([]);
   const [lesson, setLesson] = useState(null);
 
@@ -43,7 +45,12 @@ function LearningMaterialPublish() {
     const fetchLesson = async () => {
       try {
         const lessonResponse = await apiClient.get(`/lessons/${lessonId}`);
-        const { id: lessonNewId, title, type, lessonContents } = lessonResponse.data.data;
+        const {
+          id: lessonNewId,
+          title,
+          type,
+          lessonContents,
+        } = lessonResponse.data.data;
         setLesson({
           lessonId: lessonNewId,
           title,
@@ -61,12 +68,12 @@ function LearningMaterialPublish() {
   const handlePublishUnit = async () => {
     try {
       await apiClient.post(`/units/${unitId}/submit`);
-      console.log("Success publish")
-      navigate("/staff/learning-material/create")
+      console.log("Success publish");
+      navigate("/staff/learning-material/create");
     } catch (error) {
       console.error("Error publish unit:", error);
     }
-  }
+  };
   return (
     <PageLayout>
       <div className={cx("learning-material-publish-container")}>
@@ -76,7 +83,12 @@ function LearningMaterialPublish() {
           <div className={cx("publish-sidebar-wrapper")}>
             <div className={cx("publish-sidebar-container")}>
               {loadTopics.map((topic) => (
-                <PublishSidebarItem key={topic.id} topic={topic} unitId={unitId} lessonId={lessonId} />
+                <PublishSidebarItem
+                  key={topic.id}
+                  topic={topic}
+                  unitId={unitId}
+                  lessonId={lessonId}
+                />
               ))}
             </div>
           </div>
@@ -89,10 +101,11 @@ function LearningMaterialPublish() {
               )}
             </div>
             <div className={cx("publish-bottom")}>
-              <button className={cx("publish-btn")} onClick={handlePublishUnit}>Publish</button>
+              <button className={cx("publish-btn")} onClick={handlePublishUnit}>
+                Publish
+              </button>
             </div>
           </div>
-
         </div>
       </div>
       <LearningMaterialCreateFooter />
