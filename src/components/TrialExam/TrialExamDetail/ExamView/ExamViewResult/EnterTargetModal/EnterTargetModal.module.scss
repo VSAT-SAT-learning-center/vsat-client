@@ -1,0 +1,57 @@
+@import "~/styles/variables";
+
+.enter-target-popup-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 106;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 150px;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  .enter-target-popup-container {
+    width: 600px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+    animation: slideDown 0.35s ease-out;
+
+    .enter-target-popup-content {
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      row-gap: 12px;
+
+      .content-title {
+        font-size: 26px;
+        font-weight: bold;
+      }
+
+      .content-desc {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-30vh);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
