@@ -36,7 +36,6 @@
       flex-wrap: wrap;
       overflow-y: auto;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
       gap: 25px;
 
       .exam-schedule-content-item {
