@@ -11,16 +11,16 @@ function LearningItem({ item}) {
   const navigate = useNavigate();
 
   const handleClickItem = () => {
-    if (item.status === "True") {
+    if (item.status === "Active") {
       navigate(`/learning/part/${item.id}`);
     }
   };
 
   return (
     <div
-      className={cx("learning-item", { "disabled-item": item.status !== "True" })}
-      onClick={item.status === "True" ? () => handleClickItem() : undefined}
-      style={{ cursor: item.status === "True" ? "pointer" : "not-allowed" }}
+      className={cx("learning-item", { "disabled-item": item.status !== "Active" })}
+      onClick={item.status === "Active" ? () => handleClickItem() : undefined}
+      style={{ cursor: item.status === "Active" ? "pointer" : "not-allowed" }}
     >
       <div className={cx("item-header")}>
         <div className={cx("header-image")}>
@@ -49,10 +49,10 @@ function LearningItem({ item}) {
           <div
             className={cx(
               "footer-status",
-              item.status === "True" ? "approved" : "rejected"
+              item.status === "Active" ? "approved" : "rejected"
             )}
           >
-            {item.status === "True" ? "Active" : "Inactive"}
+            {item.status === "Active" ? "Active" : "Inactive"}
           </div>
         </div>
       </div>
