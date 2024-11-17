@@ -1,20 +1,25 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
+import Loader from "~/components/General/Loader";
 import apiClient from "~/services/apiService";
 import ConfimContinueModal from "./ConfimContinueModal";
 import DomainTable from "./DomainTable";
 import EnterTargetModal from "./EnterTargetModal";
 import styles from "./ExamViewResult.module.scss";
+import LearningPathModal from "./LearningPathModal";
 import ModuleTable from "./ModuleTable";
 import SkillTable from "./SkillTable";
 const cx = classNames.bind(styles);
 
-function ExamViewResult({ examResult }) {
+function ExamViewResult({ exam, examResult }) {
   const [examResultRW, setExamResultRW] = useState(null);
   const [examResultMath, setExamResultMath] = useState(null);
   const [isWating, setIsWating] = useState(false);
   const [showConfirmContinue, setShowConfirmContinue] = useState(false);
   const [showEnterTarget, setShowEnterTarget] = useState(false);
+  const [showLearningPath, setShowLearningPath] = useState(false);
+  const [learningPartData, setLearningPartData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchExamResult = async () => {
@@ -46,18 +51,30 @@ function ExamViewResult({ examResult }) {
   }, [examResult?.attemptId]);
   return (
     <>
+      {isLoading && <Loader />}
+      {showLearningPath && (
+        <LearningPathModal learningPartData={learningPartData} />
+      )}
       {showConfirmContinue && (
         <ConfimContinueModal
           setShowConfirmContinue={setShowConfirmContinue}
           setShowEnterTarget={setShowEnterTarget}
         />
       )}
-      {showEnterTarget && <EnterTargetModal setShowEnterTarget={setShowEnterTarget} />}
+      {showEnterTarget && (
+        <EnterTargetModal
+          examResult={examResult}
+          setLearningPartData={setLearningPartData}
+          setShowEnterTarget={setShowEnterTarget}
+          setShowLearningPath={setShowLearningPath}
+          setIsLoading={setIsLoading}
+        />
+      )}
       <div className={cx("exam-view-result-wrapper")}>
         <div className={cx("exam-view-result-container")}>
           <div className={cx("exam-view-result-header")}>
             <div className={cx("header-content")}>
-              <div className={cx("content-text")}>Trial Exam Result</div>
+              <div className={cx("content-text")}>{exam?.title} Result</div>
               <button
                 className={cx("continue-btn")}
                 onClick={() => setShowConfirmContinue(true)}
@@ -80,13 +97,13 @@ function ExamViewResult({ examResult }) {
                   <div className={cx("exam-score")}>
                     <div className={cx("score-item")}>
                       <div className={cx("score-number")}>
-                        {examResult?.scoreRW + examResult?.scoreMath}
+                        {examResult?.scoreRW + examResult?.scoreMath || 0}
                       </div>
                       <div className={cx("score-text")}>Total</div>
                     </div>
                     <div className={cx("score-item")}>
                       <div className={cx("score-number")}>
-                        {examResult?.scoreRW}
+                        {examResult?.scoreRW || 0}
                       </div>
                       <div className={cx("score-text")}>
                         Reading and Writing
@@ -94,7 +111,7 @@ function ExamViewResult({ examResult }) {
                     </div>
                     <div className={cx("score-item")}>
                       <div className={cx("score-number")}>
-                        {examResult?.scoreMath}
+                        {examResult?.scoreMath || 0}
                       </div>
                       <div className={cx("score-text")}>Math</div>
                     </div>

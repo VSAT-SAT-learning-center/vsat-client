@@ -1,6 +1,7 @@
 @import "~/styles/variables";
 
 .topbar-wrapper {
+  position: relative;
   flex: 1;
   height: 80px;
   position: fixed;

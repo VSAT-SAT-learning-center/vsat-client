@@ -1,0 +1,171 @@
+@import "~/styles/variables";
+
+.account-options-wrapper {
+  position: absolute;
+  right: 10px;
+  top: 70px;
+  width: 310px;
+  height: fit-content;
+  max-height: 650px;
+  padding: 9px;
+  border-radius: 15px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  z-index: 106;
+  background-color: $bg-primary-color;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  animation: slideIn 0.5s ease forwards;
+
+  .account-options-container {
+    .current-text {
+      width: 100%;
+      height: 32px;
+      padding: 8px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .user-info-wrapper {
+      cursor: pointer;
+      width: 100%;
+      height: 80px;
+      padding: 8px;
+      border-radius: 8px;
+      background-color: #e9e9e9;
+
+      .user-info-container {
+        width: 100%;
+        height: 64px;
+        display: flex;
+        align-items: center;
+
+        .user-info-main {
+          user-select: none;
+          width: 90%;
+          display: flex;
+          align-items: center;
+          margin-right: 16px;
+
+          .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 8px;
+
+            .avatar {
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+          }
+
+          .user-info {
+            width: calc(100% - 60px);
+
+            .username {
+              font-size: 17px;
+              font-weight: 600;
+              line-height: 22px;
+            }
+
+            .account-type {
+              font-size: 13px;
+              line-height: 20px;
+            }
+
+            .email {
+              font-size: 14px;
+              line-height: 20px;
+            }
+          }
+        }
+
+        .tick {
+          flex: 1;
+
+          .icon {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
+    .more-options-text {
+      width: 100%;
+      height: 32px;
+      margin-top: 16px;
+      padding: 8px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .option-wrapper {
+      user-select: none;
+      cursor: pointer;
+      text-decoration: none;
+      width: 100%;
+      height: 40px;
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: 0.15s ease;
+      .option-text {
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 22px;
+      }
+
+      .icon {
+        font-size: 12px;
+      }
+
+      &:hover {
+        background-color: #e9e9e9;
+      }
+    }
+
+    .log-out-wrapper {
+      user-select: none;
+      cursor: pointer;
+      width: 100%;
+      height: 40px;
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      transition: 0.15s ease;
+
+      .log-out-text {
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 22px;
+      }
+
+      &:hover {
+        background-color: #e9e9e9;
+      }
+    }
+  }
+}
+
+.account-options-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

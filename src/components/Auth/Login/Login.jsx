@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Loader from "~/components/General/Loader";
 import { AuthContext } from "~/contexts/AuthContext";
 import Logo from "../../../assets/images/logo/LOGO-06.png";
@@ -12,16 +13,23 @@ function Login({ setShowLogin }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     try {
       setLoading(true);
-      const decodedUser = await login({ username, password });
+      const user = await login({ username, password });
+
+      if (!user.isTrialExam && user.role === "Student") {
+        setLoading(false);
+        setShowLogin(false);
+        navigate("/trial-exam");
+        return;
+      }
+
       setLoading(false);
       setShowLogin(false);
-      switch (decodedUser.role) {
+      switch (user.role) {
         case "Admin":
           navigate("/admin");
           break;
@@ -37,10 +45,24 @@ function Login({ setShowLogin }) {
         case "Student":
           navigate("/learning");
           break;
+        default:
+          break;
       }
     } catch (error) {
-      console.error("Login failed!", error);
-      setErrorMsg(error.response.data.details);
+      console.error("Login failed!", error.response?.data?.details);
+      setLoading(false);
+      toast.error(
+        error.response?.data?.details || "Login failed. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
     }
   };
 
@@ -92,15 +114,8 @@ function Login({ setShowLogin }) {
                     />
                   </div>
                 </div>
-                {/* Error Message */}
-                {errorMsg && (
-                  <div className={cx("error-message")}>{errorMsg}</div>
-                )}
                 {/* Forget password */}
-                <div
-                  className={cx("login-btn")}
-                  style={{ marginTop: errorMsg === "" ? "15px" : "0" }}
-                >
+                <div className={cx("login-btn")}>
                   <button className={cx("btn")} onClick={handleLogin}>
                     Log in
                   </button>

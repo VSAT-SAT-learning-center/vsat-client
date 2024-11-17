@@ -1,4 +1,4 @@
-import ExamViewResult from "~/components/TrialExam/TrialExamDetail/ExamView/ExamViewResult";
+import AccountOptions from "~/layouts/Landing/HeaderAuthen/AccountOptions";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -51,10 +51,10 @@ import Students from "~/pages/Staff/Students";
 import StudyProfile from "~/pages/Staff/Students/StudyProfile";
 import Teachers from "~/pages/Staff/Teachers";
 import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
+import ExamSchedule from "~/pages/Student/ExamSchedule";
 import Learning from "~/pages/Student/Learning";
 import LearningPart from "~/pages/Student/LearningPart";
 import LearningPartDetail from "~/pages/Student/LearningPartDetail";
-import ExamSchedule from "~/pages/Student/ExamSchedule";
 import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
@@ -67,7 +67,7 @@ import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/Feedbac
 
 const routesConfig = [
   // Testing
-  { path: "/test", component: ExamViewResult },
+  { path: "/test", component: AccountOptions },
   // Landing page routes
   { path: "/", component: Home },
   { path: "/about", component: About },
@@ -76,8 +76,18 @@ const routesConfig = [
   { path: "/unauthorized", component: Unauthorized, protected: true },
 
   // Trial Exam routes
-  { path: "/trial-exam", component: TrialExam },
-  { path: "/trial-exam/:examId", component: TrialExamDetail },
+  {
+    path: "/trial-exam",
+    component: TrialExam,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/trial-exam/:examId",
+    component: TrialExamDetail,
+    protected: true,
+    roles: ["Student"],
+  },
   // Student routes
   {
     path: "/learning",
@@ -264,13 +274,13 @@ const routesConfig = [
   },
   // Staff manage students routes
   {
-    path: "/staff/students/manage",
+    path: "/staff/students/study-profile",
     component: Students,
     protected: true,
     roles: ["Staff"],
   },
   {
-    path: "/staff/students/study-profile",
+    path: "/staff/students/assign-students",
     component: StudyProfile,
     protected: true,
     roles: ["Staff"],
