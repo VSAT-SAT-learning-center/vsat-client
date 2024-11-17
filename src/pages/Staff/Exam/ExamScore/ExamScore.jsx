@@ -7,6 +7,7 @@ import ExamScoreItem from "~/components/Staff/ExamScoreCreate/ExamScoreItem";
 import ExamScoreViewDetail from "~/components/Staff/ExamScoreCreate/ExamScoreViewDetail";
 import UploadFileScore from "~/components/Staff/ExamScoreCreate/UploadFileScore";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ExamScore.module.scss";
@@ -106,7 +107,11 @@ function ExamScore() {
                 <span className={cx("import-text")}>New Score</span>
               </button>
             </div>
-            <div className={cx("create-score-content")}>
+            <div className={cx(
+              isWaiting || examScoreList.length > 0
+              ? "create-score-content"
+              : "create-score-no-content"
+            )}>
               {isWaiting ? (
                 <>
                   {[...Array(3)].map((_, i) => (
@@ -119,7 +124,7 @@ function ExamScore() {
                     />
                   ))}
                 </>
-              ) : (
+              ) : examScoreList.length > 0 ? (
                 examScoreList?.map((examScore, index) => (
                   <ExamScoreItem
                     key={examScore.id}
@@ -129,6 +134,8 @@ function ExamScore() {
                     setIsShowViewDetailScore={setIsShowViewDetailScore}
                   />
                 ))
+              ) : (
+                <NoQuestionData />
               )}
             </div>
           </div>

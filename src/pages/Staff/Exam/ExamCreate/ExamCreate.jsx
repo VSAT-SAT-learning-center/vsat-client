@@ -5,6 +5,7 @@ import ExamCreateItem from "~/components/Staff/ExamCreate/ExamCreateItem";
 import ExamCreateModal from "~/components/Staff/ExamCreate/ExamCreateModal";
 import ExamCreateView from "~/components/Staff/ExamCreate/ExamCreateView";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ExamCreate.module.scss";
@@ -33,7 +34,10 @@ function ExamCreate() {
   return (
     <>
       {isShowCreateExamModal && (
-        <ExamCreateModal setIsShowCreateExamModal={setIsShowCreateExamModal} fetchExamList={fetchExamList} />
+        <ExamCreateModal
+          setIsShowCreateExamModal={setIsShowCreateExamModal}
+          fetchExamList={fetchExamList}
+        />
       )}
 
       {isShowCreateExamView && (
@@ -55,7 +59,9 @@ function ExamCreate() {
                 <span className={cx("exam-text")}>New Exam</span>
               </button>
             </div>
-            <div className={cx("create-exam-content")}>
+            <div className={cx(isWaiting || examList.length > 0
+                  ? "create-exam-content"
+                  : "create-exam-no-content")}>
               {isWaiting ? (
                 <>
                   {[...Array(3)].map((_, i) => (
@@ -68,7 +74,7 @@ function ExamCreate() {
                     />
                   ))}
                 </>
-              ) : (
+              ) : examList.length > 0 ? (
                 examList?.map((exam) => (
                   <ExamCreateItem
                     key={exam.id}
@@ -77,6 +83,8 @@ function ExamCreate() {
                     setIsShowCreateExamView={setIsShowCreateExamView}
                   />
                 ))
+              ) : (
+                <NoQuestionData />
               )}
             </div>
           </div>

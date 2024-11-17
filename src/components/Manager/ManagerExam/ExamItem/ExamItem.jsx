@@ -3,7 +3,7 @@ import { formatDate } from "~/utils/formatDate";
 import styles from "./ExamItem.module.scss";
 const cx = classNames.bind(styles);
 
-function ExamItem({ exam, setExamCensorData, setIsShowExamCensorView }) {
+function ExamItem({ exam, index, setExamCensorData, setIsShowExamCensorView }) {
   const handleViewExamDetail = () => {
     setExamCensorData(exam)
     setIsShowExamCensorView(true)
@@ -12,7 +12,7 @@ function ExamItem({ exam, setExamCensorData, setIsShowExamCensorView }) {
     <div className={cx("exam-create-item-container")}>
       <div className={cx("exam-create-item-header")}>
         <div className={cx("header-infor")}>
-          <div className={cx("number")}>1</div>
+          <div className={cx("number")}>{index}</div>
           <div className={cx("exam-title")}>{exam?.title}</div>
         </div>
         <div className={cx("header-action")}>

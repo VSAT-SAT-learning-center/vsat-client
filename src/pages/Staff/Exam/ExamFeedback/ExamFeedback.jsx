@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import ExamCreateItem from "~/components/Staff/ExamCreate/ExamCreateItem";
 import ExamCreateView from "~/components/Staff/ExamCreate/ExamCreateView";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ExamFeedback.module.scss";
@@ -43,7 +44,11 @@ function ExamFeedback() {
             <div className={cx("exam-feedback-header")}>
               <div className={cx("exam-feedback-text")}>Exam Feedback</div>
             </div>
-            <div className={cx("exam-feedback-content")}>
+            <div className={cx(
+              isWaiting || examList.length > 0
+              ? "exam-feedback-content"
+              : "exam-feedback-no-content"
+            )}>
               {isWaiting ? (
                 <>
                   {[...Array(3)].map((_, i) => (
@@ -56,7 +61,7 @@ function ExamFeedback() {
                     />
                   ))}
                 </>
-              ) : (
+              ) : examList.length > 0 ? (
                 examList?.map((exam) => (
                   <ExamCreateItem
                     key={exam.id}
@@ -65,6 +70,8 @@ function ExamFeedback() {
                     setIsShowCreateExamView={setIsShowCreateExamView}
                   />
                 ))
+              ) : (
+                <NoQuestionData />
               )}
             </div>
           </div>

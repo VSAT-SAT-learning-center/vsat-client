@@ -56,7 +56,6 @@ function ManagerExam() {
               )}
             >
               {isWaiting ? (
-                // Show Skeletons while waiting
                 <>
                   {[...Array(3)].map((_, i) => (
                     <Skeleton
@@ -69,7 +68,6 @@ function ManagerExam() {
                   ))}
                 </>
               ) : examList.length > 0 ? (
-                // Show ExamItem when examList has items and not waiting
                 examList.map((item, index) => (
                   <ExamItem
                     key={item.id}
@@ -80,7 +78,6 @@ function ManagerExam() {
                   />
                 ))
               ) : (
-                // Show NoQuestionData when examList is empty and not waiting
                 <NoQuestionData />
               )}
             </div>
