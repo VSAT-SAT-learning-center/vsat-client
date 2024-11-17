@@ -62,7 +62,7 @@ function ManagerExam() {
                   ))}
                 </>
               ) : examList.length > 0 ? (
-                <div className={cx("exam-schedule-content-item", "exam-schedule-item-container")}>
+                <div className={cx("manage-exam-item", "exam-schedule-item-container")}>
                   {examList.map((item, index) => (
                     <TrialExamItem
                       key={item.id}
