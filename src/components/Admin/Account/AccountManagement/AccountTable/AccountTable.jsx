@@ -16,7 +16,7 @@ function AccountTable() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [pageSize] = useState(6);
+  const [pageSize] = useState(5);
   const [searchName, setSearchName] = useState("");
 
   const openModal = () => {
@@ -122,7 +122,7 @@ function AccountTable() {
                   <td className={cx("gender-cell")}>
                     {user.gender === true ? "👨" : "👩"}
                   </td>
-                  <td>{user.role?.rolename || "N/A"}</td>
+                  <td>{user.role || "N/A"}</td>
                   <td className={cx("status-cell")}>
                     <div
                       className={cx("status-toggle")}

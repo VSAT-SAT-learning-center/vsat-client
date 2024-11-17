@@ -117,7 +117,7 @@ function Login({ setShowLogin }) {
                 {/* Forget password */}
                 <div className={cx("login-btn")}>
                   <button className={cx("btn")} onClick={handleLogin}>
-                    Log in
+                    Sign in
                   </button>
                 </div>
               </div>

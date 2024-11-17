@@ -63,5 +63,14 @@
         display: none;
       }
     }
+
+    .create-score-no-content {
+      width: 100%;
+      height: calc(100% - 79px);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }

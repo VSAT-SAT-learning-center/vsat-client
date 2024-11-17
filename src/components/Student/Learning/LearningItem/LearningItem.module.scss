@@ -17,6 +17,19 @@
     transform: translateY(-5px);
   }
 
+  &.disabled-item {
+    background-color: #f5f5f5;
+    color: #999;
+    pointer-events: none;
+    /* Ngăn mọi tương tác */
+    cursor: not-allowed;
+
+    &:hover {
+      box-shadow: none;
+      transform: none;
+    }
+  }
+
   .item-header {
     display: flex;
     align-items: center;
@@ -72,46 +85,6 @@
     justify-content: space-between;
     flex-direction: column;
 
-    .content-config {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .config-level {
-        align-items: center;
-
-        .level-icon {
-          font-size: 14px;
-          margin-right: 8px;
-        }
-
-        .level-text {
-          font-size: 14px;
-          font-style: italic;
-        }
-      }
-
-      .config-detail {
-        display: flex;
-        align-items: center;
-        column-gap: 12px;
-
-        .detail-item {
-          align-items: center;
-
-          .detail-icon {
-            font-size: 14px;
-            margin-right: 8px;
-          }
-
-          .detail-text {
-            font-size: 14px;
-            font-style: italic;
-          }
-        }
-      }
-    }
-
     .content-footer {
       width: 100%;
       display: flex;
@@ -134,12 +107,6 @@
           color: rgb(0, 166, 14);
           border: 1px solid rgb(0, 166, 14);
           background-color: rgba(0, 166, 14, 0.1);
-        }
-
-        &.pending {
-          color: rgb(255, 165, 0);
-          border: 1px solid rgb(255, 165, 0);
-          background-color: rgba(255, 165, 0, 0.1);
         }
 
         &.rejected {

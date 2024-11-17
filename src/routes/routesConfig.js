@@ -49,6 +49,7 @@ import QuizzFeedback from "~/pages/Staff/QuestionQuizz/QuizzFeedback/QuizzFeedba
 import Settings from "~/pages/Staff/Settings";
 import Students from "~/pages/Staff/Students";
 import StudyProfile from "~/pages/Staff/Students/StudyProfile";
+import StudentProfile from "~/pages/Student/Profile";
 import Teachers from "~/pages/Staff/Teachers";
 import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
 import ExamSchedule from "~/pages/Student/ExamSchedule";
@@ -116,6 +117,12 @@ const routesConfig = [
   {
     path: "/learning/:slug/:idSection/:id",
     component: LearningPartDetail,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/profile",
+    component: StudentProfile,
     protected: true,
     roles: ["Student"],
   },
@@ -285,6 +292,7 @@ const routesConfig = [
     protected: true,
     roles: ["Staff"],
   },
+  
   // Staff manage teacher routes
   {
     path: "/staff/teachers/manage",

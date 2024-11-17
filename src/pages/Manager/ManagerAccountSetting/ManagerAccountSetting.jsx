@@ -9,14 +9,15 @@ function ManagerAccountSetting() {
       <div className={cx("manager-account-setting-wrapper")}>
         <div className={cx("manager-account-setting-container")}>
           <div className={cx("manager-account-setting-header")}>
-            <div className={cx("manager-account-setting-text")}>Manager Account Setting</div>
+            <div className={cx("manager-account-setting-text")}>
+              Manager Account Setting
+            </div>
           </div>
           <div className={cx("manager-account-setting-content")}></div>
         </div>
       </div>
       <LearningMaterialCreateFooter />
     </PageLayout>
-
   );
 }
 

@@ -56,4 +56,13 @@ export const sidebarNavs = [
     path: "/teacher-feedbacks",
     show: false,
   },
+  {
+    id: 6,
+    section: "MY ACCOUNT",
+    icon: "fa-light fa-user-cog",
+    iconActive: "fa-regular fa-user-cog",
+    title: "Profile",
+    path: "/profile",
+    show: false,
+  },
 ];
