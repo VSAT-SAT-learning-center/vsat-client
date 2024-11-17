@@ -330,7 +330,7 @@ function CensorQuestionExamView({
               onClick={handleApproveQuestion}
             >
               <i className={cx("fa-sharp fa-regular fa-check", "btn-icon")}></i>
-              <span className={cx("btn-text")}>Approv</span>
+              <span className={cx("btn-text")}>Approve</span>
             </button>
           </div>
         </div>

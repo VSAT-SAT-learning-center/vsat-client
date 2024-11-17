@@ -1,4 +1,3 @@
-import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useReducer } from "react";
 import apiClient from "~/services/apiService";
 import TokenService from "~/services/tokenService";
@@ -51,16 +50,14 @@ const AuthProvider = ({ children }) => {
         username,
         password,
       });
-      const { accessToken } = response.data;
 
-      // Decode the token to get user info and role
-      const decodedUser = jwtDecode(accessToken);
-      setUser(decodedUser);
+      const { account, accessToken } = response.data;
+      setUser(account);
 
       // Store access token
       TokenService.setAccessToken(accessToken);
 
-      return decodedUser;
+      return account;
     } catch (error) {
       console.error("Login error:", error);
       throw error;
@@ -77,10 +74,20 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = TokenService.getAccessToken();
     if (token) {
-      const decodedUser = jwtDecode(token);
-      setUser(decodedUser);
+      const fetchUser = async () => {
+        try {
+          const response = await apiClient.get("/account/getUserById");
+          setUser(response.data.data);
+        } catch (error) {
+          console.error("Failed to fetch user details:", error);
+          logout();
+        }
+      };
+
+      fetchUser();
+    } else {
+      dispatch({ type: "SET_LOADING", payload: false });
     }
-    dispatch({ type: "SET_LOADING", payload: false });
   }, []);
 
   return (

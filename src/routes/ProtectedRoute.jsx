@@ -16,8 +16,23 @@ function ProtectedRoute({ children, roles }) {
     return <Navigate to="/" replace state={{ from: location }} />;
   }
 
+  if (
+    user?.role === "Student" &&
+    user?.isTrialExam === false &&
+    !location.pathname.startsWith("/trial-exam")
+  ) {
+    return <Navigate to="/trial-exam" replace />;
+  }
+
   if (roles?.length > 0 && !roles?.includes(user?.role)) {
     return <Navigate to="/unauthorized" replace />;
+  }
+
+  if (
+    location.pathname.startsWith("/trial-exam") &&
+    user?.isTrialExam === true
+  ) {
+    return <Navigate to="/" replace />;
   }
 
   return children;

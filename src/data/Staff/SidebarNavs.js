@@ -142,13 +142,13 @@ export const sidebarNavs = [
     subNavs: [
       {
         id: 1,
-        title: "Manage Students",
-        path: "/staff/students/manage",
+        title: "Manage Study Profile",
+        path: "/staff/students/study-profile",
       },
       {
         id: 2,
-        title: "Study Profile",
-        path: "/staff/students/study-profile",
+        title: "Assign Students",
+        path: "/staff/students/assign-students",
       },
     ],
   },
@@ -165,11 +165,11 @@ export const sidebarNavs = [
         title: "Manage Teachers",
         path: "/staff/teachers/manage",
       },
-      {
-        id: 2,
-        title: "Assign Students",
-        path: "/staff/teachers/assign-students",
-      },
+      // {
+      //   id: 2,
+      //   title: "Assign Students",
+      //   path: "/staff/teachers/assign-students",
+      // },
     ],
   },
   {

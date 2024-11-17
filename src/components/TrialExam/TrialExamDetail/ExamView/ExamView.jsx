@@ -12,10 +12,9 @@ import QuestionExam from "./QuestionExam";
 const cx = classNames.bind(styles);
 
 function ExamView({ exam }) {
-
   const [isShowTime, setIsShowTime] = useState(true);
   const [isShowDirection, setIsShowDirection] = useState(true);
-  const [currentModuleIndex, setCurrentModuleIndex] = useState(2);
+  const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [showSubmitConfirmation, setShowSubmitConfirmation] = useState(false);
@@ -27,14 +26,14 @@ function ExamView({ exam }) {
   const [isTimeoutTriggered, setIsTimeoutTriggered] = useState(false);
   const [reviewQuestions, setReviewQuestions] = useState({});
   const [isFinishClicked, setIsFinishClicked] = useState(false);
-  const [isHardRW, setIsHardRW] = useState(false)
-  const [isHardMath, setIsHardMath] = useState(false)
+  const [isHardRW, setIsHardRW] = useState(false);
+  const [isHardMath, setIsHardMath] = useState(false);
 
   const currentModule = exam.examQuestions[currentModuleIndex];
   const currentQuestion = currentModule.questions[currentQuestionIndex];
-  const [isWatingSubmit, setIsWatingSubmit] = useState(false)
-  const [showExamResult, setShowExamResult] = useState(false)
-  const [examResult, setExamResult] = useState(null)
+  const [isWatingSubmit, setIsWatingSubmit] = useState(false);
+  const [showExamResult, setShowExamResult] = useState(false);
+  const [examResult, setExamResult] = useState(null);
 
   useEffect(() => {
     setTimeLeft(currentModule.time * 60);
@@ -202,7 +201,10 @@ function ExamView({ exam }) {
 
     // Check if this is the first module and we need an adaptive module for Module 2
     if (exam?.examStructureType === "Adaptive") {
-      if (currentModule.section === "Reading & Writing" && currentModuleIndex === 0) {
+      if (
+        currentModule.section === "Reading & Writing" &&
+        currentModuleIndex === 0
+      ) {
         // Determine if we need "Hard" or "Easy" questions for Module 2
         if (score >= exam.requiredCorrectInModule1RW) {
           // Select the hard level module for Reading & Writing
@@ -234,7 +236,7 @@ function ExamView({ exam }) {
               module.level === "Hard" &&
               module.section === "Math"
           );
-          setIsHardMath(true)
+          setIsHardMath(true);
           console.log("Proceeding to harder Math questions.");
         } else {
           // Select the easy level module for Math
@@ -244,7 +246,7 @@ function ExamView({ exam }) {
               module.level === "Easy" &&
               module.section === "Math"
           );
-          setIsHardMath(false)
+          setIsHardMath(false);
           console.log("Proceeding to easier Math questions.");
         }
       }
@@ -341,7 +343,9 @@ function ExamView({ exam }) {
       })
       .reduce((score, question) => {
         const userAnswer = userAnswers[question.id];
-        const correctAnswer = question.answers.find((answer) => answer.isCorrectAnswer);
+        const correctAnswer = question.answers.find(
+          (answer) => answer.isCorrectAnswer
+        );
         return score + (userAnswer && userAnswer === correctAnswer?.id ? 1 : 0);
       }, 0);
 
@@ -362,10 +366,14 @@ function ExamView({ exam }) {
       })
       .reduce((score, question) => {
         const userAnswer = userAnswers[question.id];
-        const correctAnswer = question.answers.find((answer) => answer.isCorrectAnswer);
+        const correctAnswer = question.answers.find(
+          (answer) => answer.isCorrectAnswer
+        );
 
         if (question.isSingleChoiceQuestion) {
-          return score + (correctAnswer && userAnswer === correctAnswer.id ? 1 : 0);
+          return (
+            score + (correctAnswer && userAnswer === correctAnswer.id ? 1 : 0)
+          );
         } else if (correctAnswer) {
           const normalizedCorrectAnswer = correctAnswer.plaintext
             .replace(/\\\[(.*?)\\\]/g, "$1")
@@ -374,40 +382,44 @@ function ExamView({ exam }) {
 
           const normalizedUserAnswer = userAnswer?.trim().toLowerCase();
 
-          return score + (normalizedUserAnswer === normalizedCorrectAnswer ? 1 : 0);
+          return (
+            score + (normalizedUserAnswer === normalizedCorrectAnswer ? 1 : 0)
+          );
         }
         return score;
       }, 0);
 
-    const createExamAttemptDetail = Object.entries(userAnswers).map(([questionId, studentAnswer]) => {
-      const question = exam.examQuestions
-        .flatMap((module) => module.questions)
-        .find((q) => q.id === questionId);
+    const createExamAttemptDetail = Object.entries(userAnswers).map(
+      ([questionId, studentAnswer]) => {
+        const question = exam.examQuestions
+          .flatMap((module) => module.questions)
+          .find((q) => q.id === questionId);
 
-      let studentAnswerText = `<p>\\[${studentAnswer}\\]</p>`;
+        let studentAnswerText = `<p>\\[${studentAnswer}\\]</p>`;
 
-      if (question) {
-        const selectedAnswer = question.answers.find((answer) => {
-          if (answer.id === studentAnswer) return true;
-          const normalizedAnswerText = answer.plaintext
-            .replace(/\\\[(.*?)\\\]/g, "$1")
-            .trim()
-            .toLowerCase();
+        if (question) {
+          const selectedAnswer = question.answers.find((answer) => {
+            if (answer.id === studentAnswer) return true;
+            const normalizedAnswerText = answer.plaintext
+              .replace(/\\\[(.*?)\\\]/g, "$1")
+              .trim()
+              .toLowerCase();
 
-          const normalizedStudentAnswer = studentAnswer.trim().toLowerCase();
-          return normalizedAnswerText === normalizedStudentAnswer;
-        });
+            const normalizedStudentAnswer = studentAnswer.trim().toLowerCase();
+            return normalizedAnswerText === normalizedStudentAnswer;
+          });
 
-        if (selectedAnswer) {
-          studentAnswerText = selectedAnswer.text;
+          if (selectedAnswer) {
+            studentAnswerText = selectedAnswer.text;
+          }
         }
-      }
 
-      return {
-        questionid: questionId,
-        studentanswer: studentAnswerText,
-      };
-    });
+        return {
+          questionid: questionId,
+          studentanswer: studentAnswerText,
+        };
+      }
+    );
 
     // Construct payload
     const payload = {
@@ -420,26 +432,29 @@ function ExamView({ exam }) {
     };
     // Send API request
     try {
-      setIsWatingSubmit(true)
-      const response = await apiClient.post("/exam-attempts", payload)
-      setExamResult(response.data.data)
-      setShowExamResult(true)
+      setIsWatingSubmit(true);
+      const response = await apiClient.post("/exam-attempts", payload);
+      setExamResult(response.data.data);
+      setShowExamResult(true);
     } catch (error) {
-      console.error('Error submitting exam:', error);
+      console.error("Error submitting exam:", error);
     } finally {
-      setIsWatingSubmit(false)
+      setIsWatingSubmit(false);
     }
     setShowSubmitConfirmation(false);
   };
 
   const handleMarkForReview = (questionId) => {
     setReviewQuestions((prevReviewQuestions) => {
-      const moduleReviewQuestions = prevReviewQuestions[currentModuleIndex] || [];
+      const moduleReviewQuestions =
+        prevReviewQuestions[currentModuleIndex] || [];
       if (moduleReviewQuestions.includes(questionId)) {
         // Remove question from review if it’s already in the array
         return {
           ...prevReviewQuestions,
-          [currentModuleIndex]: moduleReviewQuestions.filter((id) => id !== questionId),
+          [currentModuleIndex]: moduleReviewQuestions.filter(
+            (id) => id !== questionId
+          ),
         };
       } else {
         // Add question to review
@@ -458,7 +473,7 @@ function ExamView({ exam }) {
   return (
     <>
       {isWatingSubmit && <Loader />}
-      {showExamResult && <ExamViewResult examResult={examResult} />}
+      {showExamResult && <ExamViewResult exam={exam} examResult={examResult} />}
       {isShowDirection && (
         <DirectionModal setIsShowDirection={setIsShowDirection} />
       )}

@@ -15,7 +15,7 @@
 
   .enter-target-popup-container {
     width: 600px;
-    height: 500px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
@@ -26,9 +26,8 @@
 
     .enter-target-popup-content {
       width: 100%;
-      padding: 20px;
+      padding: 20px 30px;
       display: flex;
-      align-items: center;
       justify-content: center;
       flex-direction: column;
       row-gap: 12px;
@@ -36,10 +35,66 @@
       .content-title {
         font-size: 26px;
         font-weight: bold;
+        text-align: center;
       }
 
       .content-desc {
         font-size: 18px;
+      }
+
+      .enter-target-container {
+        width: 100%;
+
+        .enter-target-item {
+          width: 100%;
+
+          .target-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .enter-title {
+              font-size: 18px;
+              font-weight: 600;
+
+              .highlight {
+                font-style: italic;
+                font-weight: 400;
+              }
+            }
+
+            .value-target {
+              font-size: 20px;
+              font-weight: 600;
+            }
+          }
+
+          .enter-target {
+            margin: 16px 0;
+          }
+        }
+      }
+    }
+
+    .enter-target-popup-footer {
+      width: 100%;
+      padding: 0 30px 20px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .continue-btn {
+        padding: 8px 20px;
+        border-radius: 5px;
+        font-size: 17px;
+        font-weight: 600;
+        color: $white-color;
+        background-color: $primary-color;
+        transition: all 0.3s linear;
+
+        &:hover {
+          opacity: 0.8;
+        }
       }
     }
   }
