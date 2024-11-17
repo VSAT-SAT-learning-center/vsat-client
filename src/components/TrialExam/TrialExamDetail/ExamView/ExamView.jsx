@@ -15,7 +15,7 @@ function ExamView({ exam }) {
 
   const [isShowTime, setIsShowTime] = useState(true);
   const [isShowDirection, setIsShowDirection] = useState(true);
-  const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
+  const [currentModuleIndex, setCurrentModuleIndex] = useState(2);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [showSubmitConfirmation, setShowSubmitConfirmation] = useState(false);
@@ -168,7 +168,6 @@ function ExamView({ exam }) {
       const correctAnswer = question.answers.find(
         (answer) => answer.isCorrectAnswer
       );
-
       if (question.isSingleChoiceQuestion) {
         // For single-choice questions, check if the user's selected answer ID matches the correct answer ID
         if (correctAnswer && userAnswer === correctAnswer.id) {

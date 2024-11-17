@@ -1,11 +1,11 @@
+import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
-import PageLayout from "~/layouts/Manager/PageLayout";
-import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
-import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
-import TrialExamItem from "~/components/Manager/ManagerExam/ExamItem";
+import ExamItem from "~/components/Manager/ManagerExam/ExamItem";
 import ExamViewDetail from "~/components/Manager/ManagerExam/ExamViewDetail";
-import { Skeleton } from "@mui/material";
+import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
+import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ManagerExam.module.scss";
 
@@ -48,32 +48,39 @@ function ManagerExam() {
             <div className={cx("manager-exam-header")}>
               <div className={cx("manager-exam-text")}>Exam</div>
             </div>
-            <div className={cx("manager-exam-content")}>
+            <div
+              className={cx(
+                isWaiting || examList.length > 0
+                  ? "manager-exam-content"
+                  : "manager-exam-no-content"
+              )}
+            >
               {isWaiting ? (
+                // Show Skeletons while waiting
                 <>
                   {[...Array(3)].map((_, i) => (
                     <Skeleton
-                    key={i}
-                    animation="wave"
-                    variant="rectangular"
-                    width="100%"
-                    height={260}
+                      key={i}
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={260}
                     />
                   ))}
                 </>
               ) : examList.length > 0 ? (
-                <div className={cx("manage-exam-item", "exam-schedule-item-container")}>
-                  {examList.map((item, index) => (
-                    <TrialExamItem
-                      key={item.id}
-                      exam={item}
-                      index={index + 1}
-                      setExamCensorData={setExamCensorData}
-                      setIsShowExamCensorView={setIsShowExamCensorView}
-                    />
-                  ))}
-                </div>
+                // Show ExamItem when examList has items and not waiting
+                examList.map((item, index) => (
+                  <ExamItem
+                    key={item.id}
+                    exam={item}
+                    index={index + 1}
+                    setExamCensorData={setExamCensorData}
+                    setIsShowExamCensorView={setIsShowExamCensorView}
+                  />
+                ))
               ) : (
+                // Show NoQuestionData when examList is empty and not waiting
                 <NoQuestionData />
               )}
             </div>

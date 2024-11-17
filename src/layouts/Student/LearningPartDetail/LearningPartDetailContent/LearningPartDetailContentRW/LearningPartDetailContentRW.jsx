@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import LessonApp from "~/components/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentRW/LessonApp";
 import LessonConc from "~/components/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentRW/LessonConc";
 import LessonDef from "~/components/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentRW/LessonDef";
@@ -8,6 +9,17 @@ import LessonTips from "~/components/Student/LearningPartDetail/LearningPartDeta
 import styles from "./LearningPartDetailContentRW.module.scss";
 const cx = classNames.bind(styles);
 function LearningPartDetailContentRW({ lesson }) {
+  const [sortedLessonContents, setSortedLessonContents] = useState([]);
+
+  useEffect(() => {
+    if (lesson?.lessonContents) {
+      const sortOrder = ["Definition", "Conceptual", "Application", "Tips & Tricks", "Practice"];
+      const sorted = [...lesson.lessonContents].sort(
+        (a, b) => sortOrder.indexOf(a.contentType) - sortOrder.indexOf(b.contentType)
+      );
+      setSortedLessonContents(sorted);
+    }
+  }, [lesson]);
   return (
     <div className={cx("learning-part-detail-content-rw-container")}>
       <div className={cx("lesson-main-title")}>
@@ -24,8 +36,8 @@ function LearningPartDetailContentRW({ lesson }) {
       </div>
       <div className={cx("lesson-content-container")}>
         <div className={cx("lesson-content-main")}>
-          {lesson.lessonContents.length > 0 &&
-            lesson.lessonContents.map((lessonContent) => (
+          {sortedLessonContents.length > 0 &&
+            sortedLessonContents.map((lessonContent) => (
               <div key={lessonContent.id}>
                 {lessonContent.contentType === "Definition" && <LessonDef lessonContent={lessonContent} />}
                 {lessonContent.contentType === "Conceptual" && <LessonConc lessonContent={lessonContent} />}
@@ -36,7 +48,6 @@ function LearningPartDetailContentRW({ lesson }) {
             ))}
         </div>
       </div>
-
     </div>
   );
 }
