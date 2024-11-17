@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import Loader from "~/components/General/Loader";
 import apiClient from "~/services/apiService";
 import styles from "./CreateAccount.module.scss";
 
@@ -18,6 +19,8 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {
     dateofbirth: "",
     gender: true,
   });
+  const [loading, setLoading] = useState(false);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,6 +57,7 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {
       const formattedDateOfBirth = formatDate(formData.dateofbirth);
 
       try {
+        setLoading(true);
         const response = await apiClient.post("/account", {
           ...formData,
           dateofbirth: formattedDateOfBirth,
@@ -61,19 +65,23 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {
 
         if (response.status === 201) {
           toast.success("Create account successfully.");
-          closeModal();
-          fetchData(currentPage);
         }
       } catch (error) {
         const errorMessage =
           error.response?.data?.details.message ||
           "Error creating account. Please try again.";
         toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+        closeModal();
+        fetchData(currentPage);
       }
     }
   };
 
   return (
+    <>
+      {loading && <Loader />}
     <div className={cx("create-account-container")}>
       <form onSubmit={handleSubmit}>
         <div className={cx("modal-header")}>
@@ -206,6 +214,7 @@ function CreateAccount({ closeModal, fetchData, currentPage }) {
         </div>
       </form>
     </div>
+    </>
   );
 }
 

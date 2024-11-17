@@ -34,12 +34,22 @@
       height: calc(100% - 79px);
       padding: 20px;
       display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       overflow-y: auto;
 
       &::-webkit-scrollbar {
         display: none;
       }
+    }
+
+    .feedback-exam-no-content {
+      width: 100%;
+      height: calc(100% - 79px);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

@@ -33,7 +33,9 @@
       width: 100%;
       height: calc(100% - 79px);
       padding: 20px;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
       overflow-y: auto;
 
       .learning-content-item{
@@ -44,6 +46,15 @@
       &::-webkit-scrollbar {
         display: none;
       }
+    }
+
+    .learning-no-content {
+      width: 100%;
+      height: calc(100% - 79px);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

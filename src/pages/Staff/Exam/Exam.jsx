@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
-import PageLayout from "~/layouts/Manager/PageLayout";
+import PageLayout from "~/layouts/Staff/PageLayout";
 import TrialExamItem from "~/components/Manager/ManagerExam/ExamItem";
 import ExamViewDetail from "~/components/Manager/ManagerExam/ExamViewDetail";
 import { Skeleton } from "@mui/material";
@@ -43,44 +43,45 @@ function Exam() {
           setIsShowExamCensorView={setIsShowExamCensorView}
         />
       )}
-    <PageLayout>
-      <div className={cx("exam-wrapper")}>
-        <div className={cx("exam-container")}>
-          <div className={cx("exam-header")}>
-            <div className={cx("exam-text")}>Exam Overview</div>
-          </div>
-          <div className={cx("exam-content")}>{isWaiting ? (
+      <PageLayout>
+        <div className={cx("exam-wrapper")}>
+          <div className={cx("exam-container")}>
+            <div className={cx("exam-header")}>
+              <div className={cx("exam-text")}>Exam Overview</div>
+            </div>
+            <div className={cx(isWaiting || examList.length > 0
+                  ? "exam-content"
+                  : "exam-no-content")}>
+              {isWaiting ? (
                 <>
                   {[...Array(3)].map((_, i) => (
                     <Skeleton
-                    key={i}
-                    animation="wave"
-                    variant="rectangular"
-                    width="100%"
-                    height={260}
+                      key={i}
+                      animation="wave"
+                      variant="rectangular"
+                      width="100%"
+                      height={260}
                     />
                   ))}
                 </>
               ) : examList.length > 0 ? (
-                <div className={cx("manage-exam-item", "exam-schedule-item-container")}>
-                  {examList.map((item, index) => (
-                    <TrialExamItem
-                      key={item.id}
-                      exam={item}
-                      index={index + 1}
-                      setExamCensorData={setExamCensorData}
-                      setIsShowExamCensorView={setIsShowExamCensorView}
-                    />
-                  ))}
-                </div>
+                examList.map((item, index) => (
+                  <TrialExamItem
+                    key={item.id}
+                    exam={item}
+                    index={index + 1}
+                    setExamCensorData={setExamCensorData}
+                    setIsShowExamCensorView={setIsShowExamCensorView}
+                  />
+                ))
               ) : (
                 <NoQuestionData />
               )}
+            </div>
           </div>
         </div>
-      </div>
-      <LearningMaterialCreateFooter />
-    </PageLayout>
+        <LearningMaterialCreateFooter />
+      </PageLayout>
     </>
   );
 }

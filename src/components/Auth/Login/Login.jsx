@@ -41,6 +41,8 @@ function Login({ setShowLogin }) {
     } catch (error) {
       console.error("Login failed!", error);
       setErrorMsg(error.response.data.details);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,7 +104,7 @@ function Login({ setShowLogin }) {
                   style={{ marginTop: errorMsg === "" ? "15px" : "0" }}
                 >
                   <button className={cx("btn")} onClick={handleLogin}>
-                    Log in
+                    Sign in
                   </button>
                 </div>
               </div>
