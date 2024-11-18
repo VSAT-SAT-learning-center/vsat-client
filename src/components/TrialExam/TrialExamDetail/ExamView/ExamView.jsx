@@ -149,6 +149,14 @@ function ExamView({ exam }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSubmitConfirmation]);
 
+  const handleRightClick = (event) => {
+    event.preventDefault();
+  };
+
+  const handleLeftClick = (event) => {
+    event.preventDefault();
+  };
+
   // Function to handle answer selection
   const handleAnswerSelect = (questionId, answer) => {
     setUserAnswers((prevAnswers) => ({
@@ -505,7 +513,11 @@ function ExamView({ exam }) {
           isFinishClicked={isFinishClicked}
         />
       )}
-      <div className={cx("exam-view-wrapper")}>
+      <div
+        className={cx("exam-view-wrapper")}
+        onContextMenu={handleRightClick}
+        onClick={handleLeftClick}
+      >
         <div className={cx("exam-view-container")}>
           <div className={cx("exam-view-header")}>
             <div className={cx("exam-view-infor")}>
