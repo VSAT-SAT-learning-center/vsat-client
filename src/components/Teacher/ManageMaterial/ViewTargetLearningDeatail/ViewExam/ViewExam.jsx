@@ -7,7 +7,6 @@ const cx = classNames.bind(styles);
 
 function ViewExam() {
   const currentScore = 450;
-  const targetScore = 760;
   const [navStatistic, setNavStatistic] = useState("RW");
   return (
     <div className={cx("view-exam-container")}>
@@ -25,18 +24,12 @@ function ViewExam() {
               <div className={cx("score-part-item")}>
                 <div className={cx("part-title")}>Reading and Writing</div>
                 <div className={cx("part-score")}>200</div>
-                <ProgressBar
-                  currentScore={currentScore}
-                  targetScore={targetScore}
-                />
+                <ProgressBar currentScore={currentScore} />
               </div>
               <div className={cx("score-part-item")}>
                 <div className={cx("part-title")}>Math</div>
                 <div className={cx("part-score")}>200</div>
-                <ProgressBar
-                  currentScore={currentScore}
-                  targetScore={targetScore}
-                />
+                <ProgressBar currentScore={currentScore} />
               </div>
             </div>
           </div>

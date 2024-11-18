@@ -2,13 +2,11 @@ import classNames from "classnames/bind";
 import styles from "./ProgressBar.module.scss";
 const cx = classNames.bind(styles);
 
-function ProgressBar({ currentScore, targetScore }) {
+function ProgressBar({ currentScore }) {
   const minScore = 200;
   const maxScore = 800;
   const progressPercentage =
     ((currentScore - minScore) / (maxScore - minScore)) * 100;
-  const targetPercentage =
-    ((targetScore - minScore) / (maxScore - minScore)) * 100;
   return (
     <div className={cx("progress-container")}>
       <div className={cx("progress-bar")}>
