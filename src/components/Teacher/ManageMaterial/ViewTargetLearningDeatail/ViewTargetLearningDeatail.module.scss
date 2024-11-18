@@ -1,0 +1,118 @@
+@import "~/styles/variables";
+
+.view-target-learing-detail-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 107;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .view-target-learing-detail-container {
+    position: relative;
+    width: 80%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .view-target-learing-detail-header {
+      width: 100%;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #c5c5c5;
+
+      .view-target-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 15px;
+
+        .nav-item {
+          position: relative;
+          cursor: pointer;
+          user-select: none;
+          padding: 12px 20px;
+          font-size: 20px;
+          font-weight: 600;
+          color: #555;
+          transition: color 0.3s ease;
+
+
+          &.active {
+            color: #000;
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              height: 3px;
+              width: 100%;
+              background-color: $primary-color;
+              transition: all 0.3s ease-in-out;
+            }
+          }
+
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            height: 3px;
+            width: 0;
+            background-color: transparent;
+            transition: all 0.3s ease-in-out;
+          }
+
+          &:hover::after {
+            background-color: #d2d9ee;
+            width: 100%;
+            left: 0;
+          }
+        }
+      }
+
+      .target-close {
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .target-empty {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    .view-target-learing-detail-content {
+      width: 100%;
+      padding: 20px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}

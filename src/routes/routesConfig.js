@@ -1,4 +1,4 @@
-import AccountOptions from "~/layouts/Landing/HeaderAuthen/AccountOptions";
+import ExamViewResult from "~/components/TrialExam/TrialExamDetail/ExamView/ExamViewResult";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -49,13 +49,16 @@ import QuizzFeedback from "~/pages/Staff/QuestionQuizz/QuizzFeedback/QuizzFeedba
 import Settings from "~/pages/Staff/Settings";
 import Students from "~/pages/Staff/Students";
 import StudyProfile from "~/pages/Staff/Students/StudyProfile";
-import StudentProfile from "~/pages/Student/Profile";
 import Teachers from "~/pages/Staff/Teachers";
 import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
 import ExamSchedule from "~/pages/Student/ExamSchedule";
 import Learning from "~/pages/Student/Learning";
 import LearningPart from "~/pages/Student/LearningPart";
 import LearningPartDetail from "~/pages/Student/LearningPartDetail";
+import StudentProfile from "~/pages/Student/Profile";
+import AssignExam from "~/pages/Teacher/AssignExam";
+import ManageMaterial from "~/pages/Teacher/ManageMaterial";
+import ManageProgress from "~/pages/Teacher/ManageProgress";
 import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
@@ -68,7 +71,7 @@ import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/Feedbac
 
 const routesConfig = [
   // Testing
-  { path: "/test", component: AccountOptions },
+  { path: "/test", component: ExamViewResult },
   // Landing page routes
   { path: "/", component: Home },
   { path: "/about", component: About },
@@ -292,7 +295,7 @@ const routesConfig = [
     protected: true,
     roles: ["Staff"],
   },
-  
+
   // Staff manage teacher routes
   {
     path: "/staff/teachers/manage",
@@ -485,6 +488,27 @@ const routesConfig = [
   {
     path: "/teacher",
     component: TeacherDashboard,
+    protected: true,
+    roles: ["Teacher"],
+  },
+  // Teacher assign exam routes
+  {
+    path: "/teacher/assign-exam",
+    component: AssignExam,
+    protected: true,
+    roles: ["Teacher"],
+  },
+  // Teacher manage material routes
+  {
+    path: "/teacher/manage-material",
+    component: ManageMaterial,
+    protected: true,
+    roles: ["Teacher"],
+  },
+  // Teacher manage progress routes
+  {
+    path: "/teacher/manage-progress",
+    component: ManageProgress,
     protected: true,
     roles: ["Teacher"],
   },

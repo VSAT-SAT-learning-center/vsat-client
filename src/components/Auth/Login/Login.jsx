@@ -19,6 +19,7 @@ function Login({ setShowLogin }) {
     try {
       setLoading(true);
       const user = await login({ username, password });
+      console.log(user);
 
       if (!user.isTrialExam && user.role === "Student") {
         setLoading(false);
@@ -55,7 +56,7 @@ function Login({ setShowLogin }) {
         error.response?.data?.details || "Login failed. Please try again.",
         {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 4000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
