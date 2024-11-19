@@ -1,17 +1,33 @@
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import StudyProfileItem from "~/components/Teacher/ManageMaterial/StudyProfileItem";
 import ViewStudyProfile from "~/components/Teacher/ManageMaterial/ViewStudyProfile";
 import PageLayout from "~/layouts/Teacher/PageLayout";
+import apiClient from "~/services/apiService";
 import styles from "./ManageMaterial.module.scss";
 const cx = classNames.bind(styles);
 function ManageMaterial() {
   const [isShowViewStudyProfile, setIsShowViewStudyProfile] = useState(false);
+  const [profiles, setProfiles] = useState([])
+  const [selectedProfile, setSelectedProfile] = useState(null)
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        const response = await apiClient.get("/study-profiles/getStudyProfileWithTeacher?page=1&pageSize=0")
+        setProfiles(response.data.data.data);
+      } catch (error) {
+        console.error("Error while fetching profiles:", error)
+      }
+    }
+
+    fetchProfiles()
+  }, [])
   return (
     <>
       {isShowViewStudyProfile && (
         <ViewStudyProfile
+          profile={selectedProfile}
           setIsShowViewStudyProfile={setIsShowViewStudyProfile}
         />
       )}
@@ -25,9 +41,15 @@ function ManageMaterial() {
             </div>
             <div className={cx("teacher-manage-material-content")}>
               <div className={cx("study-profiles-list")}>
-                <StudyProfileItem
-                  setIsShowViewStudyProfile={setIsShowViewStudyProfile}
-                />
+                {profiles?.map((profile) => (
+                  <StudyProfileItem
+                    key={profile.id}
+                    profile={profile}
+                    setSelectedProfile={setSelectedProfile}
+                    setIsShowViewStudyProfile={setIsShowViewStudyProfile}
+                  />
+                ))}
+
               </div>
             </div>
           </div>

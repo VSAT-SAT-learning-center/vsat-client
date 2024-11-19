@@ -85,6 +85,14 @@
       }
     }
 
+    .view-study-profile-no-content {
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .view-study-profile-content {
       width: 100%;
       flex-grow: 1;
@@ -131,7 +139,18 @@
             .target-status {
               font-size: 18px;
               font-weight: 600;
-              color: $primary-color;
+
+              &.completed {
+                color: $success-color;
+              }
+
+              &.active {
+                color: $primary-color;
+              }
+
+              &.inactive {
+                color: $third-color;
+              }
             }
           }
         }
@@ -181,6 +200,13 @@
           }
         }
       }
+    }
+
+    .skeleton-load {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      row-gap: 15px;
     }
   }
 }
