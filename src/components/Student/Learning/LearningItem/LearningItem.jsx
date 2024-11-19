@@ -7,18 +7,20 @@ import styles from "./LearningItem.module.scss";
 
 const cx = classNames.bind(styles);
 
-function LearningItem({ item}) {
+function LearningItem({ item }) {
   const navigate = useNavigate();
 
   const handleClickItem = () => {
     if (item.status === "Active") {
-      navigate(`/learning/part/${item.id}`);
+      navigate(`/learning/progress`);
     }
   };
 
   return (
     <div
-      className={cx("learning-item", { "disabled-item": item.status !== "Active" })}
+      className={cx("learning-item", {
+        "disabled-item": item.status !== "Active",
+      })}
       onClick={item.status === "Active" ? () => handleClickItem() : undefined}
       style={{ cursor: item.status === "Active" ? "pointer" : "not-allowed" }}
     >
@@ -40,19 +42,23 @@ function LearningItem({ item}) {
       </div>
       <div className={cx("item-content")}>
         <div className={cx("content-footer")}>
-          <div className={cx("footer-date")}>
-            Start Date: {formatDate(item.startdate)}
-          </div>
-          <div className={cx("footer-date")}>
-            End Date: {formatDate(item.enddate)}
-          </div>
-          <div
-            className={cx(
-              "footer-status",
-              item.status === "Active" ? "approved" : "rejected"
-            )}
-          >
-            {item.status === "Active" ? "Active" : "Inactive"}
+          <div className={cx("date-status-section")}>
+            <div className={cx("date-section")}>
+              <div className={cx("footer-date")}>
+                Start Date: {formatDate(item.startdate)}
+              </div>
+              <div className={cx("footer-date")}>
+                End Date: {formatDate(item.enddate)}
+              </div>
+            </div>
+            <div
+              className={cx(
+                "footer-status",
+                item.status === "Active" ? "approved" : "rejected"
+              )}
+            >
+              {item.status === "Active" ? "Active" : "Inactive"}
+            </div>
           </div>
         </div>
       </div>

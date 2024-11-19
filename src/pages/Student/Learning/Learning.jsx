@@ -18,7 +18,7 @@ function Learning() {
     const fetchLearningMaterials = async () => {
       try {
         setIsWaiting(true);
-        const response = await apiClient.get(`/study-profiles`);
+        const response = await apiClient.get(`/study-profiles/getStudyProfileByAccountId`);
         setLearningMaterials(response.data.data);
       } catch (error) {
         console.error("Error fetching learning materials:", error);

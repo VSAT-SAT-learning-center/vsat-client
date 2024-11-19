@@ -1,0 +1,53 @@
+@import "~/styles/variables";
+
+.learning-progress-sidebar-container {
+  width: 420px;
+  max-height: 650px; 
+  padding: 24px 30px;
+  position: sticky; 
+  top: 0;
+  overflow-y: auto; 
+
+  .learning-progress-introduction {
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    transition: 0.2s ease-in;
+    border-bottom: 1px solid #ececec;
+
+    .introduction-img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 16px;
+    }
+
+    .introduction-infor {
+      .infor-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: $text-color;
+      }
+      .infor-details {
+        font-size: 14px;
+        color: $text-color-gray;
+      }
+    }
+
+    &:hover {
+      background-color: #f4f4f4;
+    }
+  }
+
+  .introduction-active {
+    border-left: 5px solid $primary-color;
+    background-color: $active-bg;
+  
+    &:hover {
+      background-color: $active-bg;
+    }
+  }  
+}

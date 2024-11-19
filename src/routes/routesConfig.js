@@ -54,6 +54,7 @@ import Teachers from "~/pages/Staff/Teachers";
 import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
 import ExamSchedule from "~/pages/Student/ExamSchedule";
 import Learning from "~/pages/Student/Learning";
+import LearningProgress from "~/pages/Student/LearningProgress";
 import LearningPart from "~/pages/Student/LearningPart";
 import LearningPartDetail from "~/pages/Student/LearningPartDetail";
 import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
@@ -84,6 +85,12 @@ const routesConfig = [
     roles: ["Student"],
   },
   {
+    path: "/take-exam/:examId",
+    component: TrialExamDetail,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
     path: "/trial-exam/:examId",
     component: TrialExamDetail,
     protected: true,
@@ -93,6 +100,12 @@ const routesConfig = [
   {
     path: "/learning",
     component: Learning,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/learning/progress",
+    component: LearningProgress,
     protected: true,
     roles: ["Student"],
   },
