@@ -1,0 +1,49 @@
+@import "~/styles/variables";
+
+.progress-container {
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .progress-title {
+    width: 270px;
+    font-size: 17px;
+  }
+
+  .progress-bar {
+    position: relative;
+    flex: 1;
+    height: 22px;
+    overflow: hidden;
+    display: flex;
+  }
+
+  .progress-correct {
+    background-color: #a3da09;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white-color;
+    font-weight: bold;
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .progress-incorrect {
+    background-color: #ff3e2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white-color;
+    font-weight: bold;
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .progress-label {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+}

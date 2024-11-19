@@ -1,6 +1,7 @@
 @import "~/styles/variables";
 
 .teacher-topbar-wrapper {
+  position: relative;
   flex: 1;
   height: 80px;
   position: fixed;
@@ -43,7 +44,7 @@
         }
 
         &.focused {
-          border-color: $primary-color; 
+          border-color: $primary-color;
         }
       }
     }

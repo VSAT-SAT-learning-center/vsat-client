@@ -1,0 +1,186 @@
+@import "~/styles/variables";
+
+.view-study-profile-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 106;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .view-study-profile-container {
+    position: relative;
+    width: 80%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .view-study-profile-header {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-radius: 15px 15px 0 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+
+      .study-profile-infor {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        column-gap: 60px;
+
+        .profile-avatar {
+          width: 180px;
+          height: 180px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          object-fit: cover;
+        }
+
+        .profile-infor {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-row-gap: 15px;
+          grid-column-gap: 60px;
+
+          .infor-item {
+            display: flex;
+            align-items: center;
+            column-gap: 12px;
+            font-size: 18px;
+
+            .item-title,
+            .item-text {
+              font-weight: 600;
+            }
+          }
+        }
+      }
+
+      .study-profile-close {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #dddddd;
+        }
+      }
+    }
+
+    .view-study-profile-content {
+      width: 100%;
+      flex-grow: 1;
+      padding: 30px 60px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .target-learning-item {
+        width: 100%;
+        margin-bottom: 25px;
+
+        .target-learing-header {
+          width: 100%;
+          display: flex;
+          align-items: center;
+
+          .target-number {
+            padding: 10px 16px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px 0 0 0;
+            border: 1px solid $primary-color;
+            color: $white-color;
+            background-color: $primary-color;
+          }
+
+          .target-content {
+            flex: 1;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 0 5px 0 0;
+            border: 1px solid #c5c5c5;
+
+            .target-title {
+              font-size: 18px;
+              font-weight: 600;
+            }
+
+            .target-status {
+              font-size: 18px;
+              font-weight: 600;
+              color: $primary-color;
+            }
+          }
+        }
+
+        .target-learing-content {
+          width: 100%;
+          padding: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border: 1px solid #c5c5c5;
+          border-top: none;
+          border-radius: 0 0 5px 5px;
+
+          .target-learning-time {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            column-gap: 15px;
+
+            .time-item {
+              display: flex;
+              align-items: center;
+              column-gap: 8px;
+              font-size: 17px;
+              font-weight: 600;
+            }
+          }
+
+          .view-btn {
+            padding: 6px 16px;
+            font-size: 17px;
+            font-weight: 600;
+            border-radius: 5px;
+            color: $primary-color;
+            border: 1px solid $primary-color;
+            background-color: $bg-primary-color-trans;
+            transition: all 0.3s linear;
+
+            &:hover {
+              opacity: 0.7;
+            }
+
+            .view-text {
+              margin-left: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -12,15 +12,14 @@ const example = `<p>Student-produced response directions</p>
   <li>If your answer is a mixed number (such as \\[5\\frac{1}{2}\\]), enter it as an improper fraction (\\[\\frac{11}{2}\\]) or decimal (\\[5.5\\]).</li>
   <li>Don't enter symbols such as percent sign, comma, or dollar sign.</li>
 </ul>`;
-function QuestionExam({ question, onAnswerSelect, currentAnswer, index, isMarkedForReview, onMarkForReview }) {
-  const handleRightClick = (event) => {
-    event.preventDefault();
-  };
-
-  const handleLeftClick = (event) => {
-    event.preventDefault();
-  };
-
+function QuestionExam({
+  question,
+  onAnswerSelect,
+  currentAnswer,
+  index,
+  isMarkedForReview,
+  onMarkForReview,
+}) {
   const handleAnswerClick = (answerId) => {
     onAnswerSelect(question.id, answerId);
   };
@@ -30,9 +29,7 @@ function QuestionExam({ question, onAnswerSelect, currentAnswer, index, isMarked
     onAnswerSelect(question.id, answerText);
   };
   return (
-    <div className={cx("question-view-main")}
-      onContextMenu={handleRightClick}
-      onClick={handleLeftClick}>
+    <div className={cx("question-view-main")}>
       <div className={cx("question-view-content")}>
         {question?.isSingleChoiceQuestion === true ? (
           <div
@@ -59,13 +56,24 @@ function QuestionExam({ question, onAnswerSelect, currentAnswer, index, isMarked
       <div className={cx("answer-view-content")}>
         <div className={cx("mark-answer-container")}>
           <div className={cx("question-number")}>{index + 1}</div>
-          <button className={cx("mark-answer", {
-            "mark-review": isMarkedForReview,
-          })} onClick={onMarkForReview}>
+          <button
+            className={cx("mark-answer", {
+              "mark-review": isMarkedForReview,
+            })}
+            onClick={onMarkForReview}
+          >
             <i
-              className={cx(isMarkedForReview ? "fa-sharp fa-solid fa-bookmark" : "fa-sharp fa-regular fa-bookmark", "icon-mark")}
+              className={cx(
+                isMarkedForReview
+                  ? "fa-sharp fa-solid fa-bookmark"
+                  : "fa-sharp fa-regular fa-bookmark",
+                "icon-mark"
+              )}
             ></i>
-            <span className={cx("mark-text")}> {isMarkedForReview ? "Marked for Review" : "Mark for Review"}</span>
+            <span className={cx("mark-text")}>
+              {" "}
+              {isMarkedForReview ? "Marked for Review" : "Mark for Review"}
+            </span>
           </button>
         </div>
         <div className={cx("long-dashes")}></div>

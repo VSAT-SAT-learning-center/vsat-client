@@ -1,0 +1,53 @@
+@import "~/styles/variables";
+
+.progress-container {
+  width: 100%;
+
+  .progress-bar {
+    position: relative;
+    background-color: #d3d3d3;
+    height: 25px;
+    overflow: hidden;
+
+    .progress-fill {
+      position: relative;
+      height: 100%;
+      background-color: $primary-color;
+      transition: width 0.3s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      color: $white-color;
+      font-weight: bold;
+      padding-right: 5px;
+    }
+  }
+
+  .score-labels {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+
+    .min-score {
+      position: relative;
+      left: -10px;
+    }
+
+    .max-score {
+      position: relative;
+      right: -10px;
+    }
+
+    .target-score {
+      position: absolute;
+      transform: translateX(-50%);
+      font-size: 14px;
+      font-weight: bold;
+      color: $primary-color;
+      top: 0;
+    }
+  }
+}
