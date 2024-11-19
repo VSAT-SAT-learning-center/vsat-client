@@ -1,7 +1,51 @@
 @import "~/styles/variables";
 
+.view-exam-no-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 4px solid $primary-color;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  .loader::after {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border-left: 4px solid $primary-color;
+    border-bottom: 4px solid transparent;
+    animation: rotation 0.5s linear infinite reverse;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
 .view-exam-container {
   width: 100%;
+  padding: 20px;
 
   .score-summary-wrapper {
     width: 100%;
@@ -10,7 +54,7 @@
     justify-content: center;
 
     .score-summary-container {
-      width: 80%;
+      width: 90%;
       height: fit-content;
       border: 1px solid #000;
 
@@ -88,7 +132,7 @@
     flex-direction: column;
 
     .score-statistics-nav {
-      width: 80%;
+      width: 90%;
       display: flex;
       align-items: center;
 
@@ -117,7 +161,7 @@
     }
 
     .score-statistic-item-container {
-      width: 80%;
+      width: 90%;
       margin-top: 20px;
 
       .analysis-overview-container {
@@ -160,6 +204,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             .overview-title {
               font-size: 22px;
               font-weight: 600;
@@ -195,6 +240,37 @@
               }
             }
           }
+        }
+      }
+    }
+  }
+
+  .chart-statistics-wrapper {
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .chart-statistics-container {
+      width: 90%;
+
+      .domain-chart-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        column-gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .skill-chart-container {
+        width: 100%;
+
+        .skill-chart-title {
+          font-size: 18px;
+          font-weight: 600;
+          margin-bottom: 20px;
         }
       }
     }

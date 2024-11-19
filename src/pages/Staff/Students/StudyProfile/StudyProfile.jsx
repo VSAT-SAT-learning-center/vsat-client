@@ -353,8 +353,8 @@ function StudyProfile() {
                     </div>
                     {assignedProfiles[selectedTeacher]?.defaultProfiles
                       ?.length > 0 ||
-                    assignedProfiles[selectedTeacher]?.additionalProfiles
-                      ?.length > 0 ? (
+                      assignedProfiles[selectedTeacher]?.additionalProfiles
+                        ?.length > 0 ? (
                       // Show target-list if there are profiles
                       <div className={cx("target-list")}>
                         {assignedProfiles[

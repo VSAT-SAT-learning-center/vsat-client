@@ -1,22 +1,42 @@
+import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
-import { useState } from "react";
-import Avatar from "~/assets/images/banner/01.png";
+import { useEffect, useState } from "react";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
+import apiClient from "~/services/apiService";
 import ViewTargetLearningDeatail from "../ViewTargetLearningDeatail";
 import TargetLearningItem from "./TargetLearningItem";
 import styles from "./ViewStudyProfile.module.scss";
+
 const cx = classNames.bind(styles);
 
-function ViewStudyProfile({ setIsShowViewStudyProfile }) {
+function ViewStudyProfile({ profile, setIsShowViewStudyProfile }) {
+  const [targetLearnings, setTargetLearnings] = useState([])
+  const [targetSelected, setTargetSelected] = useState(null)
+  const [isWaiting, setIsWaiting] = useState(false);
   const [isShowViewTargetLearning, setIsShowViewTargetLearning] = useState(false)
+  useEffect(() => {
+    const fetchTargetLearnings = async () => {
+      try {
+        setIsWaiting(true)
+        const response = await apiClient.get(`/target-learnings/getTargetLearningByStudyProfile?studyProfileId=${profile?.id}`)
+        setTargetLearnings(response.data.data);
+      } catch (error) {
+        console.error("Error while fetching target learning:", error);
+      } finally {
+        setIsWaiting(false)
+      }
+    }
+    fetchTargetLearnings()
+  }, [profile?.id])
   return (
     <>
-      {isShowViewTargetLearning && <ViewTargetLearningDeatail setIsShowViewTargetLearning={setIsShowViewTargetLearning} />}
+      {isShowViewTargetLearning && <ViewTargetLearningDeatail target={targetSelected} setIsShowViewTargetLearning={setIsShowViewTargetLearning} />}
       <div className={cx("view-study-profile-wrapper")}>
         <div className={cx("view-study-profile-container")}>
           <div className={cx("view-study-profile-header")}>
             <div className={cx("study-profile-infor")}>
               <img
-                src={Avatar}
+                src={profile?.account.profilepictureurl}
                 alt="profile-avatar"
                 className={cx("profile-avatar")}
               />
@@ -27,7 +47,7 @@ function ViewStudyProfile({ setIsShowViewStudyProfile }) {
                     <i className={cx("fa-regular fa-address-card")}></i>
                   </div>
                   <div className={cx("item-title")}>First Name:</div>
-                  <div className={cx("item-text")}>Dev</div>
+                  <div className={cx("item-text")}>{profile?.account?.firstname}</div>
                 </div>
 
                 {/* Last Name */}
@@ -36,7 +56,7 @@ function ViewStudyProfile({ setIsShowViewStudyProfile }) {
                     <i className={cx("fa-regular fa-address-card")}></i>
                   </div>
                   <div className={cx("item-title")}>Last Name:</div>
-                  <div className={cx("item-text")}>Smith</div>
+                  <div className={cx("item-text")}>{profile?.account?.lastname}</div>
                 </div>
 
                 {/* Date of Birth */}
@@ -45,7 +65,7 @@ function ViewStudyProfile({ setIsShowViewStudyProfile }) {
                     <i className={cx("fa-regular fa-calendar-alt")}></i>
                   </div>
                   <div className={cx("item-title")}>Date of Birth:</div>
-                  <div className={cx("item-text")}>01/01/1990</div>
+                  <div className={cx("item-text")}>{profile?.account?.dateofbirth}</div>
                 </div>
 
                 {/* Gender */}
@@ -54,7 +74,7 @@ function ViewStudyProfile({ setIsShowViewStudyProfile }) {
                     <i className={cx("fa-regular fa-venus-mars")}></i>
                   </div>
                   <div className={cx("item-title")}>Gender:</div>
-                  <div className={cx("item-text")}>Male</div>
+                  <div className={cx("item-text")}>{profile?.account?.gender ? "Male" : "Female"}</div>
                 </div>
 
                 {/* Email */}
@@ -63,7 +83,7 @@ function ViewStudyProfile({ setIsShowViewStudyProfile }) {
                     <i className={cx("fa-regular fa-envelope")}></i>
                   </div>
                   <div className={cx("item-title")}>Email:</div>
-                  <div className={cx("item-text")}>dev.smith@example.com</div>
+                  <div className={cx("item-text")}>{profile?.account?.email}</div>
                 </div>
 
                 {/* Phone */}
@@ -72,7 +92,7 @@ function ViewStudyProfile({ setIsShowViewStudyProfile }) {
                     <i className={cx("fa-regular fa-phone")}></i>
                   </div>
                   <div className={cx("item-title")}>Phone:</div>
-                  <div className={cx("item-text")}>+1234567890</div>
+                  <div className={cx("item-text")}>+{profile?.account?.phonenumber}</div>
                 </div>
               </div>
             </div>
@@ -83,8 +103,26 @@ function ViewStudyProfile({ setIsShowViewStudyProfile }) {
               <i className={cx("fa-solid fa-xmark")}></i>
             </button>
           </div>
-          <div className={cx("view-study-profile-content")}>
-            <TargetLearningItem setIsShowViewTargetLearning={setIsShowViewTargetLearning} />
+          <div className={cx(isWaiting || targetLearnings?.length > 0 ? "view-study-profile-content" : "view-study-profile-no-content")}>
+            {isWaiting ? (
+              <div className={cx("skeleton-load")}>
+                {[...Array(3)].map((_, i) => (
+                  <Skeleton
+                    key={i}
+                    animation="wave"
+                    variant="rectangular"
+                    width="100%"
+                    height={120}
+                  />
+                ))}
+              </div>
+            ) : targetLearnings?.length > 0 ? (
+              targetLearnings?.map((target) => (
+                <TargetLearningItem key={target.id} target={target} setTargetSelected={setTargetSelected} setIsShowViewTargetLearning={setIsShowViewTargetLearning} />
+              ))
+            ) : (
+              <NoQuestionData />
+            )}
           </div>
         </div>
       </div>

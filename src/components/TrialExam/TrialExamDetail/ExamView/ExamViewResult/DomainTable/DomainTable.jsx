@@ -4,9 +4,6 @@ import styles from "./DomainTable.module.scss";
 const cx = classNames.bind(styles);
 
 function DomainTable({ data }) {
-  // console.log(data);
-
-
   return (
     <div className={cx("domain-table")}>
       <table>

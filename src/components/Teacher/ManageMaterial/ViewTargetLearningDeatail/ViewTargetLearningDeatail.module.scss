@@ -107,7 +107,7 @@
 
     .view-target-learing-detail-content {
       width: 100%;
-      padding: 20px;
+      flex-grow: 1;
       overflow-y: auto;
 
       &::-webkit-scrollbar {
