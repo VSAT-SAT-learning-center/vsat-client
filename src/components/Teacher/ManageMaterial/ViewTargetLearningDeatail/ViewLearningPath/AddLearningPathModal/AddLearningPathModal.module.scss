@@ -1,0 +1,168 @@
+@import "~/styles/variables";
+
+.edit-learning-path-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 108;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .edit-learning-path-container {
+    position: relative;
+    width: 60%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .edit-learning-path-header {
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #c5c5c5;
+
+      .edit-close {
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .edit-title {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .edit-empty {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    .edit-learning-path-content {
+      width: 100%;
+      flex-grow: 1;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .edit-learning-path-item {
+        cursor: pointer;
+        flex: 1;
+        height: fit-content;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ddd;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        }
+
+        .item-header {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid #c5c5c5;
+
+          .item-icon {
+            padding: 12px;
+            border-right: 1px solid #c5c5c5;
+            font-size: 17px;
+          }
+
+          .item-title {
+            flex: 1;
+            padding: 12px;
+
+            .title {
+              font-size: 17px;
+              font-weight: 600;
+              word-wrap: break-word;
+              white-space: normal;
+              overflow: hidden;
+              display: -webkit-box;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+            }
+          }
+        }
+
+        .item-content {
+          width: 100%;
+          flex-grow: 1;
+          padding: 12px;
+
+          .item-name {
+            width: 100%;
+            display: flex;
+            column-gap: 12px;
+            margin-bottom: 12px;
+
+            .name-text {
+              flex: 1;
+              font-size: 17px;
+              word-wrap: break-word;
+              white-space: normal;
+              overflow: hidden;
+              display: -webkit-box;
+              text-overflow: ellipsis;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+            }
+          }
+
+          .item-level {
+            width: 100%;
+            display: flex;
+            column-gap: 12px;
+            margin-bottom: 12px;
+          }
+
+          .item-number {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            column-gap: 15px;
+
+            .item-count {
+              display: flex;
+              column-gap: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

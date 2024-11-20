@@ -11,22 +11,56 @@
     width: 100%;
     flex-grow: 1;
     padding: 20px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .view-learing-path-item-container {
       width: 100%;
       margin-bottom: 30px;
 
-      .learning-path-title {
-        font-size: 20px;
-        font-weight: 600;
+      .learning-path-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-bottom: 20px;
+
+        .learning-path-title {
+          font-size: 20px;
+          font-weight: 600;
+        }
+
+        .add-path-btn {
+          padding: 6px 14px;
+          border-radius: 10px;
+          border: 1px solid $primary-color;
+          color: $white-color;
+          background-color: $primary-color;
+          transition: all 0.2s linear;
+
+          &:hover {
+            opacity: 0.8;
+          }
+
+          .path-icon {
+            margin-right: 8px;
+          }
+
+          .path-text {
+            font-size: 16px;
+            font-weight: 600;
+          }
+        }
       }
 
       .learning-path-list {
         width: 100%;
-        display: flex;
-        align-items: center;
-        column-gap: 20px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
 
         .learning-path-item {
           flex: 1;
@@ -60,17 +94,29 @@
                 font-weight: bold;
               }
 
-              .edit-btn {
-                padding: 4px 12px;
-                font-size: 16px;
-                border-radius: 5px;
-                border: 1px solid $primary-color;
-                color: $primary-color;
-                background-color: $bg-primary-color-trans;
-                transition: all 0.2s linear;
+              .item-action {
+                display: flex;
+                align-items: center;
+                column-gap: 12px;
 
-                &:hover {
-                  opacity: 0.7;
+                .edit-btn {
+                  font-size: 18px;
+                  color: $primary-color;
+                  transition: all 0.2s linear;
+
+                  &:hover {
+                    opacity: 0.7;
+                  }
+                }
+
+                .delete-btn {
+                  font-size: 18px;
+                  color: $third-color;
+                  transition: all 0.2s linear;
+
+                  &:hover {
+                    opacity: 0.7;
+                  }
                 }
               }
             }
