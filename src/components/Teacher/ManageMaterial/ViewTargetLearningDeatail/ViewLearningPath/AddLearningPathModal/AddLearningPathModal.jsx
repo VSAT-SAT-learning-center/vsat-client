@@ -2,54 +2,61 @@ import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import apiClient from "~/services/apiService";
-import styles from "./EditLearningPathModal.module.scss";
+import styles from "./AddLearningPathModal.module.scss";
 const cx = classNames.bind(styles);
 
-function EditLearningPathModal({ existData, setIsShowEditLearningPath, onUpdateUnit }) {
+function AddLearningPathModal({ existData, setIsShowAddLearningPath, onAddUnit }) {
+
   const [units, setUnits] = useState([])
   const [isWaiting, setIsWaiting] = useState(false)
   useEffect(() => {
     const fetchUnits = async () => {
       try {
-        setIsWaiting(true)
-        const response = await apiClient.get(`/target-learnings/unit/${existData?.sectionId}`)
+        setIsWaiting(true);
+        const response = await apiClient.get(`/target-learnings/unit/${existData?.sectionId}`);
         const allUnits = response.data;
+
+        // Filter out units that already exist in `unitExistId`
         const nonExistingUnits = allUnits.filter(
-          (unit) => !existData.unitExistId.includes(unit.unitId)
+          (unit) => !existData?.unitExistId?.includes(unit.unitId)
         );
+
+        // Sort by level dynamically
         const presentLevels = [...new Set(nonExistingUnits.map((unit) => unit.level.name))];
         const dynamicOrder = ["Foundation", "Medium", "Advanced"].filter((level) =>
           presentLevels.includes(level)
         );
+
         const sortedUnits = nonExistingUnits.sort((a, b) => {
           return dynamicOrder.indexOf(a.level.name) - dynamicOrder.indexOf(b.level.name);
         });
+
         setUnits(sortedUnits);
       } catch (error) {
         console.error("Error while fetching units:", error);
       } finally {
-        setIsWaiting(false)
+        setIsWaiting(false);
       }
-    }
+    };
 
-    fetchUnits()
-  }, [existData?.sectionId, existData.unitExistId])
+    fetchUnits();
+  }, [existData]);
 
-  const handleSelectUnit = (unit) => {
-    onUpdateUnit(unit, existData.sectionId, existData.currentUnitId);
-  };
-
+  const handleAddUnit = (unit) => {
+    onAddUnit(unit);
+    setIsShowAddLearningPath(false);
+  }
   return (
     <div className={cx("edit-learning-path-wrapper")}>
       <div className={cx("edit-learning-path-container")}>
         <div className={cx("edit-learning-path-header")}>
           <div
             className={cx("edit-close")}
-            onClick={() => setIsShowEditLearningPath(false)}
+            onClick={() => setIsShowAddLearningPath(false)}
           >
             <i className={cx("fa-regular fa-arrow-left")}></i>
           </div>
-          <div className={cx("edit-title")}>Edit Learning Path</div>
+          <div className={cx("edit-title")}>Add Learning Path</div>
           <div className={cx("edit-empty")}></div>
         </div>
         <div className={cx("edit-learning-path-content")}>
@@ -67,7 +74,7 @@ function EditLearningPathModal({ existData, setIsShowEditLearningPath, onUpdateU
             </>
           ) : (
             units?.map((unit) => (
-              <div className={cx("edit-learning-path-item")} key={unit.unitId} onClick={() => handleSelectUnit(unit)}>
+              <div className={cx("edit-learning-path-item")} key={unit.unitId} onClick={() => handleAddUnit(unit)}>
                 <div className={cx("item-header")}>
                   <div className={cx("item-icon")}>
                     <i className={cx("fa-regular fa-book")}></i>
@@ -107,4 +114,4 @@ function EditLearningPathModal({ existData, setIsShowEditLearningPath, onUpdateU
   );
 }
 
-export default EditLearningPathModal;
+export default AddLearningPathModal;
