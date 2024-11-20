@@ -51,8 +51,8 @@ function Profile() {
       }
     } catch (error) {
       const errorMessage =
-          error.response?.data?.details.message ||
-          "Error creating account. Please try again.";
+        error.response?.data?.details.message ||
+        "Error creating account. Please try again.";
       toast.error(errorMessage);
     }
   };
@@ -66,8 +66,8 @@ function Profile() {
       }
     } catch (error) {
       const errorMessage =
-          error.response?.data?.details.message ||
-          "Error creating account. Please try again.";
+        error.response?.data?.details.message ||
+        "Error creating account. Please try again.";
       toast.error(errorMessage);
     }
   };
@@ -123,7 +123,9 @@ function Profile() {
                   className={cx("form-input")}
                   value={editableProfile.lastname || ""}
                   readOnly={!isEditing}
-                  onChange={(e) => handleInputChange("lastname", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("lastname", e.target.value)
+                  }
                 />
               </div>
               <div className={cx("form-group")}>

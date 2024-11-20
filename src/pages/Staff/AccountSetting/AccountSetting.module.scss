@@ -1,45 +1,147 @@
 @import "~/styles/variables";
 
-.account-settingaccount-setting-wrapper {
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-
-  .account-settingaccount-setting-container {
+.staff-profile-wrapper {
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-    background-color: $bg-primary-color;
+    padding: 20px;
 
-    .account-settingaccount-setting-header {
-      width: 100%;
-      height: 79px;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid $border-color;
+    .staff-profile-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+        background-color: $bg-primary-color;
 
-      .account-settingaccount-setting-text {
-        font-size: 20px;
-        font-weight: 700;
-      }
+        .staff-profile-header {
+            width: 100%;
+            height: 79px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid $border-color;
+
+            .staff-profile-text {
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+            .edit-button {
+                padding: 10px 20px;
+                background-color: $primary-color;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                text-align: center;
+            }
+
+            .save-button {
+                padding: 10px 20px;
+                background-color: $primary-color;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                text-align: center;
+            }
+        }
+
+        .staff-profile-content {
+            padding: 20px 30px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            .profile-info {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+
+                .profile-avatar {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    .profile-avatar-img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+
+                .profile-basic {
+                    .profile-username {
+                        font-size: 24px;
+                        font-weight: 700;
+                    }
+
+                    .profile-email {
+                        font-size: 16px;
+                        color: $text-color-gray;
+                    }
+                }
+            }
+
+            .profile-form {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+
+                .form-group {
+                    display: flex;
+                    flex-direction: column;
+
+                    .form-label {
+                        font-size: 14px;
+                        font-weight: 600;
+                        margin-bottom: 5px;
+                    }
+
+                    .form-input {
+                        padding: 10px;
+                        border: 1px solid $border-color;
+                        border-radius: 5px;
+                        cursor: not-allowed;
+
+                        &[readOnly] {
+                            cursor: not-allowed;
+
+                            &:focus {
+                                outline: none;
+                                box-shadow: none;
+                            }
+                        }
+
+                        &:not([readOnly]) {
+                            cursor: text;
+                            background-color: #fff;
+
+                            &:focus {
+                                outline: none;
+                                border-color: $primary-color;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .change-password-section {
+                margin-top: 20px;
+
+                .change-password-button {
+                    padding: 10px 20px;
+                    border: 1px solid $primary-color;
+                    border-radius: 5px;
+                    background-color: #fff;
+                    color: $primary-color;
+                    cursor: pointer;
+                    text-align: center;
+                }
+            }
+        }
     }
-
-    .account-settingaccount-setting-content {
-      width: 100%;
-      height: calc(100% - 79px);
-      padding: 20px;
-      display: grid;
-      gap: 20px;
-      overflow-y: auto;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
-  }
 }
