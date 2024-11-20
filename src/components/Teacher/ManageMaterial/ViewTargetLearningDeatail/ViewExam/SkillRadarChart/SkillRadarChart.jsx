@@ -45,8 +45,6 @@ function SkillRadarChart({ domains, skillsData }) {
     }, {});
   }, [domains, skillsData]);
 
-  console.log(domainData);
-
   const [selectedDomain, setSelectedDomain] = useState("");
 
   useEffect(() => {
