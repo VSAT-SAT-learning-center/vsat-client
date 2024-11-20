@@ -43,6 +43,14 @@ function LearningItem({ item }) {
       <div className={cx("item-content")}>
         <div className={cx("content-footer")}>
           <div className={cx("date-status-section")}>
+          <div
+              className={cx(
+                "footer-status",
+                item.status === "Active" ? "approved" : "rejected"
+              )}
+            >
+              {item.status === "Active" ? "Active" : "Inactive"}
+            </div>
             <div className={cx("date-section")}>
               <div className={cx("footer-date")}>
                 Start Date: {formatDate(item.startdate)}
@@ -50,14 +58,6 @@ function LearningItem({ item }) {
               <div className={cx("footer-date")}>
                 End Date: {formatDate(item.enddate)}
               </div>
-            </div>
-            <div
-              className={cx(
-                "footer-status",
-                item.status === "Active" ? "approved" : "rejected"
-              )}
-            >
-              {item.status === "Active" ? "Active" : "Inactive"}
             </div>
           </div>
         </div>
