@@ -53,6 +53,7 @@ import Teachers from "~/pages/Staff/Teachers";
 import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
 import ExamSchedule from "~/pages/Student/ExamSchedule";
 import Learning from "~/pages/Student/Learning";
+import LearningProcess from "~/pages/Student/LearningProcess";
 import LearningProgress from "~/pages/Student/LearningProgress";
 import LearningPart from "~/pages/Student/LearningPart";
 import LearningPartDetail from "~/pages/Student/LearningPartDetail";
@@ -101,8 +102,14 @@ const routesConfig = [
   },
   // Student routes
   {
-    path: "/learning",
+    path: "/study-profile",
     component: Learning,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/learning",
+    component: LearningProcess,
     protected: true,
     roles: ["Student"],
   },
