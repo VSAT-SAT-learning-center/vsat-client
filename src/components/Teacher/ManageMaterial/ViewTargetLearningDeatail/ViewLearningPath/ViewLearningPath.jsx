@@ -146,7 +146,7 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning }) {
     try {
       const response = await apiClient.post("/unit-progress/multiple-sync", updatedData)
       console.log(response.data);
-      setIsShowViewTargetLearning
+      setIsShowViewTargetLearning(false)
       toast.success("Update learning path successfully!", {
         autoClose: 2000,
       })
@@ -181,17 +181,19 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning }) {
                 <div className={cx("learning-path-title")}>
                   Learning path for {learningPath.section.name}
                 </div>
-                <button className={cx("add-path-btn")} onClick={() =>
-                  handleAddPathClick(
-                    learningPath.section.id,
-                    learningPath.unitProgress
-                  )
-                }>
-                  <i
-                    className={cx("fa-regular fa-plus-circle", "path-icon")}
-                  ></i>
-                  <span className={cx("path-text")}>Add Path</span>
-                </button>
+                {target.status === "Inactive" && (
+                  <button className={cx("add-path-btn")} onClick={() =>
+                    handleAddPathClick(
+                      learningPath.section.id,
+                      learningPath.unitProgress
+                    )
+                  }>
+                    <i
+                      className={cx("fa-regular fa-plus-circle", "path-icon")}
+                    ></i>
+                    <span className={cx("path-text")}>Add Path</span>
+                  </button>
+                )}
               </div>
               <div className={cx("learning-path-list")}>
                 {learningPath.unitProgress.map((unit, unitIndex) => (
@@ -202,30 +204,32 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning }) {
                       </div>
                       <div className={cx("item-title")}>
                         <div className={cx("title")}>Unit {unitIndex + 1}</div>
-                        <div className={cx("item-action")}>
-                          <button
-                            className={cx("edit-btn")}
-                            onClick={() =>
-                              handleEditClick(
-                                learningPath.section.id,
-                                learningPath.unitProgress,
-                                unit.unitId
-                              )
-                            }
-                          >
-                            <i
-                              className={cx("fa-regular fa-pen-to-square")}
-                            ></i>
-                          </button>
-                          <button
-                            className={cx("delete-btn")}
-                            onClick={() => handleDeleteUnit(learningPath.section.id, unit.unitId)}
-                          >
-                            <i
-                              className={cx("fa-regular fa-trash")}
-                            ></i>
-                          </button>
-                        </div>
+                        {target.status === "Inactive" && (
+                          <div className={cx("item-action")}>
+                            <button
+                              className={cx("edit-btn")}
+                              onClick={() =>
+                                handleEditClick(
+                                  learningPath.section.id,
+                                  learningPath.unitProgress,
+                                  unit.unitId
+                                )
+                              }
+                            >
+                              <i
+                                className={cx("fa-regular fa-pen-to-square")}
+                              ></i>
+                            </button>
+                            <button
+                              className={cx("delete-btn")}
+                              onClick={() => handleDeleteUnit(learningPath.section.id, unit.unitId)}
+                            >
+                              <i
+                                className={cx("fa-regular fa-trash")}
+                              ></i>
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className={cx("item-content")}>
@@ -271,7 +275,9 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning }) {
         </div>
         <div className={cx("view-learning-path-footer")}>
           <button className={cx("cancel-btn")} onClick={() => setIsShowViewTargetLearning(false)}>Cancel</button>
-          <button className={cx("save-btn")} onClick={handleSaveUpdatePath}>Save</button>
+          {target.status === "Inactive" && (
+            <button className={cx("save-btn")} onClick={handleSaveUpdatePath}>Save</button>
+          )}
         </div>
       </div>
     </>
