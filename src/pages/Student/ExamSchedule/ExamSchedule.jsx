@@ -12,13 +12,14 @@ const cx = classNames.bind(styles);
 
 function ExamSchedule() {
   const [examAttempts, setExamAttempts] = useState([]);
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchExamAttempts = async () => {
       try {
-        const response = await apiClient.get(`/exam-attempts/getExamAttemptByStudyProfileId`);
+        const response = await apiClient.get(`/exam-attempts/getExamAttemptByStudyProfile`);
         setExamAttempts(response.data.data || []);
+        console.log(response)
       } catch (error) {
         console.error("Error fetching exam attempts:", error);
       }
@@ -55,7 +56,7 @@ function ExamSchedule() {
           type,
           content: attempt.exam.examTitle,
           duration: "Duration: " + attempt.exam.totalTime + " mins",
-          examId: attempt.exam.id, // Include examId for navigation
+          examId: attempt.exam.id,
         };
       });
 
@@ -79,7 +80,6 @@ function ExamSchedule() {
   const handleSelectDate = (value) => {
     const listData = getListData(value);
     if (listData.length > 0) {
-      // If there is an exam, navigate to the first exam in the list
       const firstExamId = listData[0].examId;
       navigate(`/take-exam/${firstExamId}`);
     }
@@ -96,11 +96,10 @@ function ExamSchedule() {
             <div className={cx("exam-schedule-text")}>Exam Schedule</div>
           </div>
           <div className={cx("exam-schedule-content")}>
-            {/* Calendar Component */}
             <Calendar
               dateCellRender={dateCellRender}
               validRange={validRange}
-              onSelect={handleSelectDate} // Add onSelect event handler
+              onSelect={handleSelectDate} 
             />
           </div>
         </div>

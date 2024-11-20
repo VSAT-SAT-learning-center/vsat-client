@@ -2,9 +2,9 @@ export const sidebarNavs = [
   {
     id: 1,
     section: "MY STUFF",
-    icon: "fa-light fa-book",
-    iconActive: "fa-regular fa-book",
-    title: "Study Profile",
+    icon: "fa-light fa-book-open",
+    iconActive: "fa-regular fa-book-open",
+    title: "Learning Process",
     path: "/learning",
     show: false,
   },
@@ -19,6 +19,15 @@ export const sidebarNavs = [
   },
   {
     id: 3,
+    section: "MY ACCOUNT",
+    icon: "fa-light fa-book",
+    iconActive: "fa-regular fa-book",
+    title: "Study Profile",
+    path: "/study-profile",
+    show: false,
+  },
+  {
+    id: 4,
     section: "MY ACCOUNT",
     icon: "fa-light fa-chart-bar",
     iconActive: "fa-regular fa-chart-bar",
@@ -39,7 +48,7 @@ export const sidebarNavs = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     section: "MY ACCOUNT",
     icon: "fa-light fa-history",
     iconActive: "fa-regular fa-history",
@@ -48,7 +57,7 @@ export const sidebarNavs = [
     show: false,
   },
   {
-    id: 5,
+    id: 6,
     section: "MY ACCOUNT",
     icon: "fa-light fa-comments",
     iconActive: "fa-regular fa-comments",
@@ -57,7 +66,7 @@ export const sidebarNavs = [
     show: false,
   },
   {
-    id: 6,
+    id: 7,
     section: "MY ACCOUNT",
     icon: "fa-light fa-user-cog",
     iconActive: "fa-regular fa-user-cog",
