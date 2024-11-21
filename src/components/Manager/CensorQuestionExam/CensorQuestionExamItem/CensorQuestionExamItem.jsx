@@ -12,6 +12,8 @@ function CensorQuestionExamItem({
   setIsShowQuestionItemPreview,
   setQuestionCensorView,
   setIsShowCensorQuestionView,
+  setQuestionFeedback,
+  setIsShowFeedbackView
 }) {
   const handlePreviewQuestion = () => {
     setIsShowQuestionItemPreview(true);
@@ -21,6 +23,11 @@ function CensorQuestionExamItem({
   const handleCensorQuestion = () => {
     setIsShowCensorQuestionView(true);
     setQuestionCensorView(question);
+  };
+
+  const handleViewFeedback = () => {
+    setQuestionFeedback(question);
+    setIsShowFeedbackView(true);
   };
 
   return (
@@ -36,10 +43,10 @@ function CensorQuestionExamItem({
             question?.status === "Approved"
               ? "approved-status"
               : question?.status === "Pending"
-              ? "pending-status"
-              : question?.status === "Draft"
-              ? "draft-status"
-              : "rejected-status"
+                ? "pending-status"
+                : question?.status === "Draft"
+                  ? "draft-status"
+                  : "rejected-status"
           )}
         >
           {question?.status}
@@ -75,7 +82,7 @@ function CensorQuestionExamItem({
             </button>
           )}
           {question?.status === "Rejected" && (
-            <button className={cx("feedback-list-btn")}>
+            <button className={cx("feedback-list-btn")} onClick={handleViewFeedback}>
               <i className={cx("fa-regular fa-clipboard-list")}></i>
             </button>
           )}

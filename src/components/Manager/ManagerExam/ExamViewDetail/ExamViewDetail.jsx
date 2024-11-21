@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import styles from "./ExamViewDetail.module.scss";
 import ModuleCensorView from "~/components/Manager/ManagerExam/ModuleCensorView";
 import SectionQuestionView from "~/components/Manager/ManagerExam/SectionQuestionView";
+import styles from "./ExamViewDetail.module.scss";
 const cx = classNames.bind(styles);
 
 function ExamViewDetail({ examCensorData, setIsShowExamCensorView }) {

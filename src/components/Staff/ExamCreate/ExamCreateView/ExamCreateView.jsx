@@ -1,16 +1,22 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Loader from "~/components/General/Loader";
+import apiClient from "~/services/apiService";
 import DomainQuestionView from "./DomainQuestionView";
 import styles from "./ExamCreateView.module.scss";
 import ModuleQuestionView from "./ModuleQuestionView";
 const cx = classNames.bind(styles);
 
 function ExamCreateView({ exam, fetchExamList, setIsShowCreateExamView }) {
+  const navigate = useNavigate()
   const [isShowDomainQuestionView, setIsShowDomainQuestionView] =
     useState(false);
   const [originalData, setOriginalData] = useState(null);
   const [domainData, setDomainData] = useState(null);
   const [moduleData, setModuleData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
 
   const sectionOrder = ["Reading & Writing", "Math"];
   const moduleOrder = ["Module 1", "Module 2 (Easy)", "Module 2 (Hard)"];
@@ -21,16 +27,41 @@ function ExamCreateView({ exam, fetchExamList, setIsShowCreateExamView }) {
     if (sectionComparison !== 0) {
       return sectionComparison;
     }
+
     const aModule = a.name + (a.level ? ` (${a.level})` : "");
     const bModule = b.name + (b.level ? ` (${b.level})` : "");
+
+    if (!moduleOrder.includes(aModule)) {
+      moduleOrder.push(aModule);
+    }
+    if (!moduleOrder.includes(bModule)) {
+      moduleOrder.push(bModule);
+    }
 
     return moduleOrder.indexOf(aModule) - moduleOrder.indexOf(bModule);
   });
 
-  const handleUpdateExam = () => {};
+  const handleUpdateExam = async () => {
+    try {
+      setIsLoading(true)
+      await apiClient.patch(`/exams/updateStatus/${exam.id}/Pending`)
+      toast.success("Update exam successfully!", {
+        autoClose: 1000
+      })
+      navigate("/staff/exams/create")
+    } catch (error) {
+      console.error("Error while update exam:", error)
+      toast.success("Update exam failed!", {
+        autoClose: 1000
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  };
 
   return (
     <>
+      {isLoading && <Loader />}
       {isShowDomainQuestionView && (
         <DomainQuestionView
           exam={exam}
@@ -40,6 +71,7 @@ function ExamCreateView({ exam, fetchExamList, setIsShowCreateExamView }) {
           domainData={domainData}
           setDomainData={setDomainData}
           setIsShowDomainQuestionView={setIsShowDomainQuestionView}
+          setIsLoading={setIsLoading}
         />
       )}
       <div className={cx("exam-create-view-detail-wrapper")}>
@@ -94,10 +126,12 @@ function ExamCreateView({ exam, fetchExamList, setIsShowCreateExamView }) {
                   key={examQuestion.id}
                   exam={exam}
                   examQuestion={examQuestion}
+                  fetchExamList={fetchExamList}
                   setIsShowDomainQuestionView={setIsShowDomainQuestionView}
                   setOriginalData={setOriginalData}
                   setDomainData={setDomainData}
                   setModuleData={setModuleData}
+                  setIsLoading={setIsLoading}
                 />
               ))}
             </div>

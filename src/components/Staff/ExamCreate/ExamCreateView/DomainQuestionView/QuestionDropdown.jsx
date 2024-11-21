@@ -10,14 +10,15 @@ function QuestionDropdown({
   domainQuestions,
   setDomainQuestions,
   setIsQuestionDropdownVisible,
-  numberOfQuestion,
   setUpdateQuestion,
   examId,
   moduleTypeId,
 }) {
   const handleClickQuestion = (questionData) => {
-    if (domainQuestions.questions.length >= numberOfQuestion) {
-      toast.warning(`You can only select up to ${numberOfQuestion} questions.`);
+    if (domainQuestions.questions.length >= domainQuestions.numberofquestion) {
+      toast.warning(`You can only select up to ${domainQuestions.numberofquestion} questions.`, {
+        autoClose: 1000
+      });
       return;
     }
     setSearchValue("");
@@ -26,7 +27,7 @@ function QuestionDropdown({
       questions: [...prevDomainQuestions.questions, questionData],
     }));
     setIsQuestionDropdownVisible(false);
-    
+
     setUpdateQuestion((prev) => [
       ...prev,
       {

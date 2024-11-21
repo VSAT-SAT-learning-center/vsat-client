@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import QuestionItemPreview from "~/components/Staff/QuestionExamCreate/QuestionItemPreview";
 import useDebounce from "~/hooks/useDebounce";
 import apiClient from "~/services/apiService";
@@ -18,6 +19,7 @@ function DomainQuestionView({
   domainData,
   setDomainData,
   setIsShowDomainQuestionView,
+  setIsLoading
 }) {
   const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
     useState(false);
@@ -133,16 +135,34 @@ function DomainQuestionView({
       return;
     }
     try {
+      setIsLoading(true)
       const payload = {
         updateDeleteExamQuestion: updateDeleteExamQuestion,
         updateQuestion: updateQuestion,
       };
-      const response = await apiClient.patch("exam-questions", payload);
-      console.log(response.data);
-      fetchExamList();
-      setIsShowDomainQuestionView(false);
+      await apiClient.patch("exam-questions", payload);
+      const updatedExams = await fetchExamList();
+      const updatedExam = updatedExams.find((examItem) => examItem.id === exam.id);
+      const updateExamQuestions = updatedExam?.examQuestions.find((module) => module.id === moduleData.id)
+      const updatedDomain = updateExamQuestions?.domains?.find(
+        (domain) => domain.domain === domainData?.domain
+      );
+
+      if (updatedDomain) {
+        setDomainData(updatedDomain);
+        toast.success("Updated question successfully!", {
+          autoClose: 1500
+        })
+        setIsShowDomainQuestionView(false);
+        setIsLoading(false)
+      }
     } catch (error) {
       console.error("Error while update exam:", error);
+      toast.error("Updated question fail!", {
+        autoClose: 1500
+      })
+    } finally {
+      setIsLoading(false)
     }
   };
   return (
@@ -235,7 +255,6 @@ function DomainQuestionView({
                     domainQuestions={domainData}
                     setDomainQuestions={setDomainData}
                     setIsQuestionDropdownVisible={setIsQuestionDropdownVisible}
-                    numberOfQuestion={domainData.numberofquestion}
                     setUpdateQuestion={setUpdateQuestion}
                     examId={exam?.id}
                     moduleTypeId={moduleData?.id}
@@ -285,18 +304,19 @@ function DomainQuestionView({
               <button
                 className={cx("preview-btn", {
                   "disabled-btn":
-                    domainData?.questions.length < domainData.numberofquestion,
+                    domainData?.questions.length < domainData.numberofquestion ||
+                    domainData?.questions.length > domainData.numberofquestion,
                 })}
                 onClick={handleClickUpdateQuestionModule}
                 disabled={
-                  domainData?.questions.length < domainData.numberofquestion
+                  domainData?.questions.length < domainData.numberofquestion ||
+                  domainData?.questions.length > domainData.numberofquestion
                 }
               >
-                <i
-                  className={cx("fa-regular fa-floppy-disk", "preview-icon")}
-                ></i>
+                <i className={cx("fa-regular fa-floppy-disk", "preview-icon")}></i>
                 <span>Save</span>
               </button>
+
             )}
           </div>
         </div>

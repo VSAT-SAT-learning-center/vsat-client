@@ -1,12 +1,10 @@
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
-import CustomBreadcrumbs from "~/components/Student/LearningPartDetail/LearningPartDetailSidebar/CustomBreadcrumbs";
 import DetailLessonItem from "~/components/Student/LearningPartDetail/LearningPartDetailSidebar/DetailLessonItem";
-import DetailPracticeItem from "~/components/Student/LearningPartDetail/LearningPartDetailSidebar/DetailPracticeItem";
 import styles from "./LearningPartDetailSidebar.module.scss";
 const cx = classNames.bind(styles);
 
-function LearningPartDetailSidebar() {
+function LearningPartDetailSidebar({ slug, uniAreaData, activeLesson, onLessonSelect }) {
   return (
     <div className={cx("learning-part-detail-sidebar-wrapper")}>
       <div className={cx("learning-part-detail-sidebar-container")}>
@@ -15,28 +13,28 @@ function LearningPartDetailSidebar() {
             <i className={cx("fa-regular fa-book-open", "icon")}></i>
           </div>
           <div className={cx("detail-title")}>
-            Digital SAT Reading and Writing
+            Digital SAT {slug === "sat-reading-and-writing" ? "Reading and Writing" : "Math"}
           </div>
         </div>
         <div className={cx("detail-content")}>
           <div className={cx("detail-content-header")}>
-            <div className={cx("detail-content-breadscrumb")}>
+            {/* <div className={cx("detail-content-breadscrumb")}>
               <CustomBreadcrumbs />
-            </div>
+            </div> */}
             <div className={cx("detail-content-title")}>
-              Lesson 1: Command of Evidence: Textual
+              Lesson: {uniAreaData?.unitAreaProgress?.unitArea.title}
             </div>
           </div>
           <div className={cx("detail-content-main")}>
             <div className={cx("detail-content-lesson")}>
-              <DetailLessonItem />
-              <DetailLessonItem />
-              <DetailLessonItem />
-              <DetailLessonItem />
+              {uniAreaData?.lessons.map((lesson) => (
+                <DetailLessonItem key={lesson.id} lesson={lesson} isActive={lesson.id === activeLesson?.id}
+                  onClick={() => onLessonSelect(lesson)} />
+              ))}
             </div>
-            <div className={cx("detail-content-practice")}>
+            {/* <div className={cx("detail-content-practice")}>
               <DetailPracticeItem />
-            </div>
+            </div> */}
           </div>
           <div className={cx("detail-content-footer")}>
             <div className={cx("footer-copyright")}>

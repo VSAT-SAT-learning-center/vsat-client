@@ -8,6 +8,8 @@ import styles from "./ViewLearningPath.module.scss";
 const cx = classNames.bind(styles);
 
 function ViewLearningPath({ target, setIsShowViewTargetLearning }) {
+  console.log(target.targetlearningdetail[0]);
+  
   const [isShowEditLearningPath, setIsShowEditLearningPath] = useState(false)
   const [isShowAddLearningPath, setIsShowAddLearningPath] = useState(false)
   const [learningPaths, setLearningPaths] = useState([])
@@ -181,7 +183,7 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning }) {
                 <div className={cx("learning-path-title")}>
                   Learning path for {learningPath.section.name}
                 </div>
-                {target.status === "Inactive" && (
+                {target.targetlearningdetail[0].status === "Inactive" && (
                   <button className={cx("add-path-btn")} onClick={() =>
                     handleAddPathClick(
                       learningPath.section.id,
@@ -204,7 +206,7 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning }) {
                       </div>
                       <div className={cx("item-title")}>
                         <div className={cx("title")}>Unit {unitIndex + 1}</div>
-                        {target.status === "Inactive" && (
+                        {target.targetlearningdetail[0].status === "Inactive" && (
                           <div className={cx("item-action")}>
                             <button
                               className={cx("edit-btn")}
@@ -275,7 +277,7 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning }) {
         </div>
         <div className={cx("view-learning-path-footer")}>
           <button className={cx("cancel-btn")} onClick={() => setIsShowViewTargetLearning(false)}>Cancel</button>
-          {target.status === "Inactive" && (
+          {target.targetlearningdetail[0].status === "Inactive" && (
             <button className={cx("save-btn")} onClick={handleSaveUpdatePath}>Save</button>
           )}
         </div>

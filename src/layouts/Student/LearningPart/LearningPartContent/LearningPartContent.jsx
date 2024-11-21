@@ -3,24 +3,26 @@ import UnitArea from "~/components/Student/LearningPart/LearningPartContent/Unit
 import styles from "./LearningPartContent.module.scss";
 const cx = classNames.bind(styles);
 
-function LearningPartContent() {
+function LearningPartContent({ learningContent, activeUnit, sectionId }) {
   return (
     <div className={cx("learning-part-content-container")}>
       <div className={cx("content-header")}>
-        <div className={cx("content-title")}>Unit 1: About the digital SAT</div>
+        <div className={cx("content-title")}>{activeUnit?.unitTitle}</div>
       </div>
       <div className={cx("content-main")}>
         <div className={cx("content-about-unit")}>
           <div className={cx("about-unit-title")}>About this unit</div>
-          <div className={cx("about-unit-desc")}>
-            Dont know much about the digital SAT? Start here! This unit gives
-            you an overview of the structure, format, content, and scoring of
-            the test. Youll also learn how to take official practice tests and
-            create an SAT prep plan and schedule.
-          </div>
+          <div className={cx("about-unit-desc")}>{activeUnit?.description}</div>
         </div>
-        <UnitArea/>
-        <UnitArea/>
+        {activeUnit?.unitAreas.map((unitArea) => (
+          <UnitArea
+            key={unitArea.unitAreaId}
+            unitArea={unitArea}
+            learningContent={learningContent}
+            activeUnit={activeUnit}
+            sectionId={sectionId}
+          />
+        ))}
       </div>
     </div>
   );
