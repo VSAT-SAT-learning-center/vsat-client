@@ -19,6 +19,7 @@ function ExamFeedback() {
       setIsWaiting(true);
       const response = await apiClient.get("/exams/Rejected");
       setExamList(response.data.data);
+      return response.data.data;
     } catch (error) {
       console.error("Failed to fetch exam structure list:", error);
     } finally {
@@ -46,12 +47,12 @@ function ExamFeedback() {
             </div>
             <div className={cx(
               isWaiting || examList.length > 0
-              ? "exam-feedback-content"
-              : "exam-feedback-no-content"
+                ? "exam-feedback-content"
+                : "exam-feedback-no-content"
             )}>
               {isWaiting ? (
                 <>
-                  {[...Array(3)].map((_, i) => (
+                  {[...Array(2)].map((_, i) => (
                     <Skeleton
                       key={i}
                       animation="wave"

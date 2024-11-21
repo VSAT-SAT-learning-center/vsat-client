@@ -3,7 +3,7 @@ import { formatDate } from "~/utils/formatDate";
 import styles from "./ExamItem.module.scss";
 const cx = classNames.bind(styles);
 
-function ExamItem({ exam, index, setExamCensorData, setIsShowExamCensorView }) {
+function ExamItem({ exam, index, setExamCensorData, setIsShowExamCensorView}) {
   const handleViewExamDetail = () => {
     setExamCensorData(exam)
     setIsShowExamCensorView(true)
@@ -22,8 +22,8 @@ function ExamItem({ exam, index, setExamCensorData, setIsShowExamCensorView }) {
               exam?.status === "Approved"
                 ? "approved-status"
                 : exam?.status === "Pending"
-                ? "pending-status"
-                : "rejected-status"
+                  ? "pending-status"
+                  : "rejected-status"
             )}
           >
             {exam?.status}

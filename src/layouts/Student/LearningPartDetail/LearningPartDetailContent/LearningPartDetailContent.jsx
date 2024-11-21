@@ -1,14 +1,17 @@
 import classNames from "classnames/bind";
 import styles from "./LearningPartDetailContent.module.scss";
-// import LearningPartDetailContentRW from "./LearningPartDetailContentRW/LearningPartDetailContentRW";
 import LearningPartDetailContentMath from "./LearningPartDetailContentMath/LearningPartDetailContentMath";
+import LearningPartDetailContentRW from "./LearningPartDetailContentRW/LearningPartDetailContentRW";
 const cx = classNames.bind(styles);
 
-function LearningPartDetailContent() {
+function LearningPartDetailContent({ lesson }) {
   return (
     <div className={cx("learning-part-detail-content-wrapper")}>
-      {/* <LearningPartDetailContentRW /> */}
-      <LearningPartDetailContentMath />
+      {lesson?.type === "Text" ? (
+        <LearningPartDetailContentRW lesson={lesson} />
+      ) : (
+        <LearningPartDetailContentMath lesson={lesson} />
+      )}
     </div>
   );
 }

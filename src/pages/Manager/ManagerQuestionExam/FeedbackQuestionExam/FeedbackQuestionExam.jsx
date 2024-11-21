@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import CensorQuestionExamItem from "~/components/Manager/CensorQuestionExam/CensorQuestionExamItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
+import QuestionFeedbackView from "~/components/Staff/QuestionExamCreate/QuestionFeedbackView";
 import QuestionItemPreview from "~/components/Staff/QuestionExamCreate/QuestionItemPreview";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
@@ -18,6 +19,8 @@ function LearningMaterial() {
   const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
     useState(false);
   const [questionPreview, setQuestionPreview] = useState({});
+  const [isShowFeedbackView, setIsShowFeedbackView] = useState(false);
+  const [questionFeedback, setQuestionFeedback] = useState({});
   const fetchQuestions = useCallback(async () => {
     try {
       const response = await apiClient.get(`/questions`, {
@@ -49,6 +52,14 @@ function LearningMaterial() {
           setIsShowQuestionItemPreview={setIsShowQuestionItemPreview}
         />
       )}
+
+      {isShowFeedbackView && (
+        <QuestionFeedbackView
+          questionFeedback={questionFeedback}
+          setIsShowFeedbackView={setIsShowFeedbackView}
+        />
+      )}
+
       <PageLayout>
         <div className={cx("question-exam-feedback-wrapper")}>
           <div className={cx("question-exam-feedback-container")}>
@@ -67,6 +78,8 @@ function LearningMaterial() {
                       setIsShowQuestionItemPreview={
                         setIsShowQuestionItemPreview
                       }
+                      setQuestionFeedback={setQuestionFeedback}
+                      setIsShowFeedbackView={setIsShowFeedbackView}
                     />
                   ))}
                 </div>

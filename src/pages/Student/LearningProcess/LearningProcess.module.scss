@@ -38,25 +38,36 @@
     }
 
     .learning-card {
+      cursor: pointer;
+      user-select: none;
       padding: 20px;
-      border: 1px solid $border-color;
       border-radius: 10px;
-      background-color: #fff;
       display: flex;
       flex-direction: column;
+      border: 1px solid $border-color;
+      background-color: $bg-primary-color;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      }
 
       .card-header {
         margin-bottom: 12px;
 
         .card-title {
-          font-size: 18px;
-          font-weight: 700;
+          font-size: 20px;
+          font-weight: 600;
           color: $text-color;
         }
       }
 
       .card-description {
-        font-size: 14px;
+        font-size: 15px;
         margin-bottom: 15px;
         color: $text-color-gray;
       }
@@ -64,23 +75,23 @@
       .card-footer {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: flex-end;
 
         .footer-left {
           .level {
-            font-size: 14px;
+            font-size: 17px;
             font-weight: 600;
             color: $primary-color;
           }
 
           .topics-lessons {
-            font-size: 14px;
+            font-size: 16px;
             margin: 5px 0;
             color: $text-color;
           }
 
           .created-at {
-            font-size: 12px;
+            font-size: 14px;
             color: $text-color-gray;
           }
         }

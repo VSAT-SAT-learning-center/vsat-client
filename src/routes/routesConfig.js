@@ -53,10 +53,10 @@ import Teachers from "~/pages/Staff/Teachers";
 import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
 import ExamSchedule from "~/pages/Student/ExamSchedule";
 import Learning from "~/pages/Student/Learning";
-import LearningProcess from "~/pages/Student/LearningProcess";
-import LearningProgress from "~/pages/Student/LearningProgress";
 import LearningPart from "~/pages/Student/LearningPart";
 import LearningPartDetail from "~/pages/Student/LearningPartDetail";
+import LearningProcess from "~/pages/Student/LearningProcess";
+import LearningProgress from "~/pages/Student/LearningProgress";
 import StudentProfile from "~/pages/Student/Profile";
 import AssignExam from "~/pages/Teacher/AssignExam";
 import ManageMaterial from "~/pages/Teacher/ManageMaterial";
@@ -132,13 +132,13 @@ const routesConfig = [
     roles: ["Student"],
   },
   {
-    path: "/learning/:slug/:idSection",
+    path: "/learning/:slug/:sectionId",
     component: LearningPart,
     protected: true,
     roles: ["Student"],
   },
   {
-    path: "/learning/:slug/:idSection/:id",
+    path: "/learning/:slug/:sectionId/:unitAreaId/:lessonId",
     component: LearningPartDetail,
     protected: true,
     roles: ["Student"],
