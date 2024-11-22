@@ -1,12 +1,10 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import Modal from "react-modal";
 import apiClient from "~/services/apiService";
 import styles from "./TeacherTable.module.scss";
+import TeacherModal from "../TeacherDetailsModal";
 
 const cx = classNames.bind(styles);
-
-Modal.setAppElement("#root");
 
 function TeacherTable() {
   const [teachers, setTeachers] = useState([]);
@@ -14,6 +12,8 @@ function TeacherTable() {
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize] = useState(7);
   const [searchName, setSearchName] = useState("");
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchTeachers = (page, pageSize) => {
     apiClient
@@ -28,7 +28,7 @@ function TeacherTable() {
         const { data: teacherList, totalPages } = data;
         setTeachers(teacherList || []);
         setTotalPages(Math.ceil(totalPages || 1));
-        setCurrentPage(page); 
+        setCurrentPage(page);
       })
       .catch((error) => {
         console.error("Error fetching teachers:", error);
@@ -37,18 +37,28 @@ function TeacherTable() {
   };
 
   const handleSearch = () => {
-    fetchTeachers(1, pageSize); 
+    fetchTeachers(1, pageSize);
   };
 
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
-      fetchTeachers(newPage, pageSize); 
+      fetchTeachers(newPage, pageSize);
     }
   };
 
+  const handleRowClick = (teacher) => {
+    setSelectedTeacher(teacher);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedTeacher(null);
+  };
+
   useEffect(() => {
-    fetchTeachers(currentPage, pageSize); 
-  }, []); 
+    fetchTeachers(currentPage, pageSize);
+  }, []);
 
   return (
     <div className={cx("table-wrapper")}>
@@ -82,7 +92,7 @@ function TeacherTable() {
             <tbody>
               {teachers.length > 0 ? (
                 teachers.map((teacher) => (
-                  <tr key={teacher.id}>
+                  <tr key={teacher.id} onClick={() => handleRowClick(teacher)}>
                     <td>{teacher.firstname}</td>
                     <td>{teacher.lastname}</td>
                     <td>{teacher.username}</td>
@@ -126,6 +136,11 @@ function TeacherTable() {
           </div>
         </div>
       </div>
+      <TeacherModal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        teacher={selectedTeacher}
+      />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import apiClient from "~/services/apiService";
 import classNames from "classnames/bind";
 import styles from "./StudyProfileTable.module.scss";
+import ProfileEditModal from "../ProfileEditModal";
 
 const cx = classNames.bind(styles);
 
@@ -10,15 +11,17 @@ function StudyProfileTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize] = useState(5);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState(null);
 
   const fetchProfiles = (page, pageSize) => {
     apiClient
-      .get("/study-profiles/getStudyProfile", {
+      .get("/study-profiles/getStudyProfileWithTeacherDetail", {
         params: { page, pageSize },
       })
       .then((response) => {
         const { data } = response.data;
-        const { data: profileList, totalPages} = data;
+        const { data: profileList, totalPages } = data;
         setProfiles(profileList || []);
         setTotalPages(Math.ceil(totalPages || 1));
         setCurrentPage(page);
@@ -29,22 +32,15 @@ function StudyProfileTable() {
       });
   };
 
-  const updateTrialExamStatus = async (profileId, currentStatus) => {
-    const newStatus = !currentStatus; 
-    try {
-      await apiClient.post(`/study-profiles/take-trial-exam/${profileId}`, {
-        isTrialExam: newStatus,
-      });
-      fetchProfiles(currentPage, pageSize); 
-    } catch (error) {
-      console.error("Error updating trial exam status:", error);
-    }
-  };
-
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
-    const date = new Date(dateString);
-    return date.toLocaleDateString(); 
+    const parts = dateString.split(" ");
+    if (parts.length < 2) return "N/A";
+
+    const datePart = parts[1];
+    const [day, month, year] = datePart.split("/");
+
+    return `${year}-${month}-${day}`;
   };
 
   const handlePageChange = (newPage) => {
@@ -53,9 +49,19 @@ function StudyProfileTable() {
     }
   };
 
+  const handleEditClick = (profile) => {
+    setSelectedProfile(profile);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedProfile(null);
+  };
+
   useEffect(() => {
     fetchProfiles(currentPage, pageSize);
-  }, []); // Fetch profiles on component mount
+  }, []);
 
   return (
     <div className={cx("table-wrapper")}>
@@ -78,9 +84,10 @@ function StudyProfileTable() {
                 <th>Email</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Math Target Score</th>
-                <th>Reading & Writing Target Score</th>
-                <th>Take Trial Exam</th>
+                <th>Teacher In Charge</th>
+                <th>Math Target</th>
+                <th>Reading & Writing Target</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -90,34 +97,31 @@ function StudyProfileTable() {
                     <td>{profile.account?.email || "N/A"}</td>
                     <td>{formatDate(profile.startdate)}</td>
                     <td>{formatDate(profile.enddate)}</td>
-                    <td>{profile.targetscoreMath || "N/A"}</td>
-                    <td>{profile.targetscoreRW || "N/A"}</td>
-                    <td className={cx("status-cell")}>
-                      <div
-                        className={cx("status-toggle")}
-                        onClick={() =>
-                          updateTrialExamStatus(profile.id, profile.isTrialExam)
-                        }
-                        style={{
-                          cursor: "pointer",
-                        }}
-                      >
-                        {profile.isTrialExam ? (
-                          <div className={cx("toggle-switch", "active")}>
-                            <div className={cx("toggle-circle")}></div>
-                          </div>
-                        ) : (
-                          <div className={cx("toggle-switch", "inactive")}>
-                            <div className={cx("toggle-circle")}></div>
-                          </div>
-                        )}
+                    <td>
+                      {profile.teacher?.firstname || ""}{" "}
+                      {profile.teacher?.lastname || ""}
+                    </td>
+                    <td className={cx("center")}>
+                      {profile.targetscoreMath || "N/A"}
+                    </td>
+                    <td className={cx("center")}>
+                      {profile.targetscoreRW || "N/A"}
+                    </td>
+                    <td className={cx("action-cell")}>
+                      <div className={cx("action-icons")}>
+                        <span
+                          className={cx("icon", "edit-icon")}
+                          onClick={() => handleEditClick(profile)}
+                        >
+                          ...
+                        </span>
                       </div>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" className={cx("no-data")}>
+                  <td colSpan="7" className={cx("no-data")}>
                     No study profiles found.
                   </td>
                 </tr>
@@ -151,6 +155,15 @@ function StudyProfileTable() {
           </div>
         </div>
       </div>
+
+      {isModalOpen && selectedProfile && (
+        <ProfileEditModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          profile={selectedProfile}
+          onSaveSuccess={() => fetchProfiles(currentPage, pageSize)}
+        />
+      )}
     </div>
   );
 }
