@@ -18,7 +18,7 @@ function StudyProfileTable() {
       })
       .then((response) => {
         const { data } = response.data;
-        const { data: profileList, totalPages, currentPage } = data;
+        const { data: profileList, totalPages} = data;
         setProfiles(profileList || []);
         setTotalPages(Math.ceil(totalPages || 1));
         setCurrentPage(page);
@@ -30,12 +30,12 @@ function StudyProfileTable() {
   };
 
   const updateTrialExamStatus = async (profileId, currentStatus) => {
-    const newStatus = !currentStatus; // Toggle the status
+    const newStatus = !currentStatus; 
     try {
       await apiClient.post(`/study-profiles/take-trial-exam/${profileId}`, {
         isTrialExam: newStatus,
       });
-      fetchProfiles(currentPage, pageSize); // Refresh profiles after updating
+      fetchProfiles(currentPage, pageSize); 
     } catch (error) {
       console.error("Error updating trial exam status:", error);
     }
@@ -44,7 +44,7 @@ function StudyProfileTable() {
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
-    return date.toLocaleDateString(); // Formats date to MM/DD/YYYY
+    return date.toLocaleDateString(); 
   };
 
   const handlePageChange = (newPage) => {

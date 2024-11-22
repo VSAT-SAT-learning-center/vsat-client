@@ -1,4 +1,3 @@
-import { PlusCircleOutlined } from "@ant-design/icons";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
@@ -26,7 +25,7 @@ function TeacherTable() {
       })
       .then((response) => {
         const { data } = response.data;
-        const { data: teacherList, totalPages, currentPage } = data;
+        const { data: teacherList, totalPages } = data;
         setTeachers(teacherList || []);
         setTotalPages(Math.ceil(totalPages || 1));
         setCurrentPage(page); 
