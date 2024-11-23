@@ -1,3 +1,5 @@
+@import "~/styles/variables";
+
 .table-wrapper {
   width: 100%;
 
@@ -42,7 +44,7 @@
 
         .filter-btn {
           padding: 10px 15px;
-          background-color: #2446b6;
+          background-color: $primary-color;
           color: white;
           font-weight: 600;
           border: none;
@@ -55,7 +57,7 @@
           }
         }
 
-        .add-user-btn {
+        .add-study-profile-btn {
           padding: 10px 15px;
           background-color: white;
           color: #2446b6;
@@ -73,20 +75,21 @@
       }
     }
 
-    .user-table-container {
+    .study-profile-table-container {
       width: 100%;
       padding: 0 20px;
     }
 
-    .user-table {
+    .study-profile-table {
       width: 100%;
       border-collapse: collapse;
 
       thead th {
-        background-color: #f5f5f5;
+        background-color: $primary-color;
         padding: 12px;
-        text-align: left;
+        text-align: center;
         font-weight: bold;
+        color: $white-color;
       }
 
       tbody td {
@@ -94,84 +97,30 @@
         border-bottom: 1px solid #ddd;
       }
 
-      .gender-cell {
+      .center {
         text-align: center;
-        padding-right: 40px;
-
-        .icon {
-          width: 24px;
-          height: 24px;
-        }
       }
 
-      .status-cell {
-        .status-toggle {
+      .action-cell {
+        text-align: center;
+
+        .action-icons {
           display: flex;
-          justify-content: left;
-          align-items: center;
+          justify-content: center;
+          gap: 10px;
 
-          .toggle-switch {
-            width: 60px;
-            height: 30px;
-            border-radius: 50px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            padding: 5px;
-            transition: background-color 0.3s ease;
+          .icon {
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.2s ease;
 
-            .toggle-circle {
-              width: 22px;
-              height: 22px;
-              background-color: white;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              position: absolute;
-              left: 5px;
-              transition: all 0.3s ease;
-            }
-
-            &.active {
-              background-color: #4caf50;
-              cursor: pointer;
-
-              .toggle-circle {
-                left: calc(100% - 27px);
-                border: 2px solid #4caf50;
-              }
-
-              &:hover {
-                background-color: #43a047;
-              }
-            }
-
-            &.inactive {
-              background-color: #b0b0b0;
-              cursor: not-allowed;
-a
-              .toggle-circle {
-                left: 5px;
-                border: 2px solid #b0b0b0;
-              }
-            }
-
-            &.ban {
-              background-color: #f44336;
-
-              .toggle-circle {
-                left: 5px;
-                border: 2px solid #f44336;
-              }
-
-              &:hover {
-                background-color: #e53935;
-              }
+            &:hover {
+              transform: scale(1.2);
             }
           }
         }
       }
+
     }
 
     .paging-container {

@@ -11,7 +11,7 @@ function TeacherAccountSetting() {
   const [profile, setProfile] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editableProfile, setEditableProfile] = useState({});
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false); // Trạng thái mở modal
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {

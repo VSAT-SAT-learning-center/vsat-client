@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import StudyProfileTable from "~/components/Staff/StudyProfile/StudyProfileTable";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import styles from "./Students.module.scss";
 const cx = classNames.bind(styles);
@@ -13,7 +14,9 @@ function Students() {
               Manage Study Profiles
             </div>
           </div>
-          <div className={cx("manage-students-content")}></div>
+          <div className={cx("manage-students-content")}>
+            <StudyProfileTable/>
+          </div>
         </div>
       </div>
       <LearningMaterialCreateFooter />
