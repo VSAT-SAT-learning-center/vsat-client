@@ -55,10 +55,34 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 
     .lesson-content-main {
       width: 698px;
       height: fit-content;
+    }
+
+    .lesson-content-completed {
+      width: 698px;
+      margin-top: 20px;
+
+      .mark-btn {
+        padding: 12px 32px;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: 600;
+        color: $white-color;
+        background-color: $primary-color;
+        transition: all 0.3s linear;
+
+        &:hover {
+          opacity: 0.7;
+        }
+
+        .text {
+          margin-left: 6px;
+        }
+      }
     }
   }
 }

@@ -6,10 +6,12 @@ import LessonConc from "~/components/Student/LearningPartDetail/LearningPartDeta
 import LessonDef from "~/components/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentRW/LessonDef";
 import LessonPrac from "~/components/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentRW/LessonPrac";
 import LessonTips from "~/components/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentRW/LessonTips";
+import apiClient from "~/services/apiService";
 import styles from "./LearningPartDetailContentRW.module.scss";
 const cx = classNames.bind(styles);
-function LearningPartDetailContentRW({ lesson }) {
+function LearningPartDetailContentRW({ lesson, fetchUnitArea }) {
   const [sortedLessonContents, setSortedLessonContents] = useState([]);
+  const [markStatus, setMarkStatus] = useState(false)
 
   useEffect(() => {
     if (lesson?.lessonContents) {
@@ -20,6 +22,18 @@ function LearningPartDetailContentRW({ lesson }) {
       setSortedLessonContents(sorted);
     }
   }, [lesson]);
+
+  const handleMarkLesson = async () => {
+    try {
+      await apiClient.patch(`/target-learnings/${lesson?.lessonpProgressId}/complete`)
+      setMarkStatus(true)
+      if (fetchUnitArea) {
+        await fetchUnitArea();
+      }
+    } catch (error) {
+      console.error("Error when mark lesson completed:", error);
+    }
+  }
   return (
     <div className={cx("learning-part-detail-content-rw-container")}>
       <div className={cx("lesson-main-title")}>
@@ -47,8 +61,29 @@ function LearningPartDetailContentRW({ lesson }) {
               </div>
             ))}
         </div>
+        <div className={cx("lesson-content-completed")}>
+          {lesson?.status === "Not Started" ? (
+            <button className={cx("mark-btn")} onClick={handleMarkLesson}>
+              {markStatus ? (
+                <>
+                  <i className={cx("fa-solid fa-check")}></i>
+                  <span className={cx("text")}>Completed</span>
+                </>
+              ) : (
+                <>
+                  <span className={cx("text")}>Mark as Completed</span>
+                </>
+              )}
+            </button>
+          ) : (
+            <button className={cx("mark-btn")}>
+              <i className={cx("fa-solid fa-check")}></i>
+              <span className={cx("text")}>Completed</span>
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -1,9 +1,10 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AIImg from "~/assets/images/content/ai.svg";
 import Loader from "~/components/General/Loader";
+import { AuthContext } from "~/contexts/AuthContext";
 import apiClient from "~/services/apiService";
 import { convertToJSON } from "~/utils/convertToJSON";
 import { formatDate } from "~/utils/formatDate";
@@ -16,6 +17,7 @@ function CensorQuestionExamView({
   questionCensorData,
   setIsShowCensorQuestionView,
 }) {
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isShowCensorFeedback, setIsShowCensorFeedback] = useState(false);
   const [isShowCensorGpt, setIsShowCensorGpt] = useState(false);
@@ -93,8 +95,8 @@ function CensorQuestionExamView({
       questionId: questionCensorData?.id,
       content: content,
       reason: reason,
-      accountFromId: "d66ca666-3188-4662-bb69-840faa80fc40",
-      accountToId: "e3958023-2cf4-4394-93be-b86ff80e59fb",
+      accountFromId: user?.id,
+      accountToId: questionCensorData?.account?.id,
     };
     try {
       await apiClient.post(`/questions/censor/reject`, rejectData);

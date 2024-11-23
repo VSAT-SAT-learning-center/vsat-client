@@ -1,13 +1,15 @@
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AuthContext } from "~/contexts/AuthContext";
 import apiClient from "~/services/apiService";
 import styles from "./ExamCensorView.module.scss";
 import ModuleCensorView from "./ModuleCensorView";
 import SectionQuestionView from "./SectionQuestionView";
 const cx = classNames.bind(styles);
 function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate()
   const [isShowModuleViewCensor, setIsShowModuleViewCensor] = useState(false);
   const [groupedSections, setGroupedSections] = useState([]);
@@ -88,8 +90,8 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
   const handleApprove = async () => {
     const feedbackData = {
       examFeedback: censorModuleFeedback,
-      accountFromId: "d66ca666-3188-4662-bb69-840faa80fc40",
-      accountToId: "e3958023-2cf4-4394-93be-b86ff80e59fb",
+      accountFromId: user?.id,
+      accountToId: examCensorData?.account.id,
     };
     try {
       const response = await apiClient.post(
@@ -113,8 +115,8 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
   const handleReject = async () => {
     const feedbackData = {
       examFeedback: censorModuleFeedback,
-      accountFromId: "d66ca666-3188-4662-bb69-840faa80fc40",
-      accountToId: "e3958023-2cf4-4394-93be-b86ff80e59fb",
+      accountFromId: user?.id,
+      accountToId: examCensorData?.account.id,
     };
     try {
       const response = await apiClient.post(
@@ -170,7 +172,7 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
                 <div className={cx("type-name")}>{examCensorData?.examType?.name}</div>
               </div>
             </div>
-            <div className={cx("exam-config-wrapper")}>
+            {/* <div className={cx("exam-config-wrapper")}>
               <div className={cx("exam-config-container")}>
                 <div className={cx("exam-config-select")}>
                   <div className={cx("type-config")}>
@@ -209,7 +211,7 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className={cx("exam-question-wrapper")}>
               <div className={cx("exam-question-title")}>Exam question</div>
               {groupedSections?.map((section, index) => (

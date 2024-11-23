@@ -14,6 +14,7 @@ function CensorQuestionQuizzItem({
   setQuestionCensorView,
   setIsShowCensorQuestionQuizView,
 }) {
+
   const handlePreviewQuestion = () => {
     setIsShowQuizzItemPreview(true);
     setQuestionPreview(question);
@@ -28,8 +29,8 @@ function CensorQuestionQuizzItem({
     <div className={cx("question-exam-create-item")}>
       <div className={cx("question-item-top")}>
         <div className={cx("question-author")}>
-          <i className={cx("fa-solid fa-circle-question", "author-icon")}></i>
-          <span className={cx("author-name")}>Question</span>
+          <i className={cx("fa-solid fa-circle-user", "author-icon")}></i>
+          <span className={cx("author-name")}>{question?.account?.username}</span>
         </div>
         <div
           className={cx(
@@ -37,10 +38,10 @@ function CensorQuestionQuizzItem({
             question?.status === "Approved"
               ? "approved-status"
               : question?.status === "Pending"
-              ? "pending-status"
-              : question?.status === "Draft"
-              ? "draft-status"
-              : "rejected-status"
+                ? "pending-status"
+                : question?.status === "Draft"
+                  ? "draft-status"
+                  : "rejected-status"
           )}
         >
           {question?.status}

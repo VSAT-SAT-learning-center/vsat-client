@@ -55,6 +55,7 @@ import ExamSchedule from "~/pages/Student/ExamSchedule";
 import Learning from "~/pages/Student/Learning";
 import LearningPart from "~/pages/Student/LearningPart";
 import LearningPartDetail from "~/pages/Student/LearningPartDetail";
+import LearningPartUnitTest from "~/pages/Student/LearningPartUnitTest";
 import LearningProcess from "~/pages/Student/LearningProcess";
 import LearningProgress from "~/pages/Student/LearningProgress";
 import StudentProfile from "~/pages/Student/Profile";
@@ -140,6 +141,12 @@ const routesConfig = [
   {
     path: "/learning/:slug/:sectionId/:unitAreaId/:lessonId",
     component: LearningPartDetail,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/learning/:slug/:unitId/:unitProgressId/unit-test",
+    component: LearningPartUnitTest,
     protected: true,
     roles: ["Student"],
   },

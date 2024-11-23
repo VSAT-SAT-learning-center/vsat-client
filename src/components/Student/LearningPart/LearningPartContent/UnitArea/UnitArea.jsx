@@ -1,11 +1,20 @@
 import classNames from "classnames/bind";
+import { useNavigate } from "react-router-dom";
 import styles from "./UnitArea.module.scss";
 import UnitAreaLearnItem from "./UnitAreaLearnItem";
 const cx = classNames.bind(styles);
 function UnitArea({ learningContent, unitArea, activeUnit, sectionId }) {
+  const navigate = useNavigate()
+  const handleClickUnitArea = (lessonId) => {
+    const formattedTitle = activeUnit.unitTitle
+      ?.toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    navigate(`/learning/${learningContent}/${sectionId}:${formattedTitle}/${unitArea.unitAreaProgressId}/${lessonId}`);
+  }
   return (
     <div className={cx("content-unit-area")}>
-      <div className={cx("unit-area-title")}>
+      <div className={cx("unit-area-title")} onClick={() => handleClickUnitArea(unitArea?.lessons[0].lessonId)}>
         <span className={cx("title")}>{unitArea?.unitAreaTitle}</span>
       </div>
       <div className={cx("unit-area-main")}>

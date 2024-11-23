@@ -13,23 +13,24 @@ function LearningPartDetail() {
   const [uniArea, setUnitArea] = useState(null)
   const [activeLesson, setActiveLesson] = useState(null);
 
-  useEffect(() => {
-    const fetchUnitArea = async () => {
-      try {
-        const response = await apiClient.get(`/unit-area-progress/${unitAreaId}/details`)
-        const data = response.data.data;
-        setUnitArea(data);
-        if (data?.lessons?.length > 0) {
-          const foundLesson = data.lessons.find((lesson) => lesson.id === lessonId);
-          setActiveLesson(foundLesson || data.lessons[0]);
-        }
-      } catch (error) {
-        console.error("Error while fetching unit area:", error)
+  const fetchUnitArea = async () => {
+    try {
+      const response = await apiClient.get(`/unit-area-progress/${unitAreaId}/details`);
+      const data = response.data.data;
+      setUnitArea(data);
+      if (data?.lessons?.length > 0) {
+        const foundLesson = data.lessons.find((lesson) => lesson.id === lessonId);
+        setActiveLesson(foundLesson || data.lessons[0]);
       }
+    } catch (error) {
+      console.error("Error while fetching unit area:", error);
     }
+  };
 
-    fetchUnitArea()
-  }, [lessonId, unitAreaId])
+  useEffect(() => {
+    fetchUnitArea();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lessonId, unitAreaId]);
 
   return (
     <div className={cx("learning-part-detail-wrapper")}>
@@ -37,7 +38,7 @@ function LearningPartDetail() {
       <div className={cx("learning-part-detail-container")}>
         <LearningPartDetailSidebar slug={slug} uniAreaData={uniArea} activeLesson={activeLesson}
           onLessonSelect={setActiveLesson} />
-        <LearningPartDetailContent lesson={activeLesson} />
+        <LearningPartDetailContent lesson={activeLesson} fetchUnitArea={fetchUnitArea} />
       </div>
     </div>
   )

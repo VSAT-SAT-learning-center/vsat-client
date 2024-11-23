@@ -34,8 +34,8 @@ function CensorQuestionExamItem({
     <div className={cx("question-exam-create-item")}>
       <div className={cx("question-item-top")}>
         <div className={cx("question-author")}>
-          <i className={cx("fa-solid fa-circle-question", "author-icon")}></i>
-          <span className={cx("author-name")}>Question</span>
+          <i className={cx("fa-solid fa-circle-user", "author-icon")}></i>
+          <span className={cx("author-name")}>{question?.account?.username}</span>
         </div>
         <div
           className={cx(
