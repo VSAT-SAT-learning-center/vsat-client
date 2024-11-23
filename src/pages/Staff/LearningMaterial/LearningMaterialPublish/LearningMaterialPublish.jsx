@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Loader from "~/components/General/Loader";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import PublishSidebarItem from "~/components/Staff/LearningMaterialCreate/LessonCreatePublishSidebar/PublishSidebarItem";
@@ -21,6 +22,7 @@ function LearningMaterialPublish() {
 
   const [loadTopics, setLoadTopics] = useState([]);
   const [lesson, setLesson] = useState(null);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchUnitAreas = async () => {
@@ -67,49 +69,55 @@ function LearningMaterialPublish() {
 
   const handlePublishUnit = async () => {
     try {
+      setLoading(true)
       await apiClient.post(`/units/${unitId}/submit`);
       console.log("Success publish");
       navigate("/staff/learning-material/create");
     } catch (error) {
       console.error("Error publish unit:", error);
+    } finally {
+      setLoading(false)
     }
   };
   return (
-    <PageLayout>
-      <div className={cx("learning-material-publish-container")}>
-        <LearningMaterialCreateHeader title="Publish" />
-        <MultiStepProgressBar steps={steps} currentStep={currentStep} />
-        <div className={cx("publish-container")}>
-          <div className={cx("publish-sidebar-wrapper")}>
-            <div className={cx("publish-sidebar-container")}>
-              {loadTopics.map((topic) => (
-                <PublishSidebarItem
-                  key={topic.id}
-                  topic={topic}
-                  unitId={unitId}
-                  lessonId={lessonId}
-                />
-              ))}
+    <>
+      {loading && <Loader />}
+      <PageLayout>
+        <div className={cx("learning-material-publish-container")}>
+          <LearningMaterialCreateHeader title="Publish" />
+          <MultiStepProgressBar steps={steps} currentStep={currentStep} />
+          <div className={cx("publish-container")}>
+            <div className={cx("publish-sidebar-wrapper")}>
+              <div className={cx("publish-sidebar-container")}>
+                {loadTopics.map((topic) => (
+                  <PublishSidebarItem
+                    key={topic.id}
+                    topic={topic}
+                    unitId={unitId}
+                    lessonId={lessonId}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className={cx("publish-content-wrapper")}>
-            <div className={cx("publish-content-container")}>
-              {lesson?.type === "Text" ? (
-                <LearningPartDetailContentRW lesson={lesson} />
-              ) : (
-                <LearningPartDetailContentMath lesson={lesson} />
-              )}
-            </div>
-            <div className={cx("publish-bottom")}>
-              <button className={cx("publish-btn")} onClick={handlePublishUnit}>
-                Publish
-              </button>
+            <div className={cx("publish-content-wrapper")}>
+              <div className={cx("publish-content-container")}>
+                {lesson?.type === "Text" ? (
+                  <LearningPartDetailContentRW lesson={lesson} />
+                ) : (
+                  <LearningPartDetailContentMath lesson={lesson} />
+                )}
+              </div>
+              <div className={cx("publish-bottom")}>
+                <button className={cx("publish-btn")} onClick={handlePublishUnit}>
+                  Publish
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <LearningMaterialCreateFooter />
-    </PageLayout>
+        <LearningMaterialCreateFooter />
+      </PageLayout>
+    </>
   );
 }
 

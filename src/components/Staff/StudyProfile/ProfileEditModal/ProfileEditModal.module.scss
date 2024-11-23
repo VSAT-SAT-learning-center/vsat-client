@@ -1,139 +1,167 @@
 @import "~/styles/variables";
 
 .profile-modal {
-    background: white;
-    border-radius: 15px;
-    width: 600px;
-    position: relative;
-    padding: 20px;
-    max-height: 90%;
-    overflow-y: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 15px;
+  width: 600px;
+  position: relative;
+  padding: 20px;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .profile-modal-overlay {
-    background: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
 .profile-modal-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .profile-infor {
     display: flex;
     align-items: center;
     gap: 20px;
 
     .profile-image-container {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 2px solid #2446b6;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #2446b6;
 
-        .profile-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+      .profile-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
     .profile-details {
-        .profile-name {
-            font-size: 20px;
-            font-weight: bold;
-            margin: 0;
-        }
+      .profile-name {
+        font-size: 20px;
+        font-weight: bold;
+        margin: 0;
+      }
 
-        .profile-email {
-            font-size: 14px;
-            color: gray;
-        }
+      .profile-email {
+        font-size: 16px;
+        color: gray;
+      }
     }
+  }
+
+  .profile-status {
+    padding: 8px 20px;
+    border-radius: 35px;
+    font-size: 17px;
+    font-weight: 600;
+    color: $primary-color;
+    border: 1px solid $primary-color;
+    background-color: $bg-primary-color-trans;
+
+    &.approved {
+      color: rgb(0, 166, 14);
+      border: 1px solid rgb(0, 166, 14);
+      background-color: rgba(0, 166, 14, 0.1);
+    }
+
+    &.rejected {
+      color: rgb(215, 53, 79);
+      border: 1px solid rgb(215, 53, 79);
+      background-color: rgba(215, 53, 79, 0.1);
+    }
+  }
 }
 
 .profile-content {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 
-    .form-group {
-        display: flex;
-        flex-direction: column;
+  .form-group {
+    display: flex;
+    flex-direction: column;
 
-        .form-label {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .form-input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-
-            &[readOnly] {
-                cursor: not-allowed;
-                background-color: rgb(241, 241, 241);
-
-                &:focus {
-                    outline: none;
-                    box-shadow: none;
-                }
-            }
-
-            &:focus {
-                outline: none;
-                border-color: #2446b6;
-            }
-        }
-
-        .form-input-checkbox {
-            width: 28px;
-            height: 28px;
-        }
+    .form-label {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 5px;
     }
+
+    .form-input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+
+      &[readOnly] {
+        cursor: not-allowed;
+        background-color: rgb(241, 241, 241);
+
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #2446b6;
+      }
+    }
+
+    .form-input-checkbox {
+      width: 28px;
+      height: 28px;
+    }
+  }
 }
 
 .profile-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 
-    .save-btn,
-    .close-btn {
-        padding: 10px 15px;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
+  .save-btn,
+  .close-btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .save-btn {
+    background-color: #2446b6;
+    color: white;
+
+    &:hover {
+      background-color: #1e3c92;
     }
+  }
 
-    .save-btn {
-        background-color: #2446b6;
-        color: white;
+  .close-btn {
+    background-color: #ccc;
+    color: #333;
 
-        &:hover {
-            background-color: #1e3c92;
-        }
+    &:hover {
+      background-color: #bbb;
     }
-
-    .close-btn {
-        background-color: #ccc;
-        color: #333;
-
-        &:hover {
-            background-color: #bbb;
-        }
-    }
+  }
 }

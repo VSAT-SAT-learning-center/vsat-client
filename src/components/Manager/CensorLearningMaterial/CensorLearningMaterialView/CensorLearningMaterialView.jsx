@@ -270,7 +270,7 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
             </div>
             <div ref={contentRef} className={cx("censor-learning-material-view-content")}>
               {lessonData?.type === "Text" ? (
-                <LearningPartDetailContentRW lesson={lessonData} />
+                <LearningPartDetailContentRW lesson={lessonData} unit={unitDetails}/>
               ) : (
                 <LearningPartDetailContentMath lesson={lessonData} />
               )}

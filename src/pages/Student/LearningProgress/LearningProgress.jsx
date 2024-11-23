@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 import HeaderAuthen from "~/layouts/Landing/HeaderAuthen";
 import LearningProgressContent from "~/layouts/Student/LearningProgress/LearningProgressContent";
 import LearningProgressSidebar from "~/layouts/Student/LearningProgress/LearningProgressSidebar";
@@ -35,7 +35,7 @@ function LearningProgress() {
       <div className={cx("learning-progress-container")}>
         <LearningProgressSidebar
           learningContent={selectedContent}
-          onSelectContent={setSelectedContent} 
+          onSelectContent={setSelectedContent}
         />
         <div className={cx("learning-progress-content")}>
           <div className={cx("learning-progress-title")}>Learning progress</div>

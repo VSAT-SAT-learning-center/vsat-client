@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Loader from "~/components/General/Loader";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
 import MultiStepProgressBar from "~/components/Staff/LearningMaterialCreate/MultiStepProgressBar";
@@ -21,6 +22,7 @@ function LearningMaterialCreateAss() {
     unitId: unitId,
     skillConfigs: [],
   });
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -56,60 +58,65 @@ function LearningMaterialCreateAss() {
   };
 
   const handleNext = async () => {
-    console.log(quizConfigsData);
     try {
+      setLoading(true)
       const response = await apiClient.post("/quiz-config", quizConfigsData);
       console.log(response.data);
       navigate(`${steps[currentStep + 1].path}/${unitId}/${lessonId}`);
     } catch (error) {
       console.error("Error while config unit test:", error);
+    } finally {
+      setLoading(false)
     }
   };
 
   return (
-    <PageLayout>
-      <div className={cx("learning-material-ass-container")}>
-        <LearningMaterialCreateHeader title="Publish" />
-        <MultiStepProgressBar steps={steps} currentStep={currentStep} />
-        <div className={cx("ass-container")}>
-          <div className={cx("create-ass-top")}>
-            <div className={cx("create-ass-title")}>Unit Test</div>
-          </div>
-          <div className={cx("create-ass-content")}>
-            <div className={cx("ass-config-container")}>
-              {quizConfigs?.map((item) => (
-                <div key={item.id} className={cx("ass-config-item-container")}>
-                  <div className={cx("config-item-infor")}>
-                    <div className={cx("config-item-icon")}>
-                      <i className={cx("fa-regular fa-layer-group")}></i>
+    <>
+      {loading && <Loader />}
+      <PageLayout>
+        <div className={cx("learning-material-ass-container")}>
+          <LearningMaterialCreateHeader title="Publish" />
+          <MultiStepProgressBar steps={steps} currentStep={currentStep} />
+          <div className={cx("ass-container")}>
+            <div className={cx("create-ass-top")}>
+              <div className={cx("create-ass-title")}>Unit Test</div>
+            </div>
+            <div className={cx("create-ass-content")}>
+              <div className={cx("ass-config-container")}>
+                {quizConfigs?.map((item) => (
+                  <div key={item.id} className={cx("ass-config-item-container")}>
+                    <div className={cx("config-item-infor")}>
+                      <div className={cx("config-item-icon")}>
+                        <i className={cx("fa-regular fa-layer-group")}></i>
+                      </div>
+                      <div className={cx("config-item-name")}>
+                        <span className={cx("name")}>{item.title}</span>
+                      </div>
                     </div>
-                    <div className={cx("config-item-name")}>
-                      <span className={cx("name")}>{item.title}</span>
+                    <div className={cx("config-item-input")}>
+                      <input
+                        type="number"
+                        className={cx("item-input")}
+                        onChange={(e) => handleChange(e, item.id)}
+                        value={
+                          quizConfigsData.skillConfigs.find(
+                            (config) => config.skillId === item.id
+                          )?.totalQuestions || ""
+                        }
+                      />
                     </div>
                   </div>
-                  <div className={cx("config-item-input")}>
-                    <input
-                      type="number"
-                      className={cx("item-input")}
-                      onChange={(e) => handleChange(e, item.id)}
-                      value={
-                        quizConfigsData.skillConfigs.find(
-                          (config) => config.skillId === item.id
-                        )?.totalQuestions || ""
-                      }
-                    />
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+            <div className={cx("create-ass-bottom")} onClick={handleNext}>
+              <button className={cx("continue-btn")}>Continue</button>
             </div>
           </div>
-          <div className={cx("create-ass-bottom")} onClick={handleNext}>
-            <button className={cx("continue-btn")}>Continue</button>
-          </div>
         </div>
-      </div>
-      <LearningMaterialCreateFooter />
-    </PageLayout>
+        <LearningMaterialCreateFooter />
+      </PageLayout>
+    </>
   );
 }
 

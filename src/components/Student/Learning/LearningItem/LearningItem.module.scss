@@ -3,8 +3,7 @@
 .learning-item {
   cursor: pointer;
   width: 100%;
-  height: 188px;
-  padding: 20px 16px;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -30,104 +29,93 @@
   }
 
   .item-header {
+    padding: 20px 16px;
     display: flex;
     align-items: center;
-    column-gap: 12px;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    border-bottom: 1px solid $border-color;
 
-    .header-image {
-      width: 50px;
-      height: auto;
+    .header-infor {
       display: flex;
       align-items: center;
-      justify-content: center;
+      column-gap: 15px;
 
-      .image {
-        width: 100%;
-        height: 100%;
+      .header-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .header-title {
+        flex: 1;
+        font-size: 20px;
+        font-weight: 700;
       }
     }
 
-    .header-title {
-      flex: 1;
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 20px;
-      text-decoration: underline;
-      word-wrap: break-word;
-      white-space: normal;
-      overflow: hidden;
-      display: -webkit-box;
-      text-overflow: ellipsis;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
+    .header-status {
+      padding: 8px 20px;
+      border-radius: 35px;
+      font-size: 17px;
+      font-weight: 600;
+      color: $primary-color;
+      border: 1px solid $primary-color;
+      background-color: $bg-primary-color-trans;
+
+      &.approved {
+        color: rgb(0, 166, 14);
+        border: 1px solid rgb(0, 166, 14);
+        background-color: rgba(0, 166, 14, 0.1);
+      }
+
+      &.rejected {
+        color: rgb(215, 53, 79);
+        border: 1px solid rgb(215, 53, 79);
+        background-color: rgba(215, 53, 79, 0.1);
+      }
     }
   }
 
-  .item-description {
-    min-height: 35px;
-    font-size: 19px;
-    font-style: italic;
-    word-wrap: break-word;
-    white-space: normal;
-    overflow: hidden;
-    display: -webkit-box;
-    text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-
   .item-content {
-    flex-grow: 1;
+    width: 100%;
+    padding: 16px 20px;
     display: flex;
-    flex-direction: column;
+    align-items: flex-end;
     justify-content: space-between;
-  
-    .content-footer {
-      width: 100%;
+
+    .content-infor {
       display: flex;
       flex-direction: column;
-  
-      .date-status-section {
-        margin-top: -85px;
+      row-gap: 15px;
+
+      .infor-item {
         display: flex;
-        justify-content: flex-end;
-        flex-direction: column;
-        align-items: flex-end;
-  
-        .date-section {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-  
-          .footer-date {
-            font-size: 15px;
-            font-style: italic;
-            color: $text-color-gray;
-            margin-bottom: 5px; 
-          }
-        }
-  
-        .footer-status {
-          margin-top: 10px;
-          padding: 4px 20px;
-          border-radius: 35px;
-          font-size: 14px;
-          font-weight: 600;
-          text-align: right;
-  
-          &.approved {
-            color: rgb(0, 166, 14);
-            border: 1px solid rgb(0, 166, 14);
-            background-color: rgba(0, 166, 14, 0.1);
-          }
-  
-          &.rejected {
-            color: rgb(215, 53, 79);
-            border: 1px solid rgb(215, 53, 79);
-            background-color: rgba(215, 53, 79, 0.1);
-          }
-        }
+        align-items: center;
+        column-gap: 12px;
+        font-size: 19px;
+        font-weight: 600;
+      }
+    }
+
+    .content-date {
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
+      row-gap: 5px;
+
+      .date-item {
+        font-size: 15px;
+        font-style: italic;
+        color: $text-color-gray;
       }
     }
   }

@@ -17,8 +17,8 @@ function LearningPart() {
         const response = await apiClient.get(`/unit-progress/${sectionId}`)
         const fetchedUnits = response.data.data;
         setUnits(fetchedUnits);
-        if (fetchedUnits.length > 0) {
-          setActiveUnit(fetchedUnits[0]);
+        if (fetchedUnits.units.length > 0) {
+          setActiveUnit(fetchedUnits.units[0]);
         }
       } catch (error) {
         console.error("Error whitle fetching units:", error);

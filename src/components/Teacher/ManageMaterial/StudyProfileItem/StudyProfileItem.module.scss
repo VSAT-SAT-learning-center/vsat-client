@@ -7,6 +7,10 @@
   border-radius: 10px;
   border: 1px solid #c5c5c5;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   .study-profile-header {
     width: 100%;
     padding: 16px;

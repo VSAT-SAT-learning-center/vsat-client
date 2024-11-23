@@ -1,8 +1,8 @@
+import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import apiClient from "~/services/apiService";
-import classNames from "classnames/bind";
-import styles from "./StudyProfileTable.module.scss";
 import ProfileEditModal from "../ProfileEditModal";
+import styles from "./StudyProfileTable.module.scss";
 
 const cx = classNames.bind(styles);
 
@@ -61,7 +61,7 @@ function StudyProfileTable() {
 
   useEffect(() => {
     fetchProfiles(currentPage, pageSize);
-  }, []);
+  }, [currentPage, pageSize]);
 
   return (
     <div className={cx("table-wrapper")}>
@@ -94,7 +94,7 @@ function StudyProfileTable() {
               {profiles.length > 0 ? (
                 profiles.map((profile) => (
                   <tr key={profile.id}>
-                    <td>{profile.account?.email || "N/A"}</td>
+                    <td style={{ textAlign: "left" }}>{profile.account?.email || "N/A"}</td>
                     <td>{formatDate(profile.startdate)}</td>
                     <td>{formatDate(profile.enddate)}</td>
                     <td>

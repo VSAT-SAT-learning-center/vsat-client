@@ -1,6 +1,7 @@
-import Modal from "react-modal";
+import { Switch } from "@mui/material";
 import classNames from "classnames/bind";
 import { useState } from "react";
+import Modal from "react-modal";
 import { toast } from "react-toastify";
 import apiClient from "~/services/apiService";
 import styles from "./ProfileEditModal.module.scss";
@@ -84,24 +85,38 @@ function ProfileEditModal({ isOpen, onClose, profile, onSaveSuccess }) {
     >
       <div className={cx("profile-modal-container")}>
         <div className={cx("profile-header")}>
-          <div className={cx("profile-image-container")}>
-            <img
-              className={cx("profile-image")}
-              src={
-                editableProfile.account?.profilepictureurl ||
-                "/default-avatar.png"
-              }
-              alt="Profile"
-            />
+          <div className={cx("profile-infor")}>
+            <div className={cx("profile-image-container")}>
+              <img
+                className={cx("profile-image")}
+                src={
+                  editableProfile.account?.profilepictureurl ||
+                  "/default-avatar.png"
+                }
+                alt="Profile"
+              />
+            </div>
+            <div className={cx("profile-details")}>
+              <h2 className={cx("profile-name")}>
+                {editableProfile.account?.firstname || "N/A"}{" "}
+                {editableProfile.account?.lastname || "N/A"}
+              </h2>
+              <p className={cx("profile-email")}>
+                {editableProfile.account?.email || "N/A"}
+              </p>
+            </div>
           </div>
-          <div className={cx("profile-details")}>
-            <h2 className={cx("profile-name")}>
-              {editableProfile.account?.firstname || "N/A"}{" "}
-              {editableProfile.account?.lastname || "N/A"}
-            </h2>
-            <p className={cx("profile-email")}>
-              {editableProfile.account?.email || "N/A"}
-            </p>
+          <div
+            className={cx(
+              "profile-status",
+              editableProfile?.status === "Completed"
+                ? "approved"
+                : editableProfile?.status === "In Active"
+                  ? "rejected"
+                  : ""
+            )}
+          >
+            {editableProfile?.status}
           </div>
         </div>
 
@@ -152,17 +167,14 @@ function ProfileEditModal({ isOpen, onClose, profile, onSaveSuccess }) {
             <input
               type="text"
               className={cx("form-input")}
-              value={`${editableProfile.teacher?.firstname || ""} ${
-                editableProfile.teacher?.lastname || ""
-              }`}
+              value={`${editableProfile.teacher?.firstname || ""} ${editableProfile.teacher?.lastname || ""
+                }`}
               readOnly
             />
           </div>
           <div className={cx("form-group")}>
             <label className={cx("form-label")}>Take Trial Exam:</label>
-            <input
-              type="checkbox"
-              className={cx("form-input-checkbox")}
+            <Switch
               checked={editableProfile.account?.isTrialExam || false}
               onChange={(e) =>
                 handleInputChange("account.isTrialExam", e.target.checked)

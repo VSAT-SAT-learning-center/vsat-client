@@ -66,6 +66,7 @@ function LearningProcess() {
   const handleLearnSection = (item) => {
     if (item.status === "Inactive") return
     if (item.section.name === "Reading & Writing") {
+
       navigate(`/learning/sat-reading-and-writing/${item.id}`);
     } else {
       navigate(`/learning/sat-math/${item.id}`);
