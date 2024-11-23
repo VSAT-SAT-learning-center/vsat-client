@@ -4,13 +4,13 @@ import LearningPartDetailContentMath from "./LearningPartDetailContentMath/Learn
 import LearningPartDetailContentRW from "./LearningPartDetailContentRW/LearningPartDetailContentRW";
 const cx = classNames.bind(styles);
 
-function LearningPartDetailContent({ lesson }) {
+function LearningPartDetailContent({ lesson, fetchUnitArea }) {
   return (
     <div className={cx("learning-part-detail-content-wrapper")}>
       {lesson?.type === "Text" ? (
-        <LearningPartDetailContentRW lesson={lesson} />
+        <LearningPartDetailContentRW lesson={lesson} fetchUnitArea={fetchUnitArea} />
       ) : (
-        <LearningPartDetailContentMath lesson={lesson} />
+        <LearningPartDetailContentMath lesson={lesson} fetchUnitArea={fetchUnitArea} />
       )}
     </div>
   );

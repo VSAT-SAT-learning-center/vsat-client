@@ -1,0 +1,128 @@
+@import "~/styles/variables";
+
+.learning-part-unit-test-wrapper {
+  flex: 1;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-left: 1px solid #dbdcdd;
+
+  .learning-part-unit-test-title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #dbdcdd;
+
+
+    .title {
+      width: 800px;
+      padding: 24px 48px;
+      font-size: 28px;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  .learing-part-unit-test-content {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba(36, 70, 182, 0.1);
+
+    .content-title-content {
+      width: 800px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+
+      .content-title {
+        font-size: 36px;
+        font-weight: bold;
+        color: $primary-color;
+      }
+
+      .content-desc {
+        font-size: 22px;
+        color: $primary-color;
+      }
+
+      .test-bg-img {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .learing-part-unit-test-action {
+    width: 100%;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #dbdcdd;
+
+    .empty {
+      width: 150px;
+
+      .again-btn {
+        display: flex;
+        align-items: center;
+        column-gap: 12px;
+        font-size: 17px;
+        color: $primary-color;
+
+        .text {
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        &:hover {
+          .text {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .noq {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .action {
+      width: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .start-btn {
+        padding: 6px 16px;
+        border-radius: 5px;
+        font-size: 17px;
+        font-weight: 600;
+        color: $white-color;
+        background-color: $primary-color;
+        transition: all 0.2s ease;
+
+        &:hover {
+          opacity: 0.7;
+        }
+
+        &.disabled {
+          cursor: not-allowed;
+          opacity: 0.6;
+
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
+}

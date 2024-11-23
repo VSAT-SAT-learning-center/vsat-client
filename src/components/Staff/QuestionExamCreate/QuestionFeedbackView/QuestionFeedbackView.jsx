@@ -7,7 +7,6 @@ import { formatDate } from "~/utils/formatDate";
 import styles from "./QuestionFeedbackView.module.scss";
 const cx = classNames.bind(styles);
 function QuestionFeedbackView({ questionFeedback, setIsShowFeedbackView }) {
-  console.log(questionFeedback);
   const [feedbacks, setFeedbacks] = useState(null)
   const [isWaiting, setIsWaiting] = useState(false)
   useEffect(() => {

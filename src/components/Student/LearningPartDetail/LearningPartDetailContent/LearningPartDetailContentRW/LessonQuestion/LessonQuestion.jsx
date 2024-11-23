@@ -3,7 +3,7 @@ import DOMPurify from "dompurify";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import styles from "./LessonQuestion.module.scss";
-const cx = classNames.bind(styles); 
+const cx = classNames.bind(styles);
 
 function LessonQuestion({ title, questionData }) {
   const [selectedOption, setSelectedOption] = useState("");
