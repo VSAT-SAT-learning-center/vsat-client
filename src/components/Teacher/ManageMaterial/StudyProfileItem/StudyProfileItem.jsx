@@ -1,9 +1,9 @@
 import classNames from "classnames/bind";
-import { formatDate } from "~/utils/formatDate";
 import styles from "./StudyProfileItem.module.scss";
 const cx = classNames.bind(styles);
 
 function StudyProfileItem({ profile, setSelectedProfile, setIsShowViewStudyProfile }) {
+
   const handleViewDetailProfile = () => {
     setSelectedProfile(profile)
     setIsShowViewStudyProfile(true)
@@ -47,7 +47,7 @@ function StudyProfileItem({ profile, setSelectedProfile, setIsShowViewStudyProfi
             <div className={cx("infor-text")}>
               Start Date:{" "}
               <span className={cx("infor-number")}>
-                {formatDate(profile?.startdate)}
+                {profile?.startdate}
               </span>
             </div>
           </div>
@@ -58,7 +58,7 @@ function StudyProfileItem({ profile, setSelectedProfile, setIsShowViewStudyProfi
             <div className={cx("infor-text")}>
               End Date:{" "}
               <span className={cx("infor-number")}>
-                {formatDate(profile?.enddate)}
+                {profile?.enddate}
               </span>
             </div>
           </div>

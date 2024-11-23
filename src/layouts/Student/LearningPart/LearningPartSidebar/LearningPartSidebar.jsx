@@ -21,14 +21,14 @@ function LearningPartSidebar({ learningContent, units, activeUnit, setActiveUnit
         <div className={cx("introduction-infor")}>
           <div className={cx("infor-title")}>Digital {content} </div>
           <div className={cx("infor-details")}>
-            <span className={cx("infor-units")}>11 TOPICS</span>
+            <span className={cx("infor-units")}>{units?.totalUnitAreaCount} TOPICS</span>
             {" - "}
-            <span className={cx("infor-skills")}>41 LESSONS</span>
+            <span className={cx("infor-skills")}>{units?.totalLessonCount} LESSONS</span>
           </div>
         </div>
       </Link>
       <div className={cx("learning-part-unit-list")}>
-        {units?.map((unit, index) => (
+        {units.units?.map((unit, index) => (
           <PartUnitItem
             key={unit.unitId}
             index={index + 1}

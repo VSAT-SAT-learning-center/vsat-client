@@ -1,14 +1,13 @@
-import Modal from "react-modal";
+import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import apiClient from "~/services/apiService";
 import StudyProfileItem from "~/components/Teacher/ManageMaterial/StudyProfileItem";
 import ViewStudyProfile from "~/components/Teacher/ManageMaterial/ViewStudyProfile";
-import classNames from "classnames/bind";
+import apiClient from "~/services/apiService";
 import styles from "./TeacherDetailsModal.module.scss";
 
 const cx = classNames.bind(styles);
 
-function TeacherDetailsModal({ isOpen, onRequestClose, teacher }) {
+function TeacherDetailsModal({ teacher, setShowPopup }) {
   const [isShowViewStudyProfile, setIsShowViewStudyProfile] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);
@@ -35,47 +34,41 @@ function TeacherDetailsModal({ isOpen, onRequestClose, teacher }) {
   }, [teacher]);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      className={cx("modal-content")}
-      overlayClassName={cx("modal-overlay")}
-    >
+    <div className={cx("teacher-manage-material-wrapper")}>
       {isShowViewStudyProfile && (
         <ViewStudyProfile
           profile={selectedProfile}
           setIsShowViewStudyProfile={setIsShowViewStudyProfile}
         />
       )}
-      <div className={cx("teacher-manage-material-wrapper")}>
-        <div className={cx("teacher-manage-material-container")}>
-          {/* Header */}
-          <div className={cx("teacher-manage-material-header")}>
-            Manage Material
-          </div>
-
-          {/* Content */}
-          <div className={cx("teacher-manage-material-content")}>
-            <div className={cx("study-profiles-list")}>
-              {profiles.length > 0 ? (
-                profiles.map((profile) => (
-                  <StudyProfileItem
-                    key={profile.id}
-                    profile={profile}
-                    setSelectedProfile={setSelectedProfile}
-                    setIsShowViewStudyProfile={setIsShowViewStudyProfile}
-                  />
-                ))
-              ) : (
-                <div className={cx("no-profiles")}>
-                  No profiles found for this teacher.
-                </div>
-              )}
-            </div>
+      <div className={cx("teacher-manage-material-container")}>
+        <div className={cx("teacher-manage-material-header")}>
+          <span className={cx("empty")}></span>
+          <span className={cx("title")}>Manage profile</span>
+          <button className={cx("close-btn")} onClick={() => setShowPopup(false)}>
+            <i className={cx("fa-solid fa-xmark")}></i>
+          </button>
+        </div>
+        <div className={cx("teacher-manage-material-content")}>
+          <div className={cx("study-profiles-list")}>
+            {profiles.length > 0 ? (
+              profiles.map((profile) => (
+                <StudyProfileItem
+                  key={profile.id}
+                  profile={profile}
+                  setSelectedProfile={setSelectedProfile}
+                  setIsShowViewStudyProfile={setIsShowViewStudyProfile}
+                />
+              ))
+            ) : (
+              <div className={cx("no-profiles")}>
+                No profiles found for this teacher.
+              </div>
+            )}
           </div>
         </div>
       </div>
-    </Modal>
+    </div>
   );
 }
 

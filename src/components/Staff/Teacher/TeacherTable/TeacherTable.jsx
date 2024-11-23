@@ -2,18 +2,15 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import apiClient from "~/services/apiService";
 import styles from "./TeacherTable.module.scss";
-import TeacherModal from "../TeacherDetailsModal";
 
 const cx = classNames.bind(styles);
 
-function TeacherTable() {
+function TeacherTable({ setSelectedTeacher, setShowPopup }) {
   const [teachers, setTeachers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize] = useState(7);
   const [searchName, setSearchName] = useState("");
-  const [selectedTeacher, setSelectedTeacher] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchTeachers = (page, pageSize) => {
     apiClient
@@ -48,17 +45,12 @@ function TeacherTable() {
 
   const handleRowClick = (teacher) => {
     setSelectedTeacher(teacher);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedTeacher(null);
+    setShowPopup(true)
   };
 
   useEffect(() => {
     fetchTeachers(currentPage, pageSize);
-  }, []);
+  }, [currentPage, pageSize]);
 
   return (
     <div className={cx("table-wrapper")}>
@@ -136,11 +128,6 @@ function TeacherTable() {
           </div>
         </div>
       </div>
-      <TeacherModal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        teacher={selectedTeacher}
-      />
     </div>
   );
 }

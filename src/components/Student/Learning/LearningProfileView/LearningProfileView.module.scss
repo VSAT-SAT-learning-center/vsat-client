@@ -1,0 +1,170 @@
+@import "~/styles/variables";
+
+.learning-profile-view-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 106;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .learning-profile-view-container {
+    position: relative;
+    width: 800px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .learning-profile-view-header {
+      width: 100%;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .profile-title {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .profile-close {
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .profile-empty {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    .learning-profile-view-content {
+      width: 100%;
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .target-learning-item {
+        width: 100%;
+        margin-bottom: 25px;
+
+        .target-learing-header {
+          width: 100%;
+          display: flex;
+          align-items: center;
+
+          .target-number {
+            padding: 10px 16px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px 0 0 0;
+            border: 1px solid $primary-color;
+            color: $white-color;
+            background-color: $primary-color;
+          }
+
+          .target-content {
+            flex: 1;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 0 5px 0 0;
+            border: 1px solid #c5c5c5;
+
+            .target-title {
+              font-size: 18px;
+              font-weight: 600;
+            }
+
+            .target-status {
+              font-size: 18px;
+              font-weight: 600;
+
+              &.completed {
+                color: $success-color;
+              }
+
+              &.active {
+                color: $primary-color;
+              }
+
+              &.inactive {
+                color: $third-color;
+              }
+            }
+          }
+        }
+
+        .target-learing-content {
+          width: 100%;
+          padding: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border: 1px solid #c5c5c5;
+          border-top: none;
+          border-radius: 0 0 5px 5px;
+
+          .target-learning-time {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            column-gap: 15px;
+
+            .time-item {
+              display: flex;
+              align-items: center;
+              column-gap: 8px;
+              font-size: 17px;
+              font-weight: 600;
+            }
+          }
+
+          .view-btn {
+            padding: 6px 16px;
+            font-size: 17px;
+            font-weight: 600;
+            border-radius: 5px;
+            color: $primary-color;
+            border: 1px solid $primary-color;
+            background-color: $bg-primary-color-trans;
+            transition: all 0.3s linear;
+
+            &:hover {
+              opacity: 0.7;
+            }
+
+            .view-text {
+              margin-left: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -13,6 +13,7 @@ import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./LearningMaterialCreateLesson.module.scss";
+import Loader from "~/components/General/Loader";
 
 const cx = classNames.bind(styles);
 function LearningMaterialCreateLesson() {
@@ -27,6 +28,7 @@ function LearningMaterialCreateLesson() {
   const [lessonIds, setLessonIds] = useState([]);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(-1);
   const [isLessonContentSaved, setIsLessonContentSaved] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchUnitAreas = async () => {
@@ -92,6 +94,7 @@ function LearningMaterialCreateLesson() {
 
   const handleNext = async () => {
     try {
+      setLoading(true)
       if (!isLessonContentSaved) {
         const response = await apiClient.post("/lessons", lesson);
         console.log("Lesson contents created:", response.data.data);
@@ -121,6 +124,8 @@ function LearningMaterialCreateLesson() {
       }
     } catch (error) {
       console.error("Error saving lesson:", error);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -129,52 +134,55 @@ function LearningMaterialCreateLesson() {
     completedItems.length === lessonMathContents.length;
 
   return (
-    <PageLayout>
-      <div className={cx("learning-material-create-lessons-container")}>
-        <LearningMaterialCreateHeader title="Unit leson" />
-        <MultiStepProgressBar steps={steps} currentStep={currentStep} />
-        <div className={cx("create-lessons-container")}>
-          <div className={cx("create-lessons-top")}>
-            <div className={cx("create-lessons-title")}>Unit Lessons</div>
-          </div>
-          <div className={cx("create-lessons-content")}>
-            <div className={cx("create-lessons-sidebar-wrapper")}>
-              <LessonCreateSidebar
-                unitId={unitId}
-                topics={loadTopics}
-                lessonId={lessonId}
-              />
+    <>
+      {loading && <Loader />}
+      <PageLayout>
+        <div className={cx("learning-material-create-lessons-container")}>
+          <LearningMaterialCreateHeader title="Unit leson" />
+          <MultiStepProgressBar steps={steps} currentStep={currentStep} />
+          <div className={cx("create-lessons-container")}>
+            <div className={cx("create-lessons-top")}>
+              <div className={cx("create-lessons-title")}>Unit Lessons</div>
             </div>
-            <div className={cx("create-lessons-main-wrapper")}>
-              {lesson ? (
-                <MainContent
-                  lesson={lesson}
-                  setLesson={setLesson}
-                  completedItems={completedItems}
-                  setCompletedItems={setCompletedItems}
-                  currentIndex={currentIndex}
-                  setCurrentIndex={setCurrentIndex}
+            <div className={cx("create-lessons-content")}>
+              <div className={cx("create-lessons-sidebar-wrapper")}>
+                <LessonCreateSidebar
+                  unitId={unitId}
+                  topics={loadTopics}
+                  lessonId={lessonId}
                 />
-              ) : (
-                <NoContent />
-              )}
+              </div>
+              <div className={cx("create-lessons-main-wrapper")}>
+                {lesson ? (
+                  <MainContent
+                    lesson={lesson}
+                    setLesson={setLesson}
+                    completedItems={completedItems}
+                    setCompletedItems={setCompletedItems}
+                    currentIndex={currentIndex}
+                    setCurrentIndex={setCurrentIndex}
+                  />
+                ) : (
+                  <NoContent />
+                )}
+              </div>
             </div>
-          </div>
-          <div className={cx("create-lessons-bottom")}>
-            <button
-              className={cx("continue-btn", {
-                "disabled-btn": !isContinueEnabled,
-              })}
-              disabled={!isContinueEnabled}
-              onClick={handleNext}
-            >
-              Continue
-            </button>
+            <div className={cx("create-lessons-bottom")}>
+              <button
+                className={cx("continue-btn", {
+                  "disabled-btn": !isContinueEnabled,
+                })}
+                disabled={!isContinueEnabled}
+                onClick={handleNext}
+              >
+                Continue
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <LearningMaterialCreateFooter />
-    </PageLayout>
+        <LearningMaterialCreateFooter />
+      </PageLayout>
+    </>
   );
 }
 export default LearningMaterialCreateLesson;

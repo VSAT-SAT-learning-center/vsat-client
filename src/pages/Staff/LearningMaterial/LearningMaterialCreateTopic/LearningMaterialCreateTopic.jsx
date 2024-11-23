@@ -9,6 +9,7 @@ import LessonTypeModal from "~/components/Staff/LearningMaterialCreate/LessonTyp
 import MultiStepProgressBar from "~/components/Staff/LearningMaterialCreate/MultiStepProgressBar";
 import TopicItem from "~/components/Staff/LearningMaterialCreate/TopicItem";
 // import TopicItemPreview from "~/components/Staff/LearningMaterialCreate/TopicItemPreview";
+import Loader from "~/components/General/Loader";
 import { steps } from "~/data/Staff/StepProgressBar";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
@@ -24,7 +25,7 @@ function LearningMaterialCreateTopic() {
   // const [createTopicPreviews, setCreateTopicPreviews] = useState([]);
   const [lessonType, setLessonType] = useState("Empty");
   const [isShowLessonTypeModal, setIsShowLessonTypeModal] = useState(false);
-
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     const fetchTopics = async () => {
       try {
@@ -36,6 +37,7 @@ function LearningMaterialCreateTopic() {
         const transformedArray = originalArray.map((item) => ({
           id: uuidv4(),
           unitId: unitId,
+          skillId: item.id,
           title: item.title,
           lessons: [],
         }));
@@ -104,10 +106,13 @@ function LearningMaterialCreateTopic() {
 
   const handleNext = async () => {
     try {
+      setLoading(true)
       await apiClient.post("/unit-areas/create", topics);
       navigate(`${steps[currentStep + 1].path}/${unitId}`);
     } catch (error) {
       console.error("Error creating unit:", error);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -122,6 +127,7 @@ function LearningMaterialCreateTopic() {
           inputLessonRef={inputLessonRef}
         />
       )}
+      {loading && <Loader />}
       <PageLayout>
         <div className={cx("learning-material-create-topics-container")}>
           <LearningMaterialCreateHeader title="Unit Topic" />
