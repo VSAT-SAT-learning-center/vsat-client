@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import CensorQuestionQuizzItem from "~/components/Manager/CensorQuestionQuizz/CensorQuestionQuizzItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
+import QuestionFeedbackView from "~/components/Staff/QuestionExamCreate/QuestionFeedbackView";
 import QuizzItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
@@ -18,6 +19,8 @@ function FeedbackQuestionQuizz() {
   const [isShowQuestionItemPreview, setIsShowQuizzItemPreview] =
     useState(false);
   const [questionPreview, setQuestionPreview] = useState({});
+  const [isShowFeedbackView, setIsShowFeedbackView] = useState(false);
+  const [questionFeedback, setQuestionFeedback] = useState({});
   const fetchQuestions = useCallback(async () => {
     try {
       const response = await apiClient.get(`/quiz-questions`, {
@@ -49,6 +52,13 @@ function FeedbackQuestionQuizz() {
           setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}
         />
       )}
+
+      {isShowFeedbackView && (
+        <QuestionFeedbackView
+          questionFeedback={questionFeedback}
+          setIsShowFeedbackView={setIsShowFeedbackView}
+        />
+      )}
       <PageLayout>
         <div className={cx("question-exam-feedback-wrapper")}>
           <div className={cx("question-exam-feedback-container")}>
@@ -61,12 +71,14 @@ function FeedbackQuestionQuizz() {
                   {questionList.map((question, index) => (
                     <CensorQuestionQuizzItem
                       key={index}
-                      index={index}
+                      index={index + (currentPage - 1) * itemsPerPage}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
                       setIsShowQuizzItemPreview={
                         setIsShowQuizzItemPreview
                       }
+                      setQuestionFeedback={setQuestionFeedback}
+                      setIsShowFeedbackView={setIsShowFeedbackView}
                     />
                   ))}
                 </div>

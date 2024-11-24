@@ -49,7 +49,6 @@ function ManageMaterial() {
                     setIsShowViewStudyProfile={setIsShowViewStudyProfile}
                   />
                 ))}
-
               </div>
             </div>
           </div>
