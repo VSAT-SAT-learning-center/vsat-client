@@ -66,17 +66,17 @@ export const sidebarNavs = [
     subNavs: [
       {
         id: 1,
-        title: "Quizz Bank",
+        title: "Quiz Bank",
         path: "/manager/question-quizz/bank",
       },
       {
         id: 2,
-        title: "Censor Quizz Question",
+        title: "Censor Quiz Question",
         path: "/manager/question-quizz/censor",
       },
       {
         id: 3,
-        title: "Feedback Quizz Question",
+        title: "Feedback Quiz Question",
         path: "/manager/question-quizz/feedback",
       },
     ],
@@ -157,12 +157,12 @@ export const sidebarNavs = [
     path: "/manager/account-setting",
     show: false,
   },
-  {
-    id: 9,
-    icon: "fa-light fa-cog",
-    iconActive: "fa-regular fa-cog",
-    title: "Settings",
-    path: "/manager/setting",
-    show: false,
-  },
+  // {
+  //   id: 9,
+  //   icon: "fa-light fa-cog",
+  //   iconActive: "fa-regular fa-cog",
+  //   title: "Settings",
+  //   path: "/manager/setting",
+  //   show: false,
+  // },
 ];

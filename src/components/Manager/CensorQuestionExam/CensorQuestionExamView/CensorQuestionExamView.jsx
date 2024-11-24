@@ -24,13 +24,15 @@ function CensorQuestionExamView({
   const [loading, setLoading] = useState(false);
   const [dataCensorWithAI, setDataCensorWithAI] = useState(null);
   const handleApproveQuestion = async () => {
-    const status = {
-      status: "Approved",
+    const payload = {
+      questionId: questionCensorData?.id,
+      accountFromId: user?.id,
+      accountToId: questionCensorData?.account?.id,
     };
     try {
-      await apiClient.put(
-        `/questions/update-status/${questionCensorData.id}`,
-        status
+      await apiClient.post(
+        `/questions/censor/approve`,
+        payload
       );
       navigate("/manager/question-bank/bank");
     } catch (error) {

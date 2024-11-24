@@ -39,12 +39,12 @@ export const sidebarNavs = [
     path: "/teacher/account-setting",
     show: false,
   },
-  {
-    id: 6,
-    icon: "fa-light fa-cog",
-    iconActive: "fa-regular fa-cog",
-    title: "Settings",
-    path: "/teacher/setting",
-    show: false,
-  },
+  // {
+  //   id: 6,
+  //   icon: "fa-light fa-cog",
+  //   iconActive: "fa-regular fa-cog",
+  //   title: "Settings",
+  //   path: "/teacher/setting",
+  //   show: false,
+  // },
 ];

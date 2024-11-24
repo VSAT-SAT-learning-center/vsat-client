@@ -61,7 +61,7 @@ export const sidebarNavs = [
     id: 4,
     icon: "fa-light fa-seal-question",
     iconActive: "fa-regular fa-seal-question",
-    title: "Question Quizz",
+    title: "Question Quiz",
     path: "/staff/question-quizz",
     show: true,
     subNavs: [
@@ -188,12 +188,12 @@ export const sidebarNavs = [
     path: "/staff/account-setting",
     show: false,
   },
-  {
-    id: 11,
-    icon: "fa-light fa-cog",
-    iconActive: "fa-regular fa-cog",
-    title: "Settings",
-    path: "/staff/setting",
-    show: false,
-  },
+  // {
+  //   id: 11,
+  //   icon: "fa-light fa-cog",
+  //   iconActive: "fa-regular fa-cog",
+  //   title: "Settings",
+  //   path: "/staff/setting",
+  //   show: false,
+  // },
 ];

@@ -20,7 +20,6 @@ function FeedbackExam() {
     try {
       setIsWaiting(true);
       const response = await apiClient.get(`exams/Rejected`);
-      console.log(response);
       setExamList(response.data.data);
     } catch (error) {
       console.error("Failed to fetch exam structure list:", error);
