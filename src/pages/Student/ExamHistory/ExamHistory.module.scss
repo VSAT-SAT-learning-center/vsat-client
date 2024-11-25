@@ -1,11 +1,11 @@
 @import "~/styles/variables";
 
-.staff-dashboard-wrapper {
+.exam-history-wrapper {
   width: 100%;
   height: 100%;
   padding: 20px;
 
-  .staff-dashboard-container {
+  .exam-history-container {
     width: 100%;
     height: 100%;
     display: flex;
@@ -14,7 +14,7 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     background-color: $bg-primary-color;
 
-    .staff-dashboard-header {
+    .exam-history-header {
       width: 100%;
       height: 79px;
       padding: 20px;
@@ -23,13 +23,13 @@
       justify-content: space-between;
       border-bottom: 1px solid $border-color;
 
-      .staff-dashboard-text {
+      .exam-history-text {
         font-size: 20px;
         font-weight: 700;
       }
     }
 
-    .staff-dashboard-content {
+    .exam-history-content {
       width: 100%;
       height: calc(100% - 79px);
       padding: 20px;

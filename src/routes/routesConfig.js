@@ -49,6 +49,9 @@ import QuizzFeedback from "~/pages/Staff/QuestionQuizz/QuizzFeedback/QuizzFeedba
 import Settings from "~/pages/Staff/Settings";
 import Students from "~/pages/Staff/Students";
 import StudyProfile from "~/pages/Staff/Students/StudyProfile";
+import ProgressOverview from "~/pages/Student/ProgressOverview";
+import DetailedReport from "~/pages/Student/DetailedReport";
+import ExamHistory from "~/pages/Student/ExamHistory";
 import Teachers from "~/pages/Staff/Teachers";
 import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
 import ExamSchedule from "~/pages/Student/ExamSchedule";
@@ -153,6 +156,24 @@ const routesConfig = [
   {
     path: "/profile",
     component: StudentProfile,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/skill-statistics/overview",
+    component: ProgressOverview,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/skill-statistics/report",
+    component: DetailedReport,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/exam-history",
+    component: ExamHistory,
     protected: true,
     roles: ["Student"],
   },
