@@ -35,7 +35,7 @@ function QuestionExamCreate() {
 
   const fetchQuestions = useCallback(async () => {
     try {
-      const response = await apiClient.get(`/questions`, {
+      const response = await apiClient.get(`/questions/getAllWithstatusByCreateBy`, {
         params: {
           page: currentPage,
           pageSize: itemsPerPage,

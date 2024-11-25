@@ -340,6 +340,10 @@
             justify-content: center;
 
             .no-data-content {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-direction: column;
               .no-data-img {
                 width: 100px;
                 height: 100%;

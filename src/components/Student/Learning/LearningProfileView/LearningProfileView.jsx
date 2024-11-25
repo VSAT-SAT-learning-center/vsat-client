@@ -7,7 +7,6 @@ import styles from "./LearningProfileView.module.scss";
 
 const cx = classNames.bind(styles);
 
-
 function LearningProfileView({ profile, setShowLearningProfileView }) {
   const [targetLearnings, setTargetLearnings] = useState([])
   const [showLearningProgress, setShowLearningProgress] = useState(false)
@@ -30,7 +29,7 @@ function LearningProfileView({ profile, setShowLearningProfileView }) {
   }
   return (
     <>
-      {showLearningProgress && <LearningProgressView target={targetSelected} setShowLearningProgress={setShowLearningProgress} />}
+      {showLearningProgress && <LearningProgressView target={targetSelected} setShowLearningProgress={setShowLearningProgress} setShowLearningProfileView={setShowLearningProfileView} />}
       <div className={cx("learning-profile-view-wrapper")}>
         <div className={cx("learning-profile-view-container")}>
           <div className={cx("learning-profile-view-header")}>
@@ -44,10 +43,10 @@ function LearningProfileView({ profile, setShowLearningProfileView }) {
             <div className={cx("profile-empty")}></div>
           </div>
           <div className={cx("learning-profile-view-content")}>
-            {targetLearnings?.map((target) => (
+            {targetLearnings?.map((target, index) => (
               <div className={cx("target-learning-item")} key={target.id}>
                 <div className={cx("target-learing-header")}>
-                  <div className={cx("target-number")}>1</div>
+                  <div className={cx("target-number")}>{index + 1}</div>
                   <div className={cx("target-content")}>
                     <div className={cx("target-title")}>Target Learning</div>
                     <div className={cx("target-status", target?.status === "Completed"
@@ -69,9 +68,11 @@ function LearningProfileView({ profile, setShowLearningProfileView }) {
                       <span>{formatDate(target?.enddate)}</span>
                     </div>
                   </div>
-                  <button className={cx("view-btn")} onClick={() => handleChooseTarget(target)}>
-                    <i className={cx("fa-regular fa-arrow-up-right-from-square")}></i>
-                    <span className={cx("view-text")}>View</span></button>
+                  {target?.status !== "Inactive" && (
+                    <button className={cx("view-btn")} onClick={() => handleChooseTarget(target)}>
+                      <i className={cx("fa-regular fa-arrow-up-right-from-square")}></i>
+                      <span className={cx("view-text")}>View</span></button>
+                  )}
                 </div>
               </div>
             ))}
