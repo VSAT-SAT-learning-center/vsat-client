@@ -21,6 +21,8 @@ function TrialExamDetail() {
       try {
         const response = await apiClient.get(`/exams/getExamById/${examId}`);
         setExamData(response.data.data);
+        console.log(response.data.data);
+
       } catch (error) {
         console.error("Error while fetching exam:", error);
       } finally {

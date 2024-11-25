@@ -15,6 +15,8 @@ function QuestionExamItem({
   setIsShowUpdateQuestionModal,
   setIsShowFeedbackView,
 }) {
+  console.log(question);
+
   const handlePreviewQuestion = () => {
     setIsShowQuestionItemPreview(true);
     setQuestionPreview(question);
@@ -75,8 +77,9 @@ function QuestionExamItem({
           <button className={cx("preview-btn")} onClick={handlePreviewQuestion}>
             <i className={cx("fa-regular fa-eye")}></i>
           </button>
-          {question?.status !== "Approved" &&
-            question?.status !== "Pending" && (
+          {question.countfeedback <= 3 &&
+            (question?.status === "Draft" ||
+              question?.status === "Rejected") && (
               <button className={cx("edit-btn")} onClick={handleEditQuestion}>
                 <i className={cx("fa-regular fa-pen-to-square")}></i>
               </button>

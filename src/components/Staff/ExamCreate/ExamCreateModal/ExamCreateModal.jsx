@@ -301,6 +301,8 @@ function ExamCreateModal({ setIsShowCreateExamModal, fetchExamList }) {
         ...examData,
         examQuestions: simplifiedExamQuestions,
       };
+      console.log(payload);
+
       await apiClient.post("/exams", payload);
       setIsShowCreateExamModal(false);
       fetchExamList()

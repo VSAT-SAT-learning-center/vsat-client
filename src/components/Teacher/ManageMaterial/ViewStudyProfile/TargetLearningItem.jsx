@@ -3,7 +3,7 @@ import { formatDate } from "~/utils/formatDate";
 import styles from "./ViewStudyProfile.module.scss";
 const cx = classNames.bind(styles);
 
-function TargetLearningItem({ target, setTargetSelected, setIsShowViewTargetLearning }) {
+function TargetLearningItem({ target, index, setTargetSelected, setIsShowViewTargetLearning }) {
   const handleViewTarget = () => {
     setTargetSelected(target)
     setIsShowViewTargetLearning(true)
@@ -11,7 +11,7 @@ function TargetLearningItem({ target, setTargetSelected, setIsShowViewTargetLear
   return (
     <div className={cx("target-learning-item")}>
       <div className={cx("target-learing-header")}>
-        <div className={cx("target-number")}>1</div>
+        <div className={cx("target-number")}>{index}</div>
         <div className={cx("target-content")}>
           <div className={cx("target-title")}>Target Learning</div>
           <div className={cx("target-status", target?.status === "Completed"
@@ -33,9 +33,11 @@ function TargetLearningItem({ target, setTargetSelected, setIsShowViewTargetLear
             <span>{formatDate(target?.enddate)}</span>
           </div>
         </div>
-        <button className={cx("view-btn")} onClick={handleViewTarget}>
-          <i className={cx("fa-regular fa-arrow-up-right-from-square")}></i>
-          <span className={cx("view-text")}>View</span></button>
+        {target?.status !== "Inactive" && (
+          <button className={cx("view-btn")} onClick={handleViewTarget}>
+            <i className={cx("fa-regular fa-arrow-up-right-from-square")}></i>
+            <span className={cx("view-text")}>View</span></button>
+        )}
       </div>
     </div>
   )

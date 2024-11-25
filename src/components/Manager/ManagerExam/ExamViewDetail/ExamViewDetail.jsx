@@ -6,6 +6,8 @@ import styles from "./ExamViewDetail.module.scss";
 const cx = classNames.bind(styles);
 
 function ExamViewDetail({ examCensorData, setIsShowExamCensorView }) {
+  console.log(examCensorData);
+
   const [isShowModuleViewCensor, setIsShowModuleViewCensor] = useState(false);
   const [groupedSections, setGroupedSections] = useState([]);
   const [moduleCensorData, setModuleCensorData] = useState([]);
@@ -77,15 +79,15 @@ function ExamViewDetail({ examCensorData, setIsShowExamCensorView }) {
             <div className={cx("exam-information-container")}>
               <div className={cx("exam-title-container")}>
                 <div className={cx("title")}>Exam title</div>
-                <div className={cx("exam-name")}>Exam 1</div>
+                <div className={cx("exam-name")}>{examCensorData?.title}</div>
               </div>
               <div className={cx("exam-structure-container")}>
                 <div className={cx("title")}>Exam structure</div>
-                <div className={cx("structure-name")}>Exam structure 1</div>
+                <div className={cx("structure-name")}>{examCensorData?.examStructure.structurename}</div>
               </div>
               <div className={cx("exam-type-container")}>
                 <div className={cx("title")}>Exam type</div>
-                <div className={cx("type-name")}>Practical exam</div>
+                <div className={cx("type-name")}>{examCensorData?.examType.name}</div>
               </div>
             </div>
             {/* <div className={cx("exam-config-wrapper")}>

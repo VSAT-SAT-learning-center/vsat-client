@@ -30,7 +30,7 @@ function ViewStudyProfile({ profile, setIsShowViewStudyProfile }) {
   }, [profile?.id])
   return (
     <>
-      {isShowViewTargetLearning && <ViewTargetLearningDeatail target={targetSelected} setIsShowViewTargetLearning={setIsShowViewTargetLearning} />}
+      {isShowViewTargetLearning && <ViewTargetLearningDeatail target={targetSelected} setIsShowViewTargetLearning={setIsShowViewTargetLearning} setIsShowViewStudyProfile={setIsShowViewStudyProfile}/>}
       <div className={cx("view-study-profile-wrapper")}>
         <div className={cx("view-study-profile-container")}>
           <div className={cx("view-study-profile-header")}>
@@ -117,8 +117,8 @@ function ViewStudyProfile({ profile, setIsShowViewStudyProfile }) {
                 ))}
               </div>
             ) : targetLearnings?.length > 0 ? (
-              targetLearnings?.map((target) => (
-                <TargetLearningItem key={target.id} target={target} setTargetSelected={setTargetSelected} setIsShowViewTargetLearning={setIsShowViewTargetLearning} />
+              targetLearnings?.map((target, index) => (
+                <TargetLearningItem key={target.id} index={index + 1} target={target} setTargetSelected={setTargetSelected} setIsShowViewTargetLearning={setIsShowViewTargetLearning} />
               ))
             ) : (
               <NoQuestionData />

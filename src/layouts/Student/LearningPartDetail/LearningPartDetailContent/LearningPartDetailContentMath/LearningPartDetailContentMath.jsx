@@ -9,7 +9,7 @@ import apiClient from "~/services/apiService";
 import styles from "./LearningPartDetailContentMath.module.scss";
 const cx = classNames.bind(styles);
 
-function LearningPartDetailContentMath({ lesson }) {
+function LearningPartDetailContentMath({ lesson, fetchUnitArea }) {
   const [sortedLessonContents, setSortedLessonContents] = useState([]);
   const [markStatus, setMarkStatus] = useState(false)
 
@@ -27,6 +27,9 @@ function LearningPartDetailContentMath({ lesson }) {
     try {
       await apiClient.patch(`/target-learnings/${lesson?.lessonpProgressId}/complete`)
       setMarkStatus(true)
+      if (fetchUnitArea) {
+        await fetchUnitArea();
+      }
     } catch (error) {
       console.error("Error when mark lesson completed:", error);
     }
