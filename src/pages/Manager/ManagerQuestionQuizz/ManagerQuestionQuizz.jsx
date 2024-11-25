@@ -62,7 +62,7 @@ function ManagerQuestionQuizz() {
                   {questionList.map((question, index) => (
                     <CensorQuestionQuizzItem
                       key={index}
-                      index={index}
+                      index={index + (currentPage - 1) * itemsPerPage}
                       question={question}
                       setQuestionPreview={setQuestionPreview}
                       setIsShowQuizzItemPreview={setIsShowQuizzItemPreview}

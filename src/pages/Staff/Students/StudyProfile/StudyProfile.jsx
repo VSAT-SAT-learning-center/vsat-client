@@ -7,7 +7,6 @@ import Loader from "~/components/General/Loader";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
-import { formatDate } from "~/utils/formatDate";
 import styles from "./StudyProfile.module.scss";
 
 const cx = classNames.bind(styles);
@@ -233,8 +232,8 @@ function StudyProfile() {
                             </div>
                           </div>
                           <div className={cx("profile-date")}>
-                            {formatDate(item?.startdate)} -{" "}
-                            {formatDate(item?.enddate)}
+                            {item?.startdate} -{" "}
+                            {item?.enddate}
                           </div>
                         </div>
                         <div className={cx("profile-content")}>

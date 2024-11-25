@@ -1,24 +1,57 @@
 import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import LearningProfileView from "~/components/Student/Learning/LearningProfileView";
+import StudyProfileItem from "~/components/Teacher/ManageMaterial/StudyProfileItem";
 import PageLayout from "~/layouts/Teacher/PageLayout";
+import apiClient from "~/services/apiService";
 import styles from "./ManageProgress.module.scss";
 const cx = classNames.bind(styles);
 
 function ManageProgress() {
+  const [profiles, setProfiles] = useState([])
+  const [selectedProfile, setSelectedProfile] = useState(null)
+  const [showLearningProfileView, setShowLearningProfileView] = useState(false)
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        const response = await apiClient.get("/study-profiles/getStudyProfileWithTeacher?page=1&pageSize=0")
+        setProfiles(response.data.data.data);
+      } catch (error) {
+        console.error("Error while fetching profiles:", error)
+      }
+    }
+
+    fetchProfiles()
+  }, [])
   return (
-    <PageLayout>
-      <div className={cx("teacher-manage-progress-wrapper")}>
-        <div className={cx("teacher-manage-progress-container")}>
-          <div className={cx("teacher-manage-progress-header")}>
-            <div className={cx("teacher-manage-progress-text")}>
-              Manage Progress
+    <>
+      {showLearningProfileView && <LearningProfileView profile={selectedProfile} setShowLearningProfileView={setShowLearningProfileView} />}
+      <PageLayout>
+        <div className={cx("teacher-manage-progress-wrapper")}>
+          <div className={cx("teacher-manage-progress-container")}>
+            <div className={cx("teacher-manage-progress-header")}>
+              <div className={cx("teacher-manage-progress-text")}>
+                Manage Progress
+              </div>
+            </div>
+            <div className={cx("teacher-manage-progress-content")}>
+              <div className={cx("study-profiles-list")}>
+                {profiles?.map((profile) => (
+                  <StudyProfileItem
+                    key={profile.id}
+                    profile={profile}
+                    setSelectedProfile={setSelectedProfile}
+                    setIsShowViewStudyProfile={setShowLearningProfileView}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-          <div className={cx("teacher-manage-progress-content")}></div>
         </div>
-      </div>
-      <LearningMaterialCreateFooter />
-    </PageLayout>
+        <LearningMaterialCreateFooter />
+      </PageLayout>
+    </>
   );
 }
 

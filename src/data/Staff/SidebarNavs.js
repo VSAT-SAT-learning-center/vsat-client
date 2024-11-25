@@ -61,7 +61,7 @@ export const sidebarNavs = [
     id: 4,
     icon: "fa-light fa-seal-question",
     iconActive: "fa-regular fa-seal-question",
-    title: "Question Quizz",
+    title: "Question Quiz",
     path: "/staff/question-quizz",
     show: true,
     subNavs: [

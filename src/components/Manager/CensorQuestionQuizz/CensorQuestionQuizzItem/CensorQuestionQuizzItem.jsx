@@ -13,6 +13,8 @@ function CensorQuestionQuizzItem({
   setIsShowQuizzItemPreview,
   setQuestionCensorView,
   setIsShowCensorQuestionQuizView,
+  setQuestionFeedback,
+  setIsShowFeedbackView
 }) {
 
   const handlePreviewQuestion = () => {
@@ -23,6 +25,11 @@ function CensorQuestionQuizzItem({
   const handleCensorQuestion = () => {
     setIsShowCensorQuestionQuizView(true);
     setQuestionCensorView(question);
+  };
+
+  const handleViewFeedback = () => {
+    setQuestionFeedback(question);
+    setIsShowFeedbackView(true);
   };
 
   return (
@@ -77,7 +84,7 @@ function CensorQuestionQuizzItem({
             </button>
           )}
           {question?.status === "Rejected" && (
-            <button className={cx("feedback-list-btn")}>
+            <button className={cx("feedback-list-btn")} onClick={handleViewFeedback}>
               <i className={cx("fa-regular fa-clipboard-list")}></i>
             </button>
           )}

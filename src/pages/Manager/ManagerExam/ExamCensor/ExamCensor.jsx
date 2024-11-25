@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import ExamCensorItem from "~/components/Manager/CensorExam/ExamCensorItem";
 import ExamCensorView from "~/components/Manager/CensorExam/ExamCensorView";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ExamCensor.module.scss";
@@ -43,7 +44,11 @@ function ExamCensor() {
             <div className={cx("censor-exam-header")}>
               <div className={cx("exam-text")}>Censor Exam</div>
             </div>
-            <div className={cx("censor-exam-content")}>
+            <div className={cx(
+              isWaiting || examList.length > 0
+                ? "censor-exam-content"
+                : "censor-exam-no-content"
+            )}>
               {isWaiting ? (
                 <>
                   {[...Array(3)].map((_, i) => (
@@ -56,7 +61,7 @@ function ExamCensor() {
                     />
                   ))}
                 </>
-              ) : (
+              ) : examList.length > 0 ? (
                 examList?.map((exam) => (
                   <ExamCensorItem
                     key={exam.id}
@@ -65,6 +70,8 @@ function ExamCensor() {
                     setIsShowExamCensorView={setIsShowExamCensorView}
                   />
                 ))
+              ) : (
+                <NoQuestionData />
               )}
             </div>
           </div>

@@ -24,14 +24,13 @@ function CensorQuestionQuizzView({
   const [loading, setLoading] = useState(false);
   const [dataCensorWithAI, setDataCensorWithAI] = useState(null);
   const handleApproveQuestion = async () => {
-    const status = {
-      status: "Approved",
+    const payload = {
+      quizQuestionId: questionCensorData?.id,
+      accountFromId: user?.id,
+      accountToId: questionCensorData?.account?.id,
     };
     try {
-      await apiClient.put(
-        `/quiz-questions/updateStatus/${questionCensorData.id}`,
-        status
-      );
+      await apiClient.post(`/quiz-questions/censor/approve`, payload);
       navigate("/manager/question-quizz/bank");
     } catch (error) {
       console.error("Error censor approve question:", error);
@@ -98,8 +97,6 @@ function CensorQuestionQuizzView({
       accountFromId: user?.id,
       accountToId: questionCensorData?.account?.id,
     };
-    console.log(rejectData);
-
     try {
       await apiClient.post(`/quiz-questions/censor/reject`, rejectData);
       navigate("/manager/question-quizz/feedback");

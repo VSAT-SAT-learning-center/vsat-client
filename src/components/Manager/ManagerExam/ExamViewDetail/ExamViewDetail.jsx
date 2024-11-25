@@ -88,7 +88,7 @@ function ExamViewDetail({ examCensorData, setIsShowExamCensorView }) {
                 <div className={cx("type-name")}>Practical exam</div>
               </div>
             </div>
-            <div className={cx("exam-config-wrapper")}>
+            {/* <div className={cx("exam-config-wrapper")}>
               <div className={cx("exam-config-container")}>
                 <div className={cx("exam-config-select")}>
                   <div className={cx("type-config")}>
@@ -127,7 +127,7 @@ function ExamViewDetail({ examCensorData, setIsShowExamCensorView }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className={cx("exam-question-wrapper")}>
               <div className={cx("exam-question-title")}>Exam question</div>
               {groupedSections?.map((section, index) => (

@@ -14,7 +14,7 @@ const cx = classNames.bind(styles);
 function Learning() {
   const [profiles, setProfiles] = useState([]);
   const [isWaiting, setIsWaiting] = useState(false);
-  const [showLearninProfileView, setShowLearningProfileView] = useState(false)
+  const [showLearningProfileView, setShowLearningProfileView] = useState(false)
   const [profileSelected, setProfileSelected] = useState(null)
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function Learning() {
 
   return (
     <>
-      {showLearninProfileView && <LearningProfileView profile={profileSelected} setShowLearningProfileView={setShowLearningProfileView} />}
+      {showLearningProfileView && <LearningProfileView profile={profileSelected} setShowLearningProfileView={setShowLearningProfileView} />}
       <LearningLayout>
         <div className={cx("learning-wrapper")}>
           <div className={cx("learning-container")}>
