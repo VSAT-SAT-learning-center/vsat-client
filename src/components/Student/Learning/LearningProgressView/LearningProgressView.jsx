@@ -10,7 +10,7 @@ import MarkCompletePopup from "./MarkCompletePopup";
 
 const cx = classNames.bind(styles);
 
-function LearningProgressView({ target, setShowLearningProgress }) {
+function LearningProgressView({ target, setShowLearningProgress, setShowLearningProfileView }) {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate()
   const [progressData, setProgressData] = useState([])
@@ -75,7 +75,7 @@ function LearningProgressView({ target, setShowLearningProgress }) {
   };
   return (
     <>
-      {showMarkPopup && <MarkCompletePopup message={markPopupData} setShowMarkPopup={setShowMarkPopup} />}
+      {showMarkPopup && <MarkCompletePopup target={target} message={markPopupData} setShowMarkPopup={setShowMarkPopup} setShowLearningProgress={setShowLearningProgress} setShowLearningProfileView={setShowLearningProfileView}/>}
       <div className={cx("learning-progress-view-wrapper")}>
         <div className={cx("learning-progress-view-container")}>
           <div className={cx("learning-progress-view-header")}>

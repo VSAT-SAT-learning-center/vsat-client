@@ -1,11 +1,11 @@
+import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
-import PageLayout from "~/layouts/Staff/PageLayout";
 import TrialExamItem from "~/components/Manager/ManagerExam/ExamItem";
 import ExamViewDetail from "~/components/Manager/ManagerExam/ExamViewDetail";
-import { Skeleton } from "@mui/material";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
+import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./Exam.module.scss";
 
@@ -21,7 +21,6 @@ function Exam() {
     try {
       setIsWaiting(true);
       const response = await apiClient.get(`exams/getExamByCreateBy`);
-      console.log(response);
       setExamList(response.data.data);
     } catch (error) {
       console.error("Failed to fetch exam structure list:", error);
@@ -50,8 +49,8 @@ function Exam() {
               <div className={cx("exam-text")}>Exam Overview</div>
             </div>
             <div className={cx(isWaiting || examList.length > 0
-                  ? "exam-content"
-                  : "exam-no-content")}>
+              ? "exam-content"
+              : "exam-no-content")}>
               {isWaiting ? (
                 <>
                   {[...Array(3)].map((_, i) => (
