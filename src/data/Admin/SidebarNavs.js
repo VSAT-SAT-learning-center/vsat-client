@@ -35,13 +35,13 @@ export const sidebarNavs = [
       path: "/admin/account-setting",
       show: false,
     },
-    {
-      id: 4,
-      icon: "fa-light fa-cog",
-      iconActive: "fa-regular fa-cog",
-      title: "Settings",
-      path: "/admin/setting",
-      show: false,
-    }
+    // {
+    //   id: 4,
+    //   icon: "fa-light fa-cog",
+    //   iconActive: "fa-regular fa-cog",
+    //   title: "Settings",
+    //   path: "/admin/setting",
+    //   show: false,
+    // }
   ];
   

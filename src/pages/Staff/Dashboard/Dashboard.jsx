@@ -16,7 +16,6 @@ function Dashboard() {
       </div>
       <LearningMaterialCreateFooter />
     </PageLayout>
-
   );
 }
 

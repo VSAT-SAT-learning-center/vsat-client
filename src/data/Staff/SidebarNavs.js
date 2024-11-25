@@ -188,12 +188,12 @@ export const sidebarNavs = [
     path: "/staff/account-setting",
     show: false,
   },
-  {
-    id: 11,
-    icon: "fa-light fa-cog",
-    iconActive: "fa-regular fa-cog",
-    title: "Settings",
-    path: "/staff/setting",
-    show: false,
-  },
+  // {
+  //   id: 11,
+  //   icon: "fa-light fa-cog",
+  //   iconActive: "fa-regular fa-cog",
+  //   title: "Settings",
+  //   path: "/staff/setting",
+  //   show: false,
+  // },
 ];
