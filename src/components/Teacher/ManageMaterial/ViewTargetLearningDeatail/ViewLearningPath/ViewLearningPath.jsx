@@ -7,9 +7,7 @@ import EditLearningPathModal from "./EditLearningPathModal";
 import styles from "./ViewLearningPath.module.scss";
 const cx = classNames.bind(styles);
 
-function ViewLearningPath({ target, setIsShowViewTargetLearning }) {
-  console.log(target.targetlearningdetail[0]);
-  
+function ViewLearningPath({ target, setIsShowViewTargetLearning, setIsShowViewStudyProfile }) {
   const [isShowEditLearningPath, setIsShowEditLearningPath] = useState(false)
   const [isShowAddLearningPath, setIsShowAddLearningPath] = useState(false)
   const [learningPaths, setLearningPaths] = useState([])
@@ -149,6 +147,7 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning }) {
       const response = await apiClient.post("/unit-progress/multiple-sync", updatedData)
       console.log(response.data);
       setIsShowViewTargetLearning(false)
+      setIsShowViewStudyProfile(false)
       toast.success("Update learning path successfully!", {
         autoClose: 2000,
       })

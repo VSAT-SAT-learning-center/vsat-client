@@ -3,7 +3,7 @@ import { formatDate } from "~/utils/formatDate";
 import styles from "./ExamItem.module.scss";
 const cx = classNames.bind(styles);
 
-function ExamItem({ exam, index, setExamCensorData, setIsShowExamCensorView}) {
+function ExamItem({ exam, index, setExamCensorData, setIsShowExamCensorView }) {
   const handleViewExamDetail = () => {
     setExamCensorData(exam)
     setIsShowExamCensorView(true)
@@ -42,7 +42,7 @@ function ExamItem({ exam, index, setExamCensorData, setIsShowExamCensorView}) {
             <i className="fa-sharp fa-regular fa-file-lines"></i>
           </div>
           <div className={cx("type-title")}>Exam structure:</div>
-          <div className={cx("type-text")}>{exam?.description}</div>
+          <div className={cx("type-text")}>{exam?.examStructure.structurename}</div>
         </div>
         <div className={cx("exam-item-infor-type")}>
           <div className={cx("item-icon")}>

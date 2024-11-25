@@ -5,7 +5,7 @@ import ViewLearningPath from "./ViewLearningPath";
 import styles from "./ViewTargetLearningDeatail.module.scss";
 const cx = classNames.bind(styles);
 
-function ViewTargetLearningDeatail({ target, setIsShowViewTargetLearning }) {
+function ViewTargetLearningDeatail({ target, setIsShowViewTargetLearning, setIsShowViewStudyProfile }) {
   const [viewNav, setViewNav] = useState("Exam");
   return (
     <div className={cx("view-target-learing-detail-wrapper")}>
@@ -34,7 +34,7 @@ function ViewTargetLearningDeatail({ target, setIsShowViewTargetLearning }) {
           <div className={cx("target-empty")}></div>
         </div>
         <div className={cx("view-target-learing-detail-content")}>
-          {viewNav === "Exam" ? <ViewExam target={target} /> : <ViewLearningPath target={target} setIsShowViewTargetLearning={setIsShowViewTargetLearning} />}
+          {viewNav === "Exam" ? <ViewExam target={target} /> : <ViewLearningPath target={target} setIsShowViewTargetLearning={setIsShowViewTargetLearning} setIsShowViewStudyProfile={setIsShowViewStudyProfile} />}
         </div>
       </div>
     </div>
