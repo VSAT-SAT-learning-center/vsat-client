@@ -30,7 +30,7 @@ import ExamCreate from "~/pages/Staff/Exam/ExamCreate";
 import ExamFeedback from "~/pages/Staff/Exam/ExamFeedback";
 import ExamScore from "~/pages/Staff/Exam/ExamScore";
 import ExamStructure from "~/pages/Staff/Exam/ExamStructure";
-import Feedback from "~/pages/Staff/Feedback";
+import StaffFeedback from "~/pages/Staff/Feedback";
 import LearningMaterial from "~/pages/Staff/LearningMaterial";
 import LearningMaterialCreateAss from "~/pages/Staff/LearningMaterial/LearningMaterialCreateAss";
 import LearningMaterialCreateDetails from "~/pages/Staff/LearningMaterial/LearningMaterialCreateDetails";
@@ -49,20 +49,22 @@ import QuizzFeedback from "~/pages/Staff/QuestionQuizz/QuizzFeedback/QuizzFeedba
 import Settings from "~/pages/Staff/Settings";
 import Students from "~/pages/Staff/Students";
 import StudyProfile from "~/pages/Staff/Students/StudyProfile";
-import ProgressOverview from "~/pages/Student/ProgressOverview";
-import DetailedReport from "~/pages/Student/DetailedReport";
-import ExamHistory from "~/pages/Student/ExamHistory";
 import Teachers from "~/pages/Staff/Teachers";
 import AssignStudents from "~/pages/Staff/Teachers/AssignStudents";
+import DetailedReport from "~/pages/Student/DetailedReport";
+import ExamHistory from "~/pages/Student/ExamHistory";
 import ExamSchedule from "~/pages/Student/ExamSchedule";
+import Feedback from "~/pages/Student/Feedback";
 import Learning from "~/pages/Student/Learning";
 import LearningPart from "~/pages/Student/LearningPart";
 import LearningPartDetail from "~/pages/Student/LearningPartDetail";
 import LearningPartUnitTest from "~/pages/Student/LearningPartUnitTest";
 import LearningProcess from "~/pages/Student/LearningProcess";
-import LearningProgress from "~/pages/Student/LearningProgress";
 import StudentProfile from "~/pages/Student/Profile";
+import ProgressOverview from "~/pages/Student/ProgressOverview";
 import AssignExam from "~/pages/Teacher/AssignExam";
+import AssignExamSchedule from "~/pages/Teacher/AssignExam/ExamSchedule";
+import TeacherFeedback from "~/pages/Teacher/TeacherFeedback";
 import ManageMaterial from "~/pages/Teacher/ManageMaterial";
 import ManageProgress from "~/pages/Teacher/ManageProgress";
 import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
@@ -118,12 +120,6 @@ const routesConfig = [
     roles: ["Student"],
   },
   {
-    path: "/learning/progress",
-    component: LearningProgress,
-    protected: true,
-    roles: ["Student"],
-  },
-  {
     path: "/exam-schedule",
     component: ExamSchedule,
     protected: true,
@@ -156,6 +152,12 @@ const routesConfig = [
   {
     path: "/profile",
     component: StudentProfile,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/feedback",
+    component: Feedback,
     protected: true,
     roles: ["Student"],
   },
@@ -360,7 +362,7 @@ const routesConfig = [
   // Staff manage feedback routes
   {
     path: "/staff/feedback",
-    component: Feedback,
+    component: StaffFeedback,
     protected: true,
     roles: ["Staff"],
   },
@@ -541,7 +543,13 @@ const routesConfig = [
   },
   // Teacher assign exam routes
   {
-    path: "/teacher/assign-exam",
+    path: "/teacher/assign-exam/schedule",
+    component: AssignExamSchedule,
+    protected: true,
+    roles: ["Teacher"],
+  },
+  {
+    path: "/teacher/assign-exam/profiles",
     component: AssignExam,
     protected: true,
     roles: ["Teacher"],
@@ -564,6 +572,13 @@ const routesConfig = [
   {
     path: "/teacher/account-setting",
     component: TeacherAccountSetting,
+    protected: true,
+    roles: ["Teacher"],
+  },
+  // Teacher feedback routes
+  {
+    path: "/teacher/feedback",
+    component: TeacherFeedback,
     protected: true,
     roles: ["Teacher"],
   },

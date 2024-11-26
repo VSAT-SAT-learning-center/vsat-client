@@ -1,14 +1,14 @@
-import classNames from "classnames/bind"; 
-import PageLayout from "~/layouts/Staff/PageLayout";
 import { Pagination } from "antd";
+import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
-import apiClient from "~/services/apiService";
 import LearningMaterialItem from "~/components/Manager/CensorLearningMaterial/LearningMaterialItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
-import styles from "./LearningMaterial.module.scss"; 
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
+import PageLayout from "~/layouts/Staff/PageLayout";
+import apiClient from "~/services/apiService";
+import styles from "./LearningMaterial.module.scss";
 
-const cx = classNames.bind(styles); 
+const cx = classNames.bind(styles);
 const itemsPerPage = 6;
 
 function LearningMaterial() {
@@ -45,7 +45,7 @@ function LearningMaterial() {
         <div className={cx("staff-learning-material-container")}>
           <div className={cx("staff-learning-material-header")}>
             <div className={cx("staff-learning-material-text")}>
-              Course Overview
+              Material Overview
             </div>
           </div>
           {learningMaterials?.length > 0 ? (

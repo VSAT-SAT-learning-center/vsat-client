@@ -81,7 +81,7 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
           const response = await apiClient.get(`/lessons/${prevLessonId}`);
           setLessonData(response.data.data);
           if (contentRef.current) {
-            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            contentRef.current.scrollTo({ top: 0, behavior: "smooth" });
           }
         } catch (error) {
           console.error("Error fetching previous lesson:", error);
@@ -93,7 +93,7 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
   };
 
   const handleMarkRejectLesson = () => {
-    setIsShowCensorFeedback(true)
+    setIsShowCensorFeedback(true);
   };
 
   const handleContinueLesson = () => {
@@ -125,7 +125,9 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
       }
 
       // Check if all lessons are approved
-      const allApproved = updatedStatus.every((lesson) => lesson.status === "Approved");
+      const allApproved = updatedStatus.every(
+        (lesson) => lesson.status === "Approved"
+      );
       if (allApproved) {
         setFinalCensorResult("Approved");
       }
@@ -146,7 +148,7 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
           const response = await apiClient.get(`/lessons/${nextLessonId}`);
           setLessonData(response.data.data);
           if (contentRef.current) {
-            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            contentRef.current.scrollTo({ top: 0, behavior: "smooth" });
           }
         } catch (error) {
           console.error("Error fetching next lesson:", error);
@@ -157,7 +159,9 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
     } else {
       // Final check after all lessons
       setCensorStatus((currentStatus) => {
-        const isRejected = currentStatus.some((lesson) => lesson.status === "Rejected");
+        const isRejected = currentStatus.some(
+          (lesson) => lesson.status === "Rejected"
+        );
         setFinalCensorResult(isRejected ? "Rejected" : "Approved");
         return currentStatus;
       });
@@ -196,7 +200,9 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
       }
 
       // Check if there are any rejected lessons
-      const hasRejected = updatedStatus.some((lesson) => lesson.status === "Rejected");
+      const hasRejected = updatedStatus.some(
+        (lesson) => lesson.status === "Rejected"
+      );
       if (hasRejected) {
         setFinalCensorResult("Rejected");
       }
@@ -218,7 +224,7 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
           setLessonData(response.data.data);
           setIsShowCensorFeedback(false);
           if (contentRef.current) {
-            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            contentRef.current.scrollTo({ top: 0, behavior: "smooth" });
           }
         } catch (error) {
           console.error("Error fetching next lesson:", error);
@@ -229,7 +235,9 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
     } else {
       // Final check after all lessons
       setCensorStatus((currentStatus) => {
-        const isRejected = currentStatus.some((lesson) => lesson.status === "Rejected");
+        const isRejected = currentStatus.some(
+          (lesson) => lesson.status === "Rejected"
+        );
         setFinalCensorResult(isRejected ? "Rejected" : "Approved");
         return currentStatus;
       });
@@ -238,13 +246,29 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
   };
   return (
     <>
-      {isShowCensorFeedback && <CensorFeedbackReason lessonData={lessonData} setIsShowCensorFeedback={setIsShowCensorFeedback} markRejectLesson={markRejectLesson} />}
-      {isShowConfirmFeedback && <CensorConfirmFeedback unitDetails={unitDetails} censorStatus={censorStatus} finalCensorResult={finalCensorResult} setIsShowConfirmFeedback={setIsShowConfirmFeedback} />}
+      {isShowCensorFeedback && (
+        <CensorFeedbackReason
+          lessonData={lessonData}
+          setIsShowCensorFeedback={setIsShowCensorFeedback}
+          markRejectLesson={markRejectLesson}
+        />
+      )}
+      {isShowConfirmFeedback && (
+        <CensorConfirmFeedback
+          unitDetails={unitDetails}
+          censorStatus={censorStatus}
+          finalCensorResult={finalCensorResult}
+          setIsShowConfirmFeedback={setIsShowConfirmFeedback}
+        />
+      )}
       <div className={cx("censor-learning-material-view-wrapper")}>
         <div className={cx("censor-learning-material-view-container")}>
           <div className={cx("censor-learning-material-view-header")}>
             <div className={cx("header-left")}>
-              <div className={cx("view-back")} onClick={() => setIsShowCensorView(false)}>
+              <div
+                className={cx("view-back")}
+                onClick={() => setIsShowCensorView(false)}
+              >
                 <i className={cx("fa-solid fa-arrow-left", "back-icon")}></i>
               </div>
               <div className={cx("view-title")}>{unitDetails?.title}</div>
@@ -252,44 +276,83 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
           </div>
           <div className={cx("censor-learning-material-view-main")}>
             <div className={cx("censor-learning-material-view-sidebar")}>
-              <div className={cx("censor-learning-material-view-sidebar-container")}>
+              <div
+                className={cx(
+                  "censor-learning-material-view-sidebar-container"
+                )}
+              >
                 <div className={cx("detail-header")}>
                   <div className={cx("detail-icon")}>
                     <i className={cx("fa-regular fa-book-open", "icon")}></i>
                   </div>
-                  <div className={cx("detail-title")}>
-                    {unitDetails?.title}
-                  </div>
+                  <div className={cx("detail-title")}>{unitDetails?.title}</div>
                 </div>
                 <div className={cx("detail-content")}>
-                  {unitDetails?.unitAreas && unitDetails?.unitAreas.length > 0 && unitDetails?.unitAreas.map((unitArea) => (
-                    <CensorViewSidebar key={unitArea.id} unitArea={unitArea} lessonData={lessonData} />
-                  ))}
+                  {unitDetails?.unitAreas &&
+                    unitDetails?.unitAreas.length > 0 &&
+                    unitDetails?.unitAreas.map((unitArea) => (
+                      <CensorViewSidebar
+                        key={unitArea.id}
+                        unitArea={unitArea}
+                        lessonData={lessonData}
+                      />
+                    ))}
                 </div>
               </div>
             </div>
-            <div ref={contentRef} className={cx("censor-learning-material-view-content")}>
+            <div
+              ref={contentRef}
+              className={cx("censor-learning-material-view-content")}
+            >
               {lessonData?.type === "Text" ? (
-                <LearningPartDetailContentRW lesson={lessonData} unit={unitDetails}/>
+                <LearningPartDetailContentRW
+                  lesson={lessonData}
+                  unit={unitDetails}
+                />
               ) : (
-                <LearningPartDetailContentMath lesson={lessonData} />
+                <LearningPartDetailContentMath
+                  lesson={lessonData}
+                  unit={unitDetails}
+                />
               )}
             </div>
           </div>
           <div className={cx("censor-learning-material-view-bottom")}>
-            <button className={cx("mark-btn", { "disabled-mark-btn": !isBottom })} disabled={!isBottom} onClick={handleMarkRejectLesson}>Mark rejected</button>
+            <button
+              className={cx("mark-btn", { "disabled-mark-btn": !isBottom })}
+              disabled={!isBottom}
+              onClick={handleMarkRejectLesson}
+            >
+              Mark rejected
+            </button>
             <div className={cx("bottom-right")}>
-              <button className={cx("back-btn", { "disabled-back-btn": currentLessonIndex === 0 })} disabled={currentLessonIndex === 0} onClick={handleBackLesson}>Back</button>
-              <button className={cx("next-btn", { "disabled-continue-btn": !isBottom })} disabled={!isBottom} onClick={handleContinueLesson}>Continue</button>
+              <button
+                className={cx("back-btn", {
+                  "disabled-back-btn": currentLessonIndex === 0,
+                })}
+                disabled={currentLessonIndex === 0}
+                onClick={handleBackLesson}
+              >
+                Back
+              </button>
+              <button
+                className={cx("next-btn", {
+                  "disabled-continue-btn": !isBottom,
+                })}
+                disabled={!isBottom}
+                onClick={handleContinueLesson}
+              >
+                Continue
+              </button>
             </div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 CensorLearningMaterialView.propTypes = {
   unitId: PropTypes.string,
   setIsShowCensorView: PropTypes.func,
-}
-export default CensorLearningMaterialView
+};
+export default CensorLearningMaterialView;

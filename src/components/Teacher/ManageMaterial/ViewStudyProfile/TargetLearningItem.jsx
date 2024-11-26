@@ -25,12 +25,12 @@ function TargetLearningItem({ target, index, setTargetSelected, setIsShowViewTar
         <div className={cx("target-learning-time")}>
           <div className={cx("time-item")}>
             <i className={cx("fa-regular fa-timer")}></i>
-            <span>{formatDate(target?.startdate)}</span>
+            {target?.startdate === null ? <span>Not started</span> : <span>{formatDate(target?.startdate)}</span>}
           </div>
           <span>-</span>
           <div className={cx("time-item")}>
             <i className={cx("fa-regular fa-timer")}></i>
-            <span>{formatDate(target?.enddate)}</span>
+            {target?.enddate === null ? <span>Not started</span> : <span>{formatDate(target?.enddate)}</span>}
           </div>
         </div>
         {target?.status !== "Inactive" && (

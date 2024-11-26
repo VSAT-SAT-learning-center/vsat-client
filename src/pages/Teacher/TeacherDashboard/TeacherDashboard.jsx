@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
-import PageLayout from "~/layouts/Teacher/PageLayout";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import PageLayout from "~/layouts/Teacher/PageLayout";
 import styles from "./TeacherDashboard.module.scss";
 const cx = classNames.bind(styles);
 function TeacherDashboard() {
@@ -16,7 +16,6 @@ function TeacherDashboard() {
       </div>
       <LearningMaterialCreateFooter />
     </PageLayout>
-
   );
 }
 
