@@ -13,7 +13,19 @@ export const sidebarNavs = [
     iconActive: "fa-regular fa-clipboard-list",
     title: "Assign Exam",
     path: "/teacher/assign-exam",
-    show: false,
+    show: true,
+    subNavs: [
+      {
+        id: 1,
+        title: "Exam Schedule",
+        path: "/teacher/assign-exam/schedule",
+      },
+      {
+        id: 2,
+        title: "Assign Profiles",
+        path: "/teacher/assign-exam/profiles",
+      },
+    ],
   },
   {
     id: 3,
@@ -33,6 +45,14 @@ export const sidebarNavs = [
   },
   {
     id: 5,
+    icon: "fa-light fa-comments",
+    iconActive: "fa-regular fa-comments",
+    title: "Feedback",
+    path: "/teacher/feedback",
+    show: false,
+  },
+  {
+    id: 6,
     icon: "fa-light fa-user-cog",
     iconActive: "fa-regular fa-user-cog",
     title: "Account Setting",

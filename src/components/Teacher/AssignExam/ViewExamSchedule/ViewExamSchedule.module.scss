@@ -1,0 +1,152 @@
+@import "~/styles/variables";
+
+.view-exam-schedule-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 106;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .view-exam-schedule-container {
+    position: relative;
+    width: 550px;
+    height: 750px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .view-exam-date {
+      width: 100%;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 600;
+      border-radius: 10px 10px 0 0;
+      color: $white-color;
+      background-color: $primary-color;
+    }
+
+    .view-exam-container {
+      width: 100%;
+      padding: 16px;
+      border-bottom: 1px solid $border-color;
+      .view-exam-content {
+        width: 100%;
+        padding: 16px;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+        border: 1px solid #c5c5c5;
+
+        .exam-item-infor-type {
+          width: 100%;
+          display: flex;
+          column-gap: 12px;
+
+          .item-icon {
+            width: 15px;
+            font-size: 18px;
+          }
+
+          .type-title {
+            font-size: 18px;
+            font-weight: 600;
+          }
+
+          .type-text {
+            width: 220px;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
+    .view-profiles-container {
+      width: 100%;
+      flex-grow: 1;
+      padding: 16px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .view-profile-item {
+        width: 100%;
+        padding: 16px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 5px;
+        border: 1px solid #c5c5c5;
+
+        .view-profile-infor {
+          display: flex;
+          align-items: center;
+          column-gap: 15px;
+
+          .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .profile-name {
+            font-size: 18px;
+            font-weight: 600;
+          }
+        }
+
+        .view-profile-status {
+          font-size: 18px;
+          font-weight: 600;
+
+          &.undone {
+            color: $third-color;
+          }
+
+          &.done {
+            color: $success-color;
+          }
+        }
+      }
+    }
+
+    .no-data {
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .no-data-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .no-data-img {
+          width: 100px;
+          height: 100%;
+          object-fit: cover;
+        }
+        .no-data-text {
+          font-size: 17px;
+          font-weight: 600;
+          color: #bbcef3;
+        }
+      }
+    }
+  }
+}

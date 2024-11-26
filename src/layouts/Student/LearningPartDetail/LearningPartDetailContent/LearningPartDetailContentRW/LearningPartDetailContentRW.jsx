@@ -10,7 +10,6 @@ import apiClient from "~/services/apiService";
 import styles from "./LearningPartDetailContentRW.module.scss";
 const cx = classNames.bind(styles);
 function LearningPartDetailContentRW({ lesson, fetchUnitArea, unit }) {
-
   const [sortedLessonContents, setSortedLessonContents] = useState([]);
   const [markStatus, setMarkStatus] = useState(false)
 

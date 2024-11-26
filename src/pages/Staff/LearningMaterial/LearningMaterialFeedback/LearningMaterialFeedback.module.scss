@@ -20,7 +20,6 @@
       padding: 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       border-bottom: 1px solid $border-color;
 
       .learning-material-ass-text {
@@ -30,16 +29,21 @@
     }
 
     .learning-material-ass-content {
+      flex-grow: 1;
       width: 100%;
-      height: calc(100% - 79px);
-      padding: 20px;
+      padding: 16px 20px;
       display: grid;
+      grid-template-columns: repeat(3, calc((100% - 2 * 20px) / 3));
+      grid-template-rows: repeat(2, calc((100% - 1 * 20px) / 2));
       gap: 20px;
-      overflow-y: auto;
+    }
 
-      &::-webkit-scrollbar {
-        display: none;
-      }
+    .pagination-controls {
+      width: 100%;
+      padding-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
