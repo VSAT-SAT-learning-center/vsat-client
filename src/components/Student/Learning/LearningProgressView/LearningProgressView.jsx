@@ -43,7 +43,7 @@ function LearningProgressView({ target, setShowLearningProgress, setShowLearning
   }
 
   const handleChooseUnit = () => {
-    if (user === "Student") {
+    if (user.role === "Student") {
       navigate(`/learning/sat-reading-and-writing/${targetLearningDetail}`)
     }
   }
@@ -75,7 +75,7 @@ function LearningProgressView({ target, setShowLearningProgress, setShowLearning
   };
   return (
     <>
-      {showMarkPopup && <MarkCompletePopup target={target} message={markPopupData} setShowMarkPopup={setShowMarkPopup} setShowLearningProgress={setShowLearningProgress} setShowLearningProfileView={setShowLearningProfileView}/>}
+      {showMarkPopup && <MarkCompletePopup target={target} message={markPopupData} setShowMarkPopup={setShowMarkPopup} setShowLearningProgress={setShowLearningProgress} setShowLearningProfileView={setShowLearningProfileView} />}
       <div className={cx("learning-progress-view-wrapper")}>
         <div className={cx("learning-progress-view-container")}>
           <div className={cx("learning-progress-view-header")}>

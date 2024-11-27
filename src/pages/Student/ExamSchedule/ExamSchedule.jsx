@@ -88,6 +88,7 @@ function ExamSchedule() {
     if (listData.length === 0) return;
 
     const firstExam = listData[0];
+    console.log(firstExam);
     const currentDate = new Date();
     const attemptDate = new Date(value.year(), value.month(), value.date());
 
@@ -106,7 +107,7 @@ function ExamSchedule() {
       attemptDate.getMonth() === currentDate.getMonth() &&
       attemptDate.getDate() > currentDate.getDate();
 
-    if (isPast) {
+    if (isPast && firstExam.status === true) {
       toast.info("This exam has already ended. Redirecting to exam history.", {
         autoClose: 1500,
       });
@@ -114,7 +115,14 @@ function ExamSchedule() {
       return;
     }
 
-    if (isToday) {
+    if (isPast && firstExam.status === false) {
+      toast.error("This exam has ended, and you did not attempt it.", {
+        autoClose: 1500,
+      });
+      return;
+    }
+
+    if (isToday && firstExam.status === false) {
       navigate(`/take-exam/${firstExam.examId}`);
       return;
     }

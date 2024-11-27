@@ -7,7 +7,7 @@ import styles from "./LearningItem.module.scss";
 
 const cx = classNames.bind(styles);
 
-function LearningItem({ item, setShowLearningProfileView, setProfileSelected }) {
+function LearningItem({ item, index, setShowLearningProfileView, setProfileSelected }) {
   const { user } = useContext(AuthContext);
 
   const handleClickItem = () => {
@@ -34,7 +34,7 @@ function LearningItem({ item, setShowLearningProfileView, setProfileSelected }) 
               className={cx("image")}
             />
           </div>
-          <div className={cx("header-title")}>Study Profile 1</div>
+          <div className={cx("header-title")}>Study Profile {index}</div>
         </div>
         <div
           className={cx(

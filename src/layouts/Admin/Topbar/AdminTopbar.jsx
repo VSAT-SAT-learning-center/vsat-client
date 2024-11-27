@@ -19,6 +19,27 @@ function AdminTopbar() {
   // eslint-disable-next-line no-unused-vars
   const [socket, setSocket] = useState(null);
   const [nofiticationsData, setNotificationsData] = useState([])
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await apiClient.get("/notifications")
+        const notifications = response.data.data.map(notification => ({
+          type: notification.type,
+          message: notification.message,
+          accountFrom: notification.accountFrom,
+          createdAt: notification.createdAt,
+        }));
+
+        setNotificationsData(notifications)
+      } catch (error) {
+        console.error("Error while fetching notifications:", error)
+      }
+    }
+
+    fetchNotifications()
+  }, [])
+
   useEffect(() => {
     const newSocket = io("http://localhost:5001/feedbacks", {
       query: {
@@ -43,25 +64,6 @@ function AdminTopbar() {
     };
   }, [user?.id]);
 
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await apiClient.get("/notifications")
-        const notifications = response.data.data.map(notification => ({
-          type: notification.type,
-          message: notification.message,
-          accountFrom: notification.accountFrom,
-          createdAt: notification.createdAt,
-        }));
-
-        setNotificationsData(notifications)
-      } catch (error) {
-        console.error("Error while fetching notifications:", error)
-      }
-    }
-
-    fetchNotifications()
-  })
   const handleFocus = () => {
     setIsFocused(true);
   };

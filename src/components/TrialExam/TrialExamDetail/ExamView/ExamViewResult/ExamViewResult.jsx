@@ -12,8 +12,6 @@ import SkillTable from "./SkillTable";
 const cx = classNames.bind(styles);
 
 function ExamViewResult({ exam, examResult }) {
-  console.log(exam);
-
   const [examResultRW, setExamResultRW] = useState(null);
   const [examResultMath, setExamResultMath] = useState(null);
   const [isWating, setIsWating] = useState(false);
@@ -22,7 +20,7 @@ function ExamViewResult({ exam, examResult }) {
   const [showLearningPath, setShowLearningPath] = useState(false);
   const [learningPartData, setLearningPartData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  // const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     const fetchExamResult = async () => {
@@ -56,8 +54,8 @@ function ExamViewResult({ exam, examResult }) {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const response = await apiClient.get(`/study-profiles/getStudyProfileByAccountId`);
-        console.log(response.data.data);
+        const response = await apiClient.get(`/study-profiles/getStudyProfileByAccountIdAndStatus/Active`);
+        setProfile(response.data.data[0]);
       } catch (error) {
         console.error("Error fetching learning materials:", error);
       }
@@ -66,9 +64,33 @@ function ExamViewResult({ exam, examResult }) {
     fetchProfiles();
   }, []);
 
-  const handleClickContinue = () => {
-    setShowConfirmContinue(true)
+  const handleClickContinue = async () => {
+    if (exam?.examType === "Trial Exam") {
+      setShowConfirmContinue(true)
+    } else if (exam?.examType === "Practical Exam") {
+      await fetchLearningPath()
+    }
   }
+
+  const fetchLearningPath = async () => {
+    try {
+      setIsLoading(true);
+      const targetData = {
+        targetLearningRW: profile?.targetscoreMath,
+        targetLearningMath: profile?.targetscoreRW,
+      };
+      const response = await apiClient.post(
+        `/exam-attempts/${examResult?.attemptId}`,
+        targetData
+      );
+      setShowLearningPath(true);
+      setLearningPartData(response.data.data);
+    } catch (error) {
+      console.error("Error while creating target learning", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <>
       {isLoading && <Loader />}
