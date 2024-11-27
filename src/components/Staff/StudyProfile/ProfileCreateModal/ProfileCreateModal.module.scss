@@ -7,7 +7,6 @@
   position: relative;
   padding: 20px;
   max-height: 90%;
-  overflow-y: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -90,15 +89,11 @@
     }
   }
 }
-
-.create-study-profile-content {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-
+.create-study-profile-container-content{
   .form-group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 
     .form-label {
       font-size: 15px;
@@ -126,13 +121,51 @@
         border-color: #2446b6;
       }
     }
-
-    .form-input-checkbox {
-      width: 28px;
-      height: 28px;
+  }
+  .create-study-profile-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  
+    .form-group {
+      display: flex;
+      flex-direction: column;
+  
+      .form-label {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+  
+      .form-input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+  
+        &[readOnly] {
+          cursor: not-allowed;
+          background-color: rgb(241, 241, 241);
+  
+          &:focus {
+            outline: none;
+            box-shadow: none;
+          }
+        }
+  
+        &:focus {
+          outline: none;
+          border-color: #2446b6;
+        }
+      }
+  
+      .form-input-checkbox {
+        width: 28px;
+        height: 28px;
+      }
     }
   }
 }
+
 
 .create-study-profile-footer {
   display: flex;
