@@ -57,15 +57,16 @@ function Learning() {
                       animation="wave"
                       variant="rectangular"
                       width="100%"
-                      height={212}
+                      height={215}
                     />
                   ))}
                 </>
               ) : profiles.length > 0 ? (
-                profiles.map((item) => (
+                profiles.map((item, index) => (
                   <LearningItem
                     key={item.id}
                     item={item}
+                    index={index + 1}
                     setShowLearningProfileView={setShowLearningProfileView}
                     setProfileSelected={setProfileSelected}
                   />
