@@ -12,6 +12,8 @@ import SkillTable from "./SkillTable";
 const cx = classNames.bind(styles);
 
 function ExamViewResult({ exam, examResult }) {
+  console.log(exam);
+
   const [examResultRW, setExamResultRW] = useState(null);
   const [examResultMath, setExamResultMath] = useState(null);
   const [isWating, setIsWating] = useState(false);
@@ -20,6 +22,7 @@ function ExamViewResult({ exam, examResult }) {
   const [showLearningPath, setShowLearningPath] = useState(false);
   const [learningPartData, setLearningPartData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  // const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     const fetchExamResult = async () => {
@@ -49,6 +52,23 @@ function ExamViewResult({ exam, examResult }) {
 
     fetchExamResult();
   }, [examResult?.attemptId]);
+
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        const response = await apiClient.get(`/study-profiles/getStudyProfileByAccountId`);
+        console.log(response.data.data);
+      } catch (error) {
+        console.error("Error fetching learning materials:", error);
+      }
+    };
+
+    fetchProfiles();
+  }, []);
+
+  const handleClickContinue = () => {
+    setShowConfirmContinue(true)
+  }
   return (
     <>
       {isLoading && <Loader />}
@@ -77,7 +97,7 @@ function ExamViewResult({ exam, examResult }) {
               <div className={cx("content-text")}>{exam?.title} Result</div>
               <button
                 className={cx("continue-btn")}
-                onClick={() => setShowConfirmContinue(true)}
+                onClick={handleClickContinue}
               >
                 Continue
               </button>

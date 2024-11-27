@@ -3,8 +3,6 @@ import styles from "./DetailLessonItem.module.scss";
 const cx = classNames.bind(styles);
 
 function DetailLessonItem({ lesson, isActive, onClick }) {
-  console.log(lesson);
-
   return (
     <div className={cx("detail-content-lesson-item", { "lesson-item-active": isActive })} onClick={onClick}>
       {lesson?.status === "Completed" ? (

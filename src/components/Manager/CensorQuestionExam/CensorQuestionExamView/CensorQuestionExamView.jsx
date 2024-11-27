@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import AIImg from "~/assets/images/content/ai.svg";
 import Loader from "~/components/General/Loader";
 import { AuthContext } from "~/contexts/AuthContext";
@@ -88,6 +89,9 @@ function CensorQuestionExamView({
       setIsShowCensorGpt(true);
     } catch (error) {
       console.error("Error censoring question with AI:", error);
+      toast.error("Censor by AI fail!", {
+        autoClose: 1000
+      })
       setLoading(false);
     }
   };

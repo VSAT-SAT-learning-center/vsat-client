@@ -60,18 +60,19 @@ function LearningProfileView({ profile, setShowLearningProfileView }) {
                   <div className={cx("target-learning-time")}>
                     <div className={cx("time-item")}>
                       <i className={cx("fa-regular fa-timer")}></i>
-                      <span>{formatDate(target?.startdate)}</span>
+                      {target?.startdate === null ? <span>Not started</span> : <span>{formatDate(target?.startdate)}</span>}
                     </div>
                     <span>-</span>
                     <div className={cx("time-item")}>
                       <i className={cx("fa-regular fa-timer")}></i>
-                      <span>{formatDate(target?.enddate)}</span>
+                      {target?.enddate === null ? <span>Not started</span> : <span>{formatDate(target?.enddate)}</span>}
                     </div>
                   </div>
                   {target?.status !== "Inactive" && (
                     <button className={cx("view-btn")} onClick={() => handleChooseTarget(target)}>
                       <i className={cx("fa-regular fa-arrow-up-right-from-square")}></i>
-                      <span className={cx("view-text")}>View</span></button>
+                      <span className={cx("view-text")}>View</span>
+                    </button>
                   )}
                 </div>
               </div>

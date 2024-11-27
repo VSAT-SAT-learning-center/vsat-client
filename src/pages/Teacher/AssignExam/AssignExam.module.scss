@@ -250,7 +250,7 @@
           }
 
           .exam-select {
-            flex: 1;
+            width: 35%;
             padding: 8px 16px;
             font-size: 16px;
             border-radius: 8px;
@@ -261,7 +261,10 @@
             background-image: url("~/assets/images/content/dropdownIcon.svg");
             background-repeat: no-repeat;
             background-position: right 16px center;
-            background-size: 22px;
+            background-size: 20px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
 
             &:focus {
               outline: none;
@@ -309,6 +312,7 @@
           }
 
           .custom-date-picker {
+            flex: 1;
             height: 100% !important;
             border-color: #c5c5c5 !important;
             font-size: 16px !important;

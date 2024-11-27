@@ -12,21 +12,21 @@ function LearningSidebar() {
         <div className={cx("menu-section")}>
           <div className={cx("menu-title")}>MY STUFF</div>
           <div className={cx("sidebar-navs")}>
-          {sidebarNavs
-            .filter((navItem) => navItem.section === "MY STUFF")
-            .map((navItem) => (
-              <SidebarNavItem key={navItem.id} navItem={navItem} />
-          ))}
+            {sidebarNavs
+              .filter((navItem) => navItem.section === "MY STUFF")
+              .map((navItem) => (
+                <SidebarNavItem key={navItem.id} navItem={navItem} />
+              ))}
           </div>
         </div>
         <div className={cx("menu-section")}>
           <div className={cx("menu-title")}>MY ACCOUNT</div>
           <div className={cx("sidebar-navs")}>
-          {sidebarNavs
-            .filter((navItem) => navItem.section === "MY ACCOUNT")
-            .map((navItem) => (
-              <SidebarNavItem key={navItem.id} navItem={navItem} />
-          ))}
+            {sidebarNavs
+              .filter((navItem) => navItem.section === "MY ACCOUNT")
+              .map((navItem) => (
+                <SidebarNavItem key={navItem.id} navItem={navItem} />
+              ))}
           </div>
         </div>
       </div>

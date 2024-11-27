@@ -19,7 +19,7 @@ function AssignExam() {
   const [profiles, setProfiles] = useState([]);
   const [assignedProfiles, setAssignedProfiles] = useState({});
   const [isWaiting, setIsWaiting] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(moment());
+  const [selectedDate, setSelectedDate] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -170,24 +170,23 @@ function AssignExam() {
               <button
                 className={cx("reset-btn", {
                   disabled:
-                    assignedProfiles[selectedExam]?.additionalProfiles?.length === 0
+                    (assignedProfiles[selectedExam]?.additionalProfiles?.length || 0) === 0 &&
+                    (assignedProfiles[selectedExam]?.defaultProfiles?.length || 0) === 0,
                 })}
                 onClick={resetProfiles}
                 disabled={
-                  assignedProfiles[selectedExam]?.additionalProfiles?.length === 0
+                  (assignedProfiles[selectedExam]?.additionalProfiles?.length || 0) === 0 &&
+                  (assignedProfiles[selectedExam]?.defaultProfiles?.length || 0) === 0
                 }
               >
                 Reset
               </button>
               <button
                 className={cx("save-btn", {
-                  disabled:
-                    assignedProfiles[selectedExam]?.additionalProfiles?.length === 0
+                  disabled: (assignedProfiles[selectedExam]?.additionalProfiles?.length || 0) === 0,
                 })}
                 onClick={handleSave}
-                disabled={
-                  assignedProfiles[selectedExam]?.additionalProfiles?.length === 0
-                }
+                disabled={(assignedProfiles[selectedExam]?.additionalProfiles?.length || 0) === 0}
               >
                 Save
               </button>
