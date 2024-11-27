@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Loader from "~/components/General/Loader";
 import apiClient from "~/services/apiService";
 import ConfimContinueModal from "./ConfimContinueModal";
@@ -21,7 +22,7 @@ function ExamViewResult({ exam, examResult }) {
   const [learningPartData, setLearningPartData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState(null);
-
+  const navigate = useNavigate()
   useEffect(() => {
     const fetchExamResult = async () => {
       try {
@@ -69,6 +70,8 @@ function ExamViewResult({ exam, examResult }) {
       setShowConfirmContinue(true)
     } else if (exam?.examType === "Practical Exam") {
       await fetchLearningPath()
+    } else if (exam?.examType === "Final Exam") {
+      await updateStudyProfile()
     }
   }
 
@@ -91,6 +94,15 @@ function ExamViewResult({ exam, examResult }) {
       setIsLoading(false);
     }
   };
+
+  const updateStudyProfile = async () => {
+    try {
+      await apiClient.put("/study-profiles/updatestudyProfilestatus/Completed")
+      navigate("/congratulation")
+    } catch (error) {
+      console.error("Error while submit final exam", error)
+    }
+  }
   return (
     <>
       {isLoading && <Loader />}
