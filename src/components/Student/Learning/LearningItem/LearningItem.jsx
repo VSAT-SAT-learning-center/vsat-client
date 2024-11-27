@@ -11,19 +11,14 @@ function LearningItem({ item, index, setShowLearningProfileView, setProfileSelec
   const { user } = useContext(AuthContext);
 
   const handleClickItem = () => {
-    if (item.status === "Active") {
-      setProfileSelected(item)
-      setShowLearningProfileView(true)
-    }
+    setProfileSelected(item)
+    setShowLearningProfileView(true)
   };
 
   return (
     <div
-      className={cx("learning-item", {
-        "disabled-item": item.status !== "Active",
-      })}
+      className={cx("learning-item")}
       onClick={handleClickItem}
-      style={{ cursor: item.status === "Active" ? "pointer" : "not-allowed" }}
     >
       <div className={cx("item-header")}>
         <div className={cx("header-infor")}>

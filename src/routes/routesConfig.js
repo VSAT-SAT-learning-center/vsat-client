@@ -4,6 +4,7 @@ import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
 import AdminDashboard from "~/pages/Admin/AdminDashboard";
 import AdminSettings from "~/pages/Admin/AdminSettings";
+import Congratulation from "~/pages/Congratulation";
 import About from "~/pages/Landing/About";
 import Contact from "~/pages/Landing/Contact";
 import Home from "~/pages/Landing/Home";
@@ -107,6 +108,12 @@ const routesConfig = [
     roles: ["Student"],
   },
   // Student routes
+  {
+    path: "/congratulation",
+    component: Congratulation,
+    protected: true,
+    roles: ["Student"],
+  },
   {
     path: "/learning-progress",
     component: Learning,
