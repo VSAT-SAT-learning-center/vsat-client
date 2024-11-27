@@ -34,7 +34,7 @@ function ViewTargetLearningDeatail({ target, setIsShowViewTargetLearning, setIsS
           <div className={cx("target-empty")}></div>
         </div>
         <div className={cx("view-target-learing-detail-content")}>
-          {viewNav === "Exam" ? <ViewExam target={target} /> : <ViewLearningPath target={target} setIsShowViewTargetLearning={setIsShowViewTargetLearning} setIsShowViewStudyProfile={setIsShowViewStudyProfile} />}
+          {viewNav === "Exam" ? <ViewExam target={target?.id} /> : <ViewLearningPath target={target} setIsShowViewTargetLearning={setIsShowViewTargetLearning} setIsShowViewStudyProfile={setIsShowViewStudyProfile} />}
         </div>
       </div>
     </div>

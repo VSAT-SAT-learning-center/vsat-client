@@ -1,0 +1,193 @@
+@import "~/styles/variables";
+
+.view-result-question-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 108;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .view-result-question-container {
+    position: relative;
+    width: 900px;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .view-result-question-header {
+      width: 100%;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .question-title {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .question-close {
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 20px;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .question-empty {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    .view-result-question-content {
+      width: 100%;
+      flex-grow: 1;
+      padding: 20px 40px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .question-rerender-content {
+        font-size: 18px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+          "Helvetica Neue", sans-serif;
+        line-height: 1.8;
+
+        h3 {
+          font-size: 26px;
+          font-weight: 700;
+          margin-bottom: 16px;
+        }
+
+        p {
+          margin-bottom: 24px;
+          margin-top: 0;
+        }
+
+        blockquote {
+          padding: 0 32px;
+          margin-bottom: 24px;
+
+          strong {
+            font-weight: 700;
+          }
+        }
+
+        li {
+          margin-bottom: 16px;
+        }
+
+        ul {
+          list-style-type: disc;
+          padding-left: 42px;
+        }
+      }
+
+      .answers-list {
+        width: 100%;
+        margin-bottom: 20px;
+
+        .answer-item {
+          cursor: pointer;
+          width: 100%;
+          height: fit-content;
+          display: flex;
+          margin: 8px 0;
+          padding: 8px 16px;
+          font-size: 18px;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont,
+            "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+            "Helvetica Neue", sans-serif;
+          line-height: 1.8;
+          text-align: start;
+          border-radius: 5px;
+          border: 1px solid rgb(33, 46, 88);
+          background-color: $bg-primary-color;
+          transition: all 0.15s linear;
+
+          .answer-label {
+            margin-right: 8px;
+          }
+        }
+      }
+
+      .option-answer {
+        width: 100%;
+        margin-bottom: 20px;
+
+        .title {
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+
+        .answer-rerender-content {
+          font-size: 18px;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont,
+            "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+            "Helvetica Neue", sans-serif;
+          line-height: 1.8;
+
+          h3 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 16px;
+          }
+
+          p {
+            margin-bottom: 24px;
+            margin-top: 0;
+          }
+
+          blockquote {
+            padding: 0 32px;
+            margin-bottom: 24px;
+
+            strong {
+              font-weight: 700;
+            }
+          }
+
+          li {
+            margin-bottom: 16px;
+          }
+
+          ul {
+            list-style-type: disc;
+            padding-left: 42px;
+          }
+
+          &.correct {
+            color: $success-color;
+          }
+
+          &.incorrect {
+            color: $third-color;
+          }
+        }
+      }
+    }
+  }
+}

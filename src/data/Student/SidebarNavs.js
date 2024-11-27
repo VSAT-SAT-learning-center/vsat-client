@@ -22,33 +22,12 @@ export const sidebarNavs = [
     section: "MY ACCOUNT",
     icon: "fa-light fa-book",
     iconActive: "fa-regular fa-book",
-    title: "Study Profile",
-    path: "/study-profile",
+    title: "Learning Progress",
+    path: "/learning-progress",
     show: false,
   },
   {
     id: 4,
-    section: "MY ACCOUNT",
-    icon: "fa-light fa-chart-bar",
-    iconActive: "fa-regular fa-chart-bar",
-    title: "Skill Statistics",
-    path: "/skill-statistics",
-    show: false,
-    // subNavs: [
-    //   {
-    //     id: 1,
-    //     title: "Progress Overview",
-    //     path: "/skill-statistics/overview",
-    //   },
-    //   {
-    //     id: 2,
-    //     title: "Detailed Report",
-    //     path: "/skill-statistics/report",
-    //   },
-    // ],
-  },
-  {
-    id: 5,
     section: "MY ACCOUNT",
     icon: "fa-light fa-history",
     iconActive: "fa-regular fa-history",
@@ -56,6 +35,28 @@ export const sidebarNavs = [
     path: "/exam-history",
     show: false,
   },
+  // {
+  //   id: 5,
+  //   section: "MY ACCOUNT",
+  //   icon: "fa-light fa-chart-bar",
+  //   iconActive: "fa-regular fa-chart-bar",
+  //   title: "Skill Statistics",
+  //   path: "/skill-statistics",
+  //   show: false,
+  //   subNavs: [
+  //     {
+  //       id: 1,
+  //       title: "Progress Overview",
+  //       path: "/skill-statistics/overview",
+  //     },
+  //     {
+  //       id: 2,
+  //       title: "Detailed Report",
+  //       path: "/skill-statistics/report",
+  //     },
+  //   ],
+  // },
+  
   {
     id: 6,
     section: "MY ACCOUNT",

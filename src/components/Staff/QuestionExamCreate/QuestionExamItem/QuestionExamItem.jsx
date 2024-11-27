@@ -15,8 +15,6 @@ function QuestionExamItem({
   setIsShowUpdateQuestionModal,
   setIsShowFeedbackView,
 }) {
-  console.log(question);
-
   const handlePreviewQuestion = () => {
     setIsShowQuestionItemPreview(true);
     setQuestionPreview(question);
