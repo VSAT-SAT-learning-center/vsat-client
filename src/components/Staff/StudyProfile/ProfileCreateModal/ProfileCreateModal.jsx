@@ -73,32 +73,31 @@ function ProfileCreateModal({ isOpen, onClose, onSaveSuccess }) {
                 {editableProfile.account?.firstname || "N/A"}{" "}
                 {editableProfile.account?.lastname || "N/A"}
               </h2>
-              <div className={cx("form-group")}>
-                <label className={cx("form-label")}>Email:</label>
-                <select
-                  className={cx("form-input")}
-                  value={editableProfile.account?.email || ""}
-                  onChange={(e) =>
-                    setEditableProfile((prev) => ({
-                      ...prev,
-                      account: {
-                        ...prev.account,
-                        email: e.target.value, // Cập nhật giá trị email trong state
-                      },
-                    }))
-                  }
-                >
-                  <option value="">Select an email</option>{" "}
-                  {/* Tùy chọn mặc định */}
-                  <option value="email1@example.com">email1@example.com</option>
-                  <option value="email2@example.com">email2@example.com</option>
-                  <option value="email3@example.com">email3@example.com</option>
-                </select>
-              </div>
             </div>
           </div>
         </div>
         <div className={cx("create-study-profile-content")}>
+          <div className={cx("form-group")}>
+            <label className={cx("form-label")}>Email:</label>
+            <select
+              className={cx("form-input")}
+              value={editableProfile.account?.email || ""}
+              onChange={(e) =>
+                setEditableProfile((prev) => ({
+                  ...prev,
+                  account: {
+                    ...prev.account,
+                    email: e.target.value,
+                  },
+                }))
+              }
+            >
+              <option value="">Select an email</option>{" "}
+              <option value="email1@example.com">email1@example.com</option>
+              <option value="email2@example.com">email2@example.com</option>
+              <option value="email3@example.com">email3@example.com</option>
+            </select>
+          </div>
           <div className={cx("form-group")}>
             <label className={cx("form-label")}>Start Date:</label>
             <input
