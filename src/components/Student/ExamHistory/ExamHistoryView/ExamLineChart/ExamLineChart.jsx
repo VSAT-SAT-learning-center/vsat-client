@@ -20,8 +20,8 @@ ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, T
 
 function ExamLineChart({ examData, goal }) {
   // Extract data for the chart
-  const labels = examData?.map((item) => item.testDate); // X-axis labels (dates)
-  const scores = examData?.map((item) => item.score); // Y-axis data (scores)
+  const labels = examData?.map((item) => item.testDate); 
+  const scores = examData?.map((item) => item.score);
 
   // Chart data
   const data = {
@@ -30,11 +30,11 @@ function ExamLineChart({ examData, goal }) {
       {
         label: "Exam Scores",
         data: scores,
-        borderColor: "rgba(255, 20, 147, 0.8)", 
-        backgroundColor: "rgba(255, 20, 147, 0.2)", 
-        fill: true, 
+        borderColor: "rgba(81, 191, 179, 0.8)",
+        backgroundColor: "rgba(81, 191, 179, 0.2)",
+        fill: true,
         borderWidth: 2,
-        pointBackgroundColor: "rgba(255, 20, 147, 1)",
+        pointBackgroundColor: "rgba(81, 191, 179, 1)",
         tension: 0.4,
       },
     ],

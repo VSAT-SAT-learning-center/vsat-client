@@ -64,11 +64,11 @@ import StudentProfile from "~/pages/Student/Profile";
 import ProgressOverview from "~/pages/Student/ProgressOverview";
 import AssignExam from "~/pages/Teacher/AssignExam";
 import AssignExamSchedule from "~/pages/Teacher/AssignExam/ExamSchedule";
-import TeacherFeedback from "~/pages/Teacher/TeacherFeedback";
 import ManageMaterial from "~/pages/Teacher/ManageMaterial";
 import ManageProgress from "~/pages/Teacher/ManageProgress";
 import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
+import TeacherFeedback from "~/pages/Teacher/TeacherFeedback";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
 import TrialExam from "~/pages/TrialExam";
 import TrialExamDetail from "~/pages/TrialExam/TrialExamDetail";
@@ -108,7 +108,7 @@ const routesConfig = [
   },
   // Student routes
   {
-    path: "/study-profile",
+    path: "/learning-progress",
     component: Learning,
     protected: true,
     roles: ["Student"],

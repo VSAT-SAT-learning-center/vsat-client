@@ -40,7 +40,7 @@ function Learning() {
         <div className={cx("learning-wrapper")}>
           <div className={cx("learning-container")}>
             <div className={cx("learning-header")}>
-              <div className={cx("learning-text")}>Study Profile</div>
+              <div className={cx("learning-text")}>Learning Progress</div>
             </div>
             <div
               className={cx(

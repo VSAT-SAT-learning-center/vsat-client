@@ -19,7 +19,7 @@ function ViewExam({ target }) {
       try {
         setIsWaiting(true)
         const response = await apiClient.get(
-          `/target-learnings/getStatisticByTargetLearning?targetLearningId=${target?.id}`
+          `/target-learnings/getStatisticByTargetLearning?targetLearningId=${target}`
         );
         const { RW, M } = response.data.data.examStatistics;
         const rwData = {
@@ -44,7 +44,7 @@ function ViewExam({ target }) {
     };
 
     fetchExamResult();
-  }, [target?.id]);
+  }, [target]);
 
   const handleNavClick = (statistic) => {
     if (statistic === "RW" && examResultRW) {

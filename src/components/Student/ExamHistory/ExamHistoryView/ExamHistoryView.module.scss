@@ -60,12 +60,7 @@
 
     .exam-history-view-content {
       width: 100%;
-      flex-grow: 1;
       padding: 20px;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      row-gap: 24px;
       overflow-y: auto;
 
       &::-webkit-scrollbar {
@@ -73,16 +68,87 @@
       }
 
       .view-title {
-        width: 1200px;
-        font-size: 30px;
-        letter-spacing: 1.4px;
-        color: #494949;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        .title {
+          width: 1200px;
+          font-size: 30px;
+          letter-spacing: 1.4px;
+          color: #494949;
+        }
       }
 
       .tests-list-container {
-        width: 1200px;
-        height: 300px;
-        background-color: red;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .tests-list-content {
+          width: 1200px;
+
+          .test-item-intro {
+            width: 100%;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+
+            .intro {
+              flex: 1;
+              text-align: center;
+              font-size: 18px;
+              color: $text-color-gray;
+            }
+          }
+
+          .test-item-container {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 5px;
+            margin-bottom: 24px;
+            background-color: $bg-primary-color-trans;
+            
+            .item {
+              flex: 1;
+              text-align: center;
+              font-size: 19px;
+
+              &.down {
+                color: $third-color;
+              }
+
+              &.up {
+                color: $success-color;
+              }
+            }
+
+            .view-btn {
+              padding: 6px 16px;
+              font-size: 17px;
+              font-weight: 600;
+              border-radius: 5px;
+              color: $primary-color;
+              border: 1px solid $primary-color;
+              background-color: $bg-primary-color-trans;
+              transition: all 0.3s linear;
+  
+              &:hover {
+                opacity: 0.7;
+              }
+  
+              .view-text {
+                margin-left: 10px;
+              }
+            }
+          }
+        }
       }
     }
   }
