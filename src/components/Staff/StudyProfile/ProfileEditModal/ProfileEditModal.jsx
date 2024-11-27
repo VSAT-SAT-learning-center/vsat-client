@@ -14,8 +14,13 @@ const parseCustomDate = (dateString) => {
   if (!dateString) return "";
   const dateParts = dateString.split(" ")[1]?.split("/") || [];
   if (dateParts.length !== 3) return "";
-  const [day, month, year] = dateParts;
-  return `${year}-${month}-${day}`; // Convert to "yyyy-MM-dd" format
+
+  let [day, month, year] = dateParts;
+
+  day = day.padStart(2, '0');
+  month = month.padStart(2, '0');
+
+  return `${year}-${month}-${day}`; 
 };
 
 function ProfileEditModal({ isOpen, onClose, profile, onSaveSuccess }) {

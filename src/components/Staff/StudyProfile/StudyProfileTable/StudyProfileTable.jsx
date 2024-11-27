@@ -1,12 +1,15 @@
+import { PlusCircleOutlined } from "@ant-design/icons";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import apiClient from "~/services/apiService";
 import ProfileEditModal from "../ProfileEditModal";
+import ProfileCreateModal from "../ProfileCreateModal";
 import styles from "./StudyProfileTable.module.scss";
 
 const cx = classNames.bind(styles);
 
 function StudyProfileTable() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [profiles, setProfiles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -20,6 +23,7 @@ function StudyProfileTable() {
         params: { page, pageSize },
       })
       .then((response) => {
+        console.log(response);
         const { data } = response.data;
         const { data: profileList, totalPages } = data;
         setProfiles(profileList || []);
@@ -38,11 +42,22 @@ function StudyProfileTable() {
     if (parts.length < 2) return "N/A";
 
     const datePart = parts[1];
-    const [day, month, year] = datePart.split("/");
+    let [day, month, year] = datePart.split("/");
+
+    day = day.padStart(2, "0");
+    month = month.padStart(2, "0");
 
     return `${year}-${month}-${day}`;
   };
 
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModalCreate = () => {
+    setModalIsOpen(false);
+    fetchProfiles(currentPage, pageSize);
+  };
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
       fetchProfiles(newPage, pageSize);
@@ -75,6 +90,12 @@ function StudyProfileTable() {
               />
               <button className={cx("filter-btn")}>Search</button>
             </div>
+            <button
+                className={cx("add-study-profile-btn")}
+                onClick={openModal}
+              >
+                <PlusCircleOutlined style={{ marginRight: "5px" }} /> Add User
+              </button>
           </div>
         </div>
         <div className={cx("study-profile-table-container")}>
@@ -94,7 +115,9 @@ function StudyProfileTable() {
               {profiles.length > 0 ? (
                 profiles.map((profile) => (
                   <tr key={profile.id}>
-                    <td style={{ textAlign: "left" }}>{profile.account?.email || "N/A"}</td>
+                    <td style={{ textAlign: "left" }}>
+                      {profile.account?.email || "N/A"}
+                    </td>
                     <td>{formatDate(profile.startdate)}</td>
                     <td>{formatDate(profile.enddate)}</td>
                     <td>
@@ -155,12 +178,19 @@ function StudyProfileTable() {
           </div>
         </div>
       </div>
-
       {isModalOpen && selectedProfile && (
         <ProfileEditModal
           isOpen={isModalOpen}
           onClose={closeModal}
           profile={selectedProfile}
+          onSaveSuccess={() => fetchProfiles(currentPage, pageSize)}
+        />
+      )}
+
+      {modalIsOpen && (
+        <ProfileCreateModal
+          isOpen={modalIsOpen}
+          onClose={closeModalCreate}
           onSaveSuccess={() => fetchProfiles(currentPage, pageSize)}
         />
       )}
