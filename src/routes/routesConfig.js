@@ -160,7 +160,7 @@ const routesConfig = [
     roles: ["Student"],
   },
   {
-    path: "/skill-statistics/overview",
+    path: "/skill-statistics",
     component: ProgressOverview,
     protected: true,
     roles: ["Student"],

@@ -9,7 +9,7 @@ function ProgressOverview() {
       <div className={cx("progress-overview-wrapper")}>
         <div className={cx("progress-overview-container")}>
           <div className={cx("progress-overview-header")}>
-            <div className={cx("progress-overview-text")}>Progress Overview</div>
+            <div className={cx("progress-overview-text")}>Skill Statistics</div>
           </div>
           <div className={cx("progress-overview-content")}></div>
         </div>

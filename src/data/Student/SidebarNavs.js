@@ -33,19 +33,19 @@ export const sidebarNavs = [
     iconActive: "fa-regular fa-chart-bar",
     title: "Skill Statistics",
     path: "/skill-statistics",
-    show: true,
-    subNavs: [
-      {
-        id: 1,
-        title: "Progress Overview",
-        path: "/skill-statistics/overview",
-      },
-      {
-        id: 2,
-        title: "Detailed Report",
-        path: "/skill-statistics/report",
-      },
-    ],
+    show: false,
+    // subNavs: [
+    //   {
+    //     id: 1,
+    //     title: "Progress Overview",
+    //     path: "/skill-statistics/overview",
+    //   },
+    //   {
+    //     id: 2,
+    //     title: "Detailed Report",
+    //     path: "/skill-statistics/report",
+    //   },
+    // ],
   },
   {
     id: 5,
