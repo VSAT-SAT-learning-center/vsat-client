@@ -20,7 +20,7 @@ ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, T
 
 function ExamLineChart({ examData, goal }) {
   // Extract data for the chart
-  const labels = examData?.map((item) => item.testDate); 
+  const labels = examData?.map((item) => item.testDate);
   const scores = examData?.map((item) => item.score);
 
   // Chart data

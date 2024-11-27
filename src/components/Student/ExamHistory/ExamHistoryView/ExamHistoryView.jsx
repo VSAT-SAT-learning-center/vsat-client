@@ -87,7 +87,7 @@ function ExamHistoryView({ profile, setShowExamHistoryView }) {
                         up: item?.improvement > 0,
                       })}
                     >
-                      {item?.improvement}
+                      {item?.improvement > 0 ? `+${item?.improvement}` : item?.improvement}
                     </div>
                     <div className={cx("test-action", "item")}>
                       <button className={cx("view-btn")} onClick={() => handleViewExamReport(item)}>

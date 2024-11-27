@@ -15,7 +15,7 @@ function Students() {
             </div>
           </div>
           <div className={cx("manage-students-content")}>
-            <StudyProfileTable/>
+            <StudyProfileTable />
           </div>
         </div>
       </div>

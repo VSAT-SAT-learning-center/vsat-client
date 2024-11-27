@@ -88,7 +88,6 @@ function ExamSchedule() {
     if (listData.length === 0) return;
 
     const firstExam = listData[0];
-    console.log(firstExam);
     const currentDate = new Date();
     const attemptDate = new Date(value.year(), value.month(), value.date());
 
