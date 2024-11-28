@@ -89,7 +89,8 @@
     }
   }
 }
-.create-study-profile-container-content{
+
+.create-study-profile-container-content {
   .form-group {
     display: flex;
     flex-direction: column;
@@ -122,42 +123,36 @@
       }
     }
   }
+
   .create-study-profile-content {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-  
+
     .form-group {
       display: flex;
       flex-direction: column;
-  
+
       .form-label {
         font-size: 15px;
         font-weight: 600;
         margin-bottom: 5px;
       }
-  
+
       .form-input {
+        flex: 1;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
-  
-        &[readOnly] {
-          cursor: not-allowed;
-          background-color: rgb(241, 241, 241);
-  
-          &:focus {
-            outline: none;
-            box-shadow: none;
-          }
-        }
-  
+
         &:focus {
           outline: none;
           border-color: #2446b6;
         }
       }
-  
+
+      
+
       .form-input-checkbox {
         width: 28px;
         height: 28px;

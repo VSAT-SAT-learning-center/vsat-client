@@ -35,9 +35,10 @@ function AssignExam() {
           (type) => type.name !== "Trial Exam"
         );
         const fetchedProfiles = profilesResponse.data.data.data;
-        const filterProfiles = fetchedProfiles.filter((profile) => profile.targetlearning[0].status === "Completed")
+        console.log(fetchedProfiles);
+        
         setExamTypes(fetchedExamTypes);
-        setProfiles(filterProfiles);
+        setProfiles(fetchedProfiles);
 
         if (fetchedExamTypes.length > 0) {
           const defaultExamType = fetchedExamTypes[0];
