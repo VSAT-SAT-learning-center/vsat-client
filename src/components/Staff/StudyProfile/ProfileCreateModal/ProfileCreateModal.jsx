@@ -1,6 +1,6 @@
 import { Slider } from "@mui/material";
 import classNames from "classnames/bind";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import apiClient from "~/services/apiService";
@@ -24,8 +24,8 @@ function ProfileCreateModal({ isOpen, onClose, onSaveSuccess }) {
     },
   });
   const [isSaving, setIsSaving] = useState(false);
-  const [accounts, setAccounts] = useState([]); 
-  const [loadingEmails, setLoadingEmails] = useState(true); 
+  const [accounts, setAccounts] = useState([]);
+  const [loadingEmails, setLoadingEmails] = useState(true);
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -39,6 +39,7 @@ function ProfileCreateModal({ isOpen, onClose, onSaveSuccess }) {
           email: profile.account?.email,
           firstname: profile.account?.firstname,
           lastname: profile.account?.lastname,
+          profilepictureurl: profile.account?.profilepictureurl
         }));
         setAccounts(accountList);
       } catch (error) {
@@ -64,6 +65,7 @@ function ProfileCreateModal({ isOpen, onClose, onSaveSuccess }) {
         email,
         firstname: selectedAccount?.firstname || "",
         lastname: selectedAccount?.lastname || "",
+        profilepictureurl: selectedAccount?.profilepictureurl || ""
       },
     }));
   };
@@ -90,8 +92,6 @@ function ProfileCreateModal({ isOpen, onClose, onSaveSuccess }) {
         startDate: editableProfile.startdate,
         endDate: editableProfile.enddate,
       });
-      console.log(response);
-
       if (response.status === 201) {
         toast.success("Study profile created successfully.");
         onSaveSuccess();
@@ -118,14 +118,15 @@ function ProfileCreateModal({ isOpen, onClose, onSaveSuccess }) {
             <div className={cx("create-study-profile-image-container")}>
               <img
                 className={cx("create-study-profile-image")}
-                src={"https://cdn-icons-png.flaticon.com/512/18174/18174163.png"}
+                src={editableProfile.account.profilepictureurl || "https://cdn-icons-png.flaticon.com/512/18174/18174163.png"}
                 alt="Profile"
               />
             </div>
             <div className={cx("create-study-profile-details")}>
               <h2 className={cx("create-study-profile-name")}>
-                {editableProfile.account.firstname || ""}{" "}
-                {editableProfile.account.lastname || ""}
+                {editableProfile.account.firstname && editableProfile.account.lastname
+                  ? `${editableProfile.account.firstname} ${editableProfile.account.lastname}`
+                  : "Student Name"}
               </h2>
             </div>
           </div>

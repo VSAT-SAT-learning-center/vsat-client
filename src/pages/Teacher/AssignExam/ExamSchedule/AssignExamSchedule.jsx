@@ -21,10 +21,13 @@ function AssignExamSchedule() {
     try {
       const response = await apiClient.get("/exam-attempts/getExamAttemptWithStudyProfileByTeacher");
       const allEvents = response.data.data;
+
       const filteredEvents = allEvents.filter((event) => {
         const attemptDate = dayjs(event.attemptdatetime);
         return attemptDate.month() === month && attemptDate.year() === year;
       });
+      console.log(filteredEvents);
+      
       setEvents(filteredEvents);
     } catch (error) {
       console.error("Error fetching exam attempts:", error);

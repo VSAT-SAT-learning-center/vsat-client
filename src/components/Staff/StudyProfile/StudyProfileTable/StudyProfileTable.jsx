@@ -2,8 +2,8 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import apiClient from "~/services/apiService";
-import ProfileEditModal from "../ProfileEditModal";
 import ProfileCreateModal from "../ProfileCreateModal";
+import ProfileEditModal from "../ProfileEditModal";
 import styles from "./StudyProfileTable.module.scss";
 
 const cx = classNames.bind(styles);
@@ -23,7 +23,6 @@ function StudyProfileTable() {
         params: { page, pageSize },
       })
       .then((response) => {
-        console.log(response);
         const { data } = response.data;
         const { data: profileList, totalPages } = data;
         setProfiles(profileList || []);
@@ -91,11 +90,11 @@ function StudyProfileTable() {
               <button className={cx("filter-btn")}>Search</button>
             </div>
             <button
-                className={cx("add-study-profile-btn")}
-                onClick={openModal}
-              >
-                <PlusCircleOutlined style={{ marginRight: "5px" }} /> Add User
-              </button>
+              className={cx("add-study-profile-btn")}
+              onClick={openModal}
+            >
+              <PlusCircleOutlined style={{ marginRight: "5px" }} /> Add User
+            </button>
           </div>
         </div>
         <div className={cx("study-profile-table-container")}>
