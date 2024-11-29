@@ -5,6 +5,7 @@ import ExamStructureCreateView from "~/components/Staff/ExamStructureCreate/Exam
 import ExamStructureItem from "~/components/Staff/ExamStructureCreate/ExamStructureItem";
 import ExamStructureViewDetail from "~/components/Staff/ExamStructureCreate/ExamStructureViewDetail";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ExamStructure.module.scss";
@@ -20,7 +21,7 @@ function ExamStructure() {
   const fetchExamStructureList = useCallback(async () => {
     try {
       setIsWaiting(true);
-      const response = await apiClient.get("/exam-structures", {
+      const response = await apiClient.get("/exam-structures/getByCreateBy", {
         params: {
           page: 1,
           pageSize: 0,
@@ -67,7 +68,13 @@ function ExamStructure() {
                 <span className={cx("structure-text")}>New Structure</span>
               </button>
             </div>
-            <div className={cx("create-structure-content")}>
+            <div
+              className={cx(
+                isWaiting || examStructureList.length > 0
+                  ? "create-structure-content"
+                  : "create-structure-no-content"
+              )}
+            >
               {isWaiting ? (
                 <>
                   {[...Array(3)].map((_, i) => (
@@ -80,7 +87,7 @@ function ExamStructure() {
                     />
                   ))}
                 </>
-              ) : (
+              ) : examStructureList.length > 0 ? (
                 examStructureList.map((structureItem, index) => (
                   <ExamStructureItem
                     key={index}
@@ -92,6 +99,8 @@ function ExamStructure() {
                     setViewStructureDeatailData={setViewStructureDeatailData}
                   />
                 ))
+              ) : (
+                <NoQuestionData />
               )}
             </div>
           </div>

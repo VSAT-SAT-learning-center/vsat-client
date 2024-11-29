@@ -22,7 +22,8 @@ function Learning() {
       try {
         setIsWaiting(true);
         const response = await apiClient.get(`/study-profiles/getStudyProfileByAccountId`);
-        setProfiles(response.data.data);
+        const sortedProfiles = response.data.data.sort((a, b) => new Date(b.createdat) - new Date(a.createdat));
+        setProfiles(sortedProfiles);
       } catch (error) {
         console.error("Error fetching learning materials:", error);
       } finally {

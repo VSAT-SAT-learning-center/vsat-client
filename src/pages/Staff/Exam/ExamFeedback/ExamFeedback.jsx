@@ -17,7 +17,7 @@ function ExamFeedback() {
   const fetchExamList = useCallback(async () => {
     try {
       setIsWaiting(true);
-      const response = await apiClient.get("/exams/Rejected");
+      const response = await apiClient.get("/exams/getExamWithExamQuestionByStatusByCreateBy/Rejected");
       setExamList(response.data.data);
       return response.data.data;
     } catch (error) {

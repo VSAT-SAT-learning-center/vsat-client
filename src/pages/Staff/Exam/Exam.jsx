@@ -20,7 +20,7 @@ function Exam() {
   const fetchExamList = useCallback(async () => {
     try {
       setIsWaiting(true);
-      const response = await apiClient.get(`exams/getExamByCreateBy`);
+      const response = await apiClient.get(`/exams/getExamWithExamQuestionByStatusByCreateBy/Approved`);
       setExamList(response.data.data);
     } catch (error) {
       console.error("Failed to fetch exam structure list:", error);

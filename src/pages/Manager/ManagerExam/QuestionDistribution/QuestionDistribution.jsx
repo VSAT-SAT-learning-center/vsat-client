@@ -110,7 +110,7 @@ function QuestionDistribution() {
                   className={cx("fa-regular fa-plus-circle", "import-icon")}
                 ></i>
                 <span className={cx("import-text")}>
-                  New question distribution
+                  New distribution
                 </span>
               </button>
             </div>

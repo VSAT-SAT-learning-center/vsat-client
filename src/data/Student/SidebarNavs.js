@@ -56,7 +56,7 @@ export const sidebarNavs = [
   //     },
   //   ],
   // },
-  
+
   {
     id: 6,
     section: "MY ACCOUNT",
@@ -64,7 +64,19 @@ export const sidebarNavs = [
     iconActive: "fa-regular fa-comments",
     title: "Teacher Feedbacks",
     path: "/feedback",
-    show: false,
+    show: true,
+    subNavs: [
+      {
+        id: 1,
+        title: "Send Feedback",
+        path: "/feedback/send",
+      },
+      {
+        id: 2,
+        title: "Receive Feedback",
+        path: "/feedback/receive",
+      },
+    ],
   },
   {
     id: 7,

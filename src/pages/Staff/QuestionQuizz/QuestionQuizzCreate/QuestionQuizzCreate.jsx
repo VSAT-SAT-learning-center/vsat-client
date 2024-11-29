@@ -34,7 +34,7 @@ function QuestionQuizzCreate() {
 
   const fetchQuestions = useCallback(async () => {
     try {
-      const response = await apiClient.get(`/quiz-questions`, {
+      const response = await apiClient.get(`/quiz-questions/getAllWithStatusByCreateBy`, {
         params: {
           page: currentPage,
           pageSize: itemsPerPage,

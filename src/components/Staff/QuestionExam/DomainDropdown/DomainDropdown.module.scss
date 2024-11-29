@@ -1,0 +1,28 @@
+@import "~/styles/variables";
+
+.dropdowm-container {
+  position: absolute;
+  left: 534px;
+  top: 50px;
+  width: 252px;
+  height: fit-content;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid $border-color;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: $bg-primary-color;
+  z-index: 5;
+
+  .dropdown-item {
+    cursor: pointer;
+    user-select: none;
+    padding: 12px;
+    font-size: 17px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: #f4f4f4;
+    }
+  }
+}

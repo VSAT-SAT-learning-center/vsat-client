@@ -19,7 +19,7 @@ function ExamCreate() {
   const fetchExamList = useCallback(async () => {
     try {
       setIsWaiting(true);
-      const response = await apiClient.get("/exams/Pending");
+      const response = await apiClient.get("/exams/getExamWithExamQuestionByStatusByCreateBy/Pending");
       setExamList(response.data.data);
     } catch (error) {
       console.error("Failed to fetch exam structure list:", error);
@@ -60,8 +60,8 @@ function ExamCreate() {
               </button>
             </div>
             <div className={cx(isWaiting || examList.length > 0
-                  ? "create-exam-content"
-                  : "create-exam-no-content")}>
+              ? "create-exam-content"
+              : "create-exam-no-content")}>
               {isWaiting ? (
                 <>
                   {[...Array(3)].map((_, i) => (

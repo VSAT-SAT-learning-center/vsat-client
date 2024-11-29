@@ -13,6 +13,7 @@
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     background-color: $bg-primary-color;
+    overflow-y: hidden;
 
     .create-score-header {
       width: 100%;
@@ -53,6 +54,8 @@
 
     .create-score-content {
       width: 100%;
+      height: fit-content;
+      max-height: calc(100% - 79px);
       padding: 20px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);

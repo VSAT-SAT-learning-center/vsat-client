@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { AuthContext } from "~/contexts/AuthContext";
 import apiClient from "~/services/apiService";
 import AddLearningPathModal from "./AddLearningPathModal";
 import EditLearningPathModal from "./EditLearningPathModal";
@@ -8,6 +9,7 @@ import styles from "./ViewLearningPath.module.scss";
 const cx = classNames.bind(styles);
 
 function ViewLearningPath({ target, setIsShowViewTargetLearning, setIsShowViewStudyProfile }) {
+  const { user } = useContext(AuthContext);
   const [isShowEditLearningPath, setIsShowEditLearningPath] = useState(false)
   const [isShowAddLearningPath, setIsShowAddLearningPath] = useState(false)
   const [learningPaths, setLearningPaths] = useState([])
@@ -182,7 +184,7 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning, setIsShowViewSt
                 <div className={cx("learning-path-title")}>
                   Learning path for {learningPath.section.name}
                 </div>
-                {target.targetlearningdetail[0].status === "Inactive" && (
+                {(target.targetlearningdetail[0].status === "Inactive" && user?.role === "Teacher") && (
                   <button className={cx("add-path-btn")} onClick={() =>
                     handleAddPathClick(
                       learningPath.section.id,
@@ -205,7 +207,7 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning, setIsShowViewSt
                       </div>
                       <div className={cx("item-title")}>
                         <div className={cx("title")}>Unit {unitIndex + 1}</div>
-                        {target.targetlearningdetail[0].status === "Inactive" && (
+                        {(target.targetlearningdetail[0].status === "Inactive" && user?.role === "Teacher") && (
                           <div className={cx("item-action")}>
                             <button
                               className={cx("edit-btn")}
@@ -276,7 +278,7 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning, setIsShowViewSt
         </div>
         <div className={cx("view-learning-path-footer")}>
           <button className={cx("cancel-btn")} onClick={() => setIsShowViewTargetLearning(false)}>Cancel</button>
-          {target.targetlearningdetail[0].status === "Inactive" && (
+          {(target.targetlearningdetail[0].status === "Inactive" && user?.role === "Teacher") && (
             <button className={cx("save-btn")} onClick={handleSaveUpdatePath}>Save</button>
           )}
         </div>

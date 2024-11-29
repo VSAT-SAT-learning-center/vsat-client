@@ -6,10 +6,23 @@ import styles from "./HeaderUserProfile.module.scss";
 const cx = classNames.bind(styles);
 function HeaderUserProfile({ showAccountSetting, setShowAccountSetting }) {
   const { user } = useContext(AuthContext);
-
+  const generatePath = () => {
+    switch (user?.role) {
+      case "Admin":
+        return "/admin/account-setting";
+      case "Manager":
+        return "/manager/account-setting";
+      case "Staff":
+        return "/staff/account-setting";
+      case "Teacher":
+        return "/teacher/account-setting";
+      default:
+        return "/profile";
+    }
+  };
   return (
     <div className={cx("user-profile")}>
-      <Link to="/profile" className={cx("profile-image")}>
+      <Link to={generatePath()} className={cx("profile-image")}>
         <img
           src={user?.profilepictureurl}
           alt="profile-img"

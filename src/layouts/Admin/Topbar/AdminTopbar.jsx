@@ -13,7 +13,6 @@ const cx = classNames.bind(styles);
 
 function AdminTopbar() {
   const { user } = useContext(AuthContext);
-  const [isFocused, setIsFocused] = useState(false);
   const [showAccountSetting, setShowAccountSetting] = useState(false);
   const [showNotification, setShowNotification] = useState(false)
   // eslint-disable-next-line no-unused-vars
@@ -64,13 +63,6 @@ function AdminTopbar() {
     };
   }, [user?.id]);
 
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
   return (
     <>
       {showAccountSetting && <AccountOptions />}
@@ -78,21 +70,6 @@ function AdminTopbar() {
       <div className={cx("admin-topbar-wrapper")}>
         <div className={cx("admin-topbar-container")}>
           <div className={cx("admin-topbar-left")}>
-            <div className={cx("admin-topbar-search", { focused: isFocused })}>
-              <i
-                className={cx(
-                  "fa-regular fa-magnifying-glass",
-                  "admin-search-icon"
-                )}
-              ></i>
-              <input
-                type="text"
-                placeholder="Search..."
-                className={cx("admin-search-input")}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-              />
-            </div>
           </div>
           <div className={cx("admin-topbar-right")}>
             <HeaderNotification notifications={nofiticationsData} showNotification={showNotification} setShowNotification={setShowNotification} />

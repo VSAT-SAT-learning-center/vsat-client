@@ -63,6 +63,7 @@ import LearningPartUnitTest from "~/pages/Student/LearningPartUnitTest";
 import LearningProcess from "~/pages/Student/LearningProcess";
 import StudentProfile from "~/pages/Student/Profile";
 import ProgressOverview from "~/pages/Student/ProgressOverview";
+import ReceiveFeedback from "~/pages/Student/ReceiveFeedback";
 import AssignExam from "~/pages/Teacher/AssignExam";
 import AssignExamSchedule from "~/pages/Teacher/AssignExam/ExamSchedule";
 import ManageMaterial from "~/pages/Teacher/ManageMaterial";
@@ -70,6 +71,7 @@ import ManageProgress from "~/pages/Teacher/ManageProgress";
 import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
 import TeacherDashboard from "~/pages/Teacher/TeacherDashboard";
 import TeacherFeedback from "~/pages/Teacher/TeacherFeedback";
+import TeacherReceiveFeedback from "~/pages/Teacher/TeacherReceiveFeedback";
 import TeacherSettings from "~/pages/Teacher/TeacherSettings";
 import TrialExam from "~/pages/TrialExam";
 import TrialExamDetail from "~/pages/TrialExam/TrialExamDetail";
@@ -163,8 +165,14 @@ const routesConfig = [
     roles: ["Student"],
   },
   {
-    path: "/feedback",
+    path: "/feedback/send",
     component: Feedback,
+    protected: true,
+    roles: ["Student"],
+  },
+  {
+    path: "/feedback/receive",
+    component: ReceiveFeedback,
     protected: true,
     roles: ["Student"],
   },
@@ -584,8 +592,14 @@ const routesConfig = [
   },
   // Teacher feedback routes
   {
-    path: "/teacher/feedback",
+    path: "/teacher/feedback/send",
     component: TeacherFeedback,
+    protected: true,
+    roles: ["Teacher"],
+  },
+  {
+    path: "/teacher/feedback/receive",
+    component: TeacherReceiveFeedback,
     protected: true,
     roles: ["Teacher"],
   },

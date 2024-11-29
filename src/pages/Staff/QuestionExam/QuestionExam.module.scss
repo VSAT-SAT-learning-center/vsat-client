@@ -17,15 +17,53 @@
     .question-exam-header {
       width: 100%;
       height: 79px;
-      padding: 20px;
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      column-gap: 15px;
       border-bottom: 1px solid $border-color;
 
       .question-text {
         font-size: 20px;
         font-weight: 700;
+      }
+
+      .question-search-container {
+        position: relative;
+        width: 80%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        column-gap: 15px;
+
+        .search-item {
+          user-select: none;
+          cursor: pointer;
+          width: 252px;
+          height: 100%;
+          padding: 12px 14px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-radius: 5px;
+          border: 1px solid $border-color;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+          .selected-text {
+            font-size: 17px;
+            font-weight: 600;
+          }
+
+          .icon-select {
+            font-size: 15px;
+          }
+
+          &.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+          }
+        }
       }
 
       .question-options {
@@ -34,7 +72,7 @@
         gap: 12px;
 
         .approve-btn {
-          padding: 6px 16px;
+          padding: 10px 16px;
           border-radius: 35px;
           font-size: 16px;
           font-weight: 600;
@@ -49,7 +87,7 @@
         }
 
         .pending-btn {
-          padding: 6px 16px;
+          padding: 10px 16px;
           border-radius: 35px;
           font-size: 16px;
           font-weight: 600;
@@ -72,6 +110,7 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+
       &::-webkit-scrollbar {
         display: none;
       }
