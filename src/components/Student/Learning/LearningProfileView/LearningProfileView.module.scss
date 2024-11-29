@@ -58,6 +58,14 @@
       }
     }
 
+    .learning-profile-view-no-content {
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .learning-profile-view-content {
       width: 100%;
       flex-grow: 1;

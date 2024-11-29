@@ -20,35 +20,6 @@
     align-items: center;
     justify-content: space-between;
 
-    .teacher-topbar-left {
-      .teacher-topbar-search {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px 16px;
-        border-radius: 25px;
-        border: 1px solid transparent;
-        background-color: $bg-secondary-color;
-        transition: 0.2s linear;
-
-        .teacher-search-icon {
-          color: $icon-color;
-          margin-right: 10px;
-        }
-
-        .teacher-search-input {
-          width: 350px;
-          border: none;
-          outline: none;
-          background-color: transparent;
-        }
-
-        &.focused {
-          border-color: $primary-color;
-        }
-      }
-    }
-
     .teacher-topbar-right {
       height: 100%;
       display: flex;

@@ -13,7 +13,6 @@ const cx = classNames.bind(styles);
 
 function TeacherTopbar() {
   const { user } = useContext(AuthContext);
-  const [isFocused, setIsFocused] = useState(false);
   const [showAccountSetting, setShowAccountSetting] = useState(false);
   const [showNotification, setShowNotification] = useState(false)
   // eslint-disable-next-line no-unused-vars
@@ -63,13 +62,6 @@ function TeacherTopbar() {
     };
   }, [user?.id]);
 
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
   return (
     <>
       {showAccountSetting && <AccountOptions />}
@@ -77,23 +69,6 @@ function TeacherTopbar() {
       <div className={cx("teacher-topbar-wrapper")}>
         <div className={cx("teacher-topbar-container")}>
           <div className={cx("teacher-topbar-left")}>
-            <div
-              className={cx("teacher-topbar-search", { focused: isFocused })}
-            >
-              <i
-                className={cx(
-                  "fa-regular fa-magnifying-glass",
-                  "teacher-search-icon"
-                )}
-              ></i>
-              <input
-                type="text"
-                placeholder="Search..."
-                className={cx("teacher-search-input")}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-              />
-            </div>
           </div>
           <div className={cx("teacher-topbar-right")}>
             <HeaderNotification notifications={nofiticationsData} showNotification={showNotification} setShowNotification={setShowNotification} />

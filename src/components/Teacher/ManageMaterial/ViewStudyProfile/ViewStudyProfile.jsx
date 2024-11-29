@@ -19,7 +19,8 @@ function ViewStudyProfile({ profile, setIsShowViewStudyProfile }) {
       try {
         setIsWaiting(true)
         const response = await apiClient.get(`/target-learnings/getTargetLearningByStudyProfile?studyProfileId=${profile?.id}`)
-        setTargetLearnings(response.data.data);
+        const sortedTargets = response.data.data.sort((a, b) => new Date(b.createdat) - new Date(a.createdat));
+        setTargetLearnings(sortedTargets);
       } catch (error) {
         console.error("Error while fetching target learning:", error);
       } finally {
@@ -30,7 +31,7 @@ function ViewStudyProfile({ profile, setIsShowViewStudyProfile }) {
   }, [profile?.id])
   return (
     <>
-      {isShowViewTargetLearning && <ViewTargetLearningDeatail target={targetSelected} setIsShowViewTargetLearning={setIsShowViewTargetLearning} setIsShowViewStudyProfile={setIsShowViewStudyProfile}/>}
+      {isShowViewTargetLearning && <ViewTargetLearningDeatail target={targetSelected} setIsShowViewTargetLearning={setIsShowViewTargetLearning} setIsShowViewStudyProfile={setIsShowViewStudyProfile} />}
       <div className={cx("view-study-profile-wrapper")}>
         <div className={cx("view-study-profile-container")}>
           <div className={cx("view-study-profile-header")}>
