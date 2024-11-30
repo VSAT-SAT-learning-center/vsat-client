@@ -1,13 +1,13 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import ViewDetailFeedback from "~/components/Manager/ManagerFeedback/ViewDetailFeedback";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import FeedbackItem from "~/components/Teacher/TeacherFeedback/FeedbackItem";
-import PageLayout from "~/layouts/Manager/PageLayout";
+import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
-import styles from "./ManagerFeedback.module.scss";
+import styles from "./StaffReceiveFeedback.module.scss";
+import ViewDetailFeedback from "~/components/Staff/StaffFeedback/ViewDetailFeedback";
 const cx = classNames.bind(styles);
-function ManagerFeedback() {
+function StaffReceiveFeedback() {
   const [showViewFeedback, setShowViewFeedback] = useState(false);
   const [feedbacks, setFeedbacks] = useState([]);
   const [feedbackData, setFeedbackData] = useState(null);
@@ -15,7 +15,7 @@ function ManagerFeedback() {
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const response = await apiClient("/evaluate-feedback/manager");
+        const response = await apiClient("/evaluate-feedback/staff");
         setFeedbacks(response.data);
       } catch (error) {
         console.error("Error while fetching feedbacks:", error);
@@ -27,12 +27,12 @@ function ManagerFeedback() {
     <>
       {showViewFeedback && <ViewDetailFeedback feedbackData={feedbackData} setShowViewFeedback={setShowViewFeedback} />}
       <PageLayout>
-        <div className={cx("manager-feedback-wrapper")}>
-          <div className={cx("manager-feedback-container")}>
-            <div className={cx("manager-feedback-header")}>
-              <div className={cx("manager-feedback-text")}>Feedback</div>
+        <div className={cx("staff-feedback-wrapper")}>
+          <div className={cx("staff-feedback-container")}>
+            <div className={cx("staff-feedback-header")}>
+              <div className={cx("staff-feedback-text")}>Receive Feedback</div>
             </div>
-            <div className={cx("manager-feedback-content")}>
+            <div className={cx("staff-feedback-content")}>
               {feedbacks?.map((feedback) => (
                 <FeedbackItem
                   feedback={feedback}
@@ -48,7 +48,7 @@ function ManagerFeedback() {
         <LearningMaterialCreateFooter />
       </PageLayout>
     </>
-  );
+  )
 }
 
-export default ManagerFeedback;
+export default StaffReceiveFeedback

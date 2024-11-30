@@ -29,7 +29,7 @@ function SendFeedback({ setFeedbackNormalData }) {
         </div>
       </div>
       <div className={cx("detail-feedback")}>
-        <div className={cx("title")}>Detail Feedback</div>
+        <div className={cx("title")}>Detail Narrative Feedback</div>
         <div className={cx("detail-input")}>
           <textarea
             placeholder="Feedback"

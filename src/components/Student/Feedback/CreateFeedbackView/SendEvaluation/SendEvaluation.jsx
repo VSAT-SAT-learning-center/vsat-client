@@ -85,7 +85,7 @@ function SendEvaluation({ teacher, setFeedbackData }) {
                 className={cx("avatar-img")}
               />
               <div className={cx("username")}>
-                {teacher?.firstname + " " + teacher?.lastname || "Unknown"}
+                {(teacher?.firstname + " " + teacher?.lastname) || "Unknown"}
               </div>
             </div>
           </div>

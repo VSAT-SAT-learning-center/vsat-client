@@ -1,29 +1,46 @@
 import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
+import apiClient from "~/services/apiService";
 import styles from "./ViewEvaluateFeedback.module.scss";
 const cx = classNames.bind(styles);
 const evaluationDimensions = [
   {
-    id: "684122fe-277f-49e8-a0e0-6caea33aa1bb",
-    label: "Academic Performance",
-    description: "Overall academic achievements and learning progress",
+    id: "7eaa06fe-85ff-4b9b-8358-727473fb44a8",
+    label: "Teaching Effectiveness",
+    description: `Evaluates a teacher's ability to deliver lessons clearly, engage students, and ensure understanding of concepts.`,
   },
   {
-    id: "44d6daf9-2758-4090-ba77-2b805e6d9ee6",
-    label: "Classroom Behavior",
-    description: "Conduct, participation, and classroom engagement",
+    id: "529d4894-3c0a-4c54-abdf-1be5b80672d5",
+    label: "Classroom Management",
+    description:
+      "Measures how effectively a teacher maintains discipline, organizes activities, and creates a conducive learning environment.",
   },
   {
-    id: "d5adde13-bbcb-4dae-9b58-738092a61027",
-    label: "Social Skills",
-    description: "Interaction with peers and emotional intelligence",
+    id: "2e5165be-4ac9-4462-aedd-b00e99402e39",
+    label: "Communication Skills",
+    description:
+      "Assesses how clearly and effectively a teacher communicates with students and colleagues.",
   },
   {
-    id: "c34a0f82-6e72-4ad2-87b9-2602fcbf97c9",
-    label: "Leadership Potential",
-    description: "Initiative, teamwork, and potential to lead",
+    id: "8cfa139b-ff2a-44bc-bdbd-7342a81bcd17",
+    label: "Professionalism",
+    description: `Evaluates a teacher's punctuality, adherence to policies, and overall professional behavior.`,
   },
 ];
 function ViewEvaluateFeedback({ feedbackData }) {
+  const [teacher, setTeacher] = useState(null);
+  useEffect(() => {
+    const fetchTeacher = async () => {
+      try {
+        const response = await apiClient.get("/study-profiles/teacher-info");
+        setTeacher(response.data);
+      } catch (error) {
+        console.error("Error while fetching teacher information:", error);
+      }
+    };
+
+    fetchTeacher();
+  }, []);
   const renderStars = (currentRating) => {
     return Array.from({ length: 5 }, (_, index) => (
       <i
@@ -36,17 +53,17 @@ function ViewEvaluateFeedback({ feedbackData }) {
   return (
     <div className={cx("send-evaluation-container")}>
       <div className={cx("select-student-container")}>
-        <div className={cx("title")}>Student</div>
+        <div className={cx("title")}>Teacher</div>
         <div className={cx("select-container")}>
           <div className={cx("select")}>
             <div className={cx("infor")}>
               <img
-                src={feedbackData?.accountTo?.profileImage || ""}
+                src={teacher?.profilePicture || "https://cdn-icons-png.flaticon.com/512/18174/18174185.png"}
                 alt="avatar"
                 className={cx("avatar-img")}
               />
               <div className={cx("username")}>
-                {feedbackData?.accountTo?.username || "Unknown"}
+                {(teacher?.firstname + " " + teacher?.lastname) || "Unknown"}
               </div>
             </div>
           </div>

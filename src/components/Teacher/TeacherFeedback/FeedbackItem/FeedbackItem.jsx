@@ -3,11 +3,18 @@ import { formatDate } from "~/utils/formatDate";
 import styles from "./FeedbackItem.module.scss";
 const cx = classNames.bind(styles);
 
-function FeedbackItem({ feedback, setShowViewFeedback, setFeedbackData, type }) {
+function FeedbackItem({
+  feedback,
+  setShowViewFeedback,
+  setFeedbackData,
+  type,
+}) {
+  console.log(feedback);
+
   const handleChooseFeedback = () => {
-    setFeedbackData(feedback)
-    setShowViewFeedback(true)
-  }
+    setFeedbackData(feedback);
+    setShowViewFeedback(true);
+  };
 
   const generateType = () => {
     switch (feedback?.evaluateFeedbackType) {
@@ -22,17 +29,51 @@ function FeedbackItem({ feedback, setShowViewFeedback, setFeedbackData, type }) 
       case "STAFF_TO_MANAGER":
         return "Feedback to manager";
       default:
-        return "Feedback"
+        return "Feedback";
     }
   };
+
+  const generateUsername = () => {
+    if (type === "Receive") {
+      return feedback?.accountFrom?.username;
+    } else {
+      if (feedback?.evaluateFeedbackType === "STUDENT_TO_STAFF" || feedback?.evaluateFeedbackType === "TEACHER_TO_STAFF") {
+        return "Staff"
+      } else if (feedback?.evaluateFeedbackType === "STAFF_TO_MANAGER") {
+        return "Manager";
+      } else {
+        return feedback?.accountTo?.username || "Unknown User";
+      }
+    }
+  };
+
+  const generateProfileImage = () => {
+    if (type === "Receive") {
+      return feedback?.accountFrom?.profileImage;
+    } else {
+      if (feedback?.evaluateFeedbackType === "STUDENT_TO_STAFF" || feedback?.evaluateFeedbackType === "TEACHER_TO_STAFF") {
+        return "https://cdn-icons-png.flaticon.com/512/1535/1535835.png"
+      } else if (feedback?.evaluateFeedbackType === "STAFF_TO_MANAGER") {
+        return "https://cdn-icons-png.flaticon.com/512/2552/2552801.png";
+      } else {
+        return feedback?.accountTo?.profileImage ||
+          "https://cdn-icons-png.flaticon.com/512/18174/18174163.png"
+      }
+    }
+  };
+
   return (
     <div className={cx("feedback-item-container")}>
       <div className={cx("feedback-item-header")}>
         <div className={cx("user-infor")}>
           <div className={cx("user-avatar")}>
-            <img src={type === "Receive" ? feedback?.accountFrom?.profileImage : feedback?.accountTo?.profileImage || "https://cdn-icons-png.flaticon.com/512/1535/1535835.png"} alt="user-avt" className={cx("avatar")} />
+            <img
+              src={generateProfileImage()}
+              alt="user-avt"
+              className={cx("avatar")}
+            />
           </div>
-          <div className={cx("user-infor")}>{type === "Receive" ? feedback?.accountFrom?.username : feedback?.accountTo?.username || "Staff"}</div>
+          <div className={cx("user-infor")}>{generateUsername()}</div>
         </div>
         <button
           className={cx("view-detail-btn")}
@@ -50,11 +91,13 @@ function FeedbackItem({ feedback, setShowViewFeedback, setFeedbackData, type }) 
         <div className={cx("item-content")}>
           <i className={cx("fa-regular fa-timer")}></i>
           <span className={cx("item-title")}>Created At:</span>
-          <span className={cx("item-text")}>{formatDate(feedback?.createdat)}</span>
+          <span className={cx("item-text")}>
+            {formatDate(feedback?.createdat)}
+          </span>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default FeedbackItem
+export default FeedbackItem;
