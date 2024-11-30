@@ -178,7 +178,19 @@ export const sidebarNavs = [
     iconActive: "fa-regular fa-comments",
     title: "Feedback",
     path: "/staff/feedback",
-    show: false,
+    show: true,
+    subNavs: [
+      {
+        id: 1,
+        title: "Send Feedback",
+        path: "/staff/feedback/send",
+      },
+      {
+        id: 2,
+        title: "Receive Feedback",
+        path: "/staff/feedback/receive",
+      },
+    ],
   },
   {
     id: 10,

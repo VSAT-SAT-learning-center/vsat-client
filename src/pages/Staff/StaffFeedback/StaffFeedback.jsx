@@ -1,15 +1,14 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
-import CreateFeedbackView from "~/components/Student/Feedback/CreateFeedbackView";
-import ViewDetailFeedback from "~/components/Student/Feedback/ViewDetailFeedback";
+import CreateFeedbackView from "~/components/Staff/StaffFeedback/CreateFeedbackView";
+import ViewDetailFeedback from "~/components/Staff/StaffFeedback/ViewDetailFeedback";
 import FeedbackItem from "~/components/Teacher/TeacherFeedback/FeedbackItem";
-import LearningLayout from "~/layouts/Student/LearningLayout/LearningPageLayout";
+import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
-import styles from "./Feedback.module.scss";
+import styles from "./StaffFeedback.module.scss";
 const cx = classNames.bind(styles);
-
-function Feedback() {
+function StaffFeedback() {
   const [showFeedbackCreate, setShowFeedbackCreate] = useState(false)
   const [showViewFeedback, setShowViewFeedback] = useState(false)
   const [feedbacks, setFeedbacks] = useState([])
@@ -29,11 +28,11 @@ function Feedback() {
     <>
       {showFeedbackCreate && <CreateFeedbackView setShowFeedbackCreate={setShowFeedbackCreate} />}
       {showViewFeedback && <ViewDetailFeedback feedbackData={feedbackData} setShowViewFeedback={setShowViewFeedback} />}
-      <LearningLayout>
-        <div className={cx("feedback-wrapper")}>
-          <div className={cx("feedback-container")}>
-            <div className={cx("feedback-header")}>
-              <div className={cx("feedback-text")}>Send Feedback</div>
+      <PageLayout>
+        <div className={cx("staff-feedback-wrapper")}>
+          <div className={cx("staff-feedback-container")}>
+            <div className={cx("staff-feedback-header")}>
+              <div className={cx("staff-feedback-text")}>Send Feedback</div>
               <button
                 className={cx("create-feedback-action")}
                 onClick={() => setShowFeedbackCreate(true)}
@@ -42,7 +41,7 @@ function Feedback() {
                 <span className={cx("feedback-text")}>New Feedback</span>
               </button>
             </div>
-            <div className={cx("feedback-content")}>
+            <div className={cx("staff-feedback-content")}>
               {feedbacks?.map((feedback) => (
                 <FeedbackItem feedback={feedback} setShowViewFeedback={setShowViewFeedback} key={feedback?.id} setFeedbackData={setFeedbackData} />
               ))}
@@ -50,9 +49,9 @@ function Feedback() {
           </div>
         </div>
         <LearningMaterialCreateFooter />
-      </LearningLayout>
+      </PageLayout>
     </>
-  )
+  );
 }
 
-export default Feedback
+export default StaffFeedback;

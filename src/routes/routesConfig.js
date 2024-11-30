@@ -31,7 +31,6 @@ import ExamCreate from "~/pages/Staff/Exam/ExamCreate";
 import ExamFeedback from "~/pages/Staff/Exam/ExamFeedback";
 import ExamScore from "~/pages/Staff/Exam/ExamScore";
 import ExamStructure from "~/pages/Staff/Exam/ExamStructure";
-import StaffFeedback from "~/pages/Staff/Feedback";
 import LearningMaterial from "~/pages/Staff/LearningMaterial";
 import LearningMaterialCreateAss from "~/pages/Staff/LearningMaterial/LearningMaterialCreateAss";
 import LearningMaterialCreateDetails from "~/pages/Staff/LearningMaterial/LearningMaterialCreateDetails";
@@ -48,6 +47,8 @@ import QuestionQuizz from "~/pages/Staff/QuestionQuizz";
 import QuestionQuizzCreate from "~/pages/Staff/QuestionQuizz/QuestionQuizzCreate";
 import QuizzFeedback from "~/pages/Staff/QuestionQuizz/QuizzFeedback/QuizzFeedback";
 import Settings from "~/pages/Staff/Settings";
+import StaffFeedback from "~/pages/Staff/StaffFeedback";
+import StaffReceiveFeedback from "~/pages/Staff/StaffReceiveFeedback";
 import Students from "~/pages/Staff/Students";
 import StudyProfile from "~/pages/Staff/Students/StudyProfile";
 import Teachers from "~/pages/Staff/Teachers";
@@ -376,8 +377,14 @@ const routesConfig = [
   },
   // Staff manage feedback routes
   {
-    path: "/staff/feedback",
+    path: "/staff/feedback/send",
     component: StaffFeedback,
+    protected: true,
+    roles: ["Staff"],
+  },
+  {
+    path: "/staff/feedback/receive",
+    component: StaffReceiveFeedback,
     protected: true,
     roles: ["Staff"],
   },

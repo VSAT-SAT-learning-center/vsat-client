@@ -1,0 +1,76 @@
+@import "~/styles/variables";
+
+.send-feedback-container {
+  width: 100%;
+  background-color: $bg-primary-color;
+
+  .reason-feedback {
+    width: 100%;
+    margin-bottom: 24px;
+
+    .title {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .reason-input {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      min-height: 80px;
+      max-height: 80px;
+      padding: 10px 16px;
+      border-radius: 5px;
+      border: 1px solid #c5c5c5;
+
+      .input {
+        width: 100%;
+        height: fit-content;
+        min-height: calc(80px - 20px);
+        max-height: calc(80px - 20px);
+        resize: none;
+        border: none;
+        outline: none;
+        overflow: auto;
+      }
+    }
+  }
+
+  .detail-feedback {
+    width: 100%;
+    margin-bottom: 24px;
+
+    .title {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .detail-input {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      min-height: 270px;
+      max-height: 270px;
+      padding: 10px 16px;
+      border-radius: 5px;
+      border: 1px solid #c5c5c5;
+
+      .input {
+        width: 100%;
+        height: fit-content;
+        min-height: calc(270px - 20px);
+        max-height: calc(270px - 20px);
+        resize: none;
+        border: none;
+        outline: none;
+        overflow: auto;
+      }
+    }
+  }
+}
