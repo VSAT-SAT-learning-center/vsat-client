@@ -85,18 +85,18 @@ function ViewExam({ target }) {
               <div className={cx("score-summary-content")}>
                 <div className={cx("total-score")}>
                   Total Score is:{" "}
-                  <span className={cx("score")}>{examResultRW?.score + examResultMath?.score}</span>
+                  <span className={cx("score")}>{(examResultRW?.score + examResultMath?.score) || 0}</span>
                 </div>
                 <div className={cx("score-part-container")}>
                   <div className={cx("score-part-item")}>
                     <div className={cx("part-title")}>Reading and Writing</div>
-                    <div className={cx("part-score")}>{examResultRW?.score}</div>
-                    <ProgressBar currentScore={examResultRW?.score} />
+                    <div className={cx("part-score")}>{examResultRW?.score || 0}</div>
+                    <ProgressBar currentScore={examResultRW?.score || 0} />
                   </div>
                   <div className={cx("score-part-item")}>
                     <div className={cx("part-title")}>Math</div>
-                    <div className={cx("part-score")}>{examResultMath?.score}</div>
-                    <ProgressBar currentScore={examResultMath?.score} />
+                    <div className={cx("part-score")}>{examResultMath?.score || 0}</div>
+                    <ProgressBar currentScore={examResultMath?.score || 0} />
                   </div>
                 </div>
               </div>
