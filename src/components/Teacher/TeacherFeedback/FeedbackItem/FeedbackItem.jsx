@@ -9,8 +9,6 @@ function FeedbackItem({
   setFeedbackData,
   type,
 }) {
-  console.log(feedback);
-
   const handleChooseFeedback = () => {
     setFeedbackData(feedback);
     setShowViewFeedback(true);

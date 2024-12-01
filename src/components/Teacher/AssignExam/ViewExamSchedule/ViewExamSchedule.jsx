@@ -5,6 +5,7 @@ import styles from "./ViewExamSchedule.module.scss";
 const cx = classNames.bind(styles);
 
 function ViewExamSchedule({ date, event, setShowViewExamSchedule }) {
+
   return (
     <div
       className={cx("view-exam-schedule-wrapper")}
@@ -38,7 +39,7 @@ function ViewExamSchedule({ date, event, setShowViewExamSchedule }) {
               </div>
             </div>
             <div className={cx("view-profiles-container")}>
-              {event?.targetlearning.map((profile) => (
+              {event?.targetlearning?.map((profile) => (
                 <div className={cx("view-profile-item")} key={profile?.id}>
                   <div className={cx("view-profile-infor")}>
                     <img

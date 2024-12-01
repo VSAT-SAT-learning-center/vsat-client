@@ -29,82 +29,53 @@ function ExamSchedule() {
   }, []);
 
   const getListData = (value) => {
-    const currentDate = new Date();
+    const currentDate = moment();
     const listData = examAttempts
       .filter((attempt) => {
-        const attemptDate = new Date(attempt.attemptdatetime);
+        const attemptDate = moment(attempt.attemptdatetime);
         return (
-          attemptDate.getFullYear() === value.year() &&
-          attemptDate.getMonth() === value.month() &&
-          attemptDate.getDate() === value.date()
+          attemptDate.year() === value.year() &&
+          attemptDate.month() === value.month() &&
+          attemptDate.date() === value.date()
         );
       })
       .map((attempt) => {
-        const attemptDate = new Date(attempt.attemptdatetime);
-
+        const attemptDate = moment(attempt.attemptdatetime);
         let type = "success";
-        if (attemptDate.getFullYear() === currentDate.getFullYear() &&
-          attemptDate.getMonth() === currentDate.getMonth() &&
-          attemptDate.getDate() < currentDate.getDate()) {
+        if (attemptDate.isBefore(currentDate, "day")) {
           type = "error";
-        } else if (attemptDate.getFullYear() === currentDate.getFullYear() &&
-          attemptDate.getMonth() === currentDate.getMonth() &&
-          attemptDate.getDate() > currentDate.getDate()) {
+        } else if (attemptDate.isAfter(currentDate, "day")) {
           type = "warning";
-        } else if (attemptDate.getFullYear() === currentDate.getFullYear() &&
-          attemptDate.getMonth() === currentDate.getMonth() &&
-          attemptDate.getDate() === currentDate.getDate() || attempt.status === true) {
+        } else if (attemptDate.isSame(currentDate, "day")) {
           type = "success";
         }
 
         return {
           type,
           content: attempt.exam.examTitle,
-          duration: "Duration: " + attempt.exam.totalTime + " mins",
+          duration: `Duration: ${attempt.exam.totalTime} mins`,
           examId: attempt.exam.id,
-          status: attempt.status
+          status: attempt.status,
+          attemptDate: attemptDate,
         };
       });
 
     return listData || [];
   };
 
-  const dateCellRender = (value) => {
-    const listData = getListData(value);
-    return (
-      <ul className="events">
-        {listData.map((item, index) => (
-          <li key={index}>
-            <Badge status={item.type} text={item.content} />
-            <div>{item.duration}</div>
-          </li>
-        ))}
-      </ul>
-    );
-  };
+
 
   const handleSelectDate = (value) => {
     const listData = getListData(value);
     if (listData.length === 0) return;
 
     const firstExam = listData[0];
-    const currentDate = new Date();
-    const attemptDate = new Date(value.year(), value.month(), value.date());
+    const currentDate = moment();
+    const attemptDate = moment(firstExam.attemptDate);
 
-    const isToday =
-      attemptDate.getFullYear() === currentDate.getFullYear() &&
-      attemptDate.getMonth() === currentDate.getMonth() &&
-      attemptDate.getDate() === currentDate.getDate();
-
-    const isPast =
-      attemptDate.getFullYear() === currentDate.getFullYear() &&
-      attemptDate.getMonth() === currentDate.getMonth() &&
-      attemptDate.getDate() < currentDate.getDate();
-
-    const isFuture =
-      attemptDate.getFullYear() === currentDate.getFullYear() &&
-      attemptDate.getMonth() === currentDate.getMonth() &&
-      attemptDate.getDate() > currentDate.getDate();
+    const isToday = attemptDate.isSame(currentDate, "day");
+    const isPast = attemptDate.isBefore(currentDate, "day");
+    const isFuture = attemptDate.isAfter(currentDate, "day");
 
     if (isPast && firstExam.status === true) {
       toast.info("This exam has already ended. Redirecting to exam history.", {
@@ -140,15 +111,27 @@ function ExamSchedule() {
       return;
     }
 
-    // Default fallback
     toast.warning("Unexpected condition. Please try again.", {
       autoClose: 1500,
     });
   };
 
-
-  const currentDate = moment();
-  const validRange = [currentDate.clone().subtract(1, "month"), currentDate.clone().add(1, "month")];
+  const cellRender = (currentDate, info) => {
+    if (info.type === "date") {
+      const listData = getListData(currentDate);
+      return (
+        <ul className="events">
+          {listData.map((item, index) => (
+            <li key={index}>
+              <Badge status={item.type} text={item.content} />
+              <div>{item.duration}</div>
+            </li>
+          ))}
+        </ul>
+      );
+    }
+    return info.originNode;
+  };
 
   return (
     <LearningLayout>
@@ -158,11 +141,7 @@ function ExamSchedule() {
             <div className={cx("exam-schedule-text")}>Exam Schedule</div>
           </div>
           <div className={cx("exam-schedule-content")}>
-            <Calendar
-              dateCellRender={dateCellRender}
-              validRange={validRange}
-              onSelect={handleSelectDate}
-            />
+            <Calendar cellRender={cellRender} onSelect={handleSelectDate} />
           </div>
         </div>
       </div>

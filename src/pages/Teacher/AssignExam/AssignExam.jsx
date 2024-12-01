@@ -20,7 +20,6 @@ function AssignExam() {
   const [assignedProfiles, setAssignedProfiles] = useState({});
   const [isWaiting, setIsWaiting] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
-  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchExamTypesAndProfiles = async () => {
@@ -35,8 +34,6 @@ function AssignExam() {
           (type) => type.name !== "Trial Exam"
         );
         const fetchedProfiles = profilesResponse.data.data.data;
-        console.log(fetchedProfiles);
-        
         setExamTypes(fetchedExamTypes);
         setProfiles(fetchedProfiles);
 

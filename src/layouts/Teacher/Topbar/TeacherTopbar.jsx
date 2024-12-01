@@ -39,7 +39,7 @@ function TeacherTopbar() {
   }, [])
 
   useEffect(() => {
-    const newSocket = io("http://localhost:5001/feedbacks", {
+    const newSocket = io("https://server.vsatcenter.edu.vn/socket", {
       query: {
         userId: user?.id,
         token: TokenService.getAccessToken(),
@@ -50,8 +50,8 @@ function TeacherTopbar() {
       const mapNotification = {
         type: notification.eventType,
         message: notification.data.message,
-        accountFrom: notification.data.data[0].account,
-        createdAt: notification.data.data[0].createdAt,
+        accountFrom: notification.data.accountFrom,
+        createdAt: notification.data.createdAt,
       }
       setNotificationsData((prevNotifications) => [mapNotification, ...prevNotifications]);
     });
