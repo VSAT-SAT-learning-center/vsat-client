@@ -18,7 +18,7 @@ function LearningProcess() {
       id: 1,
       title: "Reading & Writing",
       description:
-        "Master critical reading, evidence-based analysis, and English conventions to excel in SAT Reading & Writing.",
+        "Enhance your skills in critical reading, evidence-based analysis, and mastery of English conventions to excel in the SAT Reading & Writing section.",
     },
     {
       id: 2,

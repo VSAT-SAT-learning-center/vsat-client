@@ -48,14 +48,20 @@ function CreateFeedbackView({ setShowFeedbackCreate }) {
       try {
         await apiClient.post("/evaluate-feedback/create", feedbackData);
         setShowFeedbackCreate(false);
-        toast.success("Send evaluate student successfully!", {
+        toast.success("Send evaluate teacher successfully!", {
           autoClose: 1500,
         });
       } catch (error) {
-        console.error("Error while evaluating student:", error);
-        toast.error("Error while evaluating student!", {
-          autoClose: 1500,
-        });
+        console.error("Error while evaluating teacher:", error);
+        if (error.response.data.details.message === "Evaluate feedback already exist") {
+          toast.error("Evaluate teacher already exist!", {
+            autoClose: 1500,
+          });
+        } else {
+          toast.error("Error while evaluating teacher!", {
+            autoClose: 1500,
+          });
+        }
       }
     } else {
       try {

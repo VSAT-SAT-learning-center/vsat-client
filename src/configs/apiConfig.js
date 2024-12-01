@@ -1,10 +1,10 @@
 const config = {
   development: {
-    // apiUrl: "https://server.vsatcenter.edu.vn/",
-    apiUrl: "http://localhost:5000/",
+    // apiUrl: "http://localhost:5000/",
+    apiUrl: 'https://server.vsatcenter.edu.vn/',
   },
   // production: {
-  //   apiUrl: 'https://api.yourapp.com',
+  //   apiUrl: 'https://server.vsatcenter.edu.vn/',
   // },
 };
 
