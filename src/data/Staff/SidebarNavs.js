@@ -28,7 +28,7 @@ export const sidebarNavs = [
       {
         id: 3,
         title: "Feedback Material",
-        path: "/staff/learning-material/feedbacks",
+        path: "/staff/learning-material/feedback",
       },
     ],
   },

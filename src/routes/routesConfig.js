@@ -266,7 +266,7 @@ const routesConfig = [
     roles: ["Staff"],
   },
   {
-    path: "/staff/learning-material/feedbacks",
+    path: "/staff/learning-material/feedback",
     component: LearningMaterialFeedback,
     protected: true,
     roles: ["Staff"],

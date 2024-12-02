@@ -18,17 +18,19 @@ function TeacherTopbar() {
   // eslint-disable-next-line no-unused-vars
   const [socket, setSocket] = useState(null);
   const [nofiticationsData, setNotificationsData] = useState([])
+  
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
         const response = await apiClient.get("/notifications")
-        const notifications = response.data.data.map(notification => ({
+        const filterNotifications = response.data.data.filter((notify) => notify.isRead === false)
+        const notifications = filterNotifications.map(notification => ({
           type: notification.type,
+          eventType: notification.eventType,
           message: notification.message,
           accountFrom: notification.accountFrom,
           createdAt: notification.createdAt,
         }));
-
         setNotificationsData(notifications)
       } catch (error) {
         console.error("Error while fetching notifications:", error)
@@ -39,7 +41,8 @@ function TeacherTopbar() {
   }, [])
 
   useEffect(() => {
-    const newSocket = io("https://server.vsatcenter.edu.vn/socket", {
+    const socketUrl = import.meta.env.VITE_SOCKET_URL;
+    const newSocket = io(socketUrl, {
       query: {
         userId: user?.id,
         token: TokenService.getAccessToken(),
@@ -48,7 +51,8 @@ function TeacherTopbar() {
 
     newSocket.on("feedbackNotification", (notification) => {
       const mapNotification = {
-        type: notification.eventType,
+        type: notification.type,
+        eventType: notification.eventType,
         message: notification.data.message,
         accountFrom: notification.data.accountFrom,
         createdAt: notification.data.createdAt,
@@ -65,7 +69,7 @@ function TeacherTopbar() {
   return (
     <>
       {showAccountSetting && <AccountOptions />}
-      {showNotification && <Notifications notifications={nofiticationsData} />}
+      {showNotification && <Notifications notifications={nofiticationsData} setShowNotification={setShowNotification}/>}
       <div className={cx("teacher-topbar-wrapper")}>
         <div className={cx("teacher-topbar-container")}>
           <div className={cx("teacher-topbar-left")}>

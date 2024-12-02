@@ -11,7 +11,7 @@ export const sidebarNavs = [
     id: 2,
     icon: "fa-light fa-clipboard-list",
     iconActive: "fa-regular fa-clipboard-list",
-    title: "Assign Exam",
+    title: "Exam",
     path: "/teacher/assign-exam",
     show: true,
     subNavs: [
@@ -22,7 +22,7 @@ export const sidebarNavs = [
       },
       {
         id: 2,
-        title: "Assign Profiles",
+        title: "Assign Exam",
         path: "/teacher/assign-exam/profiles",
       },
     ],
