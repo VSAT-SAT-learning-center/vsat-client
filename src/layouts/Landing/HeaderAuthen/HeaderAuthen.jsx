@@ -19,12 +19,15 @@ function HeaderAuthen() {
   // eslint-disable-next-line no-unused-vars
   const [socket, setSocket] = useState(null);
   const [nofiticationsData, setNotificationsData] = useState([])
+
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
         const response = await apiClient.get("/notifications")
-        const notifications = response.data.data.map(notification => ({
+        const filterNotifications = response.data.data.filter((notify) => notify.isRead === false)
+        const notifications = filterNotifications.map(notification => ({
           type: notification.type,
+          eventType: notification.eventType,
           message: notification.message,
           accountFrom: notification.accountFrom,
           createdAt: notification.createdAt,
@@ -37,8 +40,10 @@ function HeaderAuthen() {
 
     fetchNotifications()
   }, [])
+
   useEffect(() => {
-    const newSocket = io("https://server.vsatcenter.edu.vn/socket", {
+    const socketUrl = import.meta.env.VITE_SOCKET_URL;
+    const newSocket = io(socketUrl, {
       query: {
         userId: user?.id,
         token: TokenService.getAccessToken(),
@@ -47,7 +52,8 @@ function HeaderAuthen() {
 
     newSocket.on("feedbackNotification", (notification) => {
       const mapNotification = {
-        type: notification.eventType,
+        type: notification.type,
+        eventType: notification.eventType,
         message: notification.data.message,
         accountFrom: notification.data.accountFrom,
         createdAt: notification.data.createdAt,
@@ -60,10 +66,11 @@ function HeaderAuthen() {
       newSocket.close();
     };
   }, [user?.id]);
+
   return (
     <>
       {showAccountSetting && <AccountOptions />}
-      {showNotification && <Notifications notifications={nofiticationsData} />}
+      {showNotification && <Notifications notifications={nofiticationsData} setShowNotification={setShowNotification} />}
       <div className={cx("header-authen-wrapper")}>
         <div className={cx("header-authen-container")}>
           <Link to="/" className={cx("header-authen-logo")}>
