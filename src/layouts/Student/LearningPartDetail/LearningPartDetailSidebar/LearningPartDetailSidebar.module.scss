@@ -61,9 +61,19 @@
 
         .detail-content-title {
           width: 100%;
-          font-size: 18px;
-          font-weight: bold;
-          text-align: center;
+          display: flex;
+          align-items: center;
+          .icon {
+            cursor: pointer;
+            font-size: 18px;
+          }
+
+          .title {
+            flex: 1;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+          }
         }
       }
 

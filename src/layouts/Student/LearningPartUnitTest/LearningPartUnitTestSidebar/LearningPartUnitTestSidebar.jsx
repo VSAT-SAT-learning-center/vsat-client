@@ -1,10 +1,11 @@
 import classNames from "classnames/bind";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TestContext from "~/assets/images/content/test-context.jpg";
 import styles from "./LearningPartUnitTestSidebar.module.scss";
 const cx = classNames.bind(styles);
 
 function LearningPartUnitTestSidebar({ slug, section }) {
+  const navigate = useNavigate()
   const smallWords = ["and", "or", "the", "of", "in", "on", "at", "with", "by", "for"];
   const formattedSectionName = section
     .split("-")
@@ -16,6 +17,10 @@ function LearningPartUnitTestSidebar({ slug, section }) {
       return index === 0 ? capitalized + ":" : capitalized;
     })
     .join(" ");
+
+  const handleBack = () => {
+    navigate(-1)
+  }
   return (
     <div className={cx("learning-part-detail-sidebar-wrapper")}>
       <div className={cx("learning-part-detail-sidebar-container")}>
@@ -30,7 +35,8 @@ function LearningPartUnitTestSidebar({ slug, section }) {
         <div className={cx("detail-content")}>
           <div className={cx("detail-content-header")}>
             <div className={cx("detail-content-title")}>
-              Unit test
+              <i className={cx("fa-solid fa-chevron-left", "icon")} onClick={handleBack}></i>
+              <span className={cx("title")}>Unit test</span>
             </div>
           </div>
           <div className={cx("detail-content-main")}>

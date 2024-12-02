@@ -8,9 +8,9 @@ function LearningPartDetailContent({ lesson, fetchUnitArea }) {
   return (
     <div className={cx("learning-part-detail-content-wrapper")}>
       {lesson?.type === "Text" ? (
-        <LearningPartDetailContentRW lesson={lesson} fetchUnitArea={fetchUnitArea} />
+        <LearningPartDetailContentRW lesson={lesson} fetchUnitArea={fetchUnitArea} type={"learn"} />
       ) : (
-        <LearningPartDetailContentMath lesson={lesson} fetchUnitArea={fetchUnitArea} />
+        <LearningPartDetailContentMath lesson={lesson} fetchUnitArea={fetchUnitArea} type={"learn"} />
       )}
     </div>
   );

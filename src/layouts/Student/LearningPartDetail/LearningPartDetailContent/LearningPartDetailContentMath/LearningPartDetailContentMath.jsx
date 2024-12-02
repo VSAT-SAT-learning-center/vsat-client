@@ -9,7 +9,7 @@ import apiClient from "~/services/apiService";
 import styles from "./LearningPartDetailContentMath.module.scss";
 const cx = classNames.bind(styles);
 
-function LearningPartDetailContentMath({ lesson, fetchUnitArea, unit }) {
+function LearningPartDetailContentMath({ lesson, fetchUnitArea, type }) {
   const [sortedLessonContents, setSortedLessonContents] = useState([]);
   const [markStatus, setMarkStatus] = useState(false)
 
@@ -58,23 +58,21 @@ function LearningPartDetailContentMath({ lesson, fetchUnitArea, unit }) {
               </div>
             ))}
         </div>
-        {(!unit || unit?.status === "Approved") && (
+        {type === "learn" && (
           <div className={cx("lesson-content-completed")}>
             {lesson?.status === "Not Started" ? (
-              <button className={cx("mark-btn")} onClick={handleMarkLesson}>
-                {markStatus ? (
-                  <>
-                    <i className={cx("fa-solid fa-check")}></i>
-                    <span className={cx("text")}>Completed</span>
-                  </>
-                ) : (
-                  <>
-                    <span className={cx("text")}>Mark as Completed</span>
-                  </>
-                )}
-              </button>
+              markStatus ? (
+                <button className={cx("mark-btn", "completed")}>
+                  <i className={cx("fa-solid fa-check")}></i>
+                  <span className={cx("text")}>Completed</span>
+                </button>
+              ) : (
+                <button className={cx("mark-btn")} onClick={handleMarkLesson}>
+                  <span className={cx("text")}>Mark as Completed</span>
+                </button>
+              )
             ) : (
-              <button className={cx("mark-btn")}>
+              <button className={cx("mark-btn", "completed")}>
                 <i className={cx("fa-solid fa-check")}></i>
                 <span className={cx("text")}>Completed</span>
               </button>

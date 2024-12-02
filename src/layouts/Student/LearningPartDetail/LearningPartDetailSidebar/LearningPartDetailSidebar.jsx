@@ -1,10 +1,15 @@
 import classNames from "classnames/bind";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DetailLessonItem from "~/components/Student/LearningPartDetail/LearningPartDetailSidebar/DetailLessonItem";
 import styles from "./LearningPartDetailSidebar.module.scss";
 const cx = classNames.bind(styles);
 
 function LearningPartDetailSidebar({ slug, uniAreaData, activeLesson, onLessonSelect }) {
+  const navigate = useNavigate()
+
+  const handleBack = () => {
+    navigate(-1)
+  }
   return (
     <div className={cx("learning-part-detail-sidebar-wrapper")}>
       <div className={cx("learning-part-detail-sidebar-container")}>
@@ -22,7 +27,8 @@ function LearningPartDetailSidebar({ slug, uniAreaData, activeLesson, onLessonSe
               <CustomBreadcrumbs />
             </div> */}
             <div className={cx("detail-content-title")}>
-              Lesson: {uniAreaData?.unitAreaProgress?.unitArea.title}
+              <i className={cx("fa-solid fa-chevron-left", "icon")} onClick={handleBack}></i>
+              <span className={cx("title")}>Lesson: {uniAreaData?.unitAreaProgress?.unitArea.title}</span>
             </div>
           </div>
           <div className={cx("detail-content-main")}>

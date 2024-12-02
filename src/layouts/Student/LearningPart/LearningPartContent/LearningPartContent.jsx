@@ -13,9 +13,7 @@ function LearningPartContent({ learningContent, activeUnit, sectionId }) {
 
   useEffect(() => {
     const fetchContinueQuestion = async () => {
-      // Check inside the function
       if (!activeUnit?.unitProgressId) {
-        console.log("No active unit or unitProgressId found.");
         return;
       }
 
