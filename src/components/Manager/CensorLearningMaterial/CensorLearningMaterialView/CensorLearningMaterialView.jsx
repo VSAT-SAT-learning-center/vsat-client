@@ -307,12 +307,12 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
               {lessonData?.type === "Text" ? (
                 <LearningPartDetailContentRW
                   lesson={lessonData}
-                  unit={unitDetails}
+                  type={"preview"}
                 />
               ) : (
                 <LearningPartDetailContentMath
                   lesson={lessonData}
-                  unit={unitDetails}
+                  type={"preview"}
                 />
               )}
             </div>

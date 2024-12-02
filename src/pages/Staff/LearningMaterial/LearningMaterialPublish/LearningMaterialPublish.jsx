@@ -102,9 +102,9 @@ function LearningMaterialPublish() {
             <div className={cx("publish-content-wrapper")}>
               <div className={cx("publish-content-container")}>
                 {lesson?.type === "Text" ? (
-                  <LearningPartDetailContentRW lesson={lesson} />
+                  <LearningPartDetailContentRW lesson={lesson} type={"preview"} />
                 ) : (
-                  <LearningPartDetailContentMath lesson={lesson} />
+                  <LearningPartDetailContentMath lesson={lesson} type={"preview"} />
                 )}
               </div>
               <div className={cx("publish-bottom")}>

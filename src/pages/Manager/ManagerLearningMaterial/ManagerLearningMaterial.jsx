@@ -2,6 +2,7 @@ import { Pagination } from "antd";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import LearningMaterialItem from "~/components/Manager/CensorLearningMaterial/LearningMaterialItem";
+import LearningMaterialView from "~/components/Manager/CensorLearningMaterial/LearningMaterialView";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Manager/PageLayout";
@@ -13,6 +14,8 @@ function ManagerLearningMaterial() {
   const [learningMaterials, setLearningMaterials] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [isShowMaterialView, setIsShowMaterialView] = useState(false);
+  const [materialViewUnitId, setMaterialViewUnitId] = useState("");
 
   useEffect(() => {
     const fetchLearningMaterials = async () => {
@@ -38,38 +41,51 @@ function ManagerLearningMaterial() {
   };
 
   return (
-    <PageLayout>
-      <div className={cx("manager-learning-material-wrapper")}>
-        <div className={cx("manager-learning-material-container")}>
-          <div className={cx("manager-learning-material-header")}>
-            Overview Material
+    <>
+      {isShowMaterialView && (
+        <LearningMaterialView
+          unitId={materialViewUnitId}
+          setIsShowMaterialView={setIsShowMaterialView}
+        />
+      )}
+      <PageLayout>
+        <div className={cx("manager-learning-material-wrapper")}>
+          <div className={cx("manager-learning-material-container")}>
+            <div className={cx("manager-learning-material-header")}>
+              Overview Material
+            </div>
+            {learningMaterials?.length > 0 ? (
+              <div className={cx("manager-learning-material-content")}>
+                {learningMaterials?.map((item) => (
+                  <LearningMaterialItem
+                    key={item.id}
+                    item={item}
+                    setIsShowCensorView={setIsShowMaterialView}
+                    setCensorViewUnitId={setMaterialViewUnitId}
+                  />
+                ))}
+              </div>
+            ) : (
+              <NoQuestionData />
+            )}
+            {learningMaterials?.length > 0 && (
+              <div className={cx("pagination-controls")}>
+                <Pagination
+                  align="center"
+                  current={currentPage}
+                  pageSize={itemsPerPage}
+                  total={totalItems}
+                  onChange={handlePageChange}
+                  showSizeChanger={false}
+                  showLessItems={true}
+                />
+              </div>
+            )}
           </div>
-          {learningMaterials?.length > 0 ? (
-            <div className={cx("manager-learning-material-content")}>
-              {learningMaterials?.map((item) => (
-                <LearningMaterialItem key={item.id} item={item} />
-              ))}
-            </div>
-          ) : (
-            <NoQuestionData />
-          )}
-          {learningMaterials?.length > 0 && (
-            <div className={cx("pagination-controls")}>
-              <Pagination
-                align="center"
-                current={currentPage}
-                pageSize={itemsPerPage}
-                total={totalItems}
-                onChange={handlePageChange}
-                showSizeChanger={false}
-                showLessItems={true}
-              />
-            </div>
-          )}
         </div>
-      </div>
-      <LearningMaterialCreateFooter />
-    </PageLayout>
+        <LearningMaterialCreateFooter />
+      </PageLayout>
+    </>
   );
 }
 

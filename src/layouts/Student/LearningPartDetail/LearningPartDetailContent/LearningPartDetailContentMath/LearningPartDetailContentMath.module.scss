@@ -79,6 +79,13 @@
           opacity: 0.7;
         }
 
+        &.completed {
+          cursor: auto;
+          &:hover {
+            opacity: 1;
+          }
+        }
+
         .text {
           margin-left: 6px;
         }
