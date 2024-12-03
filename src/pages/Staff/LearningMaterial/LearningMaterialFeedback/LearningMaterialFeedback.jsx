@@ -42,7 +42,7 @@ function LearningMaterialFeedback() {
   };
   return (
     <>
-      {showMaterialEdit && <EditLearningMaterialView unitEdit={unitEdit} setShowMaterialEdit={setShowMaterialEdit} />}
+      {showMaterialEdit && <EditLearningMaterialView unitId={unitEdit} setIsShowMaterialView={setShowMaterialEdit} />}
       <PageLayout>
         <div className={cx("learning-material-ass-wrapper")}>
           <div className={cx("learning-material-ass-container")}>
