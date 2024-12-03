@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
+import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import ExamPieChart from "~/components/Staff/StaffDashboard/Chart/ExamPieChart";
 import LMPieChart from "~/components/Staff/StaffDashboard/Chart/LMPieChart";
 import QuestionBarChart from "~/components/Staff/StaffDashboard/Chart/QuestionBarChart";
@@ -8,7 +9,6 @@ import StudentPieChart from "~/components/Staff/StaffDashboard/Chart/StudentPieC
 import Widget from "~/components/Staff/StaffDashboard/Widget";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import styles from "./Dashboard.module.scss";
-import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 const cx = classNames.bind(styles);
 function Dashboard() {
   const getCurrentMonthName = () => {
@@ -20,6 +20,7 @@ function Dashboard() {
   };
 
   const currentMonth = getCurrentMonthName();
+  // eslint-disable-next-line no-unused-vars
   const [widgets, setWidgets] = useState([
     {
       id: 0,
