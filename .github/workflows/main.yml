@@ -1,43 +1,16 @@
 name: CI/CD for VSAT Client
 
 on:
-  push: # Trigger workflow on push to any branch
+  push:
     branches:
-      - "**" # '**' means all branches
-  pull_request: # Trigger workflow on all pull requests to any branch
+      - "**"
+  pull_request:
     branches:
       - "**"
 
 jobs:
-  # Job 1: Linting
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3 # Checks out the repository
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3 # Sets up Node.js environment
-        with:
-          node-version: 20.x # Use Node.js 20.x
-
-      - name: Cache Node.js modules
-        uses: actions/cache@v3 # Caches node_modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
-        run: npm ci # Installs dependencies
-
-      - name: Run lint
-        run: npm run lint # Lint check
-
-  # Job 2: Testing
-  test:
-    needs: lint # Runs after lint job
+  # Combined Lint and Test Job
+  lint_and_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -48,19 +21,24 @@ jobs:
         with:
           node-version: 20.x
 
-      - name: Restore Node.js modules cache
+      - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Run lint
+        run: npm run lint
+
       - name: Run tests
         env:
           CI: true
-        run: npm run test -- --coverage --passWithNoTests # Includes coverage report
+        run: npm run test -- --coverage --passWithNoTests
 
       - name: Upload test coverage report
         if: always()
@@ -69,9 +47,10 @@ jobs:
           name: coverage-report
           path: coverage
 
-  # Job 3: Build the React app
-  build:
-    needs: test # Runs after tests are complete
+  # Build and Upload Artifacts Job
+  build_and_upload:
+    needs: lint_and_test
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/') # Only run for main branch or tags
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -93,15 +72,6 @@ jobs:
 
       - name: Build the React app
         run: npm run build
-
-  # Job 4: Upload build artifacts (Optional)
-  upload_artifacts:
-    needs: build # Runs after a successful build
-    if: success()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
