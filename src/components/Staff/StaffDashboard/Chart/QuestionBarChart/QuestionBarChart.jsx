@@ -29,7 +29,7 @@ function QuestionBarChart() {
     dataLabels: {
       enabled: true,
     },
-    colors: ["#2446b6", "#f4cf39", "#d7354f"],
+    colors: ["#51bfb3", "#f4cf39", "#d7354f"],
   };
 
   const chartSeries = [

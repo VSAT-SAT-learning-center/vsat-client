@@ -8,7 +8,13 @@ function ViewSidebarInside({ lesson, lessonData, setLessonData }) {
     setLessonData(lesson)
   }
   return (
-    <div className={cx("detail-lesson-item", { active: lesson.id === lessonData.id })} onClick={handleChooseLesson}>
+    <div
+      className={cx("detail-lesson-item", {
+        active: lesson.id === lessonData.id,
+        isFeedback: lesson.id !== lessonData.id && lesson.reason && lesson.reason.length > 0,
+      })}
+      onClick={handleChooseLesson}
+    >
       <div className={cx("lesson-item-icon")}>
         <i className={cx("fa-sharp fa-regular fa-file", "icon-lesson")}></i>
       </div>

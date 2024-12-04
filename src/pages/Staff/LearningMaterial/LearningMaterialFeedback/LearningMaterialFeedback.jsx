@@ -21,7 +21,7 @@ function LearningMaterialFeedback() {
   useEffect(() => {
     const fetchLearningMaterials = async () => {
       try {
-        const response = await apiClient.get(`/units/reject`, {
+        const response = await apiClient.get(`/units/staff/reject`, {
           params: {
             page: currentPage,
             pageSize: itemsPerPage,
