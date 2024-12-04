@@ -15,7 +15,7 @@ function QuestionPieChart({ data }) {
       type: "pie",
     },
     labels: pieChartData.labels,
-    colors: ["#2446b6", "#f4cf39", "#d7354f"],
+    colors: ["#51bfb3", "#f4cf39", "#d7354f"],
     legend: {
       position: "bottom",
     },

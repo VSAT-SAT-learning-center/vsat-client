@@ -14,25 +14,28 @@ function ViewSidebar({ unitArea, lessonData, setLessonData }) {
           </div>
           <div className={cx("topic-item-title")}>{unitArea?.title}</div>
         </div>
-        <i
-          className={cx(
-            "fa-light fa-chevron-down",
-            "dropdown-icon"
-          )}
-        ></i>
+        <i className={cx("fa-light fa-chevron-down", "dropdown-icon")}></i>
       </div>
       <div className={cx("detail-lesson-list")}>
-        {unitArea?.lessons && unitArea?.lessons.length > 0 && unitArea?.lessons.map((lesson) => (
-          <ViewSidebarInside key={lesson.id} lesson={lesson} lessonData={lessonData} setLessonData={setLessonData} />
-        ))}
+        {unitArea?.lessons &&
+          unitArea?.lessons.length > 0 &&
+          unitArea?.lessons.map((lesson) => (
+            <ViewSidebarInside
+              key={lesson.id}
+              lesson={lesson}
+              lessonData={lessonData}
+              setLessonData={setLessonData}
+            />
+          ))}
       </div>
     </div>
-  )
+  );
 }
 
 ViewSidebar.propTypes = {
   unitArea: PropTypes.object,
   lessonData: PropTypes.object,
-}
+  setLessonData: PropTypes.func,
+};
 
-export default ViewSidebar
+export default ViewSidebar;
