@@ -15,7 +15,7 @@ function ManageProgress() {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const response = await apiClient.get("/study-profiles/getStudyProfileWithTeacher?page=1&pageSize=0")
+        const response = await apiClient.get("/study-profiles/getStudyProfileWithTeacher?page=1&pageSize=0&status=Active")
         setProfiles(response.data.data.data);
       } catch (error) {
         console.error("Error while fetching profiles:", error)
@@ -36,16 +36,14 @@ function ManageProgress() {
               </div>
             </div>
             <div className={cx("teacher-manage-progress-content")}>
-              <div className={cx("study-profiles-list")}>
-                {profiles?.map((profile) => (
-                  <StudyProfileItem
-                    key={profile.id}
-                    profile={profile}
-                    setSelectedProfile={setSelectedProfile}
-                    setIsShowViewStudyProfile={setShowLearningProfileView}
-                  />
-                ))}
-              </div>
+              {profiles?.map((profile) => (
+                <StudyProfileItem
+                  key={profile.id}
+                  profile={profile}
+                  setSelectedProfile={setSelectedProfile}
+                  setIsShowViewStudyProfile={setShowLearningProfileView}
+                />
+              ))}
             </div>
           </div>
         </div>

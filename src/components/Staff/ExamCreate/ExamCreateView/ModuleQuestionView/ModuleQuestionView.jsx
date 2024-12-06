@@ -41,17 +41,24 @@ function ModuleQuestionView({
   }, [exam.id, examQuestion.id, fetchExamList, setIsLoading]);
 
   const handleClickViewDomainQuestion = async (domainData) => {
-    const updatedExamQuestion = await fetchUpdatedExamQuestion();
+    if (exam?.status === "Rejected") {
+      const updatedExamQuestion = await fetchUpdatedExamQuestion();
 
-    if (updatedExamQuestion) {
-      const updatedDomain = updatedExamQuestion.domains.find(
-        (domain) => domain.domain === domainData.domain
-      );
-      const domainToSet = updatedDomain || domainData;
-      setModuleData(updatedExamQuestion);
+      if (updatedExamQuestion) {
+        const updatedDomain = updatedExamQuestion.domains.find(
+          (domain) => domain.domain === domainData.domain
+        );
+        const domainToSet = updatedDomain || domainData;
+        setModuleData(updatedExamQuestion);
+        setIsShowDomainQuestionView(true);
+        setOriginalData(domainToSet);
+        setDomainData(domainToSet);
+      }
+    } else {
       setIsShowDomainQuestionView(true);
-      setOriginalData(domainToSet);
-      setDomainData(domainToSet);
+      setOriginalData(domainData);
+      setDomainData(domainData);
+      setModuleData(examQuestion);
     }
   };
 

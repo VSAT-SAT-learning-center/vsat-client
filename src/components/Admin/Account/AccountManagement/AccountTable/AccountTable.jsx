@@ -16,7 +16,7 @@ function AccountTable() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [pageSize] = useState(5);
+  const [pageSize] = useState(6);
   const [searchName, setSearchName] = useState("");
 
   const openModal = () => {

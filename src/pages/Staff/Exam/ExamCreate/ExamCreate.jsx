@@ -43,6 +43,7 @@ function ExamCreate() {
       {isShowCreateExamView && (
         <ExamCreateView
           exam={examDetailData}
+          fetchExamList={fetchExamList}
           setIsShowCreateExamView={setIsShowCreateExamView}
         />
       )}

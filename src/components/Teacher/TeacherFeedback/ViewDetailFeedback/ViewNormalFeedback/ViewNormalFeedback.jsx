@@ -12,7 +12,7 @@ function ViewNormalFeedback({ feedbackData }) {
         </div>
       </div>
       <div className={cx("detail-feedback")}>
-        <div className={cx("title")}>Detaail Narrative Feedback</div>
+        <div className={cx("title")}>Detail Narrative Feedback</div>
         <div className={cx("detail-input")}>
           <div className={cx("input")}>{feedbackData?.narrativeFeedback}</div>
         </div>

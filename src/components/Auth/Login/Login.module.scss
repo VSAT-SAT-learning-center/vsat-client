@@ -13,9 +13,8 @@
   background: rgba(0, 0, 0, 0.3);
   .login-container {
     width: 450px;
-    height: 620px;
+    height: fit-content;
     padding: 20px;
-    padding-bottom: 0;
     border-radius: 30px;
     background-color: #fff;
     // animation: slideFromTop 0.5s ease forwards;
@@ -166,7 +165,7 @@
 
           .login-btn {
             width: 100%;
-            margin-top: 15px;
+            margin-top: 25px;
 
             .btn {
               cursor: pointer;
@@ -185,7 +184,24 @@
               &:hover {
                 opacity: 0.7;
               }
+
+              &.diasbled {
+                cursor: not-allowed;
+                opacity: 0.6;
+
+                &:hover {
+                  opacity: 0.6;
+                }
+              }
             }
+          }
+
+          .login-google-btn {
+            width: 100%;
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
         }
 

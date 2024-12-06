@@ -23,6 +23,7 @@ function TeacherTable({ setSelectedTeacher, setShowPopup }) {
       .then((response) => {
         const { data } = response.data;
         const { data: teacherList, totalPages } = data;
+        console.log(teacherList);
         setTeachers(teacherList || []);
         setTotalPages(Math.ceil(totalPages || 1));
         setCurrentPage(page);
@@ -74,27 +75,67 @@ function TeacherTable({ setSelectedTeacher, setShowPopup }) {
           <table className={cx("user-table")}>
             <thead>
               <tr>
+                <th>Avatar</th>
+                <th>Email</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Username</th>
                 <th>Phone Number</th>
                 <th>Gender</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {teachers.length > 0 ? (
                 teachers.map((teacher) => (
-                  <tr key={teacher.id} onClick={() => handleRowClick(teacher)}>
+                  <tr key={teacher.id}>
+                    <td>
+                      <div className={cx("avatar")}>
+                        <img
+                          src={teacher?.profilepictureurl}
+                          alt="user-avatar"
+                          className={cx("avatar-img")}
+                        />
+                      </div>
+                    </td>
+                    <td className={cx("email")}>{teacher.email}</td>
                     <td>{teacher.firstname}</td>
                     <td>{teacher.lastname}</td>
-                    <td>{teacher.username}</td>
                     <td>{teacher.phonenumber || "N/A"}</td>
                     <td>{teacher.gender ? "Male" : "Female"}</td>
+                    <td className={cx("status")}>
+                      <div
+                        className={cx(
+                          "status-type",
+                          teacher?.status === "Completed"
+                            ? "completed-status"
+                            : teacher?.status === "Active"
+                              ? "active-status"
+                              : "inactive-status"
+                        )}
+                      >
+                        {teacher.status}
+                      </div>
+                    </td>
+                    <td className={cx("action-cell")}>
+                      <div className={cx("action-icons")}>
+                        <span
+                          className={cx("icon")}
+                          onClick={() => handleRowClick(teacher)}
+                        >
+                          <i
+                            className={cx(
+                              "fa-regular fa-arrow-up-right-from-square"
+                            )}
+                          ></i>
+                        </span>
+                      </div>
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="5" className={cx("no-data")}>
+                  <td colSpan="8" className={cx("no-data")}>
                     No teachers found.
                   </td>
                 </tr>

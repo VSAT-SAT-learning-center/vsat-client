@@ -19,7 +19,12 @@ function StudyProfileItem({ profile, setSelectedProfile, setIsShowViewStudyProfi
           />
           <div className={cx("study-profile-username")}>{profile?.account?.username}</div>
         </div>
-        <div className={cx("study-profile-status")}>{profile?.status}</div>
+        <div className={cx("study-profile-status",
+          profile?.status === "Completed"
+            ? "completed-status"
+            : profile?.status === "Active"
+              ? "active-status"
+              : "inactive-status")}>{profile?.status}</div>
       </div>
       <div className={cx("study-profile-content")}>
         <div className={cx("profile-content-infor")}>

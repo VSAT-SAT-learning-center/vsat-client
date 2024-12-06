@@ -66,6 +66,28 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const googleLogin = async (data) => {
+    dispatch({ type: "SET_LOADING", payload: true });
+    try {
+      const response = await apiClient.post("/auth/google-login", {
+        email: data.email,
+      });
+
+      const { account, accessToken } = response.data;
+      setUser(account);
+
+      // Store access token
+      TokenService.setAccessToken(accessToken);
+
+      return account;
+    } catch (error) {
+      console.error("Google login error:", error);
+      throw error;
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false });
+    }
+  };
+
   const logout = () => {
     dispatch({ type: "LOGOUT" });
     TokenService.removeTokens();
@@ -97,6 +119,7 @@ const AuthProvider = ({ children }) => {
         isLoggedIn: state.isLoggedIn,
         loading: state.loading,
         login,
+        googleLogin,
         logout,
       }}
     >
