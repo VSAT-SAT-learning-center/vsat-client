@@ -11,7 +11,7 @@ function ViewSidebarInside({ lesson, lessonData, setLessonData }) {
     <div
       className={cx("detail-lesson-item", {
         active: lesson.id === lessonData.id,
-        isFeedback: lesson.id !== lessonData.id && lesson.reason && lesson.reason.length > 0,
+        isFeedback: lesson.id !== lessonData.id && lesson.status === false,
       })}
       onClick={handleChooseLesson}
     >

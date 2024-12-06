@@ -26,6 +26,8 @@ function StudyProfileTable() {
         const { data } = response.data;
         const { data: profileList, totalPages } = data;
         setProfiles(profileList || []);
+        console.log(profileList);
+
         setTotalPages(Math.ceil(totalPages || 1));
         setCurrentPage(page);
       })
@@ -89,10 +91,7 @@ function StudyProfileTable() {
               />
               <button className={cx("filter-btn")}>Search</button>
             </div>
-            <button
-              className={cx("add-study-profile-btn")}
-              onClick={openModal}
-            >
+            <button className={cx("add-study-profile-btn")} onClick={openModal}>
               <PlusCircleOutlined style={{ marginRight: "5px" }} /> Add User
             </button>
           </div>
@@ -101,12 +100,14 @@ function StudyProfileTable() {
           <table className={cx("study-profile-table")}>
             <thead>
               <tr>
+                <th>Avatar</th>
                 <th>Email</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Teacher In Charge</th>
                 <th>Math Target</th>
                 <th>Reading & Writing Target</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -114,14 +115,22 @@ function StudyProfileTable() {
               {profiles.length > 0 ? (
                 profiles.map((profile) => (
                   <tr key={profile.id}>
-                    <td style={{ textAlign: "left" }}>
-                      {profile.account?.email || "N/A"}
+                    <td>
+                      <div className={cx("avatar")}>
+                        <img
+                          src={profile?.account?.profilepictureurl}
+                          alt="user-avatar"
+                          className={cx("avatar-img")}
+                        />
+                      </div>
                     </td>
+                    <td>{profile.account?.email || "N/A"}</td>
                     <td>{formatDate(profile.startdate)}</td>
                     <td>{formatDate(profile.enddate)}</td>
                     <td>
-                      {profile.teacher?.firstname || ""}{" "}
-                      {profile.teacher?.lastname || ""}
+                      {(profile?.teacher?.firstname || "") +
+                        " " +
+                        (profile?.teacher?.lastname || "Unknown")}
                     </td>
                     <td className={cx("center")}>
                       {profile.targetscoreMath || "N/A"}
@@ -129,13 +138,31 @@ function StudyProfileTable() {
                     <td className={cx("center")}>
                       {profile.targetscoreRW || "N/A"}
                     </td>
+                    <td className={cx("status")}>
+                      <div
+                        className={cx(
+                          "status-type",
+                          profile?.status === "Completed"
+                            ? "completed-status"
+                            : profile?.status === "Active"
+                              ? "active-status"
+                              : "inactive-status"
+                        )}
+                      >
+                        {profile.status}
+                      </div>
+                    </td>
                     <td className={cx("action-cell")}>
                       <div className={cx("action-icons")}>
                         <span
-                          className={cx("icon", "edit-icon")}
+                          className={cx("icon")}
                           onClick={() => handleEditClick(profile)}
                         >
-                          ...
+                          <i
+                            className={cx(
+                              "fa-regular fa-arrow-up-right-from-square"
+                            )}
+                          ></i>
                         </span>
                       </div>
                     </td>
@@ -143,7 +170,7 @@ function StudyProfileTable() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7" className={cx("no-data")}>
+                  <td colSpan="9" className={cx("no-data")}>
                     No study profiles found.
                   </td>
                 </tr>

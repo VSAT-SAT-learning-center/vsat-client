@@ -13,6 +13,7 @@ const cx = classNames.bind(styles);
 const itemsPerPage = 6;
 
 function LearningMaterial() {
+  const [materialType, setMaterialType] = useState("pending")
   const [learningMaterials, setLearningMaterials] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
@@ -21,7 +22,7 @@ function LearningMaterial() {
   useEffect(() => {
     const fetchLearningMaterials = async () => {
       try {
-        const response = await apiClient.get(`/units/approve`, {
+        const response = await apiClient.get(`/units/${materialType}`, {
           params: {
             page: currentPage,
             pageSize: itemsPerPage,
@@ -35,7 +36,7 @@ function LearningMaterial() {
     };
 
     fetchLearningMaterials();
-  }, [currentPage]);
+  }, [currentPage, materialType]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -55,6 +56,24 @@ function LearningMaterial() {
             <div className={cx("staff-learning-material-header")}>
               <div className={cx("staff-learning-material-text")}>
                 Material Overview
+              </div>
+              <div className={cx("staff-learning-material-options")}>
+                <button
+                  className={cx("approve-btn", {
+                    "active-approve": materialType === "approve",
+                  })}
+                  onClick={() => setMaterialType("approve")}
+                >
+                  Approved
+                </button>
+                <button
+                  className={cx("pending-btn", {
+                    "active-pending": materialType === "pending",
+                  })}
+                  onClick={() => setMaterialType("pending")}
+                >
+                  Pending
+                </button>
               </div>
             </div>
             {learningMaterials?.length > 0 ? (

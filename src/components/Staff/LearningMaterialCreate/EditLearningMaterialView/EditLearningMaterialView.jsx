@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LearningPartDetailContentMath from "~/layouts/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentMath";
 import LearningPartDetailContentRW from "~/layouts/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentRW";
@@ -12,6 +13,7 @@ import ViewSidebar from "./ViewSidebar";
 const cx = classNames.bind(styles);
 
 function EditLearningMaterialView({ unitId, setIsShowMaterialView }) {
+  const navigate = useNavigate()
   const [unitDetails, setUnitDetails] = useState(null);
   const [lessonData, setLessonData] = useState(null);
   const [showEditDetailView, setShowEditDetailView] = useState(false)
@@ -56,7 +58,6 @@ function EditLearningMaterialView({ unitId, setIsShowMaterialView }) {
   }
 
   const handleUpdateLesson = async () => {
-
     try {
       const mapLessonToPayload = {
         lessonId: lessonData.id,
@@ -80,6 +81,21 @@ function EditLearningMaterialView({ unitId, setIsShowMaterialView }) {
     } catch (error) {
       console.error("Error while update lesson:", error)
       toast.error("Update lesson failed!", {
+        autoClose: 1000
+      })
+    }
+  }
+
+  const handleUpdateUnit = async () => {
+    try {
+      await apiClient.post(`/units/${unitId}/submit`)
+      navigate("/staff/learning-material/overview")
+      toast.success("Update unit successfully!", {
+        autoClose: 1000
+      })
+    } catch (error) {
+      console.error("Error while update unit:", error)
+      toast.error("Update unit failed!", {
         autoClose: 1000
       })
     }
@@ -112,7 +128,7 @@ function EditLearningMaterialView({ unitId, setIsShowMaterialView }) {
                   <i className={cx("fa-regular fa-floppy-disk")}></i>
                 </button>
               ) : (
-                <button className={cx("update-unit-btn")}>
+                <button className={cx("update-unit-btn")} onClick={handleUpdateUnit}>
                   Save
                 </button>
               )}

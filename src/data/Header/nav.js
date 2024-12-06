@@ -15,8 +15,4 @@ export const nav_data = [
     name: "Contact",
     link: "/contact",
   },
-  {
-    name: "More",
-    link: "/more",
-  },
 ]

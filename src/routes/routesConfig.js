@@ -67,6 +67,7 @@ import ProgressOverview from "~/pages/Student/ProgressOverview";
 import ReceiveFeedback from "~/pages/Student/ReceiveFeedback";
 import AssignExam from "~/pages/Teacher/AssignExam";
 import AssignExamSchedule from "~/pages/Teacher/AssignExam/ExamSchedule";
+import ExamViewHistory from "~/pages/Teacher/AssignExam/ExamViewHistory";
 import ManageMaterial from "~/pages/Teacher/ManageMaterial";
 import ManageProgress from "~/pages/Teacher/ManageProgress";
 import TeacherAccountSetting from "~/pages/Teacher/TeacherAccountSetting";
@@ -573,6 +574,12 @@ const routesConfig = [
   {
     path: "/teacher/assign-exam/profiles",
     component: AssignExam,
+    protected: true,
+    roles: ["Teacher"],
+  },
+  {
+    path: "/teacher/assign-exam/history",
+    component: ExamViewHistory,
     protected: true,
     roles: ["Teacher"],
   },
