@@ -75,7 +75,9 @@ function LearningProfileView({ profile, setShowLearningProfileView }) {
                             ? "completed"
                             : target?.status === "Active"
                               ? "active"
-                              : "inactive"
+                              : target?.status === "Certified"
+                                ? "certified"
+                                : "inactive"
                         )}
                       >
                         {target?.status}
@@ -102,7 +104,8 @@ function LearningProfileView({ profile, setShowLearningProfileView }) {
                         )}
                       </div>
                     </div>
-                    {target?.status !== "Inactive" && (
+                    {(target?.status === "Active" ||
+                      target?.status === "Completed") && (
                       <button
                         className={cx("view-btn")}
                         onClick={() => handleChooseTarget(target)}

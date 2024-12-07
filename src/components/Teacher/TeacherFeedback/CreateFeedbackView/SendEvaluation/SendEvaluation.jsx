@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
+import emptyImg from "~/assets/images/content/empty.png";
 import apiClient from './../../../../../services/apiService';
 import styles from "./SendEvaluation.module.scss";
 const cx = classNames.bind(styles);
@@ -138,22 +139,39 @@ function SendEvaluation({ setFeedbackData }) {
             </div>
           )}
           {isSelectStudent && (
-            <div className={cx("select-dropdown")}>
-              {students.map((student) => (
-                <div
-                  key={student.id}
-                  className={cx("dropdown-item")}
-                  onClick={() => handleSelectStudent(student)}
-                >
+            students?.length > 0 ? (
+              <div className={cx("select-dropdown")}>
+                {students?.map((student) => (
+                  <div
+                    key={student.id}
+                    className={cx("dropdown-item")}
+                    onClick={() => handleSelectStudent(student)}
+                  >
+                    <img
+                      src={student?.account?.profilepictureurl}
+                      alt="avatar"
+                      className={cx("avatar-img")}
+                    />
+                    <div className={cx("username")}>
+                      {student?.account?.username}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className={cx("select-dropdown-no-content")}>
+                <div className={cx("no-data-search-container")}>
                   <img
-                    src={student?.account?.profilepictureurl}
-                    alt="avatar"
-                    className={cx("avatar-img")}
+                    src={emptyImg}
+                    alt="empty-search"
+                    className={cx("empty-search-img")}
                   />
-                  <div className={cx("username")}>{student?.account?.username}</div>
+                  <span className={cx("empty-search-text")}>
+                    No data available
+                  </span>
                 </div>
-              ))}
-            </div>
+              </div>
+            )
           )}
         </div>
       </div>

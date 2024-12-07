@@ -36,7 +36,7 @@ function LearningItem({ item, index, setShowLearningProfileView, setProfileSelec
             "header-status",
             item.status === "Completed"
               ? "approved"
-              : item.status === "In Active"
+              : item.status === "Inactive"
                 ? "rejected"
                 : ""
           )}

@@ -1,4 +1,4 @@
-import ExamViewResult from "~/components/TrialExam/TrialExamDetail/ExamView/ExamViewResult";
+import OnboardingTrialExam from "~/components/TrialExam/TrialExamDetail/OnboardingTrialExam";
 import Account from "~/pages/Admin/Account";
 import CreateAccount from "~/pages/Admin/Account/CreateAccount";
 import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
@@ -84,7 +84,7 @@ import FeedbackQuestionQuizz from "../pages/Manager/ManagerQuestionQuizz/Feedbac
 
 const routesConfig = [
   // Testing
-  { path: "/test", component: ExamViewResult },
+  { path: "/test", component: OnboardingTrialExam },
   // Landing page routes
   { path: "/", component: Home },
   { path: "/about", component: About },

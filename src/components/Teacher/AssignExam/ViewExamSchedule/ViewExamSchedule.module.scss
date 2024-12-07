@@ -84,41 +84,65 @@
       .view-profile-item {
         width: 100%;
         padding: 16px;
-        margin-bottom: 20px;
+        padding-right: 0;
+        margin-bottom: 16px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         border-radius: 5px;
         border: 1px solid #c5c5c5;
 
-        .view-profile-infor {
+        .item-content {
+          flex: 1;
+          padding-right: 16px;
           display: flex;
           align-items: center;
-          column-gap: 15px;
+          justify-content: space-between;
 
-          .profile-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
+          .view-profile-infor {
+            display: flex;
+            align-items: center;
+            column-gap: 15px;
+
+            .profile-avatar {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .profile-name {
+              font-size: 18px;
+              font-weight: 600;
+            }
           }
 
-          .profile-name {
+          .view-profile-status {
             font-size: 18px;
             font-weight: 600;
+
+            &.undone {
+              color: $third-color;
+            }
+
+            &.done {
+              color: $success-color;
+            }
           }
         }
 
-        .view-profile-status {
-          font-size: 18px;
-          font-weight: 600;
+        .item-action {
+          padding: 0 16px;
+          border-left: 1px solid #c5c5c5;
 
-          &.undone {
-            color: $third-color;
-          }
+          .edit-btn {
+            font-size: 18px;
+            transition: transform 0.2s ease;
+            color: $primary-color;
 
-          &.done {
-            color: $success-color;
+            &:hover {
+              transform: scale(1.1);
+            }
           }
         }
       }

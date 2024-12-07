@@ -14,10 +14,8 @@
   background-color: rgba(0, 0, 0, 0.3);
 
   .teacher-manage-material-container {
-    width: 600px;
-    height: fit-content;
-    min-height: 500px;
-    max-height: 95%;
+    width: 80%;
+    height: 95%;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -59,57 +57,90 @@
         }
       }
     }
+    .teacher-profile-content {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-radius: 15px 15px 0 0;
+      padding: 20px;
+      background-color: #f4f4f4;
 
+      .teacher-profile-infor {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        column-gap: 60px;
+
+        .profile-avatar {
+          width: 180px;
+          height: 180px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          object-fit: cover;
+        }
+
+        .profile-infor {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-row-gap: 15px;
+          grid-column-gap: 60px;
+
+          .infor-item {
+            display: flex;
+            align-items: center;
+            column-gap: 12px;
+            font-size: 18px;
+
+            .item-title,
+            .item-text {
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
     .teacher-manage-material-content {
       width: 100%;
-      padding: 16px 20px;
-      overflow-y: auto;
+      flex-grow: 1;
+      .study-profiles-list {
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        overflow-y: auto;
 
-      &::-webkit-scrollbar {
-        display: none;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      .no-profiles {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .no-data-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          .no-data-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+          }
+          .no-data-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #bbcef3;
+          }
+        }
       }
     }
   }
 }
-
-
-// .teacher-manage-material-wrapper {
-//   position: relative; 
-//   width: 100%;
-//   max-width: 600px;
-//   margin: auto;
-//   border-radius: 12px;
-//   background-color: $bg-primary-color;
-//   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px;
-
-//   .teacher-manage-material-container {
-//     display: flex;
-//     flex-direction: column;
-//     border-radius: 12px;
-//     overflow: hidden;
-
-//     .teacher-manage-material-header {
-//       padding: 16px;
-//       background-color: $primary-color;
-//       color: white;
-//       text-align: center;
-//       font-size: 18px;
-//       font-weight: bold;
-//     }
-
-//     .teacher-manage-material-content {
-//       padding: 20px;
-
-//       .study-profiles-list {
-//         display: flex;
-//         flex-direction: column;
-//         gap: 12px; 
-
-//         .no-profiles {
-//           text-align: center;
-//           font-size: 16px;
-//         }
-//       }
-//     }
-//   }
-// }

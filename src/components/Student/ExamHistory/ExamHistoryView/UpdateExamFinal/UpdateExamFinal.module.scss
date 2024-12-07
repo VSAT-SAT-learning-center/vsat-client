@@ -1,0 +1,137 @@
+@import "~/styles/variables";
+
+.update-exam-final-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 107;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .update-exam-final-container {
+    position: relative;
+    width: 500px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
+
+    .update-exam-final-header {
+      width: 100%;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $border-color;
+
+      .profile-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .profile-close {
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 18px;
+        transition: all 0.3s linear;
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+
+      .profile-empty {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    .update-exam-final-content {
+      width: 100%;
+      height: fit-content;
+      padding: 16px;
+
+      .update-exam-item {
+        width: 100%;
+        margin-bottom: 15px;
+        .item-title {
+          font-size: 17px;
+          font-weight: 600;
+          margin-bottom: 8px;
+        }
+
+        .date-picker {
+          height: 40.5px !important;
+          width: 100% !important;
+          font-size: 17px !important;
+          padding: 8px 16px !important;
+        }
+
+        .item-input {
+          height: fit-content !important;
+          width: 100% !important;
+          font-size: 17px !important;
+          padding: 6px 16px !important;
+        }
+      }
+    }
+
+    .update-exam-final-footer {
+      width: 100%;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      column-gap: 12px;
+      border-top: 1px solid $border-color;
+
+      .reset-btn {
+        padding: 6px 14px;
+        border-radius: 5px;
+        font-weight: 600;
+        border: 1px solid $primary-color;
+        color: $primary-color;
+        background-color: $bg-primary-color;
+        transition: all 0.2s ease;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+
+      .update-btn {
+        padding: 6px 14px;
+        border-radius: 5px;
+        font-weight: 600;
+        color: $white-color;
+        background-color: $primary-color;
+        transition: all 0.2s ease;
+
+        &:hover {
+          opacity: 0.7;
+        }
+
+        &.disabled {
+          cursor: not-allowed;
+          opacity: 0.6;
+
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
+}

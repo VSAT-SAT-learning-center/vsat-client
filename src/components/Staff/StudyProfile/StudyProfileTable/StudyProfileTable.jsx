@@ -133,10 +133,10 @@ function StudyProfileTable() {
                         (profile?.teacher?.lastname || "Unknown")}
                     </td>
                     <td className={cx("center")}>
-                      {profile.targetscoreMath || "N/A"}
+                      {profile.targetscoreMath || 0}
                     </td>
                     <td className={cx("center")}>
-                      {profile.targetscoreRW || "N/A"}
+                      {profile.targetscoreRW || 0}
                     </td>
                     <td className={cx("status")}>
                       <div
@@ -153,18 +153,20 @@ function StudyProfileTable() {
                       </div>
                     </td>
                     <td className={cx("action-cell")}>
-                      <div className={cx("action-icons")}>
-                        <span
-                          className={cx("icon")}
-                          onClick={() => handleEditClick(profile)}
-                        >
-                          <i
-                            className={cx(
-                              "fa-regular fa-arrow-up-right-from-square"
-                            )}
-                          ></i>
-                        </span>
-                      </div>
+                      {profile.status === "Active" && (
+                        <div className={cx("action-icons")}>
+                          <span
+                            className={cx("icon")}
+                            onClick={() => handleEditClick(profile)}
+                          >
+                            <i
+                              className={cx(
+                                "fa-regular fa-arrow-up-right-from-square"
+                              )}
+                            ></i>
+                          </span>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))

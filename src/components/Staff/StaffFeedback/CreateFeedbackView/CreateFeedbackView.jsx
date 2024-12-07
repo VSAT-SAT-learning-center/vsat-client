@@ -5,7 +5,7 @@ import apiClient from "~/services/apiService";
 import styles from "./CreateFeedbackView.module.scss";
 import SendFeedback from "./SendFeedback";
 const cx = classNames.bind(styles);
-function CreateFeedbackView({ setShowFeedbackCreate }) {
+function CreateFeedbackView({ setShowFeedbackCreate, fetchFeedbacks }) {
   const [feedbackNormalData, setFeedbackNormalData] = useState({
     reason: "",
     narrativeFeedback: "",
@@ -17,6 +17,7 @@ function CreateFeedbackView({ setShowFeedbackCreate }) {
         "/evaluate-feedback/createFeedback",
         feedbackNormalData
       );
+      fetchFeedbacks()
       setShowFeedbackCreate(false);
       toast.success("Send feedback to manager successfully!", {
         autoClose: 1500,

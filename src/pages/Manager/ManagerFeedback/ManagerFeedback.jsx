@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import ViewDetailFeedback from "~/components/Manager/ManagerFeedback/ViewDetailFeedback";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import FeedbackItem from "~/components/Teacher/TeacherFeedback/FeedbackItem";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
@@ -32,17 +33,21 @@ function ManagerFeedback() {
             <div className={cx("manager-feedback-header")}>
               <div className={cx("manager-feedback-text")}>Feedback</div>
             </div>
-            <div className={cx("manager-feedback-content")}>
-              {feedbacks?.map((feedback) => (
-                <FeedbackItem
-                  feedback={feedback}
-                  setShowViewFeedback={setShowViewFeedback}
-                  key={feedback?.id}
-                  setFeedbackData={setFeedbackData}
-                  type={"Receive"}
-                />
-              ))}
-            </div>
+            {feedbacks?.length > 0 ? (
+              <div className={cx("manager-feedback-content")}>
+                {feedbacks?.map((feedback) => (
+                  <FeedbackItem
+                    feedback={feedback}
+                    setShowViewFeedback={setShowViewFeedback}
+                    key={feedback?.id}
+                    setFeedbackData={setFeedbackData}
+                    type={"Receive"}
+                  />
+                ))}
+              </div>
+            ) : (
+              <NoQuestionData />
+            )}
           </div>
         </div>
         <LearningMaterialCreateFooter />

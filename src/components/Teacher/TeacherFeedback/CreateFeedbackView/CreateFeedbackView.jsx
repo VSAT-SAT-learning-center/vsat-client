@@ -6,7 +6,7 @@ import styles from "./CreateFeedbackView.module.scss";
 import SendEvaluation from "./SendEvaluation";
 import SendFeedback from "./SendFeedback";
 const cx = classNames.bind(styles);
-function CreateFeedbackView({ setShowFeedbackCreate }) {
+function CreateFeedbackView({ setShowFeedbackCreate, fetchFeedbacks }) {
   const [viewNav, setViewNav] = useState("Evaluation");
   const [feedbackData, setFeedbackData] = useState({
     accountToId: "",
@@ -35,6 +35,7 @@ function CreateFeedbackView({ setShowFeedbackCreate }) {
           "/evaluate-feedback/create",
           feedbackData
         );
+        fetchFeedbacks()
         setShowFeedbackCreate(false);
         toast.success("Send evaluate student successfully!", {
           autoClose: 1500,
@@ -51,6 +52,7 @@ function CreateFeedbackView({ setShowFeedbackCreate }) {
           "/evaluate-feedback/createFeedback",
           feedbackNormalData
         );
+        fetchFeedbacks()
         setShowFeedbackCreate(false);
         toast.success("Send feedback to staff successfully!", {
           autoClose: 1500,
