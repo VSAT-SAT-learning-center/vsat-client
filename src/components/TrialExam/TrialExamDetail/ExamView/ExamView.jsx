@@ -28,12 +28,46 @@ function ExamView({ exam }) {
   const [isFinishClicked, setIsFinishClicked] = useState(false);
   const [isHardRW, setIsHardRW] = useState(false);
   const [isHardMath, setIsHardMath] = useState(false);
-
-  const currentModule = exam.examQuestions[currentModuleIndex];
-  const currentQuestion = currentModule.questions[currentQuestionIndex];
   const [isWatingSubmit, setIsWatingSubmit] = useState(false);
   const [showExamResult, setShowExamResult] = useState(false);
   const [examResult, setExamResult] = useState(null);
+
+  const currentModule = exam.examQuestions[currentModuleIndex];
+  const currentQuestion = currentModule.questions[currentQuestionIndex];
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      const confirmReload = window.confirm(
+        "Are you sure you want to reload? Changes you made may not be saved."
+      );
+      if (!confirmReload) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    };
+
+    const handleBeforeNavigate = (event) => {
+      const confirmNavigate = window.confirm(
+        "Are you sure you want to leave this page? Changes you made may not be saved."
+      );
+      if (confirmNavigate) {
+        window.location.reload();
+      } else {
+        window.history.pushState(null, document.title, window.location.href);
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("popstate", handleBeforeNavigate);
+
+    window.history.pushState(null, document.title, window.location.href);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("popstate", handleBeforeNavigate);
+    };
+  }, []);
 
   useEffect(() => {
     setTimeLeft(currentModule.time * 60);
