@@ -23,7 +23,6 @@ function TeacherTable({ setSelectedTeacher, setShowPopup }) {
       .then((response) => {
         const { data } = response.data;
         const { data: teacherList, totalPages } = data;
-        console.log(teacherList);
         setTeachers(teacherList || []);
         setTotalPages(Math.ceil(totalPages || 1));
         setCurrentPage(page);

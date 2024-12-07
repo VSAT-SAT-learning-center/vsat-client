@@ -121,6 +121,10 @@
                 color: $primary-color;
               }
 
+              &.certified {
+                color: $fourth-color;
+              }
+
               &.inactive {
                 color: $third-color;
               }

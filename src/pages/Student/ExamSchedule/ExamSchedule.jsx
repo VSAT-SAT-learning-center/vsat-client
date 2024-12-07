@@ -101,6 +101,7 @@ function ExamSchedule() {
       toast.success("This exam is already taken.", {
         autoClose: 1500,
       });
+      navigate("/exam-history");
       return;
     }
 

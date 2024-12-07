@@ -92,6 +92,7 @@ function AssignExamSchedule() {
           date={selectedDate}
           event={selectedDateEvents}
           setShowViewExamSchedule={setShowViewExamSchedule}
+          fetchExamAttempts={fetchExamAttempts}
         />
       )}
       <PageLayout>

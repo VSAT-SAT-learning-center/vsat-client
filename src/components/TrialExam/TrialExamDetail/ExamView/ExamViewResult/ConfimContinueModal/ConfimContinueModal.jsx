@@ -2,6 +2,10 @@ import classNames from "classnames/bind";
 import styles from "./ConfimContinueModal.module.scss";
 const cx = classNames.bind(styles);
 function ConfimContinueModal({ setShowConfirmContinue, setShowEnterTarget }) {
+  const handleCancelTrialExam = () => {
+    setShowConfirmContinue(false)
+    window.location.href = "/learning";
+  }
   return (
     <div className={cx("confirm-continue-popup-wrapper")}>
       <div className={cx("confirm-continue-popup-container")}>
@@ -16,7 +20,7 @@ function ConfimContinueModal({ setShowConfirmContinue, setShowEnterTarget }) {
         <div className={cx("confirm-continue-popup-footer")}>
           <button
             className={cx("cancel-btn")}
-            onClick={() => setShowConfirmContinue(false)}
+            onClick={handleCancelTrialExam}
           >
             Cancel
           </button>

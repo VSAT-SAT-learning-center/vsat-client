@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
+import NoData from "~/assets/images/content/nodata1.png";
 import StudyProfileItem from "~/components/Teacher/ManageMaterial/StudyProfileItem";
 import ViewStudyProfile from "~/components/Teacher/ManageMaterial/ViewStudyProfile";
 import apiClient from "~/services/apiService";
@@ -44,29 +45,101 @@ function TeacherDetailsModal({ teacher, setShowPopup }) {
       <div className={cx("teacher-manage-material-container")}>
         <div className={cx("teacher-manage-material-header")}>
           <span className={cx("empty")}></span>
-          <span className={cx("title")}>Manage profile</span>
+          <span className={cx("title")}>Teacher Profile</span>
           <button className={cx("close-btn")} onClick={() => setShowPopup(false)}>
             <i className={cx("fa-solid fa-xmark")}></i>
           </button>
         </div>
+        <div className={cx("teacher-profile-content")}>
+          <div className={cx("teacher-profile-infor")}>
+            <img
+              src={teacher.profilepictureurl}
+              alt="profile-avatar"
+              className={cx("profile-avatar")}
+            />
+            <div className={cx("profile-infor")}>
+              {/* First Name */}
+              <div className={cx("infor-item")}>
+                <div className={cx("item-icon")}>
+                  <i className={cx("fa-regular fa-address-card")}></i>
+                </div>
+                <div className={cx("item-title")}>First Name:</div>
+                <div className={cx("item-text")}>{teacher?.firstname}</div>
+              </div>
+
+              {/* Last Name */}
+              <div className={cx("infor-item")}>
+                <div className={cx("item-icon")}>
+                  <i className={cx("fa-regular fa-address-card")}></i>
+                </div>
+                <div className={cx("item-title")}>Last Name:</div>
+                <div className={cx("item-text")}>{teacher?.lastname}</div>
+              </div>
+
+              {/* Date of Birth */}
+              <div className={cx("infor-item")}>
+                <div className={cx("item-icon")}>
+                  <i className={cx("fa-regular fa-calendar-alt")}></i>
+                </div>
+                <div className={cx("item-title")}>Date of Birth:</div>
+                <div className={cx("item-text")}>{teacher?.dateofbirth}</div>
+              </div>
+
+              {/* Gender */}
+              <div className={cx("infor-item")}>
+                <div className={cx("item-icon")}>
+                  <i className={cx("fa-regular fa-venus-mars")}></i>
+                </div>
+                <div className={cx("item-title")}>Gender:</div>
+                <div className={cx("item-text")}>{teacher?.gender ? "Male" : "Female"}</div>
+              </div>
+
+              {/* Email */}
+              <div className={cx("infor-item")}>
+                <div className={cx("item-icon")}>
+                  <i className={cx("fa-regular fa-envelope")}></i>
+                </div>
+                <div className={cx("item-title")}>Email:</div>
+                <div className={cx("item-text")}>{teacher?.email}</div>
+              </div>
+
+              {/* Phone */}
+              <div className={cx("infor-item")}>
+                <div className={cx("item-icon")}>
+                  <i className={cx("fa-regular fa-phone")}></i>
+                </div>
+                <div className={cx("item-title")}>Phone:</div>
+                <div className={cx("item-text")}>+{teacher?.phonenumber}</div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className={cx("teacher-manage-material-content")}>
-          <div className={cx("study-profiles-list")}>
-            {profiles.length > 0 ? (
-              profiles.map((profile) => (
+          {profiles.length > 0 ? (
+            <div className={cx("study-profiles-list")}>
+              {profiles.map((profile) => (
                 <StudyProfileItem
                   key={profile.id}
                   profile={profile}
                   setSelectedProfile={setSelectedProfile}
                   setIsShowViewStudyProfile={setIsShowViewStudyProfile}
                 />
-              ))
-            ) : (
-              <div className={cx("no-profiles")}>
-                No profiles found for this teacher.
+              ))}
+            </div>
+          ) : (
+            <div className={cx("no-profiles")}>
+              <div className={cx("no-data-content")}>
+                <img
+                  src={NoData}
+                  alt="No data available"
+                  className={cx("no-data-img")}
+                />
+                <div className={cx("no-data-text")}>No assigned profiles</div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
+
       </div>
     </div>
   );

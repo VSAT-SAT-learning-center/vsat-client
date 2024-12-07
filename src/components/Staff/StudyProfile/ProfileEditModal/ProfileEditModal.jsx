@@ -116,7 +116,7 @@ function ProfileEditModal({ isOpen, onClose, profile, onSaveSuccess }) {
               "profile-status",
               editableProfile?.status === "Completed"
                 ? "approved"
-                : editableProfile?.status === "In Active"
+                : editableProfile?.status === "Inactive"
                   ? "rejected"
                   : ""
             )}

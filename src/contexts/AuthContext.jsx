@@ -89,6 +89,10 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    if (state.user?.id) {
+      const userOnboardingKey = `hasSeenOnboarding_${state.user.id}`;
+      localStorage.removeItem(userOnboardingKey);
+    }
     dispatch({ type: "LOGOUT" });
     TokenService.removeTokens();
   };
@@ -110,6 +114,7 @@ const AuthProvider = ({ children }) => {
     } else {
       dispatch({ type: "SET_LOADING", payload: false });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -129,3 +134,4 @@ const AuthProvider = ({ children }) => {
 };
 
 export { AuthContext, AuthProvider };
+

@@ -71,6 +71,38 @@
         }
       }
 
+      .select-dropdown-no-content {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 60px;
+        width: 100%;
+        height: fit-content;
+        padding: 16px;
+        border-radius: 5px;
+        border: 1px solid #c5c5c5;
+        background-color: $bg-primary-color;
+        z-index: 5;
+        overflow-y: auto;
+
+        .no-data-search-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          row-gap: 10px;
+          .empty-search-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+          }
+          .empty-search-text {
+            font-size: 17px;
+            font-weight: 600;
+          }
+        }
+      }
+
       .select-dropdown {
         position: absolute;
         left: 0;
