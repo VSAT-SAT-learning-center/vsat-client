@@ -11,7 +11,7 @@ import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionFeedback.module.scss";
 const cx = classNames.bind(styles);
-const itemsPerPage = 5;
+const itemsPerPage = 10;
 
 function QuestionFeedback() {
   const [questionList, setQuestionList] = useState([]);

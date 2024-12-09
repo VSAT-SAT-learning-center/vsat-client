@@ -27,6 +27,50 @@
         font-size: 20px;
         font-weight: 700;
       }
+
+      .question-search-container {
+        position: relative;
+        width: 80%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        column-gap: 15px;
+
+        .search-item {
+          user-select: none;
+          cursor: pointer;
+          width: 252px;
+          height: 100%;
+          padding: 12px 14px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-radius: 5px;
+          border: 1px solid $border-color;
+
+          .selected-text {
+            flex: 1;
+            font-size: 17px;
+            font-weight: 600;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow: hidden;
+            display: -webkit-box;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+          }
+
+          .icon-select {
+            font-size: 15px;
+          }
+
+          &.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+          }
+        }
+      }
     }
 
     .question-exam-overview-content {

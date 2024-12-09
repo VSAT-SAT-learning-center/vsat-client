@@ -74,7 +74,7 @@ function CensorQuestionQuizzGPT({ dataCensorWithAI, setIsShowCensorGpt }) {
                   className={cx("fa-regular fa-comment-check", "item-icon")}
                 ></i>
                 <span className={cx("answer-item-title")}>Answer:</span>
-                <span className={cx("answer-item-text")}>
+                <span className={cx("answer-item-text", dataCensorWithAI?.answer.status === "Correct" ? "correct" : "incorrect")}>
                   {dataCensorWithAI?.answer.status}
                 </span>
               </div>

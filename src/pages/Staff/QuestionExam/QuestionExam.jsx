@@ -1,6 +1,6 @@
 import { Pagination } from "antd";
 import classNames from "classnames/bind";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import DomainDropdown from "~/components/Staff/QuestionExam/DomainDropdown";
 import LevelDropdown from "~/components/Staff/QuestionExam/LevelDropdown";
@@ -13,10 +13,10 @@ import PageLayout from "~/layouts/Staff/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionExam.module.scss";
 const cx = classNames.bind(styles);
-const itemsPerPage = 5;
+const itemsPerPage = 10;
 
 function QuestionExam() {
-  const [bankType, setBankType] = useState("Pending");
+  const [bankType, setBankType] = useState("Approved");
   const [questionList, setQuestionList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
@@ -25,24 +25,33 @@ function QuestionExam() {
   const [questionPreview, setQuestionPreview] = useState({});
   const [sections, setSections] = useState([]);
   const [levels, setLevels] = useState([]);
+  const [domains, setDomains] = useState([]);
+  const [skills, setSkills] = useState([]);
+  const [sectionId, setSectionId] = useState(null);
   const [section, setSection] = useState("Select Section");
   const [showSection, setShowSection] = useState(false);
+  const [levelId, setLevelId] = useState(null);
   const [level, setLevel] = useState("Select Level");
   const [showLevel, setShowLevel] = useState(false);
+  const [domainId, setDomainId] = useState(null);
   const [domain, setDomain] = useState("Select Domain");
   const [showDomain, setShowDomain] = useState(false);
+  const [skillId, setSkillId] = useState(null);
   const [skill, setSkill] = useState("Select Skill");
   const [showSkill, setShowSkill] = useState(false);
 
-  const fetchQuestions = useCallback(async () => {
+  const fetchQuestions = async () => {
     try {
       const response = await apiClient.get(
-        `/questions/getAllWithstatusByCreateBy`,
+        `/questions/searchQuestionsByStatus/${bankType}`,
         {
           params: {
             page: currentPage,
             pageSize: itemsPerPage,
-            status: bankType,
+            skillId,
+            domainId,
+            levelId,
+            sectionId,
           },
         }
       );
@@ -51,11 +60,12 @@ function QuestionExam() {
     } catch (error) {
       console.error("Error fetching questions:", error);
     }
-  }, [currentPage, bankType]);
+  };
 
   useEffect(() => {
     fetchQuestions();
-  }, [fetchQuestions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, skillId, domainId, levelId, sectionId, bankType]);
 
   useEffect(() => {
     const fetchLevelsAndSections = async () => {
@@ -93,6 +103,36 @@ function QuestionExam() {
   const handleSelectSkill = () => {
     setShowSkill(!showSkill);
   };
+
+  const handleDeleteLevelSelect = () => {
+    setLevel("Select Level");
+    setLevelId(null);
+    setShowLevel(false);
+  };
+
+  const handleDeleteSectionSelect = () => {
+    setSection("Select Section");
+    setDomain("Select Domain");
+    setSkill("Select Skill");
+    setSectionId(null);
+    setShowSection(false);
+    setDomains([]);
+    setSkills([]);
+  };
+
+  const handleDeleteDomainSelect = () => {
+    setDomain("Select Domain");
+    setDomainId(null);
+    setShowDomain(false);
+    setSkills([]);
+  };
+
+  const handleDeleteSkillSelect = () => {
+    setSkill("Select Skill");
+    setSkillId(null);
+    setShowSkill(false);
+  };
+
   return (
     <>
       {isShowQuestionItemPreview && (
@@ -105,96 +145,179 @@ function QuestionExam() {
         <div className={cx("question-exam-wrapper")}>
           <div className={cx("question-exam-container")}>
             <div className={cx("question-exam-header")}>
-              {/* <div className={cx("question-text")}>Question Bank</div> */}
               <div className={cx("question-search-container")}>
+                {/* Level */}
+                <div className={cx("search-item")}>
+                  <div
+                    className={cx("selected-text")}
+                    onClick={handleSelectLevel}
+                  >
+                    {level}
+                  </div>
+                  {level === "Select Level" ? (
+                    <i
+                      className={cx(
+                        showLevel
+                          ? "fa-regular fa-chevron-down"
+                          : "fa-regular fa-chevron-up",
+                        "icon-select"
+                      )}
+                    ></i>
+                  ) : (
+                    <i
+                      className={cx("fa-sharp fa-solid fa-xmark")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteLevelSelect();
+                      }}
+                    ></i>
+                  )}
+                </div>
+                {/* Section */}
+                <div className={cx("search-item")}>
+                  <div
+                    className={cx("selected-text")}
+                    onClick={handleSelectSection}
+                  >
+                    {section}
+                  </div>
+                  {section === "Select Section" ? (
+                    <i
+                      className={cx(
+                        showSection
+                          ? "fa-regular fa-chevron-down"
+                          : "fa-regular fa-chevron-up",
+                        "icon-select"
+                      )}
+                    ></i>
+                  ) : (
+                    <i
+                      className={cx("fa-sharp fa-solid fa-xmark")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteSectionSelect();
+                      }}
+                    ></i>
+                  )}
+                </div>
+                {/* Domain */}
                 <div
-                  className={cx("search-item")}
-                  onClick={handleSelectSection}
+                  className={cx("search-item", {
+                    disabled: !domains || domains.length === 0,
+                  })}
                 >
-                  <div className={cx("selected-text")}>{section}</div>
-                  <i
-                    className={cx(
-                      showSection
-                        ? "fa-regular fa-chevron-down"
-                        : "fa-regular fa-chevron-up",
-                      "icon-select"
-                    )}
-                  ></i>
+                  <div
+                    className={cx("selected-text")}
+                    onClick={handleSelectDomain}
+                  >
+                    {domain}
+                  </div>
+                  {domain === "Select Domain" ? (
+                    <i
+                      className={cx(
+                        showDomain
+                          ? "fa-regular fa-chevron-down"
+                          : "fa-regular fa-chevron-up",
+                        "icon-select"
+                      )}
+                    ></i>
+                  ) : (
+                    <i
+                      className={cx("fa-sharp fa-solid fa-xmark")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteDomainSelect();
+                      }}
+                    ></i>
+                  )}
                 </div>
-                <div className={cx("search-item")} onClick={handleSelectLevel}>
-                  <div className={cx("selected-text")}>{level}</div>
-                  <i
-                    className={cx(
-                      showLevel
-                        ? "fa-regular fa-chevron-down"
-                        : "fa-regular fa-chevron-up",
-                      "icon-select"
-                    )}
-                  ></i>
-                </div>
+                {/* Skill */}
                 <div
-                  className={cx("search-item", "disabled")}
-                  onClick={handleSelectDomain}
+                  className={cx("search-item", {
+                    disabled: !skills || skills.length === 0,
+                  })}
                 >
-                  <div className={cx("selected-text")}>{domain}</div>
-                  <i
-                    className={cx(
-                      showDomain
-                        ? "fa-regular fa-chevron-down"
-                        : "fa-regular fa-chevron-up",
-                      "icon-select"
-                    )}
-                  ></i>
+                  <div
+                    className={cx("selected-text")}
+                    onClick={handleSelectSkill}
+                  >
+                    {skill}
+                  </div>
+                  {skill === "Select Skill" ? (
+                    <i
+                      className={cx(
+                        showSkill
+                          ? "fa-regular fa-chevron-down"
+                          : "fa-regular fa-chevron-up",
+                        "icon-select"
+                      )}
+                    ></i>
+                  ) : (
+                    <i
+                      className={cx("fa-sharp fa-solid fa-xmark")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteSkillSelect();
+                      }}
+                    ></i>
+                  )}
                 </div>
-                <div
-                  className={cx("search-item", "disabled")}
-                  onClick={handleSelectSkill}
-                >
-                  <div className={cx("selected-text")}>{skill}</div>
-                  <i
-                    className={cx(
-                      showSkill
-                        ? "fa-regular fa-chevron-down"
-                        : "fa-regular fa-chevron-up",
-                      "icon-select"
-                    )}
-                  ></i>
-                </div>
-                {showSection && (
-                  <SectionDropdown
-                    sections={sections}
-                    setSection={setSection}
-                    setShowSection={setShowSection}
-                  />
-                )}
                 {showLevel && (
                   <LevelDropdown
                     levels={levels}
+                    levelId={levelId}
                     setLevel={setLevel}
                     setShowLevel={setShowLevel}
+                    setLevelId={setLevelId}
                   />
                 )}
-                {showDomain && <DomainDropdown setDomain={setDomain} />}
-                {showSkill && <SkillDropdown setSkill={setSkill} />}
+                {showSection && (
+                  <SectionDropdown
+                    sections={sections}
+                    sectionId={sectionId}
+                    setSection={setSection}
+                    setShowSection={setShowSection}
+                    setSectionId={setSectionId}
+                    setDomains={setDomains}
+                    setDomain={setDomain}
+                    setSkill={setSkill}
+                    setSkills={setSkills}
+                  />
+                )}
+                {showDomain && (
+                  <DomainDropdown
+                    domains={domains}
+                    domainId={domainId}
+                    setDomain={setDomain}
+                    setShowDomain={setShowDomain}
+                    setDomainId={setDomainId}
+                    setSkills={setSkills}
+                  />
+                )}
+                {showSkill && (
+                  <SkillDropdown
+                    skills={skills}
+                    skillId={skillId}
+                    setSkill={setSkill}
+                    setShowSkill={setShowSkill}
+                    setSkillId={setSkillId}
+                  />
+                )}
               </div>
               <div className={cx("question-options")}>
-                <button
-                  className={cx("approve-btn", {
-                    "active-approve": bankType === "Approved",
-                  })}
-                  onClick={() => setBankType("Approved")}
-                >
-                  Approved
-                </button>
-                <button
-                  className={cx("pending-btn", {
-                    "active-pending": bankType === "Pending",
-                  })}
-                  onClick={() => setBankType("Pending")}
-                >
-                  Pending
-                </button>
+                {["Approved", "Pending"].map((status) => (
+                  <button
+                    key={status}
+                    className={cx(`${status.toLowerCase()}-btn`, {
+                      [`active-${status.toLowerCase()}`]: bankType === status,
+                    })}
+                    onClick={() => setBankType(status)}
+                  >
+                    {status}
+                  </button>
+                ))}
               </div>
+
             </div>
             <div className={cx("question-exam-content")}>
               {questionList?.length > 0 ? (

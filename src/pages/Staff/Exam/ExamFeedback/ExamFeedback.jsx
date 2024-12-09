@@ -52,7 +52,7 @@ function ExamFeedback() {
             )}>
               {isWaiting ? (
                 <>
-                  {[...Array(2)].map((_, i) => (
+                  {[...Array(3)].map((_, i) => (
                     <Skeleton
                       key={i}
                       animation="wave"

@@ -1,10 +1,10 @@
 @import "~/styles/variables";
 
-.question-view-feedback-wrapper {
+.feedback-module-view-wrapper {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 105;
+  z-index: 107;
   width: 100%;
   height: 100%;
   display: flex;
@@ -12,11 +12,10 @@
   align-items: center;
   background-color: rgba(0, 0, 0, 0.3);
 
-  .question-view-feedback-container {
+  .feedback-module-view-container {
     position: relative;
-    width: 550px;
+    width: 600px;
     height: 90%;
-    max-height: 650px;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -24,7 +23,7 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     background-color: $bg-primary-color;
 
-    .question-view-feedback-header {
+    .feedback-module-view-header {
       width: 100%;
       padding: 14px 20px;
       display: flex;
@@ -32,46 +31,40 @@
       justify-content: space-between;
       border-bottom: 1px solid $border-color;
 
-      .view-title {
-        display: flex;
-        align-items: center;
-        column-gap: 10px;
-
-        .feedback-icon {
-          width: 33px;
-          height: 33px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: $white-color;
-          background-color: $text-color;
-        }
-
-        .feedback-text {
-          font-size: 18px;
-          font-weight: 600;
-        }
-      }
-
       .view-back {
         cursor: pointer;
-        width: 33px;
-        height: 33px;
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        font-size: 20px;
-        transition: all 0.3s linear;
+        background-color: transparent;
+        transition: all 0.2s linear;
 
         &:hover {
           background-color: #f4f4f4;
         }
+
+        .back-icon {
+          font-size: 20px;
+          color: $icon-color;
+        }
+      }
+
+      .view-title {
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .view-empty {
+        width: 40px;
+        height: 40px;
       }
     }
 
-    .question-view-feedback-no-content {
+    .feedback-module-view-no-content {
       width: 100%;
       flex-grow: 1;
       display: flex;
@@ -83,7 +76,6 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        row-gap: 10px;
         .no-data-img {
           width: 150px;
           height: 150px;
@@ -92,14 +84,14 @@
         .no-data-text {
           font-size: 18px;
           font-weight: 600;
-          color: $text-color-gray;
+          color: #bbcef3;
         }
       }
     }
 
-    .question-view-feedback-content {
+    .feedback-module-view-content {
       width: 100%;
-      padding: 16px;
+      padding: 20px;
       flex-grow: 1;
       overflow-y: auto;
 

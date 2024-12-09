@@ -12,8 +12,6 @@ function ModuleCensorView({
   setCensorModuleFeedback,
   setIsShowModuleViewCensor,
 }) {
-  console.log(moduleCensorData);
-
   const [groupedByLevel, setGroupedByLevel] = useState([]);
   const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
     useState(false);
@@ -50,8 +48,6 @@ function ModuleCensorView({
     }
 
     const filteredData = combineAndFilterQuestions(moduleCensorData.domains);
-    console.log(filteredData);
-
     setGroupedByLevel(filteredData);
   }, [moduleCensorData.domains]);
 

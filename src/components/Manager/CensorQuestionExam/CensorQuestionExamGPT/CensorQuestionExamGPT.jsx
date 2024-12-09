@@ -5,6 +5,8 @@ import styles from "./CensorQuestionExamGPT.module.scss";
 const cx = classNames.bind(styles);
 
 function CensorQuestionExamGPT({ dataCensorWithAI, setIsShowCensorGpt }) {
+  console.log(dataCensorWithAI);
+
   return (
     <div className={cx("censor-question-exam-gpt-wrapper")}>
       <div className={cx("censor-question-exam-gpt-container")}>
@@ -74,7 +76,7 @@ function CensorQuestionExamGPT({ dataCensorWithAI, setIsShowCensorGpt }) {
                   className={cx("fa-regular fa-comment-check", "item-icon")}
                 ></i>
                 <span className={cx("answer-item-title")}>Answer:</span>
-                <span className={cx("answer-item-text")}>
+                <span className={cx("answer-item-text", dataCensorWithAI?.answer.status === "Correct" ? "correct" : "incorrect")}>
                   {dataCensorWithAI?.answer.status}
                 </span>
               </div>

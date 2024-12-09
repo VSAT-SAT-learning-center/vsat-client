@@ -15,7 +15,8 @@
   .question-view-feedback-container {
     position: relative;
     width: 550px;
-    height: fit-content;
+    height: 90%;
+    max-height: 650px;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -66,6 +67,33 @@
 
         &:hover {
           background-color: #f4f4f4;
+        }
+      }
+    }
+
+    .question-view-feedback-no-content {
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .no-data-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        row-gap: 10px;
+
+        .no-data-img {
+          width: 150px;
+          height: 150px;
+          object-fit: cover;
+        }
+        .no-data-text {
+          font-size: 18px;
+          font-weight: 600;
+          color: $text-color-gray;
         }
       }
     }

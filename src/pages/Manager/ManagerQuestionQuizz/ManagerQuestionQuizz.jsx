@@ -9,7 +9,7 @@ import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./ManagerQuestionQuizz.module.scss";
 const cx = classNames.bind(styles);
-const itemsPerPage = 5;
+const itemsPerPage = 10;
 
 function ManagerQuestionQuizz() {
   const [questionList, setQuestionList] = useState([]);

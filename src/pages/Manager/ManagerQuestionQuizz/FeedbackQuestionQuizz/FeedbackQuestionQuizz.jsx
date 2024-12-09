@@ -10,7 +10,7 @@ import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./FeedbackQuestionQuizz.module.scss";
 const cx = classNames.bind(styles);
-const itemsPerPage = 5;
+const itemsPerPage = 10;
 
 function FeedbackQuestionQuizz() {
   const [questionList, setQuestionList] = useState([]);

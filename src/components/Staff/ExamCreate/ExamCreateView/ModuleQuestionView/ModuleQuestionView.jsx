@@ -11,7 +11,8 @@ function ModuleQuestionView({
   setOriginalData,
   setDomainData,
   setModuleData,
-  setIsLoading
+  setIsLoading,
+  setShowModuleFeedback
 }) {
   const [sortedDomains, setSortedDomains] = useState([]);
 
@@ -66,19 +67,31 @@ function ModuleQuestionView({
     return questions?.filter((question) => question.skill.domain.content === domain.domain)?.length || 0;
   };
 
+  const handleViewFeedback = () => {
+    setShowModuleFeedback(true)
+    setModuleData(examQuestion);
+  }
+
   return (
     <div className={cx("module-question-container")}>
       <div className={cx("module-question-header")}>
-        <div className={cx("module-question-title")}>
-          <div className={cx("module-icon")}>
-            <i className="fa-light fa-file-pen"></i>
+        <div className={cx("module-content")}>
+          <div className={cx("module-question-title")}>
+            <div className={cx("module-icon")}>
+              <i className="fa-light fa-file-pen"></i>
+            </div>
+            <div className={cx("module-title")}>
+              {examQuestion?.name}{" "}
+              {examQuestion?.level ? `(${examQuestion?.level})` : ""}
+            </div>
           </div>
-          <div className={cx("module-title")}>
-            {examQuestion?.name}{" "}
-            {examQuestion?.level ? `(${examQuestion?.level})` : ""}
-          </div>
+          <div className={cx("module-section")}>{examQuestion?.section}</div>
         </div>
-        <div className={cx("module-section")}>{examQuestion?.section}</div>
+        <div className={cx("module-feedback")}>
+          <button className={cx("feedback-list-btn")} onClick={handleViewFeedback}>
+            <i className={cx("fa-regular fa-clipboard-list")}></i>
+          </button>
+        </div>
       </div>
       <div className={cx("module-question-content")}>
         {sortedDomains?.map((domain, index) => (

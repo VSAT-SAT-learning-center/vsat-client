@@ -6,8 +6,6 @@ import styles from "./ExamViewDetail.module.scss";
 const cx = classNames.bind(styles);
 
 function ExamViewDetail({ examCensorData, setIsShowExamCensorView }) {
-  console.log(examCensorData);
-
   const [isShowModuleViewCensor, setIsShowModuleViewCensor] = useState(false);
   const [groupedSections, setGroupedSections] = useState([]);
   const [moduleCensorData, setModuleCensorData] = useState([]);
