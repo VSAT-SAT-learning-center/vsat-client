@@ -12,8 +12,6 @@ function ModuleCensorView({
   setCensorModuleFeedback,
   setIsShowModuleViewCensor,
 }) {
-  console.log(moduleCensorData);
-
   const [groupedByLevel, setGroupedByLevel] = useState([]);
   const [isShowQuestionItemPreview, setIsShowQuestionItemPreview] =
     useState(false);

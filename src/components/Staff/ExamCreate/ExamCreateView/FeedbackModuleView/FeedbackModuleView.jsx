@@ -1,59 +1,53 @@
 import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
-import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import NoData from "~/assets/images/content/empty.png";
+import NoData from "~/assets/images/content/nodata1.png";
 import apiClient from "~/services/apiService";
 import { formatDate } from "~/utils/formatDate";
-import styles from "./QuestionQuizzFeedbackView.module.scss";
+import styles from "./FeedbackModuleView.module.scss";
 const cx = classNames.bind(styles);
-function QuestionQuizzFeedbackView({ questionFeedback, setIsShowFeedbackView }) {
-  console.log(questionFeedback.id);
 
-  const [feedbacks, setFeedbacks] = useState(null)
+
+function FeedbackModuleView({ moduleData, setShowModuleFeedback }) {
+  const [feedbacks, setFeedbacks] = useState([])
   const [isWaiting, setIsWaiting] = useState(false)
-
   useEffect(() => {
-    const fetchFeedback = async () => {
+    const feedbacks = async () => {
       try {
         setIsWaiting(true)
-        const response = await apiClient.get(`/feedbacks/question/reason/${questionFeedback?.id}`)
-        setFeedbacks(response.data.data)
+        const response = await apiClient.get(`/feedbacks/moduletype/reason/${moduleData?.id}`)
+        setFeedbacks(response.data);
       } catch (error) {
-        console.error(error)
+        console.error("Error while getting feedbacks:", error)
       } finally {
         setIsWaiting(false)
       }
     }
 
-    fetchFeedback()
-  }, [questionFeedback?.id])
+    feedbacks()
+  }, [moduleData?.id])
   return (
-    <div className={cx("question-view-feedback-wrapper")}>
-      <div className={cx("question-view-feedback-container")}>
-        <div className={cx("question-view-feedback-header")}>
-          <div className={cx("view-title")}>
-            <div className={cx("feedback-icon")}>
-              <i className={cx("fa-regular fa-message-lines", "icon")}></i>
-            </div>
-            <div className={cx("feedback-text")}>Feedback</div>
-          </div>
+    <div className={cx("feedback-module-view-wrapper")}>
+      <div className={cx("feedback-module-view-container")}>
+        <div className={cx("feedback-module-view-header")}>
           <div
             className={cx("view-back")}
-            onClick={() => setIsShowFeedbackView(false)}
+            onClick={() => setShowModuleFeedback(false)}
           >
-            <i className={cx("fa-regular fa-xmark")}></i>
+            <i className={cx("fa-solid fa-arrow-left", "back-icon")}></i>
           </div>
+          <div className={cx("view-title")}>View Feedback Lesson</div>
+          <div className={cx("view-empty")}></div>
         </div>
         {feedbacks?.length > 0 ? (
-          <div className={cx("question-view-feedback-content")}>
+          <div className={cx("feedback-module-view-content")}>
             {isWaiting ? (
               <>
                 <Skeleton
                   animation="wave"
                   variant="rectangular"
                   width="100%"
-                  height={173}
+                  height={175}
                 />
               </>
             ) : (
@@ -75,7 +69,7 @@ function QuestionQuizzFeedbackView({ questionFeedback, setIsShowFeedbackView }) 
                       </div>
                       <span className={cx("item-title")}>Feedback by: </span>
                     </div>
-                    <div className={cx("item-detail")}>{feedback.accountFrom.username}</div>
+                    <div className={cx("item-detail")}>{feedback.accountFrom.firstname + " " + feedback.accountFrom.lastname}</div>
                   </div>
                   <div className={cx("feedback-item")}>
                     <div className={cx("item-infor")}>
@@ -100,7 +94,7 @@ function QuestionQuizzFeedbackView({ questionFeedback, setIsShowFeedbackView }) 
             )}
           </div>
         ) : (
-          <div className={cx("question-view-feedback-no-content")}>
+          <div className={cx("feedback-module-view-no-content")}>
             <div className={cx("no-data-content")}>
               <img
                 src={NoData}
@@ -113,12 +107,7 @@ function QuestionQuizzFeedbackView({ questionFeedback, setIsShowFeedbackView }) 
         )}
       </div>
     </div>
-  );
+  )
 }
 
-QuestionQuizzFeedbackView.propTypes = {
-  questionFeedback: PropTypes.object,
-  setIsShowFeedbackView: PropTypes.func,
-};
-
-export default QuestionQuizzFeedbackView;
+export default FeedbackModuleView

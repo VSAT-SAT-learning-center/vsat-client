@@ -6,6 +6,7 @@ import Loader from "~/components/General/Loader";
 import apiClient from "~/services/apiService";
 import DomainQuestionView from "./DomainQuestionView";
 import styles from "./ExamCreateView.module.scss";
+import FeedbackModuleView from "./FeedbackModuleView";
 import ModuleQuestionView from "./ModuleQuestionView";
 const cx = classNames.bind(styles);
 
@@ -16,7 +17,8 @@ function ExamCreateView({ exam, fetchExamList, setIsShowCreateExamView }) {
   const [originalData, setOriginalData] = useState(null);
   const [domainData, setDomainData] = useState(null);
   const [moduleData, setModuleData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [showModuleFeedback, setShowModuleFeedback] = useState(false)
 
   const sectionOrder = ["Reading & Writing", "Math"];
   const moduleOrder = ["Module 1", "Module 2 (Easy)", "Module 2 (Hard)"];
@@ -74,6 +76,7 @@ function ExamCreateView({ exam, fetchExamList, setIsShowCreateExamView }) {
           setIsLoading={setIsLoading}
         />
       )}
+      {showModuleFeedback && <FeedbackModuleView moduleData={moduleData} setShowModuleFeedback={setShowModuleFeedback} />}
       <div className={cx("exam-create-view-detail-wrapper")}>
         <div className={cx("exam-create-view-detail-container")}>
           <div className={cx("exam-create-view-detail-header")}>
@@ -132,6 +135,7 @@ function ExamCreateView({ exam, fetchExamList, setIsShowCreateExamView }) {
                   setDomainData={setDomainData}
                   setModuleData={setModuleData}
                   setIsLoading={setIsLoading}
+                  setShowModuleFeedback={setShowModuleFeedback}
                 />
               ))}
             </div>
