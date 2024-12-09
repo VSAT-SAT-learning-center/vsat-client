@@ -8,8 +8,6 @@ import { formatDate } from "~/utils/formatDate";
 import styles from "./QuestionQuizzFeedbackView.module.scss";
 const cx = classNames.bind(styles);
 function QuestionQuizzFeedbackView({ questionFeedback, setIsShowFeedbackView }) {
-  console.log(questionFeedback.id);
-
   const [feedbacks, setFeedbacks] = useState(null)
   const [isWaiting, setIsWaiting] = useState(false)
 
@@ -17,7 +15,7 @@ function QuestionQuizzFeedbackView({ questionFeedback, setIsShowFeedbackView }) 
     const fetchFeedback = async () => {
       try {
         setIsWaiting(true)
-        const response = await apiClient.get(`/feedbacks/question/reason/${questionFeedback?.id}`)
+        const response = await apiClient.get(`/feedbacks/quizQuestion/reason/${questionFeedback?.id}`)
         setFeedbacks(response.data.data)
       } catch (error) {
         console.error(error)

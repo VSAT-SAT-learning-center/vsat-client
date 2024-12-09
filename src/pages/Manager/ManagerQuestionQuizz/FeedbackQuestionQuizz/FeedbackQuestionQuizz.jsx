@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import CensorQuestionQuizzItem from "~/components/Manager/CensorQuestionQuizz/CensorQuestionQuizzItem";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
-import QuestionFeedbackView from "~/components/Staff/QuestionExamCreate/QuestionFeedbackView";
+import QuestionQuizzFeedbackView from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzFeedbackView";
 import QuizzItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
@@ -54,7 +54,7 @@ function FeedbackQuestionQuizz() {
       )}
 
       {isShowFeedbackView && (
-        <QuestionFeedbackView
+        <QuestionQuizzFeedbackView
           questionFeedback={questionFeedback}
           setIsShowFeedbackView={setIsShowFeedbackView}
         />
