@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import QuestionExamEditModal from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzEditModal";
-import QuestionFeedbackView from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzFeedbackView";
+import QuestionQuizzFeedbackView from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzFeedbackView";
 import QuestionExamItem from "~/components/Staff/QuestionQuizzCreate/QuestionQuizzItem";
 import QuestionItemPreview from "~/components/Staff/QuestionQuizzCreate/QuizzItemPreview";
 import PageLayout from "~/layouts/Staff/PageLayout";
@@ -60,7 +60,7 @@ function QuizzFeedback() {
       )}
 
       {isShowFeedbackView && (
-        <QuestionFeedbackView
+        <QuestionQuizzFeedbackView
           questionFeedback={questionFeedback}
           setIsShowFeedbackView={setIsShowFeedbackView}
         />

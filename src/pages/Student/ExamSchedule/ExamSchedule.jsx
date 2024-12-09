@@ -13,13 +13,15 @@ const cx = classNames.bind(styles);
 
 function ExamSchedule() {
   const [examAttempts, setExamAttempts] = useState([]);
+  const [currentDate, setCurrentDate] = useState(null)
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchExamAttempts = async () => {
       try {
         const response = await apiClient.get(`/exam-attempts/getExamAttemptByStudyProfile`);
-        setExamAttempts(response.data.data);
+        setExamAttempts(response.data.data.examAttemptArrs);
+        setCurrentDate(moment(response.data.data.currentTime));
       } catch (error) {
         console.error("Error fetching exam attempts:", error);
       }
@@ -29,7 +31,7 @@ function ExamSchedule() {
   }, []);
 
   const getListData = (value) => {
-    const currentDate = moment();
+    if (!currentDate) return [];
     const listData = examAttempts
       .filter((attempt) => {
         const attemptDate = moment(attempt.attemptdatetime);
@@ -66,11 +68,12 @@ function ExamSchedule() {
 
 
   const handleSelectDate = (value) => {
+    if (!currentDate) return;
+
     const listData = getListData(value);
     if (listData.length === 0) return;
 
     const firstExam = listData[0];
-    const currentDate = moment();
     const attemptDate = moment(firstExam.attemptDate);
 
     const isToday = attemptDate.isSame(currentDate, "day");
@@ -118,6 +121,7 @@ function ExamSchedule() {
   };
 
   const cellRender = (currentDate, info) => {
+    if (!currentDate) return info.originNode;
     if (info.type === "date") {
       const listData = getListData(currentDate);
       return (
