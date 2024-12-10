@@ -6,10 +6,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 15px; 
+  padding: 20px 15px;
   border-radius: 12px;
   text-align: center;
-  
+
   .info-slider-item {
     width: 270px !important;
     .item-img img {
@@ -18,10 +18,10 @@
       border-radius: 10px;
       object-fit: cover;
     }
-  
+
     .item-name {
       margin: 10px 0;
-      font-size: 28px; 
+      font-size: 28px;
       font-weight: 600;
     }
     .item-job {
