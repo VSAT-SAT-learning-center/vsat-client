@@ -96,7 +96,7 @@ function ExamScore() {
         <div className={cx("create-score-wrapper")}>
           <div className={cx("create-score-container")}>
             <div className={cx("create-score-header")}>
-              <div className={cx("create-score-text")}>Exam Score</div>
+              <div className={cx("create-score-text")}>Score Distribution</div>
               <button
                 className={cx("create-score-import")}
                 onClick={() => setIsShowCreateExamScoreModal(true)}
@@ -104,13 +104,13 @@ function ExamScore() {
                 <i
                   className={cx("fa-regular fa-plus-circle", "import-icon")}
                 ></i>
-                <span className={cx("import-text")}>New Score</span>
+                <span className={cx("import-text")}>New Distribution</span>
               </button>
             </div>
             <div className={cx(
               isWaiting || examScoreList.length > 0
-              ? "create-score-content"
-              : "create-score-no-content"
+                ? "create-score-content"
+                : "create-score-no-content"
             )}>
               {isWaiting ? (
                 <>

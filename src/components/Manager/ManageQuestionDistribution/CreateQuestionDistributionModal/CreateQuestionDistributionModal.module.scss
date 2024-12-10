@@ -1,15 +1,5 @@
 @import "~/styles/variables";
 
-$border-color: #ddd !default;
-$bg-primary-color: #ffffff !default;
-$text-primary-color: #333 !default;
-$text-secondary-color: #666 !default;
-$icon-color: #333 !default;
-$bg-secondary-color: #f9f9f9 !default;
-$primary-color: #3498db !default;
-$warning-color: #ff6347 !default;
-$white-color: #ffffff !default;
-
 .create-question-distribution-modal-wrapper {
   position: fixed;
   top: 0;
@@ -56,9 +46,8 @@ $white-color: #ffffff !default;
       }
 
       .create-question-distribution-modal-title {
-        font-size: 20px;
+        font-size: 19px;
         font-weight: 600;
-        color: $text-primary-color;
       }
     }
 
@@ -72,14 +61,12 @@ $white-color: #ffffff !default;
           font-size: 18px;
           font-weight: 700;
           margin-bottom: 8px;
-          color: $text-secondary-color;
 
           .required {
             padding-left: 5px;
             font-size: 14px;
             font-weight: 400;
             font-style: italic;
-            color: $warning-color;
           }
         }
 
@@ -90,12 +77,11 @@ $white-color: #ffffff !default;
           align-items: center;
           font-size: 17px;
           border-radius: 5px;
-          border: 1px solid $text-primary-color;
+          border: 1px solid $text-color;
 
           .item-icon {
             padding: 6px 12px;
-            border-right: 1px solid $text-primary-color;
-            color: $icon-color;
+            border-right: 1px solid $text-color;
           }
 
           .item-input {
@@ -104,13 +90,13 @@ $white-color: #ffffff !default;
             border: none;
             outline: none;
             background-color: transparent;
-            color: $text-primary-color;
           }
 
           .date-picker-container {
-            display: flex;
-            gap: 8px; // Spacing between date inputs
             width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
           }
 
           .date-input {
@@ -119,14 +105,6 @@ $white-color: #ffffff !default;
             border-radius: 5px;
             outline: none;
             font-size: 16px;
-            color: $text-primary-color;
-            transition: border-color 0.3s ease;
-            cursor: pointer;
-
-            &:focus,
-            &:hover {
-              border-color: $primary-color;
-            }
           }
         }
       }
@@ -144,7 +122,9 @@ $white-color: #ffffff !default;
         color: $white-color;
         background-color: $primary-color;
         border: 1px solid $primary-color;
-        transition: background-color 0.3s ease, opacity 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          opacity 0.3s ease;
 
         &:hover {
           opacity: 0.7;
@@ -153,10 +133,6 @@ $white-color: #ffffff !default;
         &.disabled-btn {
           cursor: not-allowed;
           opacity: 0.6;
-
-          &:hover {
-            background-color: $primary-color;
-          }
         }
       }
     }

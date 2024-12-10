@@ -117,7 +117,7 @@ function Login({ setShowLogin }) {
       console.error("Google login failed!", error);
       toast.error(error.response?.data?.details || "Google login failed. Please try again.", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 4000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -130,7 +130,6 @@ function Login({ setShowLogin }) {
   };
 
   const handleGoogleLoginError = () => {
-    console.error("Google login failed!");
     toast.error("Google login failed. Please try again.", {
       position: "top-right",
       autoClose: 2000,
