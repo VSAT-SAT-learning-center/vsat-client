@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import NoData from "~/assets/images/content/nonotify.png";
 import Logo from "~/assets/images/logo/LOGO-02.png";
 import { AuthContext } from "~/contexts/AuthContext";
+import apiClient from "~/services/apiService";
 import styles from "./Notifications.module.scss";
 const cx = classNames.bind(styles);
 
-function Notifications({ notifications, setShowNotification }) {
+function Notifications({ notifications, setNotifications, setShowNotification }) {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate()
 
@@ -22,7 +23,21 @@ function Notifications({ notifications, setShowNotification }) {
     };
   }, []);
 
-  const handleReadNotification = (notify) => {
+  const handleReadAllNotification = async () => {
+    try {
+      await apiClient.post("/notifications/mark-all-read");
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((notification) => ({
+          ...notification,
+          isRead: true,
+        }))
+      );
+    } catch (error) {
+      console.error("Error marking all notifications as read:", error);
+    }
+  }
+
+  const handleReadNotification = async (notify) => {
     const roleActions = {
       Admin: () => console.log(notify),
       Manager: () => {
@@ -75,8 +90,18 @@ function Notifications({ notifications, setShowNotification }) {
         }
       },
     };
-    roleActions[user.role]?.();
-    setShowNotification(false);
+    try {
+      await apiClient.patch(`/notifications/${notify.id}/read`);
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((n) =>
+          n.id === notify.id ? { ...n, isRead: true } : n
+        )
+      );
+      roleActions[user.role]?.();
+      setShowNotification(false);
+    } catch (error) {
+      console.error("Error while reading notification:", error)
+    }
   };
 
   const notificationIcons = {
@@ -97,14 +122,15 @@ function Notifications({ notifications, setShowNotification }) {
         <div className={cx("mark-as-read")}>
           <button
             className={cx("mark-as-read-btn")}
+            onClick={handleReadAllNotification}
           >
             Mark as read
           </button>
         </div>
         {notifications.length > 0 ? (
           <div className={cx("notification-list")}>
-            {notifications?.map((notify, index) => (
-              <div className={cx("notification-item")} key={index} onClick={() => handleReadNotification(notify)}>
+            {notifications?.map((notify) => (
+              <div className={cx("notification-item")} key={notify?.id} onClick={() => handleReadNotification(notify)}>
                 <div className={cx("user-avatar")}>
                   <img
                     src={notify?.accountFrom?.profilepictureurl || Logo}

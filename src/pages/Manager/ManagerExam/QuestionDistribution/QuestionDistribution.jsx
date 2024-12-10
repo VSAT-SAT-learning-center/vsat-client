@@ -7,6 +7,7 @@ import QuestionDistributionItem from "~/components/Manager/ManageQuestionDistrib
 import QuestionDistributionViewDetail from "~/components/Manager/ManageQuestionDistribution/QuestionDistributionViewDetail";
 import UploadFileQuestionDistribution from "~/components/Manager/ManageQuestionDistribution/UploadFileQuestionDistribution";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import PageLayout from "~/layouts/Manager/PageLayout";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionDistribution.module.scss";
@@ -100,7 +101,7 @@ function QuestionDistribution() {
           <div className={cx("question-distribution-container")}>
             <div className={cx("question-distribution-header")}>
               <div className={cx("question-distribution-text")}>
-                Question distribution
+                Question Distribution
               </div>
               <button
                 className={cx("question-distribution-import")}
@@ -109,12 +110,16 @@ function QuestionDistribution() {
                 <i
                   className={cx("fa-regular fa-plus-circle", "import-icon")}
                 ></i>
-                <span className={cx("import-text")}>
-                  New distribution
-                </span>
+                <span className={cx("import-text")}>New Distribution</span>
               </button>
             </div>
-            <div className={cx("question-distribution-content")}>
+            <div
+              className={cx(
+                isWaiting || examScoreList.length > 0
+                  ? "question-distribution-content"
+                  : "question-distribution-no-content"
+              )}
+            >
               {isWaiting ? (
                 <>
                   {[...Array(3)].map((_, i) => (
@@ -128,16 +133,19 @@ function QuestionDistribution() {
                   ))}
                 </>
               ) : (
-                examScoreList?.length > 0 &&
-                examScoreList?.map((examScore, index) => (
-                  <QuestionDistributionItem
-                    key={examScore.id}
-                    index={index + 1}
-                    examScore={examScore}
-                    setViewScoreDetailData={setViewScoreDetailData}
-                    setIsShowViewDetailScore={setIsShowViewDetailScore}
-                  />
-                ))
+                examScoreList?.length > 0 ? (
+                  examScoreList?.map((examScore, index) => (
+                    <QuestionDistributionItem
+                      key={examScore.id}
+                      index={index + 1}
+                      examScore={examScore}
+                      setViewScoreDetailData={setViewScoreDetailData}
+                      setIsShowViewDetailScore={setIsShowViewDetailScore}
+                    />
+                  ))
+                ) : (
+                  <NoQuestionData />
+                )
               )}
             </div>
           </div>

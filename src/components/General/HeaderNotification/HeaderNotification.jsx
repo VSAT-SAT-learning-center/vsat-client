@@ -3,7 +3,7 @@ import styles from "./HeaderNotification.module.scss";
 const cx = classNames.bind(styles);
 
 function HeaderNotification({ notifications, showNotification, setShowNotification }) {
-  const countNotifications = notifications?.length || 0;
+  const countNotifications = notifications?.filter((n) => !n.isRead)?.length || 0;
   return (
     <div className={cx("notification")} onClick={() => setShowNotification(!showNotification)}>
       <i className={cx("fa-sharp fa-regular fa-bell", "icon")}></i>

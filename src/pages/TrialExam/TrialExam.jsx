@@ -1,6 +1,7 @@
 import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
 import { useCallback, useContext, useEffect, useState } from "react";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import OnboardingTrialExam from "~/components/TrialExam/TrialExamDetail/OnboardingTrialExam";
 import TrialExamItem from "~/components/TrialExam/TrialExamItem";
 import { AuthContext } from "~/contexts/AuthContext";
@@ -47,7 +48,7 @@ function TrialExam() {
       {showOnboarding && <OnboardingTrialExam setShowOnboarding={handleOnboardingComplete} />}
       <div className={cx("trial-exam-wrapper")}>
         <HeaderAuthen />
-        <div className={cx("trial-exam-container")}>
+        <div className={cx(isWaiting || examList.length > 0 ? "trial-exam-container" : "trial-exam-no-container")}>
           {isWaiting ? (
             <>
               {[...Array(3)].map((_, i) => (
@@ -60,10 +61,12 @@ function TrialExam() {
                 />
               ))}
             </>
-          ) : (
+          ) : examList.length > 0 ? (
             examList?.map((exam, index) => (
               <TrialExamItem key={exam.id} index={index + 1} exam={exam} />
             ))
+          ) : (
+            <NoQuestionData />
           )}
         </div>
       </div>

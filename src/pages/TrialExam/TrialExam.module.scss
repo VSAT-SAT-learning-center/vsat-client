@@ -11,4 +11,14 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
   }
+
+  .trial-exam-no-container {
+    width: 100%;
+    height: calc(100vh - 80px);
+    margin-top: 80px;
+    padding: 25px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

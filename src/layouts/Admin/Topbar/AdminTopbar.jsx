@@ -14,31 +14,32 @@ const cx = classNames.bind(styles);
 function AdminTopbar() {
   const { user } = useContext(AuthContext);
   const [showAccountSetting, setShowAccountSetting] = useState(false);
-  const [showNotification, setShowNotification] = useState(false)
+  const [showNotification, setShowNotification] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [socket, setSocket] = useState(null);
-  const [nofiticationsData, setNotificationsData] = useState([])
+  const [nofiticationsData, setNotificationsData] = useState([]);
 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await apiClient.get("/notifications")
-        const filterNotifications = response.data.data.filter((notify) => notify.isRead === false)
-        const notifications = filterNotifications.map(notification => ({
+        const response = await apiClient.get("/notifications");
+        const notifications = response.data.data.map((notification) => ({
+          id: notification.id,
           type: notification.type,
           eventType: notification.eventType,
           message: notification.message,
           accountFrom: notification.accountFrom,
           createdAt: notification.createdAt,
+          isRead: notification.isRead,
         }));
-        setNotificationsData(notifications)
+        setNotificationsData(notifications);
       } catch (error) {
-        console.error("Error while fetching notifications:", error)
+        console.error("Error while fetching notifications:", error);
       }
-    }
+    };
 
-    fetchNotifications()
-  }, [])
+    fetchNotifications();
+  }, []);
 
   useEffect(() => {
     const socketUrl = import.meta.env.VITE_SOCKET_URL;
@@ -56,8 +57,11 @@ function AdminTopbar() {
         message: notification.data.message,
         accountFrom: notification.data.accountFrom,
         createdAt: notification.data.createdAt,
-      }
-      setNotificationsData((prevNotifications) => [mapNotification, ...prevNotifications]);
+      };
+      setNotificationsData((prevNotifications) => [
+        mapNotification,
+        ...prevNotifications,
+      ]);
     });
     setSocket(newSocket);
 
@@ -69,13 +73,22 @@ function AdminTopbar() {
   return (
     <>
       {showAccountSetting && <AccountOptions />}
-      {showNotification && <Notifications notifications={nofiticationsData} setShowNotification={setShowNotification} />}
+      {showNotification && (
+        <Notifications
+          notifications={nofiticationsData}
+          setNotifications={setNotificationsData}
+          setShowNotification={setShowNotification}
+        />
+      )}
       <div className={cx("admin-topbar-wrapper")}>
         <div className={cx("admin-topbar-container")}>
-          <div className={cx("admin-topbar-left")}>
-          </div>
+          <div className={cx("admin-topbar-left")}></div>
           <div className={cx("admin-topbar-right")}>
-            <HeaderNotification notifications={nofiticationsData} showNotification={showNotification} setShowNotification={setShowNotification} />
+            <HeaderNotification
+              notifications={nofiticationsData}
+              showNotification={showNotification}
+              setShowNotification={setShowNotification}
+            />
             <HeaderUserProfile
               showAccountSetting={showAccountSetting}
               setShowAccountSetting={setShowAccountSetting}
