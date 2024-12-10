@@ -4,6 +4,7 @@ import DOMPurify from "dompurify";
 import { useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import NoData from "~/assets/images/content/nonotify.png";
+import Logo from "~/assets/images/logo/LOGO-02.png";
 import { AuthContext } from "~/contexts/AuthContext";
 import styles from "./Notifications.module.scss";
 const cx = classNames.bind(styles);
@@ -106,7 +107,7 @@ function Notifications({ notifications, setShowNotification }) {
               <div className={cx("notification-item")} key={index} onClick={() => handleReadNotification(notify)}>
                 <div className={cx("user-avatar")}>
                   <img
-                    src={notify?.accountFrom?.profilepictureurl}
+                    src={notify?.accountFrom?.profilepictureurl || Logo}
                     alt="user-avt"
                     className={cx("avatar")}
                   />

@@ -42,12 +42,12 @@
       .reason-item {
         display: flex;
         align-items: center;
+        column-gap: 15px;
         margin-bottom: 22px;
 
         .reason-icon {
           width: 25px;
           height: 25px;
-          margin-right: 10px;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -61,6 +61,7 @@
         }
 
         .reason-text {
+          flex: 1;
           font-size: 18px;
           font-weight: 400;
           color: #747474;
