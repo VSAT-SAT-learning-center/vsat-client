@@ -5,8 +5,6 @@ import styles from "./CensorQuestionExamGPT.module.scss";
 const cx = classNames.bind(styles);
 
 function CensorQuestionExamGPT({ dataCensorWithAI, setIsShowCensorGpt }) {
-  console.log(dataCensorWithAI);
-
   return (
     <div className={cx("censor-question-exam-gpt-wrapper")}>
       <div className={cx("censor-question-exam-gpt-container")}>

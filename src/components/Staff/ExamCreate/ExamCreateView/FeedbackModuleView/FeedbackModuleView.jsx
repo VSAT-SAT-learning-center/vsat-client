@@ -36,7 +36,7 @@ function FeedbackModuleView({ moduleData, setShowModuleFeedback }) {
           >
             <i className={cx("fa-solid fa-arrow-left", "back-icon")}></i>
           </div>
-          <div className={cx("view-title")}>View Feedback Lesson</div>
+          <div className={cx("view-title")}>View Feedback Module</div>
           <div className={cx("view-empty")}></div>
         </div>
         {feedbacks?.length > 0 ? (

@@ -35,8 +35,16 @@
       }
 
       .exam-title {
+        width: 185px;
         font-size: 17px;
         font-weight: 600;
+        word-wrap: break-word;
+        white-space: normal;
+        overflow: hidden;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
       }
     }
 
