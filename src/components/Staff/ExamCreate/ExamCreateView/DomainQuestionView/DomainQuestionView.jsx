@@ -150,7 +150,7 @@ function DomainQuestionView({
 
       if (updatedDomain) {
         setDomainData(updatedDomain);
-        toast.success("Updated question successfully!", {
+        toast.success("Update question successfully!", {
           autoClose: 1500
         })
         setIsShowDomainQuestionView(false);
@@ -158,7 +158,7 @@ function DomainQuestionView({
       }
     } catch (error) {
       console.error("Error while update exam:", error);
-      toast.error("Updated question fail!", {
+      toast.error("Update question failed!", {
         autoClose: 1500
       })
     } finally {

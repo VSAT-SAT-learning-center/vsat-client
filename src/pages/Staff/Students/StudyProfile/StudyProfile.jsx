@@ -168,14 +168,14 @@ function StudyProfile() {
 
       setProfiles(newAvailableProfiles);
       setAssignedProfiles(newAssignedProfiles);
-      toast.success("Profiles successfully saved!", {
+      toast.success("Profiles successfully assigned!", {
         autoClose: 2000,
       });
       console.log("Updated Profiles:", updatedProfiles);
       console.log("Assigned Profiles Map:", newAssignedProfiles);
     } catch (error) {
       console.error("Failed to assign profiles:", error);
-      toast.error("Failed to assign profiles. Please try again.", {
+      toast.error("Failed to assign profiles. Please try again!", {
         autoClose: 2000,
       });
     } finally {

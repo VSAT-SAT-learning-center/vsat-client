@@ -64,7 +64,7 @@ function QuestionDistributionViewDetail({
       await apiClient.patch("/domain-distribution-config", updatedRows);
       setIsShowViewDetailScore(false);
       fetchExamScoreList();
-      toast.success("Update successfully!", {
+      toast.success("Update question distribution successfully!", {
         autoClose: 2000,
       });
     } catch (error) {

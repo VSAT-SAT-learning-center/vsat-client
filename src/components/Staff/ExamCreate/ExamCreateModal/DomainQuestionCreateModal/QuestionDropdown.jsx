@@ -14,7 +14,7 @@ function QuestionDropdown({
 }) {
   const handleClickQuestion = (questionData) => {
     if (domainQuestions.questions.length >= numberOfQuestion) {
-      toast.warning(`You can only select up to ${numberOfQuestion} questions.`);
+      toast.warning(`You can only select up to ${numberOfQuestion} questions!`);
       return;
     }
     setSearchValue("");

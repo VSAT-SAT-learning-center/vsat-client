@@ -35,7 +35,7 @@ function QuestionDistributionCreateView({
       fetchExamScoreList();
       setIsShowCreateExamScoreModal(false);
       setIsShowExamScoreResult(false);
-      toast.success("Create successfully");
+      toast.success("Create question distribution successfully!");
     } catch (error) {
       console.error("Error creating exam score:", error);
     }

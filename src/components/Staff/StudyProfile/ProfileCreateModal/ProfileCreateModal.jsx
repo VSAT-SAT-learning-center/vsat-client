@@ -79,7 +79,7 @@ function ProfileCreateModal({ isOpen, onClose, onSaveSuccess }) {
 
   const handleSave = async () => {
     if (!editableProfile.account.id || !editableProfile.startdate || !editableProfile.enddate) {
-      toast.error("Please fill all required fields before saving.");
+      toast.error("Please fill all required fields before saving!", { autoClose: 1500 });
       return;
     }
 
@@ -93,13 +93,13 @@ function ProfileCreateModal({ isOpen, onClose, onSaveSuccess }) {
         endDate: editableProfile.enddate,
       });
       if (response.status === 201) {
-        toast.success("Study profile created successfully.");
+        toast.success("Study profile created successfully!", { autoClose: 1500 });
         onSaveSuccess();
         onClose();
       }
     } catch (error) {
       console.error("Error creating study profile:", error);
-      toast.error("Failed to create study profile. Please try again.");
+      toast.error("Failed to create a study profile. Please try again!", { autoClose: 1500 });
     } finally {
       setIsSaving(false);
     }

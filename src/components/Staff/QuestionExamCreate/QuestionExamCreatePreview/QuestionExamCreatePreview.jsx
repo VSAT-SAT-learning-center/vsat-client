@@ -86,7 +86,7 @@ function QuestionExamCreatePreview({
       setIsShowCreateQuestionModal(false);
       fetchQuestions();
     } catch (error) {
-      toast.error(`${error.response.data.details.message}`, {
+      toast.error(`${error.response.data.details.message || "Question created failed!"}`, {
         autoClose: 2000,
       });
     }

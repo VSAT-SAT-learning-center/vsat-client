@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import Loader from "~/components/General/Loader";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import LearningMaterialCreateHeader from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateHeader";
@@ -71,10 +72,15 @@ function LearningMaterialPublish() {
     try {
       setLoading(true)
       await apiClient.post(`/units/${unitId}/submit`);
-      console.log("Success publish");
+      toast.success("Publish learning material successfully!", {
+        autoClose: 1500
+      })
       navigate("/staff/learning-material/create");
     } catch (error) {
       console.error("Error publish unit:", error);
+      toast.error("Publish learning material failed!", {
+        autoClose: 1500
+      })
     } finally {
       setLoading(false)
     }
