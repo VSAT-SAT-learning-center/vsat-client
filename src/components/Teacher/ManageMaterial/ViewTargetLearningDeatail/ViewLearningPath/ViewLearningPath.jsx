@@ -155,7 +155,7 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning, setIsShowViewSt
       })
     } catch (error) {
       console.error("Error when update learning path:", error)
-      toast.error("Fail to learning path!", {
+      toast.error("Fail to update the learning path!", {
         autoClose: 2000,
       })
     }

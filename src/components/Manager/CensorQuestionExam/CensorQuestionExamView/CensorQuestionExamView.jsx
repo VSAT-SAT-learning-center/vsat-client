@@ -89,7 +89,7 @@ function CensorQuestionExamView({
       setIsShowCensorGpt(true);
     } catch (error) {
       console.error("Error censoring question with AI:", error);
-      toast.error("Censor by AI fail!", {
+      toast.error("Censors by AI fail!", {
         autoClose: 1000
       })
       setLoading(false);

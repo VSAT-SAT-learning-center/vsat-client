@@ -46,7 +46,7 @@ function AdminAccountSetting() {
       setIsEditing(false);
       console.log(response);
       if (response.status === 200) {
-        toast.success("Update profile successfully.");
+        toast.success("Update profile successfully!");
       }
     } catch (error) {
       const errorMessage =

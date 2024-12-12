@@ -276,7 +276,7 @@ function ExamCreateModal({ setIsShowCreateExamModal, fetchExamList }) {
       });
     } catch (error) {
       console.error("Error fetching questions from database:", error);
-      toast.error("Failed to upload file. Please try again.", {
+      toast.error("Failed to upload file. Please try again!", {
         autoClose: 1000,
       });
     } finally {
@@ -311,7 +311,7 @@ function ExamCreateModal({ setIsShowCreateExamModal, fetchExamList }) {
       });
     } catch (error) {
       console.error("Error while creating exam:", error);
-      toast.error("Failed to create exam. Please try again.", {
+      toast.error("Failed to create an exam. Please try again!", {
         autoClose: 1000,
       });
     } finally {

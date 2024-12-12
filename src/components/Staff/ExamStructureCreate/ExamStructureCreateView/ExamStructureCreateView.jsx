@@ -258,7 +258,7 @@ function ExamStructureCreateView({
       setIsShowExamStructureCreateView(false);
     } catch (error) {
       console.error("Error while creating exam structure:", error);
-      toast.error("Failed to create exam structure. Please try again.", {
+      toast.error("Failed to create exam structure. Please try again!", {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,

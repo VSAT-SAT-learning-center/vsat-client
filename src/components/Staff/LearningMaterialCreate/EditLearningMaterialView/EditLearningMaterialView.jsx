@@ -90,12 +90,12 @@ function EditLearningMaterialView({ unitId, setIsShowMaterialView }) {
     try {
       await apiClient.post(`/units/${unitId}/submit`)
       navigate("/staff/learning-material/overview")
-      toast.success("Update unit successfully!", {
+      toast.success("Update learning material successfully!", {
         autoClose: 1000
       })
     } catch (error) {
       console.error("Error while update unit:", error)
-      toast.error("Update unit failed!", {
+      toast.error("Update learning material failed!", {
         autoClose: 1000
       })
     }

@@ -52,7 +52,7 @@ function Profile() {
     } catch (error) {
       const errorMessage =
         error.response?.data?.details.message ||
-        "Error creating account. Please try again.";
+        "Error update account. Please try again!";
       toast.error(errorMessage);
     }
   };

@@ -100,13 +100,13 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
       );
       navigate("/manager/exams/overview")
       setIsShowExamCensorView(false);
-      toast.success("Censor approve exam successfully!", {
+      toast.success("Censor approved exam successfully!", {
         autoClose: 1000
       })
       console.log(response.data);
     } catch (error) {
       console.error("Error approving exam:", error);
-      toast.error("Censor approve exam failed!", {
+      toast.error("Censor approval exam failed!", {
         autoClose: 1000
       })
     }
@@ -125,7 +125,7 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
       );
       navigate("/manager/exams/feedback")
       setIsShowExamCensorView(false);
-      toast.success("Censor reject exam successfully!", {
+      toast.success("Censor rejected the exam successfully!", {
         autoClose: 1000
       })
       console.log(response.data);

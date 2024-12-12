@@ -78,7 +78,7 @@ function UploadFileQuestionDistribution({
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
       if (jsonData.length <= 1) {
-        toast.error("File không có dữ liệu hợp lệ!", { autoClose: 1500 });
+        toast.error("File has no valid data!", { autoClose: 1500 });
         return;
       }
       const filteredData = jsonData
