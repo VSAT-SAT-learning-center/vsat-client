@@ -12,7 +12,7 @@ function QuestionDistributionViewDetail({
   viewScoreDetailData,
   setIsShowViewDetailScore,
 }) {
-  const [combinedData, setCombinedData] = useState([]); // Combined data for both sections
+  const [combinedData, setCombinedData] = useState([]); 
   const [updatedRows, setUpdatedRows] = useState([]);
 
   useEffect(() => {

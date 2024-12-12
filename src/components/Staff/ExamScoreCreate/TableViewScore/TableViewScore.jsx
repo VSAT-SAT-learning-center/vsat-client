@@ -24,6 +24,7 @@ const TableViewScore = ({ dataSource }) => {
         dataSource={dataSource.map((item) => ({ ...item, key: item.id }))}
         columns={columns}
         rowClassName="editable-row"
+        scroll={{ y: 470 }}
         pagination={{ pageSize: 10 }}
       />
     </div>

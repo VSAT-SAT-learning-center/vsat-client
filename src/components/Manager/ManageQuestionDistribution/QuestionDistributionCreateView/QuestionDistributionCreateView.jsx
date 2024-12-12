@@ -8,7 +8,6 @@ const cx = classNames.bind(styles);
 function QuestionDistributionCreateView({
   dataSource,
   examTitle,
-  examType,
   examTime,
   setDataSource,
   setIsShowExamScoreResult,
@@ -53,7 +52,7 @@ function QuestionDistributionCreateView({
             <i className={cx("fa-regular fa-arrow-left")}></i>
           </div>
           <div className={cx("question-distribution-title")}>{examTitle}</div>
-          <div className={cx("question-distribution-type")}>{examType}</div>
+          <div className={cx("question-distribution-type")}></div>
         </div>
         <div className={cx("question-distribution-create-view-content")}>
           <EditableTable
