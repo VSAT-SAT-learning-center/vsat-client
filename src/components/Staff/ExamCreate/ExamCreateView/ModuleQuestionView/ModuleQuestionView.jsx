@@ -87,11 +87,13 @@ function ModuleQuestionView({
           </div>
           <div className={cx("module-section")}>{examQuestion?.section}</div>
         </div>
-        <div className={cx("module-feedback")}>
-          <button className={cx("feedback-list-btn")} onClick={handleViewFeedback}>
-            <i className={cx("fa-regular fa-clipboard-list")}></i>
-          </button>
-        </div>
+        {exam?.status === "Rejected" && (
+          <div className={cx("module-feedback")}>
+            <button className={cx("feedback-list-btn")} onClick={handleViewFeedback}>
+              <i className={cx("fa-regular fa-clipboard-list")}></i>
+            </button>
+          </div>
+        )}
       </div>
       <div className={cx("module-question-content")}>
         {sortedDomains?.map((domain, index) => (

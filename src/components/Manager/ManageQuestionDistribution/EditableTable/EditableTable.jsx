@@ -60,8 +60,6 @@ const EditableTable = ({ dataSource, setDataSource }) => {
           minQuestion: parseInt(row.minQuestion, 10),
           maxQuestion: parseInt(row.maxQuestion, 10),
         };
-        console.log("Updated Row:", updatedRow);
-        
         newData.splice(index, 1, updatedRow);  // Cập nhật hàng đã chỉnh sửa
         setDataSource(newData);                // Cập nhật lại dữ liệu
         setEditingId("");
