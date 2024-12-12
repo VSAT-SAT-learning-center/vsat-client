@@ -21,7 +21,6 @@ function QuestionDistribution() {
   const [mathData, setMathData] = useState(initialMathData);
   const [rwData, setRwData] = useState(initialReadingWritingData);
   const [examTitle, setExamTitle] = useState("");
-  const [examType, setExamType] = useState("");
   const [isShowImportExamScore, setIsShowImportExamScore] = useState(false);
   const [isShowExamScoreResult, setIsShowExamScoreResult] = useState(false);
   const [isShowCreateExamScoreModal, setIsShowCreateExamScoreModal] =
@@ -57,9 +56,7 @@ function QuestionDistribution() {
       {isShowCreateExamScoreModal && (
         <CreateQuestionDistributionModal
           examTitle={examTitle}
-          examType={examType}
           setExamTitle={setExamTitle}
-          setExamType={setExamType}
           setExamTime={setExamTime}
           setIsShowCreateExamScoreModal={setIsShowCreateExamScoreModal}
           setIsShowImportExamScore={setIsShowImportExamScore}
@@ -80,7 +77,6 @@ function QuestionDistribution() {
           rwData={rwData}
           mathData={mathData}
           examTitle={examTitle}
-          examType={examType}
           examTime={examTime}
           setDataSource={setDataSource}
           setIsShowExamScoreResult={setIsShowExamScoreResult}

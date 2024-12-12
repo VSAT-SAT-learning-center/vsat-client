@@ -152,7 +152,7 @@ const EditableTable = ({ dataSource, setDataSource }) => {
           dataSource={dataSource.map((item) => ({ ...item, key: item.id }))}
           columns={mergedColumns}
           rowClassName="editable-row"
-          scroll={{ y: 400 }}
+          scroll={{ y: 470 }}
           pagination={{ pageSize: 10 }}
         />
       </Form>
