@@ -1,17 +1,18 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import apiClient from "~/services/apiService";
 import styles from "./CensorConfirmFeedback.module.scss";
 const cx = classNames.bind(styles);
 
 function CensorConfirmFeedback({
+  fetchLearningMaterials,
   unitDetails,
   censorStatus,
   finalCensorResult,
   setIsShowConfirmFeedback,
+  setIsShowCensorView
 }) {
-  const navigate = useNavigate();
   const handleApproveLesson = async () => {
     const lessonsFeedbackData = censorStatus.map((item) => ({
       lessonId: item.lessonId,
@@ -24,12 +25,19 @@ function CensorConfirmFeedback({
         lessonsFeedback: lessonsFeedbackData,
       },
     };
-    console.log(feedbackData);
     try {
       await apiClient.post(`/units/censor/approve`, feedbackData);
-      navigate("/manager/learning-material/overview");
+      fetchLearningMaterials()
+      setIsShowConfirmFeedback(false)
+      setIsShowCensorView(false)
+      toast.success("Censor approve learning material successfully!", {
+        autoClose: 1500
+      })
     } catch (error) {
       console.error("Error approving feedback:", error);
+      toast.error("Censor approve learning material failed!", {
+        autoClose: 1500
+      })
     }
   };
   const handleRejectLesson = async () => {
@@ -47,9 +55,17 @@ function CensorConfirmFeedback({
     };
     try {
       await apiClient.post(`/units/censor/reject`, feedbackData);
-      navigate("/manager/learning-material/feedback");
+      fetchLearningMaterials()
+      setIsShowConfirmFeedback(false)
+      setIsShowCensorView(false)
+      toast.success("Censor reject learning material successfully!", {
+        autoClose: 1500
+      })
     } catch (error) {
       console.error("Error rejecting feedback:", error);
+      toast.success("Censor reject learning material failed!", {
+        autoClose: 1500
+      })
     }
   };
   return (

@@ -29,7 +29,7 @@ function QuestionBarChart() {
     dataLabels: {
       enabled: true,
     },
-    colors: ["#51bfb3", "#f4cf39", "#d7354f"],
+    colors: ["#2446b6", "#f4cf39", "#d7354f"],
   };
 
   const chartSeries = [
@@ -48,7 +48,7 @@ function QuestionBarChart() {
   ];
   return (
     <div className={cx("chart-bar-question-container")}>
-      <div className={cx("chart-title")}>Question Bar Chart</div>
+      <div className={cx("chart-title")}>Question Statistics</div>
       <div className={cx("chart-content")}>
         <Chart options={chartOptions} series={chartSeries} type="bar" height={415} />
       </div>

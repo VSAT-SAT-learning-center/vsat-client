@@ -15,7 +15,7 @@
   .error-question-container {
     position: relative;
     width: 600px;
-    height: 80%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -72,6 +72,10 @@
         margin-bottom: 15px;
         border-radius: 10px;
         border: 1px solid $third-color;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
 
         .question-error-header {
           width: 100%;

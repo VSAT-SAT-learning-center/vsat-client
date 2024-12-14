@@ -17,23 +17,24 @@ function LearningMaterial() {
   const [isShowCensorView, setIsShowCensorView] = useState(false);
   const [censorViewUnitId, setCensorViewUnitId] = useState("");
 
-  useEffect(() => {
-    const fetchLearningMaterials = async () => {
-      try {
-        const response = await apiClient.get(`/units/pending`, {
-          params: {
-            page: currentPage,
-            pageSize: itemsPerPage,
-          },
-        });
-        setLearningMaterials(response.data.data.data);
-        setTotalItems(response.data.data.totalItems);
-      } catch (error) {
-        console.error("Error fetching learning materials:", error);
-      }
-    };
+  const fetchLearningMaterials = async () => {
+    try {
+      const response = await apiClient.get(`/units/pending`, {
+        params: {
+          page: currentPage,
+          pageSize: itemsPerPage,
+        },
+      });
+      setLearningMaterials(response.data.data.data);
+      setTotalItems(response.data.data.totalItems);
+    } catch (error) {
+      console.error("Error fetching learning materials:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchLearningMaterials();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   const handlePageChange = (page) => {
@@ -43,6 +44,7 @@ function LearningMaterial() {
     <>
       {isShowCensorView && (
         <CensorLearningMaterialView
+          fetchLearningMaterials={fetchLearningMaterials}
           unitId={censorViewUnitId}
           setIsShowCensorView={setIsShowCensorView}
         />
