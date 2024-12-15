@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PageLayout from "~/layouts/Admin/PageLayout";
+import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
 import apiClient from "~/services/apiService";
 import styles from "./CreateAccountByImportFile.module.scss";
 
@@ -95,12 +96,13 @@ function CreateAccountByImportFile() {
 
   return (
     <PageLayout>
+      <div className={cx("import-create-account-wrapper")}>
       <div className={cx("import-create-account-container")}>
         <div className={cx("import-modal-header")}>
-          <div className={cx("import-modal-title")}>Add a new user</div>
+          <div className={cx("import-modal-text")}>Add a new user</div>
         </div>
 
-        <div className={cx("import-form-container")}>
+        <div className={cx("import-form-content")}>
           <div className={cx("import-form-group")}>
             <label>Import CSV file</label>
             <input type="file" accept=".csv" onChange={handleFileUpload} />
@@ -217,6 +219,8 @@ function CreateAccountByImportFile() {
         </div>
         <ToastContainer />
       </div>
+      </div>
+      <LearningMaterialCreateFooter />
     </PageLayout>
   );
 }
