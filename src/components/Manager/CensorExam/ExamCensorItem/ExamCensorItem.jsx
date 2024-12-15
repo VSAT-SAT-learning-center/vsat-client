@@ -22,8 +22,8 @@ function ExamCensorItem({ exam, setExamCensorData, setIsShowExamCensorView }) {
               exam?.status === "Approved"
                 ? "approved-status"
                 : exam?.status === "Pending"
-                ? "pending-status"
-                : "rejected-status"
+                  ? "pending-status"
+                  : "rejected-status"
             )}
           >
             {exam?.status}

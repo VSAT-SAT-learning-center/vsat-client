@@ -4,16 +4,7 @@ import styles from "./ExamTableChart.module.scss";
 
 const cx = classNames.bind(styles);
 
-function ExamTableChart() {
-  const examData = Array.from({ length: 10 }, (_, index) => ({
-    key: index,
-    student: `Student ${index + 1}`,
-    exam: `Exam ${Math.floor(index / 10) + 1}`,
-    readingWritingScore: Math.floor(Math.random() * 400) + 200, 
-    mathScore: Math.floor(Math.random() * 400) + 200, 
-    totalScore: Math.floor(Math.random() * 800) + 400, 
-  }));
-
+function ExamTableChart({ examData }) {
   const columns = [
     {
       title: "Student",

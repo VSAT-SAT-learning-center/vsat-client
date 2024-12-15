@@ -22,7 +22,7 @@ function LearningMaterial() {
   useEffect(() => {
     const fetchLearningMaterials = async () => {
       try {
-        const response = await apiClient.get(`/units/${materialType}`, {
+        const response = await apiClient.get(`/units/staff/${materialType}`, {
           params: {
             page: currentPage,
             pageSize: itemsPerPage,

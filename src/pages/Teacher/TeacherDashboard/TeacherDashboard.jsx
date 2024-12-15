@@ -29,7 +29,6 @@ function TeacherDashboard() {
       data: 100,
       number: 10,
       title: "Active Student Profiles",
-      pieData: [55, 32, 13],
     },
     {
       id: 1,
@@ -38,7 +37,6 @@ function TeacherDashboard() {
       data: 124,
       number: 2,
       title: "Paths Pending Approval",
-      pieData: [60, 25, 15],
     },
     {
       id: 2,
@@ -47,7 +45,6 @@ function TeacherDashboard() {
       data: 15,
       number: 5,
       title: `Upcoming Exams`,
-      pieData: [45, 35, 20],
     },
     {
       id: 3,
@@ -56,7 +53,6 @@ function TeacherDashboard() {
       data: 125,
       number: 25,
       title: `Total Feedbacks in ${currentMonth}`,
-      pieData: [50, 40, 10],
     },
   ]);
   return (

@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 import styles from "./QuestionBarChart.module.scss";
 const cx = classNames.bind(styles);
 
-function QuestionBarChart() {
+function QuestionBarChart({ data }) {
   const chartOptions = {
     chart: {
       type: "bar",
@@ -31,26 +31,11 @@ function QuestionBarChart() {
     },
     colors: ["#2446b6", "#f4cf39", "#d7354f"],
   };
-
-  const chartSeries = [
-    {
-      name: "Approved",
-      data: [12, 14, 8, 10, 18, 20, 6, 7],
-    },
-    {
-      name: "Pending",
-      data: [6, 7, 4, 5, 10, 9, 3, 2],
-    },
-    {
-      name: "Rejected",
-      data: [2, 3, 2, 1, 3, 4, 1, 1],
-    },
-  ];
   return (
     <div className={cx("chart-bar-question-container")}>
       <div className={cx("chart-title")}>Question Statistics</div>
       <div className={cx("chart-content")}>
-        <Chart options={chartOptions} series={chartSeries} type="bar" height={415} />
+        <Chart options={chartOptions} series={data} type="bar" height={415} />
       </div>
     </div>
   )
