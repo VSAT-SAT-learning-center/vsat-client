@@ -53,11 +53,13 @@ function HeaderAuthen() {
 
     newSocket.on("feedbackNotification", (notification) => {
       const mapNotification = {
+        id: notification.data.id,
         type: notification.type,
         eventType: notification.eventType,
         message: notification.data.message,
         accountFrom: notification.data.accountFrom,
         createdAt: notification.data.createdAt,
+        isRead: false,
       };
       setNotificationsData((prevNotifications) => [
         mapNotification,

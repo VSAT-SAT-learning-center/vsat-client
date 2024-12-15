@@ -22,8 +22,8 @@ function ExamCreateItem({ exam, setExamDetailData, setIsShowCreateExamView }) {
               exam?.status === "Approved"
                 ? "approved-status"
                 : exam?.status === "Pending"
-                ? "pending-status"
-                : "rejected-status"
+                  ? "pending-status"
+                  : "rejected-status"
             )}
           >
             {exam?.status}

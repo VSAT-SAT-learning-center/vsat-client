@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./Widget.module.scss";
 const cx = classNames.bind(styles);
 
-function Widget({ widget, setSelectedWidget }) {
+function Widget({ widget }) {
   const styleIcon = (type) => {
     if (type === "Student Profiles") {
       return {
@@ -43,14 +43,9 @@ function Widget({ widget, setSelectedWidget }) {
     }
   };
 
-  const handleChooseWidget = () => {
-    setSelectedWidget(widget)
-  }
-
   return (
     <div
       className={cx("widget_container")}
-      onClick={handleChooseWidget}
     >
       <div className={cx("widget_header")}>
         <div

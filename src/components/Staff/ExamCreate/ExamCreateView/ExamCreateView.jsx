@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "~/components/General/Loader";
 import apiClient from "~/services/apiService";
@@ -10,6 +11,7 @@ import ModuleQuestionView from "./ModuleQuestionView";
 const cx = classNames.bind(styles);
 
 function ExamCreateView({ exam, fetchExamList, setIsShowCreateExamView }) {
+  const navigate = useNavigate()
   const [isShowDomainQuestionView, setIsShowDomainQuestionView] =
     useState(false);
   const [originalData, setOriginalData] = useState(null);
@@ -45,6 +47,7 @@ function ExamCreateView({ exam, fetchExamList, setIsShowCreateExamView }) {
     try {
       setIsLoading(true)
       await apiClient.patch(`/exams/updateStatus/${exam.id}/Pending`)
+      navigate("/staff/exams/create")
       setIsShowCreateExamView(false)
       toast.success("Update exam successfully!", {
         autoClose: 1000
