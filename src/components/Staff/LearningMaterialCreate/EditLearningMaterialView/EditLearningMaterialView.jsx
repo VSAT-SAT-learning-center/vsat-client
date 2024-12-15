@@ -1,7 +1,6 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LearningPartDetailContentMath from "~/layouts/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentMath";
 import LearningPartDetailContentRW from "~/layouts/Student/LearningPartDetail/LearningPartDetailContent/LearningPartDetailContentRW";
@@ -12,12 +11,15 @@ import LessonViewFeedback from "./LessonViewFeedback";
 import ViewSidebar from "./ViewSidebar";
 const cx = classNames.bind(styles);
 
-function EditLearningMaterialView({ unitId, setIsShowMaterialView }) {
-  const navigate = useNavigate()
+function EditLearningMaterialView({
+  fetchLearningMaterials,
+  unitId,
+  setIsShowMaterialView,
+}) {
   const [unitDetails, setUnitDetails] = useState(null);
   const [lessonData, setLessonData] = useState(null);
-  const [showEditDetailView, setShowEditDetailView] = useState(false)
-  const [showFeedbackView, setShowFeedbackView] = useState(false)
+  const [showEditDetailView, setShowEditDetailView] = useState(false);
+  const [showFeedbackView, setShowFeedbackView] = useState(false);
   const [updatedLessonId, setUpdatedLessonId] = useState([]);
   useEffect(() => {
     const fetchUnitDetails = async () => {
@@ -50,12 +52,12 @@ function EditLearningMaterialView({ unitId, setIsShowMaterialView }) {
   }, [unitId]);
 
   const handleViewEdit = () => {
-    setShowEditDetailView(true)
-  }
+    setShowEditDetailView(true);
+  };
 
   const handleViewFeedback = () => {
-    setShowFeedbackView(true)
-  }
+    setShowFeedbackView(true);
+  };
 
   const handleUpdateLesson = async () => {
     try {
@@ -70,40 +72,54 @@ function EditLearningMaterialView({ unitId, setIsShowMaterialView }) {
         })),
       };
 
-      const response = await apiClient.post("/lessons/update", mapLessonToPayload)
-      console.log(response.data);
+      await apiClient.post(
+        "/lessons/update",
+        mapLessonToPayload
+      );
       setUpdatedLessonId((prevIds) =>
         prevIds.filter((id) => id !== lessonData.id)
       );
       toast.success("Update lesson successfully!", {
-        autoClose: 1000
-      })
+        autoClose: 1000,
+      });
     } catch (error) {
-      console.error("Error while update lesson:", error)
+      console.error("Error while update lesson:", error);
       toast.error("Update lesson failed!", {
-        autoClose: 1000
-      })
+        autoClose: 1000,
+      });
     }
-  }
+  };
 
   const handleUpdateUnit = async () => {
     try {
-      await apiClient.post(`/units/${unitId}/submit`)
-      navigate("/staff/learning-material/overview")
+      await apiClient.post(`/units/${unitId}/submit`);
+      fetchLearningMaterials()
+      setIsShowMaterialView(false)
       toast.success("Update learning material successfully!", {
-        autoClose: 1000
-      })
+        autoClose: 1000,
+      });
     } catch (error) {
-      console.error("Error while update unit:", error)
+      console.error("Error while update unit:", error);
       toast.error("Update learning material failed!", {
-        autoClose: 1000
-      })
+        autoClose: 1000,
+      });
     }
-  }
+  };
   return (
     <>
-      {showEditDetailView && <EditDeatilView lesson={lessonData} setLessonData={setLessonData} setShowEditDetailView={setShowEditDetailView} />}
-      {showFeedbackView && <LessonViewFeedback lesson={lessonData} setShowFeedbackView={setShowFeedbackView} />}
+      {showEditDetailView && (
+        <EditDeatilView
+          lesson={lessonData}
+          setLessonData={setLessonData}
+          setShowEditDetailView={setShowEditDetailView}
+        />
+      )}
+      {showFeedbackView && (
+        <LessonViewFeedback
+          lesson={lessonData}
+          setShowFeedbackView={setShowFeedbackView}
+        />
+      )}
       <div className={cx("censor-learning-material-view-wrapper")}>
         <div className={cx("censor-learning-material-view-container")}>
           <div className={cx("censor-learning-material-view-header")}>
@@ -118,17 +134,28 @@ function EditLearningMaterialView({ unitId, setIsShowMaterialView }) {
             </div>
             <div className={cx("header-right")}>
               <button className={cx("preview-btn")} onClick={handleViewEdit}>
-                <i className={cx("fa-regular fa-arrow-up-right-from-square")}></i>
+                <i
+                  className={cx("fa-regular fa-arrow-up-right-from-square")}
+                ></i>
               </button>
-              <button className={cx("feedback-list-btn")} onClick={handleViewFeedback}>
+              <button
+                className={cx("feedback-list-btn")}
+                onClick={handleViewFeedback}
+              >
                 <i className={cx("fa-regular fa-clipboard-list")}></i>
               </button>
               {updatedLessonId && updatedLessonId.length > 0 ? (
-                <button className={cx("update-lesson-btn")} onClick={handleUpdateLesson}>
+                <button
+                  className={cx("update-lesson-btn")}
+                  onClick={handleUpdateLesson}
+                >
                   <i className={cx("fa-regular fa-floppy-disk")}></i>
                 </button>
               ) : (
-                <button className={cx("update-unit-btn")} onClick={handleUpdateUnit}>
+                <button
+                  className={cx("update-unit-btn")}
+                  onClick={handleUpdateUnit}
+                >
                   Save
                 </button>
               )}

@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import AIImg from "~/assets/images/content/ai.svg";
 import Loader from "~/components/General/Loader";
 import { AuthContext } from "~/contexts/AuthContext";
@@ -14,11 +14,11 @@ import CensorQuestionQuizzGPT from "../CensorQuestionQuizzGPT";
 import styles from "./CensorQuestionQuizzView.module.scss";
 const cx = classNames.bind(styles);
 function CensorQuestionQuizzView({
+  fetchQuestions,
   questionCensorData,
   setIsShowCensorQuestionQuizView,
 }) {
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [isShowCensorFeedback, setIsShowCensorFeedback] = useState(false);
   const [isShowCensorGpt, setIsShowCensorGpt] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,9 +31,16 @@ function CensorQuestionQuizzView({
     };
     try {
       await apiClient.post(`/quiz-questions/censor/approve`, payload);
-      navigate("/manager/question-quizz/bank");
+      fetchQuestions()
+      setIsShowCensorQuestionQuizView(false)
+      toast.success("Censor approve quiz question successfully!", {
+        autoClose: 1500
+      })
     } catch (error) {
       console.error("Error censor approve question:", error);
+      toast.error("Censor approve quiz question failed!", {
+        autoClose: 1500
+      })
     }
   };
 
@@ -99,9 +106,16 @@ function CensorQuestionQuizzView({
     };
     try {
       await apiClient.post(`/quiz-questions/censor/reject`, rejectData);
-      navigate("/manager/question-quizz/feedback");
+      fetchQuestions()
+      setIsShowCensorQuestionQuizView(false)
+      toast.success("Censor reject quiz question successfully!", {
+        autoClose: 1500
+      })
     } catch (error) {
       console.error("Error censor reject question:", error);
+      toast.error("Censor approve quiz question failed!", {
+        autoClose: 1500
+      })
     }
   };
 

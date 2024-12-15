@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import apiClient from "~/services/apiService";
 import styles from "./QuestionQuizzEditModal.module.scss";
@@ -191,13 +192,24 @@ function QuestionQuizzEditModal({
         );
 
         if (questionEdit.status === "Draft") {
-          setIsShowUpdateQuestionModal(false);
           fetchQuestions();
+          setIsShowUpdateQuestionModal(false);
+          toast.success("Update quiz question successfully!", {
+            autoClose: 1500
+          })
         } else if (questionEdit.status === "Rejected") {
+          fetchQuestions();
+          setIsShowUpdateQuestionModal(false);
+          toast.success("Update quiz question successfully!", {
+            autoClose: 1500
+          })
           navigate("/staff/question-quizz/create");
         }
       } catch (error) {
         console.error("Error updating question:", error);
+        toast.error("Update quiz question failed!", {
+          autoClose: 1500
+        })
       }
     }
   };

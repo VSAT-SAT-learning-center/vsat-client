@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import ExamBarChart from "~/components/Staff/StaffDashboard/Chart/ExamBarChart";
 import ExamPieChart from "~/components/Staff/StaffDashboard/Chart/ExamPieChart";
 import LMPieChart from "~/components/Staff/StaffDashboard/Chart/LMPieChart";
 import QuestionBarChart from "~/components/Staff/StaffDashboard/Chart/QuestionBarChart";
@@ -9,6 +10,7 @@ import StudentPieChart from "~/components/Staff/StaffDashboard/Chart/StudentPieC
 import Widget from "~/components/Staff/StaffDashboard/Widget";
 import PageLayout from "~/layouts/Staff/PageLayout";
 import styles from "./Dashboard.module.scss";
+import ExamTableChart from "~/components/Staff/StaffDashboard/Chart/ExamTableChart";
 const cx = classNames.bind(styles);
 function Dashboard() {
   const getCurrentMonthName = () => {
@@ -83,8 +85,8 @@ function Dashboard() {
               <QuestionBarChart />
             </div>
             <div className={cx("dashboard-statistic-container")}>
-              <div className={cx("exam-statistic-container")}></div>
-              <div className={cx("exam-table-container")}></div>
+              <ExamBarChart />
+              <ExamTableChart />
             </div>
           </div>
         </div>

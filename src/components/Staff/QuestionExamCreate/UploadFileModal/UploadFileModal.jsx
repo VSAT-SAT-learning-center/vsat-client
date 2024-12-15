@@ -8,6 +8,7 @@ import csvImg from "~/assets/images/content/csv.png";
 import csvIcon from "~/assets/images/content/csvIcon.png";
 import wordImg from "~/assets/images/content/word.png";
 import wordIcon from "~/assets/images/content/wordIcon.png";
+import Loader from "~/components/General/Loader";
 import apiClient from "~/services/apiService";
 import styles from "./UploadFileModal.module.scss";
 const cx = classNames.bind(styles);
@@ -19,6 +20,7 @@ function UploadFileModal({
 }) {
   const fileInputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const handleUploadClick = () => {
     if (fileInputRef.current) {
@@ -45,18 +47,22 @@ function UploadFileModal({
   };
 
   const handleFiles = (files) => {
+    setLoading(true)
     const file = files[0];
     const fileType = file.type;
     if (
       fileType ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
       fileType === "application/vnd.ms-excel"
     ) {
       readExcelFile(file);
     } else if (fileType === "text/csv") {
       readCSVFile(file);
     } else {
-      console.error("Please upload a CSV or Excel file.");
+      toast.info("Please upload a CSV or Excel file.", {
+        autoClose: 1500
+      });
+      setLoading(false)
     }
   };
 
@@ -109,6 +115,8 @@ function UploadFileModal({
         }
       } catch (error) {
         console.error("Error importing questions:", error);
+      } finally {
+        setLoading(false)
       }
     };
 
@@ -129,8 +137,8 @@ function UploadFileModal({
             row.Section === "Reading_Writing"
               ? "Reading & Writing"
               : row.Section === "Math"
-              ? "Math"
-              : "",
+                ? "Math"
+                : "",
           content: row.Content ? `<p>${row.Content}</p>` : "",
           explain: row.Explain ?? "",
           answers: [
@@ -157,12 +165,12 @@ function UploadFileModal({
           ],
           isSingleChoiceQuestion:
             row.isSingleChoiceQuestion === "TRUE" ||
-            row.isSingleChoiceQuestion === true
+              row.isSingleChoiceQuestion === true
               ? true
               : row.isSingleChoiceQuestion === "" ||
                 row.isSingleChoiceQuestion === undefined
-              ? null
-              : false,
+                ? null
+                : false,
         });
       }
     });
@@ -182,7 +190,6 @@ function UploadFileModal({
     };
     reader.readAsText(file);
   };
-
   const handleDownloadTemplate = (type) => {
     const link = document.createElement("a");
     if (type === "excel") {
@@ -198,85 +205,88 @@ function UploadFileModal({
   };
 
   return (
-    <div className={cx("upload-file-modal-wrapper")}>
-      <div className={cx("upload-file-modal-container")}>
-        <div className={cx("upload-file-modal-header")}>
-          <div className={cx("empty")}></div>
-          <div className={cx("upload-file-title")}>Upload file</div>
-          <div
-            className={cx("upload-file-close")}
-            onClick={() => setIsShowUploadFileModal(false)}
-          >
-            <i className={cx("fa-regular fa-xmark")}></i>
+    <>
+      {loading && <Loader />}
+      <div className={cx("upload-file-modal-wrapper")}>
+        <div className={cx("upload-file-modal-container")}>
+          <div className={cx("upload-file-modal-header")}>
+            <div className={cx("empty")}></div>
+            <div className={cx("upload-file-title")}>Upload file</div>
+            <div
+              className={cx("upload-file-close")}
+              onClick={() => setIsShowUploadFileModal(false)}
+            >
+              <i className={cx("fa-regular fa-xmark")}></i>
+            </div>
           </div>
-        </div>
-        <div className={cx("upload-file-modal-content")}>
-          <div
-            className={cx("upload-container", { "dragging-active": dragging })}
-            onClick={handleUploadClick}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            <div className={cx("upload-file-action")}>
-              <i className={cx("fa-regular fa-file")}></i>
-              <span className={cx("upload-file-text")}>Upload file</span>
-            </div>
-            <div className={cx("upload-file-content-text")}>
-              Select or drag and drop files
-            </div>
-            <input
-              type="file"
-              ref={fileInputRef}
-              accept=".csv,.xlsx,.xls"
-              style={{ display: "none" }}
-              onChange={handleFileInputChange}
-            />
-          </div>
-          <div className={cx("line")}></div>
-          <div className={cx("download-container")}>
-            <div className={cx("download-item-container")}>
-              <div className={cx("download-image")}>
-                <img
-                  src={csvImg}
-                  alt="csv-download-img"
-                  className={cx("image")}
-                />
+          <div className={cx("upload-file-modal-content")}>
+            <div
+              className={cx("upload-container", { "dragging-active": dragging })}
+              onClick={handleUploadClick}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              <div className={cx("upload-file-action")}>
+                <i className={cx("fa-regular fa-file")}></i>
+                <span className={cx("upload-file-text")}>Upload file</span>
               </div>
-              <div
-                className={cx("download-infor")}
-                onClick={() => handleDownloadTemplate("excel")}
-              >
-                <img src={csvIcon} alt="csv-icon" className={cx("icon-img")} />
-                <div className={cx("download-infor-text")}>
-                  Download Template
+              <div className={cx("upload-file-content-text")}>
+                Select or drag and drop files
+              </div>
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept=".csv,.xlsx,.xls"
+                style={{ display: "none" }}
+                onChange={handleFileInputChange}
+              />
+            </div>
+            <div className={cx("line")}></div>
+            <div className={cx("download-container")}>
+              <div className={cx("download-item-container")}>
+                <div className={cx("download-image")}>
+                  <img
+                    src={csvImg}
+                    alt="csv-download-img"
+                    className={cx("image")}
+                  />
                 </div>
-                <i className="fa-regular fa-arrow-down-to-bracket"></i>
-              </div>
-            </div>
-            <div className={cx("download-item-container")}>
-              <div className={cx("download-image")}>
-                <img
-                  src={wordImg}
-                  alt="csv-download-img"
-                  className={cx("image")}
-                />
-              </div>
-              <div
-                className={cx("download-infor")}
-                onClick={() => handleDownloadTemplate("word")}
-              >
-                <img src={wordIcon} alt="csv-icon" className={cx("icon-img")} />
-                <div className={cx("download-infor-text")}>
-                  Download Template
+                <div
+                  className={cx("download-infor")}
+                  onClick={() => handleDownloadTemplate("excel")}
+                >
+                  <img src={csvIcon} alt="csv-icon" className={cx("icon-img")} />
+                  <div className={cx("download-infor-text")}>
+                    Download Template
+                  </div>
+                  <i className="fa-regular fa-arrow-down-to-bracket"></i>
                 </div>
-                <i className="fa-regular fa-arrow-down-to-bracket"></i>
+              </div>
+              <div className={cx("download-item-container")}>
+                <div className={cx("download-image")}>
+                  <img
+                    src={wordImg}
+                    alt="csv-download-img"
+                    className={cx("image")}
+                  />
+                </div>
+                <div
+                  className={cx("download-infor")}
+                  onClick={() => handleDownloadTemplate("word")}
+                >
+                  <img src={wordIcon} alt="csv-icon" className={cx("icon-img")} />
+                  <div className={cx("download-infor-text")}>
+                    Download Template
+                  </div>
+                  <i className="fa-regular fa-arrow-down-to-bracket"></i>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

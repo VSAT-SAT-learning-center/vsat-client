@@ -55,6 +55,7 @@ function QuestionExamCreate() {
       )}
       {isShowCensorQuestionView && (
         <CensorQuestionExamView
+          fetchQuestions={fetchQuestions}
           questionCensorData={questionCensorView}
           setIsShowCensorQuestionView={setIsShowCensorQuestionView}
         />
