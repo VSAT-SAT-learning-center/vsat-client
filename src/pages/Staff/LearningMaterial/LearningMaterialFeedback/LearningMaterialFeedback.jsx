@@ -18,23 +18,24 @@ function LearningMaterialFeedback() {
   const [showMaterialEdit, setShowMaterialEdit] = useState(false);
   const [unitEdit, setUnitEdit] = useState(null);
 
-  useEffect(() => {
-    const fetchLearningMaterials = async () => {
-      try {
-        const response = await apiClient.get(`/units/staff/reject`, {
-          params: {
-            page: currentPage,
-            pageSize: itemsPerPage,
-          },
-        });
-        setLearningMaterials(response.data.data.data);
-        setTotalItems(response.data.data.totalItems);
-      } catch (error) {
-        console.error("Error fetching learning materials:", error);
-      }
-    };
+  const fetchLearningMaterials = async () => {
+    try {
+      const response = await apiClient.get(`/units/staff/reject`, {
+        params: {
+          page: currentPage,
+          pageSize: itemsPerPage,
+        },
+      });
+      setLearningMaterials(response.data.data.data);
+      setTotalItems(response.data.data.totalItems);
+    } catch (error) {
+      console.error("Error fetching learning materials:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchLearningMaterials();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   const handlePageChange = (page) => {
@@ -42,7 +43,13 @@ function LearningMaterialFeedback() {
   };
   return (
     <>
-      {showMaterialEdit && <EditLearningMaterialView unitId={unitEdit} setIsShowMaterialView={setShowMaterialEdit} />}
+      {showMaterialEdit && (
+        <EditLearningMaterialView
+          fetchLearningMaterials={fetchLearningMaterials}
+          unitId={unitEdit}
+          setIsShowMaterialView={setShowMaterialEdit}
+        />
+      )}
       <PageLayout>
         <div className={cx("learning-material-ass-wrapper")}>
           <div className={cx("learning-material-ass-container")}>

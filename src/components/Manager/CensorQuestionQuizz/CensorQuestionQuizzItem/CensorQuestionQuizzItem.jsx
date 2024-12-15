@@ -16,7 +16,6 @@ function CensorQuestionQuizzItem({
   setQuestionFeedback,
   setIsShowFeedbackView
 }) {
-
   const handlePreviewQuestion = () => {
     setIsShowQuizzItemPreview(true);
     setQuestionPreview(question);

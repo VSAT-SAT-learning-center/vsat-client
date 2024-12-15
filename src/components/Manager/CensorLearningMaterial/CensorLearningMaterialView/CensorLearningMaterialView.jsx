@@ -10,7 +10,7 @@ import styles from "./CensorLearningMaterialView.module.scss";
 import CensorViewSidebar from "./CensorViewSidebar";
 const cx = classNames.bind(styles);
 
-function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
+function CensorLearningMaterialView({ fetchLearningMaterials, unitId, setIsShowCensorView }) {
   const [unitDetails, setUnitDetails] = useState(null);
   const [lessonData, setLessonData] = useState(null);
   const [lessonIds, setLessonIds] = useState([]);
@@ -255,10 +255,12 @@ function CensorLearningMaterialView({ unitId, setIsShowCensorView }) {
       )}
       {isShowConfirmFeedback && (
         <CensorConfirmFeedback
+          fetchLearningMaterials={fetchLearningMaterials}
           unitDetails={unitDetails}
           censorStatus={censorStatus}
           finalCensorResult={finalCensorResult}
           setIsShowConfirmFeedback={setIsShowConfirmFeedback}
+          setIsShowCensorView={setIsShowCensorView}
         />
       )}
       <div className={cx("censor-learning-material-view-wrapper")}>

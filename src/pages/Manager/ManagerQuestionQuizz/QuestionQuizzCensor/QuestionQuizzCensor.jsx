@@ -56,6 +56,7 @@ function QuestionQuizzCensor() {
       )}
       {isShowCensorQuestionQuizView && (
         <CensorQuestionQuizzView
+          fetchQuestions={fetchQuestions}
           questionCensorData={questionCensorView}
           setIsShowCensorQuestionQuizView={setIsShowCensorQuestionQuizView}
         />

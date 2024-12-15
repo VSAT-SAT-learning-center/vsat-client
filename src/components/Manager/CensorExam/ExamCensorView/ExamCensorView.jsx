@@ -1,6 +1,5 @@
 import classNames from "classnames/bind";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "~/contexts/AuthContext";
 import apiClient from "~/services/apiService";
@@ -8,9 +7,8 @@ import styles from "./ExamCensorView.module.scss";
 import ModuleCensorView from "./ModuleCensorView";
 import SectionQuestionView from "./SectionQuestionView";
 const cx = classNames.bind(styles);
-function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
+function ExamCensorView({ fetchExamList, examCensorData, setIsShowExamCensorView }) {
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate()
   const [isShowModuleViewCensor, setIsShowModuleViewCensor] = useState(false);
   const [groupedSections, setGroupedSections] = useState([]);
   const [moduleCensorData, setModuleCensorData] = useState([]);
@@ -94,20 +92,19 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
       accountToId: examCensorData?.account.id,
     };
     try {
-      const response = await apiClient.post(
+      await apiClient.post(
         `/exams/censor/approve`,
         feedbackData
       );
-      navigate("/manager/exams/overview")
+      fetchExamList()
       setIsShowExamCensorView(false);
       toast.success("Censor approved exam successfully!", {
-        autoClose: 1000
+        autoClose: 1500
       })
-      console.log(response.data);
     } catch (error) {
       console.error("Error approving exam:", error);
       toast.error("Censor approval exam failed!", {
-        autoClose: 1000
+        autoClose: 1500
       })
     }
   };
@@ -119,16 +116,15 @@ function ExamCensorView({ examCensorData, setIsShowExamCensorView }) {
       accountToId: examCensorData?.account.id,
     };
     try {
-      const response = await apiClient.post(
+      await apiClient.post(
         `/exams/censor/reject`,
         feedbackData
       );
-      navigate("/manager/exams/feedback")
+      fetchExamList()
       setIsShowExamCensorView(false);
       toast.success("Censor rejected the exam successfully!", {
         autoClose: 1000
       })
-      console.log(response.data);
     } catch (error) {
       console.error("Error reject exam:", error);
       toast.error("Censor reject exam failed!", {

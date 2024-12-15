@@ -1,7 +1,6 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AIImg from "~/assets/images/content/ai.svg";
 import Loader from "~/components/General/Loader";
@@ -15,11 +14,11 @@ import CensorQuestionExamGPT from "../CensorQuestionExamGPT";
 import styles from "./CensorQuestionExamView.module.scss";
 const cx = classNames.bind(styles);
 function CensorQuestionExamView({
+  fetchQuestions,
   questionCensorData,
   setIsShowCensorQuestionView,
 }) {
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [isShowCensorFeedback, setIsShowCensorFeedback] = useState(false);
   const [isShowCensorGpt, setIsShowCensorGpt] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,9 +34,16 @@ function CensorQuestionExamView({
         `/questions/censor/approve`,
         payload
       );
-      navigate("/manager/question-bank/bank");
+      fetchQuestions()
+      setIsShowCensorQuestionView(false)
+      toast.success("Censor approve question successfully!", {
+        autoClose: 1500
+      })
     } catch (error) {
       console.error("Error censor approve question:", error);
+      toast.error("Censor approve question failed!", {
+        autoClose: 1500
+      })
     }
   };
 
@@ -106,9 +112,16 @@ function CensorQuestionExamView({
     };
     try {
       await apiClient.post(`/questions/censor/reject`, rejectData);
-      navigate("/manager/question-bank/feedback");
+      fetchQuestions()
+      setIsShowCensorQuestionView(false)
+      toast.success("Censor reject question successfully!", {
+        autoClose: 1500
+      })
     } catch (error) {
       console.error("Error censor reject question:", error);
+      toast.error("Censor reject question failed!", {
+        autoClose: 1500
+      })
     }
   };
 

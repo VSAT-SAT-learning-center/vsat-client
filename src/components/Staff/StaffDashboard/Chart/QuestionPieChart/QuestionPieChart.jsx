@@ -15,14 +15,14 @@ function QuestionPieChart({ data }) {
       type: "pie",
     },
     labels: pieChartData.labels,
-    colors: ["#51bfb3", "#f4cf39", "#d7354f"],
+    colors: ["#2446b6", "#f4cf39", "#d7354f"],
     legend: {
       position: "bottom",
     },
   }
   return (
     <div className={cx("chart-pie-container")}>
-      <div className={cx("chart-title")}>Question Pie Chart</div>
+      <div className={cx("chart-title")}>Question Statistics</div>
       <div className={cx("chart-content")}>
         <Chart
           options={chartOptions}

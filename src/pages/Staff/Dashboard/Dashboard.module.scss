@@ -50,28 +50,6 @@
         align-items: center;
         justify-content: space-between;
         column-gap: 20px;
-
-        .exam-statistic-container {
-          width: 60%;
-          height: 500px;
-          padding: 16px;
-          display: flex;
-          flex-direction: column;
-          border-radius: 10px;
-          box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-          background-color: $bg-primary-color;
-        }
-
-        .exam-table-container {
-          flex: 1;
-          height: 500px;
-          padding: 16px;
-          display: flex;
-          flex-direction: column;
-          border-radius: 10px;
-          box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-          background-color: $bg-primary-color;
-        }
       }
     }
   }
