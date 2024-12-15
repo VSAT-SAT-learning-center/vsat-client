@@ -1,15 +1,17 @@
 @import "~/styles/variables";
 
-.import-create-account-container {
-    background: white;
-    border-radius: 8px;
-    width: 97%;
-    min-height: 1000px;
+.import-create-account-wrapper {
+    width: 100%;
+    height: 100%;
     padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-    border: 1px solid #ccc;
-    overflow: visible;
+.import-create-account-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    background-color: $bg-primary-color;
 
     .import-modal-header {
         display: flex;
@@ -23,7 +25,7 @@
         padding: 15px;
         position: relative;
 
-        .import-modal-title {
+        .import-modal-text {
             font-size: 20px;
             font-weight: bold;
             color: white;
@@ -31,7 +33,7 @@
         }
     }
 
-    .import-form-container {
+    .import-form-content {
         padding: 15px;
 
         .import-form-group {
@@ -228,4 +230,5 @@
     tbody tr:hover {
         background-color: #f1f1f1;
     }
+}
 }
