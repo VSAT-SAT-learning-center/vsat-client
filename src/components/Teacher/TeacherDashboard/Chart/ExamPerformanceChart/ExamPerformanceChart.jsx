@@ -4,12 +4,12 @@ import Chart from "react-apexcharts";
 import styles from "./ExamPerformanceChart.module.scss";
 const cx = classNames.bind(styles);
 
-function ExamPerformanceChart() {
+function ExamPerformanceChart({ data }) {
   const [chartData] = useState({
     series: [
       {
         name: "Average Score",
-        data: [1200, 1400, 800, 1500, 1100, 950, 1350],
+        data: data?.scores,
       },
     ],
     options: {
@@ -28,7 +28,7 @@ function ExamPerformanceChart() {
         formatter: (val) => `${val}`,
       },
       xaxis: {
-        categories: ["Alice", "Bob", "Charlie", "Diana", "Evan", "Fiona", "George"],
+        categories: data?.studentNames,
       },
       yaxis: {
         labels: {
