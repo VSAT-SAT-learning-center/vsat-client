@@ -194,7 +194,7 @@ function UploadFileModal({
   const handleDownloadTemplate = (type) => {
     const link = document.createElement("a");
     if (type === "excel") {
-      link.href = "../../../../../public/TemplateCreateQuestion.xlsx";
+      link.href = "/TemplateCreateQuestion.xlsx";
       link.download = "TemplateCreateQuestion.xlsx";
       setIsShowUploadFileModal(false);
     } else if (type === "word") {
