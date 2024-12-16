@@ -4,9 +4,9 @@ import Chart from "react-apexcharts";
 import styles from "./LearningProgressOverviewChart.module.scss";
 
 const cx = classNames.bind(styles);
-function LearningProgressOverviewChart() {
+function LearningProgressOverviewChart({ data }) {
   const [chartData] = useState({
-    series: [70, 20, 10],
+    series: data,
     options: {
       chart: {
         type: "donut",

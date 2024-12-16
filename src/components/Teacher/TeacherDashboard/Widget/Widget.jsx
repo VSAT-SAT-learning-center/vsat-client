@@ -12,7 +12,7 @@ function Widget({ widget }) {
       return {
         color: "#f4cf39",
       };
-    } else if (type === "Exams") {
+    } else if (type === "Schedule Exams") {
       return {
         color: "#d7354f",
       };
@@ -32,7 +32,7 @@ function Widget({ widget }) {
       return {
         backgroundColor: "rgba(244, 207, 57, 0.2)",
       };
-    } else if (type === "Exams") {
+    } else if (type === "Schedule Exams") {
       return {
         backgroundColor: "rgba(215, 53, 79, 0.2)",
       };

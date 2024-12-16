@@ -82,7 +82,7 @@ function SkillRadarChart({ domains, skillsData }) {
           display: true,
         },
         suggestedMin: 0,
-        suggestedMax: 100,
+        // suggestedMax: 100,
         ticks: {
           font: {
             size: 12,

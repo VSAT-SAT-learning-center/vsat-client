@@ -38,10 +38,6 @@ function ExamBarChart({ examData }) {
     xaxis: {
       categories: examData.map((exam) => exam.name),
     },
-    yaxis: {
-      min: 200,
-      max: 1600,
-    },
     colors: ["#2446b6", "#51bfb3", "#f4cf39"],
     tooltip: {
       shared: true,

@@ -5,22 +5,9 @@ import styles from "./LearningProgressChart.module.scss";
 
 const cx = classNames.bind(styles);
 
-function LearningProgressChart() {
+function LearningProgressChart({ data }) {
   const [chartData] = useState({
-    series: [
-      {
-        name: "Completed",
-        data: [40, 30, 60, 20, 50, 35], 
-      },
-      {
-        name: "In Progress",
-        data: [30, 20, 20, 15, 20, 10], 
-      },
-      {
-        name: "Not Started",
-        data: [30, 50, 20, 65, 30, 55],
-      },
-    ],
+    series: data?.progressData,
     options: {
       chart: {
         type: "bar",
@@ -36,10 +23,9 @@ function LearningProgressChart() {
         formatter: (val) => `${val}%`,
       },
       xaxis: {
-        categories: ["Alice", "Bob", "Charlie", "Diana", "Evan", "Fiona"],
+        categories: data?.studentNames,
       },
       yaxis: {
-        min: 0,
         max: 100,
       },
       colors: ["#2446b6", "#f4cf39", "#d7354f"],

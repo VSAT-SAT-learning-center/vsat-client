@@ -20,6 +20,20 @@
       }
     }
 
+    .manager-dashboard-no-content {
+      width: 100%;
+      height: fit-content;
+
+      .dashboard-widgets-no-container {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        grid-template-columns: auto auto auto auto;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+    }
+
     .manager-dashboard-content {
       width: 100%;
       height: fit-content;

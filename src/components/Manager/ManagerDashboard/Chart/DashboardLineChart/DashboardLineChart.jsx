@@ -4,23 +4,9 @@ import Chart from "react-apexcharts";
 import styles from "./DashboardLineChart.module.scss";
 const cx = classNames.bind(styles);
 
-function DashboardLineChart() {
-  // Fake data for Grouped Column Chart
+function DashboardLineChart({ data }) {
   const [chartData] = useState({
-    series: [
-      {
-        name: "Approved",
-        data: [55, 45, 35], // Example values for Approved
-      },
-      {
-        name: "Pending",
-        data: [32, 25, 15], // Example values for Pending
-      },
-      {
-        name: "Rejected",
-        data: [13, 20, 10], // Example values for Rejected
-      },
-    ],
+    series: data,
     options: {
       chart: {
         type: "bar",

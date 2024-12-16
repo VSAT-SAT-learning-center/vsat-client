@@ -4,9 +4,9 @@ import Chart from "react-apexcharts";
 import styles from "./ExamParticipationChart.module.scss";
 const cx = classNames.bind(styles);
 
-function ExamParticipationChart() {
+function ExamParticipationChart({ data }) {
   const [chartData] = useState({
-    series: [60, 20, 20],
+    series: data,
     options: {
       chart: {
         type: "pie",
