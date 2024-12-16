@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import StudyProfileItem from "~/components/Teacher/ManageMaterial/StudyProfileItem";
 import ViewStudyProfile from "~/components/Teacher/ManageMaterial/ViewStudyProfile";
 import PageLayout from "~/layouts/Teacher/PageLayout";
@@ -39,16 +40,20 @@ function ManageMaterial() {
                 Manage Material
               </div>
             </div>
-            <div className={cx("teacher-manage-material-content")}>
-              {profiles?.map((profile) => (
-                <StudyProfileItem
-                  key={profile.id}
-                  profile={profile}
-                  setSelectedProfile={setSelectedProfile}
-                  setIsShowViewStudyProfile={setIsShowViewStudyProfile}
-                />
-              ))}
-            </div>
+            {profiles?.length > 0 ? (
+              <div className={cx("teacher-manage-material-content")}>
+                {profiles?.map((profile) => (
+                  <StudyProfileItem
+                    key={profile.id}
+                    profile={profile}
+                    setSelectedProfile={setSelectedProfile}
+                    setIsShowViewStudyProfile={setIsShowViewStudyProfile}
+                  />
+                ))}
+              </div>
+            ) : (
+              <NoQuestionData />
+            )}
           </div>
         </div>
         <LearningMaterialCreateFooter />

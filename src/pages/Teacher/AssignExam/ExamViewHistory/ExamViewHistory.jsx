@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import ExamHistoryView from "~/components/Student/ExamHistory/ExamHistoryView";
 import StudyProfileItem from "~/components/Teacher/ManageMaterial/StudyProfileItem";
 import PageLayout from "~/layouts/Teacher/PageLayout";
@@ -32,16 +33,20 @@ function ExamViewHistory() {
             <div className={cx("exam-history-header")}>
               <div className={cx("exam-history-text")}>Exam History</div>
             </div>
-            <div className={cx("exam-history-content")}>
-              {profiles?.map((profile) => (
-                <StudyProfileItem
-                  key={profile.id}
-                  profile={profile}
-                  setSelectedProfile={setSelectedProfile}
-                  setIsShowViewStudyProfile={setShowLearningProfileView}
-                />
-              ))}
-            </div>
+            {profiles?.length > 0 ? (
+              <div className={cx("exam-history-content")}>
+                {profiles?.map((profile) => (
+                  <StudyProfileItem
+                    key={profile.id}
+                    profile={profile}
+                    setSelectedProfile={setSelectedProfile}
+                    setIsShowViewStudyProfile={setShowLearningProfileView}
+                  />
+                ))}
+              </div>
+            ) : (
+              <NoQuestionData />
+            )}
           </div>
         </div>
         <LearningMaterialCreateFooter />

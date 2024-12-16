@@ -1,13 +1,13 @@
 import classNames from "classnames/bind";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 import * as XLSX from "xlsx";
 import csvImg from "~/assets/images/content/csv.png";
 import csvIcon from "~/assets/images/content/csvIcon.png";
 import wordImg from "~/assets/images/content/word.png";
 import wordIcon from "~/assets/images/content/wordIcon.png";
 import styles from "./UploadFileQuestionDistribution.module.scss";
-import { v4 as uuidv4 } from "uuid";
 
 const cx = classNames.bind(styles);
 
@@ -50,7 +50,7 @@ function UploadFileQuestionDistribution({
     const fileType = file.type;
     if (
       fileType ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
       fileType === "application/vnd.ms-excel"
     ) {
       readExcelFile(file);
@@ -119,8 +119,8 @@ function UploadFileQuestionDistribution({
   const handleDownloadTemplate = (type) => {
     const link = document.createElement("a");
     if (type === "excel") {
-      link.href = "../../../../../public/TemplateCreateExamScore.xlsx";
-      link.download = "TemplateCreateExamScore.xlsx";
+      link.href = "/TemplateCreateQuestionDistribution.xlsx";
+      link.download = "TemplateCreateQuestionDistribution.xlsx";
       setIsShowImportExamScore(false);
     } else if (type === "word") {
       toast.info("Word template is currently not available!", {

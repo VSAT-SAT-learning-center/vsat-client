@@ -109,7 +109,7 @@ function UploadFileScore({
   const handleDownloadTemplate = (type) => {
     const link = document.createElement("a");
     if (type === "excel") {
-      link.href = "../../../../../public/TemplateCreateExamScore.xlsx";
+      link.href = "/TemplateCreateExamScore.xlsx";
       link.download = "TemplateCreateExamScore.xlsx";
       setIsShowImportExamScore(false);
     } else if (type === "word") {

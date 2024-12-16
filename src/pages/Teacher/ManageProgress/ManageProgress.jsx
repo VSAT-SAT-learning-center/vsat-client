@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import NoQuestionData from "~/components/Staff/QuestionExamCreate/NoQuestionData";
 import LearningProfileView from "~/components/Student/Learning/LearningProfileView";
 import StudyProfileItem from "~/components/Teacher/ManageMaterial/StudyProfileItem";
 import PageLayout from "~/layouts/Teacher/PageLayout";
@@ -35,16 +36,20 @@ function ManageProgress() {
                 Manage Progress
               </div>
             </div>
-            <div className={cx("teacher-manage-progress-content")}>
-              {profiles?.map((profile) => (
-                <StudyProfileItem
-                  key={profile.id}
-                  profile={profile}
-                  setSelectedProfile={setSelectedProfile}
-                  setIsShowViewStudyProfile={setShowLearningProfileView}
-                />
-              ))}
-            </div>
+            {profiles?.length > 0 ? (
+              <div className={cx("teacher-manage-progress-content")}>
+                {profiles?.map((profile) => (
+                  <StudyProfileItem
+                    key={profile.id}
+                    profile={profile}
+                    setSelectedProfile={setSelectedProfile}
+                    setIsShowViewStudyProfile={setShowLearningProfileView}
+                  />
+                ))}
+              </div>
+            ) : (
+              <NoQuestionData />
+            )}
           </div>
         </div>
         <LearningMaterialCreateFooter />
