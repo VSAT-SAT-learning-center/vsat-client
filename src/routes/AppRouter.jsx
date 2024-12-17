@@ -15,7 +15,7 @@ function AppRouter() {
   const getRedirectPath = (role) => {
     switch (role) {
       case "Admin":
-        return "/admin";
+        return "/admin/account/manage";
       case "Manager":
         return "/manager";
       case "Staff":

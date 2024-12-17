@@ -205,6 +205,10 @@ function QuestionExamEditModal({
         }
       } catch (error) {
         console.error("Error updating question:", error);
+        setIsShowUpdateQuestionModal(false);
+        toast.error(error.response?.data?.details.message || "Question updated failed!", {
+          autoClose: 1000,
+        });
       }
     }
   };

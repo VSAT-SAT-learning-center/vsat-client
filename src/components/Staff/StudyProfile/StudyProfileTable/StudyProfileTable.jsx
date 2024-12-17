@@ -106,7 +106,7 @@ function StudyProfileTable() {
                 <th>End Date</th>
                 <th>Teacher In Charge</th>
                 <th>Math Target</th>
-                <th>Reading & Writing Target</th>
+                <th>R&W Target</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>

@@ -32,7 +32,7 @@ function Login({ setShowLogin }) {
       setShowLogin(false);
       switch (user.role) {
         case "Admin":
-          navigate("/admin");
+          navigate("/admin/account/manage");
           break;
         case "Manager":
           navigate("/manager");
@@ -92,7 +92,7 @@ function Login({ setShowLogin }) {
       setShowLogin(false);
       switch (user.role) {
         case "Admin":
-          navigate("/admin");
+          navigate("/admin/account/manage");
           break;
         case "Manager":
           navigate("/manager");

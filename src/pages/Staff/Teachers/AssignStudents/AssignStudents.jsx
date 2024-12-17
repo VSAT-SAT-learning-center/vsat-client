@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
-import PageLayout from "~/layouts/Staff/PageLayout";
 import LearningMaterialCreateFooter from "~/components/Staff/LearningMaterialCreate/LearningMaterialCreateFooter";
+import PageLayout from "~/layouts/Staff/PageLayout";
 import styles from "./AssignStudents.module.scss";
 const cx = classNames.bind(styles);
 function AssignStudents() {

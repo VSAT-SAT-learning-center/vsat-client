@@ -1,12 +1,12 @@
 export const sidebarNavs = [
-  {
-    id: 1,
-    icon: "fa-light fa-grid-2",
-    iconActive: "fa-regular fa-grid-2",
-    title: "Dashboard",
-    path: "/admin",
-    show: false,
-  },
+  // {
+  //   id: 1,
+  //   icon: "fa-light fa-grid-2",
+  //   iconActive: "fa-regular fa-grid-2",
+  //   title: "Dashboard",
+  //   path: "/admin",
+  //   show: false,
+  // },
   {
     id: 2,
     icon: "fa-light fa-file-alt",
