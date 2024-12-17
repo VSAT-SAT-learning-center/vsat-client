@@ -207,7 +207,7 @@ function QuestionQuizzEditModal({
         }
       } catch (error) {
         console.error("Error updating question:", error);
-        toast.error("Update quiz question failed!", {
+        toast.error(error.response?.data?.details.message || "Update quiz question failed!", {
           autoClose: 1500
         })
       }

@@ -133,9 +133,9 @@ function Dashboard() {
           },
           {
             id: 3,
-            type: "Students",
+            type: "Study Profiles",
             icon: "fa-solid fa-user",
-            title: `Students Engaged in ${currentMonth}`,
+            title: `Profiles Engaged in ${currentMonth}`,
             data: [data.studyprofile.complete, data.studyprofile.active, data.studyprofile.inactive].reduce(
               (sum, value) => sum + value,
               0
@@ -204,7 +204,7 @@ function Dashboard() {
                 {selectedWidget?.type === "Learning Materials" && <LMPieChart data={selectedWidget.pieData} />}
                 {selectedWidget?.type === "Questions" && <QuestionPieChart data={selectedWidget.pieData} />}
                 {selectedWidget?.type === "Exams" && <ExamPieChart data={selectedWidget.pieData} />}
-                {selectedWidget?.type === "Students" && <StudentPieChart data={selectedWidget.pieData} />}
+                {selectedWidget?.type === "Study Profiles" && <StudentPieChart data={selectedWidget.pieData} />}
                 <QuestionBarChart data={domainQuestions} />
               </div>
               <div className={cx("dashboard-statistic-container")}>

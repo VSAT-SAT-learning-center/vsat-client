@@ -111,7 +111,6 @@ function UploadFileQuestionDistribution({
       setMathData(mathData);
       setIsShowImportExamScore(false);
       setIsShowExamScoreResult(true);
-      console.log(jsonData);
     };
     reader.readAsArrayBuffer(file);
   };

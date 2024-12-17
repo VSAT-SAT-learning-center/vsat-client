@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 function AdminSidebar() {
   return (
     <div className={cx("admin-sidebar-wrapper")}>
-      <Link to="/admin" className={cx("admin-sidebar-logo")}>
+      <Link to="/admin/account/manage" className={cx("admin-sidebar-logo")}>
         <img src={Logo} alt="main-logo" className={cx("admin-logo")} />
       </Link>
       <div className={cx("admin-sidebar-container")}>

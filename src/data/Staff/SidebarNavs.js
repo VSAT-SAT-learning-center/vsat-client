@@ -136,18 +136,18 @@ export const sidebarNavs = [
     id: 7,
     icon: "fa-light fa-users",
     iconActive: "fa-regular fa-users",
-    title: "Students",
+    title: "Study Profiles",
     path: "/staff/students",
     show: true,
     subNavs: [
       {
         id: 1,
-        title: "Manage Study Profile",
+        title: "Manage Study Profiles",
         path: "/staff/students/study-profile",
       },
       {
         id: 2,
-        title: "Assign Students",
+        title: "Assign Profiles",
         path: "/staff/students/assign-students",
       },
     ],

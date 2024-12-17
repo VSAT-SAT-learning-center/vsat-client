@@ -78,18 +78,18 @@ function QuestionQuizzCreatePreview({
   ]);
   const handleSaveQuestion = async () => {
     console.log(questionPreviewData);
-    
+
     try {
       await apiClient.post("/quiz-questions", questionPreviewData);
-      toast.success("Question created successfully!", {
+      toast.success("Question quiz created successfully!", {
         autoClose: 2000,
       });
       setIsShowQuestionPreview(false);
       setIsShowCreateQuestionModal(false);
       fetchQuestions();
     } catch (error) {
-      toast.error(`${error.response.data.details.message}`, {
-        autoClose: 3000,
+      toast.error(`${error.response.data.details.message || "Question quiz created failed!"}`, {
+        autoClose: 2000,
       });
     }
   };

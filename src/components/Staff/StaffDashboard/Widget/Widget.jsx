@@ -16,7 +16,7 @@ function Widget({ widget, setSelectedWidget }) {
       return {
         color: "#d7354f",
       };
-    } else if (type === "Students") {
+    } else if (type === "Study Profiles") {
       return {
         color: "#51bfb3",
       };
@@ -36,7 +36,7 @@ function Widget({ widget, setSelectedWidget }) {
       return {
         backgroundColor: "rgba(215, 53, 79, 0.2)",
       };
-    } else if (type === "Students") {
+    } else if (type === "Study Profiles") {
       return {
         backgroundColor: "rgba(81, 191, 179, 0.2)",
       };
