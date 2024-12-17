@@ -34,7 +34,6 @@ function ExamCensor() {
       {isShowExamCensorView && (
         <ExamCensorView
           examCensorData={examCensorData}
-          fetchExamList={fetchExamList}
           setIsShowExamCensorView={setIsShowExamCensorView}
         />
       )}

@@ -301,8 +301,6 @@ function ExamCreateModal({ setIsShowCreateExamModal, fetchExamList }) {
         ...examData,
         examQuestions: simplifiedExamQuestions,
       };
-      console.log(payload);
-
       await apiClient.post("/exams", payload);
       setIsShowCreateExamModal(false);
       fetchExamList()
@@ -318,6 +316,10 @@ function ExamCreateModal({ setIsShowCreateExamModal, fetchExamList }) {
       setLoading(false);
     }
   };
+
+  const isSaveDisabled = examData.examQuestions.every((module) =>
+    module.domains.every((domain) => domain.questions.length === 0)
+  );
 
   return (
     <>
@@ -636,7 +638,11 @@ function ExamCreateModal({ setIsShowCreateExamModal, fetchExamList }) {
             >
               Cancel
             </button>
-            <button className={cx("preview-btn")} onClick={handleCreateExam}>
+            <button
+              className={cx("preview-btn", { "disabled-btn": isSaveDisabled })}
+              onClick={handleCreateExam}
+              disabled={isSaveDisabled}
+            >
               <span>Save</span>
             </button>
           </div>
