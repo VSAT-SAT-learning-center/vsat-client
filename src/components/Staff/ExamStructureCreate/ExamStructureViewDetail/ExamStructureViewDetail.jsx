@@ -115,7 +115,6 @@ function ExamStructureViewDetail({
           return 0;
         });
       });
-      console.log(grouped);
       setGroupedModules(grouped);
     }
   }, [viewStructureDetailData]);
@@ -143,14 +142,9 @@ function ExamStructureViewDetail({
             <div className={cx("config-infor-item")}>
               <div className={cx("config-title")}>Exam Structure Name</div>
               <div className={cx("config-input")}>
-                <input
-                  type="text"
-                  value={viewStructureDetailData?.structurename}
-                  className={cx("title-input")}
-                  placeholder="Name..."
-                  autoFocus={true}
-                  // onChange={handleChangeStructureName}
-                />
+                <div className={cx("title-input")}>
+                  {viewStructureDetailData?.structurename}
+                </div>
               </div>
             </div>
             <div className={cx("config-infor-item")}>
@@ -158,13 +152,9 @@ function ExamStructureViewDetail({
                 Exam Structure Description
               </div>
               <div className={cx("config-input")}>
-                <input
-                  type="text"
-                  value={viewStructureDetailData?.description}
-                  className={cx("title-input")}
-                  placeholder="Description..."
-                  // onChange={handleChangeStructureDesc}
-                />
+                <div className={cx("title-input")}>
+                  {viewStructureDetailData?.description}
+                </div>
               </div>
             </div>
             <div className={cx("config-infor-item")}>
@@ -184,13 +174,9 @@ function ExamStructureViewDetail({
                   <span className={cx("required")}>(Reading & Writing)</span>
                 </div>
                 <div className={cx("mechanism-input")}>
-                  <input
-                    type="number"
-                    value={viewStructureDetailData?.requiredCorrectInModule1RW}
-                    className={cx("title-input")}
-                    placeholder="Number..."
-                    // onChange={handleChangeNumberRW}
-                  />
+                  <div className={cx("title-input")}>
+                    {viewStructureDetailData?.requiredCorrectInModule1RW}
+                  </div>
                 </div>
               </div>
               <div className={cx("mechanism-item")}>
@@ -199,13 +185,9 @@ function ExamStructureViewDetail({
                   <span className={cx("required")}>(Math)</span>
                 </div>
                 <div className={cx("mechanism-input")}>
-                  <input
-                    type="number"
-                    value={viewStructureDetailData?.requiredCorrectInModule1M}
-                    className={cx("title-input")}
-                    placeholder="Number..."
-                    // onChange={handleChangeNumberMath}
-                  />
+                  <div className={cx("title-input")}>
+                    {viewStructureDetailData?.requiredCorrectInModule1M}
+                  </div>
                 </div>
               </div>
             </div>

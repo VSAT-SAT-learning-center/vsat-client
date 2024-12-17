@@ -198,8 +198,7 @@ function ExamStructureCreateView({
 
       if (hasRWError) {
         toast.error(
-          `Each module in Reading & Writing must have ${
-            totalRWQuestion / 2
+          `Each module in Reading & Writing must have ${totalRWQuestion / 2
           } questions.`,
           {
             position: "top-right",
@@ -242,7 +241,6 @@ function ExamStructureCreateView({
   };
 
   const handleFinish = async () => {
-    console.log(examStructureData);
     setLoading(true);
     try {
       await apiClient.post("/exam-structures", examStructureData);
