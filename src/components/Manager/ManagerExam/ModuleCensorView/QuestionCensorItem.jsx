@@ -9,7 +9,6 @@ function QuestionCensorItem({
   setQuestionPreviewData,
   setIsShowQuestionItemPreview,
 }) {
-
   const handlePreviewQuestion = () => {
     setQuestionPreviewData(question);
     setIsShowQuestionItemPreview(true);
@@ -22,7 +21,8 @@ function QuestionCensorItem({
           <div className={cx("author-name")}>Question</div>
         </div>
         <div className={cx("question-left")}>
-          <div className={cx("question-skill")}>{question?.skill.content}</div>
+          <div className={cx("question-domain")}>{question?.skill?.domain?.content}</div>
+          <div className={cx("question-skill")}>{question?.skill?.content}</div>
           <div className={cx("view-question")}>
             <button
               className={cx("preview-btn")}

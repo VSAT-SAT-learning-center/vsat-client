@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 import { formatDate } from "~/utils/formatDate";
 import { renderMathAndText } from "~/utils/renderMathAndText";
 import styles from "./QuestionExamItem.module.scss";
@@ -28,6 +29,23 @@ function QuestionExamItem({
   const handleViewFeedback = () => {
     setIsShowFeedbackView(true);
     setQuestionFeedback(question);
+  };
+
+  const handleCopyQuestion = () => {
+    const questionContent = question?.plainContent || "";
+    if (questionContent) {
+      navigator.clipboard
+        .writeText(questionContent)
+        .then(() => {
+          toast.success("Question copied to clipboard!");
+        })
+        .catch((err) => {
+          toast.error("Failed to copy question!");
+          console.error("Failed to copy:", err);
+        });
+    } else {
+      toast.warn("No question content to copy!");
+    }
   };
   return (
     <div className={cx("question-exam-create-item")}>
@@ -75,6 +93,11 @@ function QuestionExamItem({
           <button className={cx("preview-btn")} onClick={handlePreviewQuestion}>
             <i className={cx("fa-regular fa-eye")}></i>
           </button>
+          {question?.status === "Approved" && (
+            <button className={cx("preview-btn")} onClick={handleCopyQuestion}>
+              <i className={cx("fa-regular fa-copy")}></i>
+            </button>
+          )}
           {question.countfeedback <= 3 &&
             (question?.status === "Draft" ||
               question?.status === "Rejected") && (
