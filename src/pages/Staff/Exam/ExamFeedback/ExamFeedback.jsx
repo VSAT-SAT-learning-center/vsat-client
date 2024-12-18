@@ -63,9 +63,10 @@ function ExamFeedback() {
                   ))}
                 </>
               ) : examList.length > 0 ? (
-                examList?.map((exam) => (
+                examList?.map((exam, index) => (
                   <ExamCreateItem
                     key={exam.id}
+                    index={index + 1}
                     exam={exam}
                     setExamDetailData={setExamDetailData}
                     setIsShowCreateExamView={setIsShowCreateExamView}

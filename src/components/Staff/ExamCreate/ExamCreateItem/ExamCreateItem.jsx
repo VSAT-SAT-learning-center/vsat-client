@@ -3,7 +3,7 @@ import { formatDate } from "~/utils/formatDate";
 import styles from "./ExamCreateItem.module.scss";
 const cx = classNames.bind(styles);
 
-function ExamCreateItem({ exam, setExamDetailData, setIsShowCreateExamView }) {
+function ExamCreateItem({ exam, index, setExamDetailData, setIsShowCreateExamView }) {
   const handleViewExamDetail = () => {
     setExamDetailData(exam);
     setIsShowCreateExamView(true);
@@ -12,7 +12,7 @@ function ExamCreateItem({ exam, setExamDetailData, setIsShowCreateExamView }) {
     <div className={cx("exam-create-item-container")}>
       <div className={cx("exam-create-item-header")}>
         <div className={cx("header-infor")}>
-          <div className={cx("number")}>1</div>
+          <div className={cx("number")}>{index}</div>
           <div className={cx("exam-title")}>{exam?.title}</div>
         </div>
         <div className={cx("header-action")}>
