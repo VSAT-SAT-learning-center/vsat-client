@@ -22,6 +22,8 @@ function ExamSchedule() {
         const response = await apiClient.get(`/exam-attempts/getExamAttemptByStudyProfile`);
         setExamAttempts(response.data.data.examAttemptArrs);
         setCurrentDate(moment(response.data.data.currentTime));
+        console.log(response.data.data.currentTime);
+        console.log(response.data.data.examAttemptArrs);
       } catch (error) {
         console.error("Error fetching exam attempts:", error);
       }
