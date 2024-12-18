@@ -26,9 +26,11 @@ function AssignExamSchedule() {
 
       // Filter events for the given month and year
       const filteredEvents = allEvents.filter((event) => {
-        const attemptDate = moment(event.attemptdatetime);
+        const attemptDate = moment.utc(event.attemptdatetime); // Use UTC
         return attemptDate.month() === month && attemptDate.year() === year;
       });
+      console.log(filteredEvents);
+
       setEvents(filteredEvents);
     } catch (error) {
       console.error("Error fetching exam attempts:", error);

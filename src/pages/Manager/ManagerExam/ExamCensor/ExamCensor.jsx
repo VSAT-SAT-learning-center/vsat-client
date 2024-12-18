@@ -61,9 +61,10 @@ function ExamCensor() {
                   ))}
                 </>
               ) : examList.length > 0 ? (
-                examList?.map((exam) => (
+                examList?.map((exam, index) => (
                   <ExamCensorItem
                     key={exam.id}
+                    index={index + 1}
                     exam={exam}
                     setExamCensorData={setExamCensorData}
                     setIsShowExamCensorView={setIsShowExamCensorView}

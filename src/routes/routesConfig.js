@@ -5,6 +5,7 @@ import AdminAccountSetting from "~/pages/Admin/AdminAccountSetting";
 import AdminDashboard from "~/pages/Admin/AdminDashboard";
 import AdminSettings from "~/pages/Admin/AdminSettings";
 import Congratulation from "~/pages/Congratulation";
+import Graduation from "~/pages/Graduation";
 import About from "~/pages/Landing/About";
 import Contact from "~/pages/Landing/Contact";
 import Home from "~/pages/Landing/Home";
@@ -91,6 +92,7 @@ const routesConfig = [
   { path: "/contact", component: Contact },
   { path: "/news", component: News },
   { path: "/unauthorized", component: Unauthorized, protected: true },
+  { path: "/graduation", component: Graduation },
 
   // Trial Exam routes
   {
