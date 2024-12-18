@@ -317,9 +317,28 @@ function ExamCreateModal({ setIsShowCreateExamModal, fetchExamList }) {
     }
   };
 
-  const isSaveDisabled = examData.examQuestions.every((module) =>
-    module.domains.every((domain) => domain.questions.length === 0)
+  const totalExpectedQuestions = structureModuleQuestions.reduce(
+    (sum, module) =>
+      sum +
+      module.domaindistribution.reduce(
+        (domainSum, domain) => domainSum + domain.numberofquestion,
+        0
+      ),
+    0
   );
+
+  const totalCreatedQuestions = examData.examQuestions.reduce(
+    (sum, module) =>
+      sum +
+      module.domains.reduce(
+        (domainSum, domain) => domainSum + domain.questions.length,
+        0
+      ),
+    0
+  );
+
+  const isSaveDisabled =
+    totalCreatedQuestions === 0 || totalCreatedQuestions !== totalExpectedQuestions;
 
   return (
     <>

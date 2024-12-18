@@ -64,7 +64,7 @@ function ExamHistoryView({ profile, setShowExamHistoryView }) {
               <i className={cx("fa-regular fa-arrow-left")}></i>
             </div>
             <div className={cx("profile-title")} style={{ marginLeft: user?.role === "Teacher" ? "140px" : "0" }}>Exam History</div>
-            {user?.role === "Teacher" ? (
+            {(user?.role === "Teacher" && profile?.status === "Completed") ? (
               <button className={cx("profile-aciton")} onClick={() => setShowUpdateExamFinal(true)}>
                 Update Exam
               </button>
