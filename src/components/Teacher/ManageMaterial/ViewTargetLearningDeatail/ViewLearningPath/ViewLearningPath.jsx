@@ -1,12 +1,14 @@
 import classNames from "classnames/bind";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import NoData from "~/assets/images/content/nodata1.png";
 import { AuthContext } from "~/contexts/AuthContext";
 import apiClient from "~/services/apiService";
 import AddLearningPathModal from "./AddLearningPathModal";
 import EditLearningPathModal from "./EditLearningPathModal";
 import styles from "./ViewLearningPath.module.scss";
 const cx = classNames.bind(styles);
+
 
 function ViewLearningPath({ target, setIsShowViewTargetLearning, setIsShowViewStudyProfile }) {
   const { user } = useContext(AuthContext);
@@ -160,6 +162,12 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning, setIsShowViewSt
       })
     }
   }
+
+  const isNotValid = learningPaths.some(
+    (learningPath) =>
+      (learningPath.section.name === "Math" || learningPath.section.name === "Reading & Writing") &&
+      learningPath.unitProgress.length <= 0
+  )
   return (
     <>
       {isShowAddLearningPath && (
@@ -198,80 +206,93 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning, setIsShowViewSt
                   </button>
                 )}
               </div>
-              <div className={cx("learning-path-list")}>
-                {learningPath.unitProgress.map((unit, unitIndex) => (
-                  <div key={unit.unitId} className={cx("learning-path-item")}>
-                    <div className={cx("item-header")}>
-                      <div className={cx("item-icon")}>
-                        <i className={cx("fa-regular fa-book")}></i>
-                      </div>
-                      <div className={cx("item-title")}>
-                        <div className={cx("title")}>Unit {unitIndex + 1}</div>
-                        {(target.targetlearningdetail[0].status === "Inactive" && user?.role === "Teacher") && (
-                          <div className={cx("item-action")}>
-                            <button
-                              className={cx("edit-btn")}
-                              onClick={() =>
-                                handleEditClick(
-                                  learningPath.section.id,
-                                  learningPath.unitProgress,
-                                  unit.unitId
-                                )
-                              }
-                            >
-                              <i
-                                className={cx("fa-regular fa-pen-to-square")}
-                              ></i>
-                            </button>
-                            <button
-                              className={cx("delete-btn")}
-                              onClick={() => handleDeleteUnit(learningPath.section.id, unit.unitId)}
-                            >
-                              <i
-                                className={cx("fa-regular fa-trash")}
-                              ></i>
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className={cx("item-content")}>
-                      <div className={cx("item-name")}>
-                        <div className={cx("name-icon")}>
-                          <i className={cx("fa-regular fa-pen")}></i>
+              {learningPath?.unitProgress?.length > 0 ? (
+                <div className={cx("learning-path-list")}>
+                  {learningPath.unitProgress.map((unit, unitIndex) => (
+                    <div key={unit.unitId} className={cx("learning-path-item")}>
+                      <div className={cx("item-header")}>
+                        <div className={cx("item-icon")}>
+                          <i className={cx("fa-regular fa-book")}></i>
                         </div>
-                        <div className={cx("name-text")}>{unit.unitTitle}</div>
-                      </div>
-                      <div className={cx("item-level")}>
-                        <div className={cx("name-icon")}>
-                          <i className={cx("fa-regular fa-layer-group")}></i>
-                        </div>
-                        <div className={cx("name-text")}>
-                          {unit.level.name}
+                        <div className={cx("item-title")}>
+                          <div className={cx("title")}>Unit {unitIndex + 1}</div>
+                          {(target.targetlearningdetail[0].status === "Inactive" && user?.role === "Teacher") && (
+                            <div className={cx("item-action")}>
+                              <button
+                                className={cx("edit-btn")}
+                                onClick={() =>
+                                  handleEditClick(
+                                    learningPath.section.id,
+                                    learningPath.unitProgress,
+                                    unit.unitId
+                                  )
+                                }
+                              >
+                                <i
+                                  className={cx("fa-regular fa-pen-to-square")}
+                                ></i>
+                              </button>
+                              <button
+                                className={cx("delete-btn")}
+                                onClick={() => handleDeleteUnit(learningPath.section.id, unit.unitId)}
+                              >
+                                <i
+                                  className={cx("fa-regular fa-trash")}
+                                ></i>
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
-                      <div className={cx("item-number")}>
-                        <div className={cx("item-count")}>
+                      <div className={cx("item-content")}>
+                        <div className={cx("item-name")}>
                           <div className={cx("name-icon")}>
-                            <i className={cx("fa-regular fa-book-open")}></i>
+                            <i className={cx("fa-regular fa-pen")}></i>
+                          </div>
+                          <div className={cx("name-text")}>{unit.unitTitle}</div>
+                        </div>
+                        <div className={cx("item-level")}>
+                          <div className={cx("name-icon")}>
+                            <i className={cx("fa-regular fa-layer-group")}></i>
                           </div>
                           <div className={cx("name-text")}>
-                            {unit.unitAreaCount} Topics
+                            {unit.level.name}
                           </div>
                         </div>
-                        <div className={cx("item-count")}>
-                          <div className={cx("name-icon")}>
-                            <i className={cx("fa-light fa-file-pen")}></i>
+                        <div className={cx("item-number")}>
+                          <div className={cx("item-count")}>
+                            <div className={cx("name-icon")}>
+                              <i className={cx("fa-regular fa-book-open")}></i>
+                            </div>
+                            <div className={cx("name-text")}>
+                              {unit.unitAreaCount} Topics
+                            </div>
                           </div>
-                          <div className={cx("name-text")}>
-                            {unit.lessonCount} Lessons
+                          <div className={cx("item-count")}>
+                            <div className={cx("name-icon")}>
+                              <i className={cx("fa-light fa-file-pen")}></i>
+                            </div>
+                            <div className={cx("name-text")}>
+                              {unit.lessonCount} Lessons
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  ))}
+                </div>
+              ) : (
+                <div className={cx("learning-path-no-data")}>
+                  <div className={cx("no-data-content")}>
+                    <img
+                      src={NoData}
+                      alt="no-data"
+                      className={cx("no-data-img")}
+                    />
+                    <div className={cx("no-data-text")}>No more data</div>
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
           ))}
 
@@ -279,7 +300,7 @@ function ViewLearningPath({ target, setIsShowViewTargetLearning, setIsShowViewSt
         <div className={cx("view-learning-path-footer")}>
           <button className={cx("cancel-btn")} onClick={() => setIsShowViewTargetLearning(false)}>Cancel</button>
           {(target.targetlearningdetail[0].status === "Inactive" && user?.role === "Teacher") && (
-            <button className={cx("save-btn")} onClick={handleSaveUpdatePath}>Save</button>
+            <button className={cx("save-btn", { "disabled-btn": isNotValid })} onClick={handleSaveUpdatePath} disabled={isNotValid}>Save</button>
           )}
         </div>
       </div>
