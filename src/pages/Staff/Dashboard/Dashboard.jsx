@@ -79,7 +79,7 @@ function Dashboard() {
         ];
 
         const examData = resultAverage.map((exam) => ({
-          name: exam.examType,
+          name: exam.examTitle,
           totalAverage: exam.average,
           mathAverage: exam.averageMathScore,
           rwAverage: exam.averageRWScore,
