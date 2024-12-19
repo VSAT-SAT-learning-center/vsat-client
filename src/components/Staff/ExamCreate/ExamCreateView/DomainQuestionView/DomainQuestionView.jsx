@@ -140,7 +140,11 @@ function DomainQuestionView({
         updateDeleteExamQuestion: updateDeleteExamQuestion,
         updateQuestion: updateQuestion,
       };
-      await apiClient.patch("exam-questions", payload);
+      console.log(payload);
+
+      const res = await apiClient.patch("/exam-questions", payload);
+      console.log(res.data);
+
       const updatedExams = await fetchExamList();
       const updatedExam = updatedExams.find((examItem) => examItem.id === exam.id);
       const updateExamQuestions = updatedExam?.examQuestions.find((module) => module.id === moduleData.id)
