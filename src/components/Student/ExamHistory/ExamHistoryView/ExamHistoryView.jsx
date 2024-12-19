@@ -26,6 +26,7 @@ function ExamHistoryView({ profile, setShowExamHistoryView }) {
       const mappedData = apiExams
         .map((exam) => ({
           testDate: new Date(exam.attemptdatetime).toLocaleDateString("en-US", {
+            year: "numeric",
             month: "short",
             day: "numeric",
           }),

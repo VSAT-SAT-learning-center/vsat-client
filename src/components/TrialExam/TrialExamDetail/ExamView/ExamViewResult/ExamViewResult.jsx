@@ -146,7 +146,7 @@ function ExamViewResult({ exam, examResult }) {
               <div className={cx("content-main")}>
                 <div className={cx("content-top")}>
                   <div className={cx("exam-name")}>
-                    Full-length Trial Exam 1
+                    Full-length {exam?.title}
                   </div>
                   <div className={cx("exam-score")}>
                     <div className={cx("score-item")}>
