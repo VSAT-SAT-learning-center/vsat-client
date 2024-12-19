@@ -54,6 +54,7 @@ function ExamStructureCreateView({
     const isStructureConfigStep = steps[currentStep] === "Structure Config";
     const isSectionConfigStep = steps[currentStep] === "Section Config";
     const isModuleConfigStep = steps[currentStep] === "Module Config";
+    const isTimeConfigStep = steps[currentStep] === "Time Config";
     const requiredFields = [
       { key: "structurename", label: "Exam Structure Name" },
       { key: "description", label: "Exam Structure Description" },
@@ -181,18 +182,30 @@ function ExamStructureCreateView({
     if (isModuleConfigStep) {
       let hasRWError = false;
       let hasMathError = false;
+      let hasRWDomainError = false;
+      let hasMathDomainError = false;
 
       examStructureData.moduleType.forEach((module) => {
-        if (
-          module.section === "Reading & Writing" &&
-          module.numberOfQuestion !== totalRWQuestion / 2
-        ) {
-          hasRWError = true;
+        if (module.section === "Reading & Writing") {
+          if (module.numberOfQuestion !== totalRWQuestion / 2) {
+            hasRWError = true;
+          }
+          module.domainDistribution.forEach((domain) => {
+            if (domain.numberOfQuestion <= 0) {
+              hasRWDomainError = true
+            }
+          })
         } else if (
-          module.section === "Math" &&
-          module.numberOfQuestion !== totalMathQuestion / 2
+          module.section === "Math"
         ) {
-          hasMathError = true;
+          if (module.numberOfQuestion !== totalMathQuestion / 2) {
+            hasMathError = true;
+          }
+          module.domainDistribution.forEach((domain) => {
+            if (domain.numberOfQuestion <= 0) {
+              hasMathDomainError = true
+            }
+          })
         }
       });
 
@@ -225,8 +238,62 @@ function ExamStructureCreateView({
         );
       }
 
+      if (hasMathDomainError) {
+        toast.error(
+          `Each domain in Math must have number of question greater than 0.`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+      }
+
+      if (hasRWDomainError) {
+        toast.error(
+          `Each domain in Reading & Writing must have number of question greater than 0.`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+      }
+
       // Prevent navigation if there are any errors
-      if (hasRWError || hasMathError) return;
+      if (hasRWError || hasMathError || hasRWDomainError || hasMathDomainError) return;
+    }
+
+    if (isTimeConfigStep) {
+      let hasError = false;
+      examStructureData.moduleType.forEach((module) => {
+        console.log(module.time);
+        if (module.time === undefined || Number.isNaN(module.time)) {
+          hasError = true;
+        }
+      })
+      if (hasError) {
+        toast.error(
+          `Time config for each Module not be empty.`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
+      }
+
+      // Prevent navigation if there are any errors
+      if (hasError) return;
     }
 
     currentStep < steps.length - 1
