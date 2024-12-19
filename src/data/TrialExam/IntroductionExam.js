@@ -3,7 +3,7 @@ export const inforductionExams = [
     id: 1,
     icon: "fa-regular fa-clock-nine",
     title: "Timing",
-    desc: "You must complete the entire test with the appropriate timing, and if you exit before you are finished, your test will end and your scores will be calculated based on the work you have completed.",
+    desc: "You must complete the entire test with the appropriate timing, and if you exit before you are finished.",
   },
   {
     id: 2,

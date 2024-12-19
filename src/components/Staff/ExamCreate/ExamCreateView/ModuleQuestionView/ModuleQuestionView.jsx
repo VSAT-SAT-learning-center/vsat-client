@@ -41,27 +41,27 @@ function ModuleQuestionView({
     }
   }, [exam.id, examQuestion.id, fetchExamList, setIsLoading]);
 
-  const handleClickViewDomainQuestion = async (domainData) => {
-    if (exam?.status === "Rejected") {
-      const updatedExamQuestion = await fetchUpdatedExamQuestion();
+  const handleEditDomainQuestion = async (domainData) => {
+    const updatedExamQuestion = await fetchUpdatedExamQuestion();
 
-      if (updatedExamQuestion) {
-        const updatedDomain = updatedExamQuestion.domains.find(
-          (domain) => domain.domain === domainData.domain
-        );
-        const domainToSet = updatedDomain || domainData;
-        setModuleData(updatedExamQuestion);
-        setIsShowDomainQuestionView(true);
-        setOriginalData(domainToSet);
-        setDomainData(domainToSet);
-      }
-    } else {
+    if (updatedExamQuestion) {
+      const updatedDomain = updatedExamQuestion.domains.find(
+        (domain) => domain.domain === domainData.domain
+      );
+      const domainToSet = updatedDomain || domainData;
+      setModuleData(updatedExamQuestion);
       setIsShowDomainQuestionView(true);
-      setOriginalData(domainData);
-      setDomainData(domainData);
-      setModuleData(examQuestion);
+      setOriginalData(domainToSet);
+      setDomainData(domainToSet);
     }
   };
+
+  const handleViewDomainQuestion = (domainData) => {
+    setIsShowDomainQuestionView(true);
+    setOriginalData(domainData);
+    setDomainData(domainData);
+    setModuleData(examQuestion);
+  }
 
   const getAttemptedQuestionsCount = (questions, domain) => {
     return questions?.filter((question) => question.skill.domain.content === domain.domain)?.length || 0;
@@ -106,20 +106,33 @@ function ModuleQuestionView({
               <div className={cx("domain-action")}>
                 <div className={cx("count-noq")}>{getAttemptedQuestionsCount(domain?.questions, domain)}/{domain?.numberofquestion}</div>
                 <div className={cx("create-action")}>
-                  <button
-                    className={cx("create-btn")}
-                    onClick={() => handleClickViewDomainQuestion(domain)}
-                  >
-                    <i
-                      className={cx(
-                        "fa-regular fa-arrow-up-right-from-square",
-                        "create-icon"
-                      )}
-                    ></i>
-                    <span className={cx("create-text")}>
-                      {exam?.status === "Rejected" ? "Edit" : "View"}
-                    </span>
-                  </button>
+                  {exam?.status === "Rejected" ? (
+                    <button
+                      className={cx("create-btn")}
+                      onClick={() => handleEditDomainQuestion(domain)}
+                    >
+                      <i
+                        className={cx(
+                          "fa-regular fa-arrow-up-right-from-square",
+                          "create-icon"
+                        )}
+                      ></i>
+                      <span className={cx("create-text")}>Edit</span>
+                    </button>
+                  ) : (
+                    <button
+                      className={cx("create-btn")}
+                      onClick={() => handleViewDomainQuestion(domain)}
+                    >
+                      <i
+                        className={cx(
+                          "fa-regular fa-arrow-up-right-from-square",
+                          "create-icon"
+                        )}
+                      ></i>
+                      <span className={cx("create-text")}>View</span>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -153,7 +153,7 @@ function StudyProfileTable() {
                       </div>
                     </td>
                     <td className={cx("action-cell")}>
-                      {profile.status === "Active" && (
+                      {(profile.status === "Active" || profile.status === "Inactive") && (
                         <div className={cx("action-icons")}>
                           <span
                             className={cx("icon")}
