@@ -22,7 +22,7 @@ function CensorQuestionQuizzGPT({ dataCensorWithAI, setIsShowCensorGpt }) {
           <div className={cx("censor-overview-general")}>
             <div className={cx("overview-content-title")}>
               <div className={cx("number")}>1</div>
-              <div className={cx("overview-title-text")}>Question Overivew</div>
+              <div className={cx("overview-title-text")}>Question Overview</div>
             </div>
             <div className={cx("overview-content-container")}>
               <div className={cx("overview-item")}>
