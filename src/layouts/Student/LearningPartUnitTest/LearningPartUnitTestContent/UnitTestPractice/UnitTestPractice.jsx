@@ -11,8 +11,6 @@ function UnitTestPractice({
   selectedAnswer,
   showExplanation,
   setValidateAnswer,
-  firstSelectedAnswer,
-  setFirstSelectedAnswer,
 }) {
   const [answerStatus, setAnswerStatus] = useState({}); // Track styles for each answer
 
@@ -24,12 +22,6 @@ function UnitTestPractice({
 
   const handleAnswerClick = (id) => {
     if (answerStatus[id] === "incorrect") return; // Prevent reselecting an already incorrect answer
-
-    // Set the first selected answer if it's not already set
-    if (!firstSelectedAnswer) {
-      setFirstSelectedAnswer(id);
-    }
-
     onAnswerSelected(id); // Notify parent of selected answer
   };
 
