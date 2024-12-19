@@ -338,7 +338,11 @@ function ExamCreateModal({ setIsShowCreateExamModal, fetchExamList }) {
   );
 
   const isSaveDisabled =
-    totalCreatedQuestions === 0 || totalCreatedQuestions !== totalExpectedQuestions;
+    totalCreatedQuestions === 0 ||
+    totalCreatedQuestions !== totalExpectedQuestions ||
+    examData.title.trim() === "" ||
+    examData.description.trim() === "" ||
+    examData.examTypeId === "";
 
   return (
     <>
