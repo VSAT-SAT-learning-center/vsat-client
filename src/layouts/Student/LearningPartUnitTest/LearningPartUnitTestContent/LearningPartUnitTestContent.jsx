@@ -80,6 +80,7 @@ function LearningPartUnitTestContent({ unitId, unitProgressId }) {
         studentdAnswerId: firstSelectedAnswer,
         studentdAnswerText: "",
       };
+      console.log(progressData);
       await apiClient.post(`/quiz-attempts/${quizAttempt.quizAttemptId}/progress`, progressData);
       setButtonText("Back");
     } catch (error) {
@@ -131,6 +132,9 @@ function LearningPartUnitTestContent({ unitId, unitProgressId }) {
       }
       await submitQuiz()
     } else if (buttonText === "Check" || buttonText === "Check again") {
+      if (!firstSelectedAnswer) {
+        setFirstSelectedAnswer(selectedAnswer); // Set only on the first "Check" click
+      }
       validateAnswer(); // Trigger validation in UnitTestPractice
     } else if (buttonText === "Back") {
       navigate(-1);
@@ -140,11 +144,6 @@ function LearningPartUnitTestContent({ unitId, unitProgressId }) {
   const onAnswerSelected = (id) => {
     setDisableButton(false); // Enable button when an answer is selected
     setSelectedAnswer(id); // Update selected answer
-
-    // Set first selected answer if it's not already set
-    if (!firstSelectedAnswer) {
-      setFirstSelectedAnswer(id);
-    }
   };
 
   const onAnswerChecked = (isCorrect) => {
@@ -198,8 +197,6 @@ function LearningPartUnitTestContent({ unitId, unitProgressId }) {
               selectedAnswer={selectedAnswer}
               showExplanation={showExplanation}
               setValidateAnswer={setValidateAnswer}
-              firstSelectedAnswer={firstSelectedAnswer}
-              setFirstSelectedAnswer={setFirstSelectedAnswer}
             />
           ) : (
             <div className={cx("learing-part-unit-test-content")}>
